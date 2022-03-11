@@ -1,0 +1,37 @@
+.tableBox {
+    td {
+        word-break:break-all;
+    }
+}
+
+
+.expandRow{
+    span{
+        display: block;
+        padding-bottom: 6px;
+        border-bottom: 1px dashed #ccc;
+        &:last-child{
+            border-bottom:0;
+            padding-bottom: 0;
+            color:#000;
+        }
+    }
+    :global {
+        .ant-divider-dashed{
+            margin:0;
+            border-color: #ccc;
+        }
+    }
+    
+}
+
+    .chartSwitch{
+        display:inline-block ;
+        position:absolute;
+        top: 66px;
+        right: 28px;
+        font-size:13px;
+        
+    }
+
+
