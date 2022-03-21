@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import router from 'umi/router';
 import { FormattedMessage } from 'umi-plugin-locale';
-import wutongUtil from '../../../utils/wutong';
-
 import { Menu } from 'antd';
+
 import styles from './Info.less';
+import wutongUtil from '../../../utils/wutong';
 
 const { Item } = Menu;
 

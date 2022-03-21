@@ -5,7 +5,10 @@ node_modules
 # roadhog-api-doc ignore
 /src/utils/request-temp.js
 _roadhog-api-doc
-
+# development env
+.env
+# vscode configration
+.vscode
 # production
 /dist
 
