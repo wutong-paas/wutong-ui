@@ -52,7 +52,7 @@ const EditableRow = ({ form, index, ...props }) => {
 const EditableFormRow = Form.create()(EditableRow);
 
 class EditableCell extends React.Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { handleClustersMount } = this.props;
     if (handleClustersMount) {
       handleClustersMount(this);

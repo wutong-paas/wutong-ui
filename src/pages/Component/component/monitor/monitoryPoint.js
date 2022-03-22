@@ -30,7 +30,7 @@ export default class customMonitor extends PureComponent {
       operationPermissions: this.handlePermissions('queryAppInfo')
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { dispatch } = this.props;
     const {
       operationPermissions: { isAccess }

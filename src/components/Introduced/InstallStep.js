@@ -26,7 +26,7 @@ export default class InstallStep extends PureComponent {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { dispatch, eid } = this.props;
     this.handleGetEnterpeiseMsg();
     dispatch({

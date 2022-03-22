@@ -434,7 +434,7 @@ export default class Index extends PureComponent {
     this.load();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { status: newStatus, timers: newTimers } = nextProps;
     const { status, timers } = this.props;
     if (newStatus !== status) {

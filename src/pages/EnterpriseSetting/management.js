@@ -41,7 +41,7 @@ export default class Management extends PureComponent {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.fetchEnterpriseInfo();
     this.getEnterpriseAdmins();
   }

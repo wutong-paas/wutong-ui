@@ -97,7 +97,7 @@ class UpdateMemory extends PureComponent {
 // eslint-disable-next-line react/no-multi-comp
 @Form.create()
 class ConfigItems extends PureComponent {
-  componentWillReceiveProps() {}
+  UNSAFE_componentWillReceiveProps() {}
   onChange = (val, index) => {
     const { data } = this.props;
     data &&

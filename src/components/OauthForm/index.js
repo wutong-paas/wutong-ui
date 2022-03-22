@@ -25,7 +25,7 @@ class CreateOAuthForm extends PureComponent {
       this.setState({ edit: true });
     }
   }
-  componentWillUpdate(props) {
+  UNSAFE_componentWillUpdate(props) {
     const { oauthInfo } = props;
     if (oauthInfo) {
       this.setState({ edit: true });

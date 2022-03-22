@@ -86,11 +86,11 @@ class TeamLayout extends PureComponent {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.getNewbieGuideConfig();
     this.getEnterpriseList();
   }
-  componentWillReceiveProps() {
+  UNSAFE_componentWillReceiveProps() {
     const appID = globalUtil.getAppID();
     const { appID: cldAppID } = this.state;
     if (appID && appID !== cldAppID) {

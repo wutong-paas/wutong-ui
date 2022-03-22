@@ -18,7 +18,7 @@ export default class AppDirector extends PureComponent {
       members: []
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.fetchTeamMember();
   }
   onOk = e => {

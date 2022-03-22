@@ -50,7 +50,7 @@ export default class Index extends PureComponent {
     this.props.onRollback && this.props.onRollback(data);
   };
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     nextProps.showUpgrade == true && this.getVersionList("update");
   }
 

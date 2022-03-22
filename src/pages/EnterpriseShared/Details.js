@@ -75,7 +75,7 @@ export default class Main extends PureComponent {
       isAppDetails: false
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.getTags();
     this.getEnterpriseTeams();
     this.getAppModelsDetails();

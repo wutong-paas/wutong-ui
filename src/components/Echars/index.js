@@ -13,7 +13,7 @@ class Echarts extends Component {
 	saveRef = (ref) => {
 		this.ref = ref;
     }
-    componentWillReceiveProps(nextProps){
+    UNSAFE_componentWillReceiveProps(nextProps){
 
     }
 	componentDidUpdate(){

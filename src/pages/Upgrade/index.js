@@ -86,7 +86,7 @@ export default class AppList extends PureComponent {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { currentTeamPermissionsInfo, dispatch } = this.props;
     const isUpgrade = roleUtil.queryAppInfo(
       currentTeamPermissionsInfo,

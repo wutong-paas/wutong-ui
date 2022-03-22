@@ -12,7 +12,7 @@ const { Option } = Select;
 
 @Form.create()
 class EvnOption extends React.Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { onDidMount, index } = this.props;
     if (onDidMount) {
       onDidMount(index, this);
@@ -249,7 +249,7 @@ class EnvGroup extends PureComponent {
     // 保存组建引用
     this.groupItem = [];
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { onDidMount } = this.props;
     if (onDidMount) {
       onDidMount(this);

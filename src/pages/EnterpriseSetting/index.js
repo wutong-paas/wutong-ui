@@ -31,7 +31,7 @@ export default class EnterpriseSetting extends PureComponent {
       activeKey: 'infrastructure'
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { adminer } = this.state;
     const { dispatch } = this.props;
     if (!adminer) {

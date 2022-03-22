@@ -18,7 +18,7 @@ export default class LoginPage extends Component {
     super(props);
     this.state = {};
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { dispatch } = this.props;
     dispatch({ type: 'global/hideNeedLogin' });
     globalUtil.removeCookie();

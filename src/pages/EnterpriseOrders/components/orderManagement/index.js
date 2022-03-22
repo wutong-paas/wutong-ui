@@ -32,7 +32,7 @@ export default class EnterpriseClusters extends PureComponent {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.fetchEnterpriseOrderList();
   }
 

@@ -83,7 +83,7 @@ export default class Index extends PureComponent {
       enableGPU: licenseUtil.haveFeature(this.props.features, 'GPU')
     };
   }
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (
       nextProps.instances.new_pods !== this.state.new_pods ||
       nextProps.instances.old_pods !== this.state.old_pods

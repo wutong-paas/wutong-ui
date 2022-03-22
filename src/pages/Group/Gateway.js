@@ -42,7 +42,7 @@ export default class AppGatewayList extends PureComponent {
       operationPermissions: this.handlePermissions('queryControlInfo')
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { dispatch } = this.props;
     const {
       operationPermissions: { isAccess }

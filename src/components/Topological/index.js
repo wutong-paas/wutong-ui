@@ -7,7 +7,7 @@ import globalUtil from '../../utils/global';
 
 @connect()
 class Index extends React.Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const teamName = globalUtil.getCurrTeamName();
     const regionName = globalUtil.getCurrRegionName();
     const { group_id: groupId, dispatch } = this.props;

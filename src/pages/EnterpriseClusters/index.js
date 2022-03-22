@@ -73,7 +73,7 @@ export default class EnterpriseClusters extends PureComponent {
       isEnterpriseEdition: wutongUtil.isEnterpriseEdition(rainbondInfo)
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { adminer } = this.state;
     const { dispatch } = this.props;
     if (!adminer) {

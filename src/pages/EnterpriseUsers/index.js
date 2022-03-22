@@ -42,7 +42,7 @@ export default class EnterpriseUsers extends PureComponent {
       Loading: false
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { adminer } = this.state;
     const { dispatch } = this.props;
     if (!adminer) {

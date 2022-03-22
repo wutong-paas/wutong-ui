@@ -30,7 +30,7 @@ export default class OrderDetails extends PureComponent {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.fetchEnterpriseOrderDetails();
     this.fetchBankInfo();
   }

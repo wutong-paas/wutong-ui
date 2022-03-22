@@ -22,7 +22,7 @@ import { createEnterprise, createTeam } from '../../utils/breadcrumb';
   { pure: false }
 )
 export default class Main extends PureComponent {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { currentTeamPermissionsInfo, dispatch } = this.props;
     roleUtil.canCreateComponent(currentTeamPermissionsInfo, dispatch);
   }

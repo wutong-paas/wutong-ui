@@ -40,7 +40,7 @@ class Control extends Component {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { dispatch } = this.props;
     const {
       operationPermissions: { isAccess }

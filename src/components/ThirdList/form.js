@@ -68,7 +68,7 @@ class Index extends React.Component {
       checkedList: []
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.handleCodeWarehouseType(this.props);
   }
   componentDidUpdate(nextProps) {

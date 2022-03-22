@@ -22,7 +22,7 @@ export default class Loading extends Component {
         this.state.width += (totalWidth - this.state.width) * 0.01;
         return this.state.width > 90 ? 90 : this.state.width;
     }
-    componentWillReceiveProps(nextprops){
+    UNSAFE_componentWillReceiveProps(nextprops){
     	var apploadingnum = this.props.apploadingnum;
     	var nextApploadingnum = nextprops.apploadingnum;
 

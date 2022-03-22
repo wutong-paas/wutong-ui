@@ -54,7 +54,7 @@ export default class HttpTable extends PureComponent {
       parameterInfo: null
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.load();
   }
   onPageChange = page_num => {

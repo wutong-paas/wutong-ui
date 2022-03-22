@@ -115,7 +115,7 @@ export default class Main extends PureComponent {
     };
     this.mount = false;
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { currentTeamPermissionsInfo, dispatch } = this.props;
     roleUtil.canCreateComponent(currentTeamPermissionsInfo, dispatch);
   }

@@ -23,7 +23,7 @@ export default class RangeChart extends PureComponent {
       performanceObj: {}
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { moduleName } = this.props;
     if (
       moduleName === 'PerformanceAnalysis' ||
@@ -35,7 +35,7 @@ export default class RangeChart extends PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { start: oldStart, end, step, moduleName } = this.props;
     const {
       start: newStart,

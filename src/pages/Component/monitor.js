@@ -31,7 +31,7 @@ export default class Index extends PureComponent {
       anaPlugins: null,
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.fetchBaseInfo();
   }
   componentDidMount() {

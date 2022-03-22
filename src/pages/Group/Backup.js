@@ -259,7 +259,7 @@ export default class AppList extends PureComponent {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { dispatch } = this.props;
     const {
       operationPermissions: { isBackup }

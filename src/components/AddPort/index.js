@@ -10,7 +10,7 @@ const FormItem = Form.Item;
   };
 })
 export default class AddPort extends PureComponent {
-  componentWillMount() {}
+  UNSAFE_componentWillMount() {}
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {

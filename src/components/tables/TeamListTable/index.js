@@ -7,7 +7,7 @@ class TeamListTable extends PureComponent {
     totalCallNo: 0,
   };
 
-  componentWillReceiveProps() {}
+  UNSAFE_componentWillReceiveProps() {}
 
   handleTableChange = (pagination, filters, sorter) => {
     if (this.props.onChange) {

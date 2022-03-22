@@ -1,7 +1,7 @@
 import React from "react";
 
 export default class PublicLogin extends React.Component {
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const href = `https://sso.goodrain.com/#/login/${encodeURIComponent(location.href)}`;
     location.href = href;
   }

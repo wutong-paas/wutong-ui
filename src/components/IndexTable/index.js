@@ -13,7 +13,7 @@ class StandardTable extends PureComponent {
     totalCallNo: 0,
   };
 
-  componentWillReceiveProps(nextProps) {}
+  UNSAFE_componentWillReceiveProps(nextProps) {}
 
   handleTableChange = (pagination, filters, sorter) => {
     this.props.onChange(pagination, filters, sorter);
