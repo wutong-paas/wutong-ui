@@ -236,7 +236,7 @@ export async function getKubeConfig(body, handleError) {
 
 export async function getRainbondComponents(body) {
   return request(
-    `/console/proxy/enterprise-server/api/v1/enterprises/${body.enterprise_id}/kclusters/${body.clusterID}/rainbond-components`,
+    `/console/proxy/enterprise-server/api/v1/enterprises/${body.enterprise_id}/kclusters/${body.clusterID}/wutong-components`,
     {
       method: 'get',
       params: {
@@ -249,7 +249,7 @@ export async function getRainbondComponents(body) {
 }
 export async function getPodEvent(body) {
   return request(
-    `/console/proxy/enterprise-server/api/v1/enterprises/${body.enterprise_id}/kclusters/${body.clusterID}/rainbond-components/${body.podName}/events`,
+    `/console/proxy/enterprise-server/api/v1/enterprises/${body.enterprise_id}/kclusters/${body.clusterID}/wutong-components/${body.podName}/events`,
     {
       method: 'get',
       params: {
@@ -285,7 +285,7 @@ export async function updateKubernetesCluster(body, handleError) {
 
 export async function getRainbondClusterConfig(body, handleError) {
   return request(
-    `/console/proxy/enterprise-server/api/v1/enterprises/${body.enterprise_id}/kclusters/${body.clusterID}/rainbondcluster`,
+    `/console/proxy/enterprise-server/api/v1/enterprises/${body.enterprise_id}/kclusters/${body.clusterID}/wutongcluster`,
     {
       method: 'get',
       handleError
@@ -295,7 +295,7 @@ export async function getRainbondClusterConfig(body, handleError) {
 
 export async function setRainbondClusterConfig(body, handleError) {
   return request(
-    `/console/proxy/enterprise-server/api/v1/enterprises/${body.enterprise_id}/kclusters/${body.clusterID}/rainbondcluster`,
+    `/console/proxy/enterprise-server/api/v1/enterprises/${body.enterprise_id}/kclusters/${body.clusterID}/wutongcluster`,
     {
       method: 'put',
       data: {

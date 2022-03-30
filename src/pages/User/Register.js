@@ -17,11 +17,6 @@ export default class Register extends Component {
 
   handleSubmit = values => {
     const { rainbondInfo } = this.props;
-    const firstRegist = !wutongUtil.fetchIsFirstRegist(rainbondInfo);
-    const version =
-      rainbondInfo && rainbondInfo.version && rainbondInfo.version.enable
-        ? rainbondInfo.version.value
-        : '';
     const { dispatch } = this.props;
     dispatch({
       type: 'user/register',

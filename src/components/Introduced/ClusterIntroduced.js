@@ -1,3 +1,4 @@
+/*
 import { Button, Col, Modal, Row } from 'antd';
 import React, { PureComponent } from 'react';
 import styles from '../CreateTeam/index.less';
@@ -31,3 +32,4 @@ export default class ClusterIntroduced extends PureComponent {
     );
   }
 }
+*/

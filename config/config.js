@@ -47,12 +47,19 @@ export default {
 
   routes: routerConfig,
   proxy: {
+    '/console/proxy': {
+      target: 'http://127.0.0.1:8080',
+      pathRewrite: {
+        '^/console/proxy': '/'
+      },
+      changeOrigin: true
+    },
     '/console': {
-      target: 'http://192.168.214.160:8888',
+      target: 'http://127.0.0.1:8888',
       changeOrigin: true
     },
     '/data': {
-      target: 'http://192.168.214.160:8888',
+      target: 'http://127.0.0.1:8888',
       changeOrigin: true
     }
   }

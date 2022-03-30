@@ -15,7 +15,7 @@ import {
   fetchHelmMarkets,
   fetchHelmMarketsTab,
   fetchMarkets,
-  fetchMarketsTab,
+  // fetchMarketsTab,
   getAppMarketInfo,
   getAppModelsDetails,
   getBindingMarketsList,
@@ -164,18 +164,18 @@ export default {
         callback(response);
       }
     },
-    *fetchMarketsTab({ payload, callback }, { call }) {
-      const response = yield call(fetchMarketsTab, payload);
-      if (response && callback) {
-        callback(response);
-      }
-    },
-    *fetchHelmMarketsTab({ payload, callback }, { call }) {
-      const response = yield call(fetchHelmMarketsTab, payload);
-      if (response && callback) {
-        callback(response);
-      }
-    },
+    // *fetchMarketsTab({ payload, callback }, { call }) {
+    //   const response = yield call(fetchMarketsTab, payload);
+    //   if (response && callback) {
+    //     callback(response);
+    //   }
+    // },
+    // *fetchHelmMarketsTab({ payload, callback }, { call }) {
+    //   const response = yield call(fetchHelmMarketsTab, payload);
+    //   if (response && callback) {
+    //     callback(response);
+    //   }
+    // },
     *fetchHelmMarkets({ payload, callback }, { call }) {
       const response = yield call(fetchHelmMarkets, payload);
       if (response && callback) {
