@@ -2,7 +2,7 @@ import {
   appExport,
   cancelImportApp,
   CheckWarehouseAppName,
-  createAppMarket,
+  // createAppMarket,
   createAppModel,
   createMarketAppModel,
   createTag,
@@ -128,12 +128,12 @@ export default {
         callback(response);
       }
     },
-    *createAppMarket({ payload, callback }, { call }) {
-      const response = yield call(createAppMarket, payload);
-      if (response && callback) {
-        callback(response);
-      }
-    },
+    // *createAppMarket({ payload, callback }, { call }) {
+    //   const response = yield call(createAppMarket, payload);
+    //   if (response && callback) {
+    //     callback(response);
+    //   }
+    // },
     *createMarketAppModel({ payload, callback }, { call }) {
       const response = yield call(createMarketAppModel, payload);
       if (response && callback) {
