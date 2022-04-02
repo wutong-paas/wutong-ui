@@ -11,8 +11,8 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
       name: formatMessage({ id: 'menu.team.dashboard' }),
       icon: 'dashboard',
       path: `team/${teamName}/region/${regionName}/index`,
-      authority: ['admin', 'user'],
-    },
+      authority: ['admin', 'user']
+    }
   ];
   function results(moduleName, targets) {
     return roleUtil.queryTeamUserPermissionsInfo(
@@ -46,7 +46,7 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
         name: formatMessage({ id: 'menu.app.monitor' }),
         icon: 'monitor',
         path: `team/${teamName}/region/${regionName}/monitor`,
-        authority: ['admin', 'user'],
+        authority: ['admin', 'user']
       });
     }
     if (appView) {
@@ -54,7 +54,7 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
         name: formatMessage({ id: 'menu.team.app' }),
         icon: 'appstore-o',
         path: `team/${teamName}/region/${regionName}/apps`,
-        authority: ['admin', 'user'],
+        authority: ['admin', 'user']
       });
     }
     if (appCreateView && componentCreateView && componentConstructView) {
@@ -67,24 +67,24 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
           {
             name: formatMessage({ id: 'menu.team.create.code' }),
             path: `/code`,
-            authority: ['admin', 'user'],
+            authority: ['admin', 'user']
           },
           {
             name: formatMessage({ id: 'menu.team.create.image' }),
             path: `/image`,
-            authority: ['admin', 'user'],
+            authority: ['admin', 'user']
           },
           {
             name: formatMessage({ id: 'menu.team.create.market' }),
             path: `/market`,
-            authority: ['admin', 'user'],
+            authority: ['admin', 'user']
           },
           {
             name: formatMessage({ id: 'menu.team.create.third' }),
             path: `/outer`,
-            authority: ['admin', 'user'],
-          },
-        ],
+            authority: ['admin', 'user']
+          }
+        ]
       });
     }
 
@@ -94,7 +94,7 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
         children.push({
           name: formatMessage({ id: 'menu.team.gateway.control' }),
           path: 'control',
-          authority: ['admin', 'user'],
+          authority: ['admin', 'user']
         });
       }
 
@@ -102,7 +102,7 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
         children.push({
           name: formatMessage({ id: 'menu.team.gateway.certificate' }),
           path: 'license',
-          authority: ['admin', 'user'],
+          authority: ['admin', 'user']
         });
       }
       addMenuArr({
@@ -110,7 +110,7 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
         icon: 'gateway',
         path: `team/${teamName}/region/${regionName}/gateway`,
         authority: ['admin', 'user'],
-        children,
+        children
       });
     }
 
@@ -119,7 +119,7 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
         name: formatMessage({ id: 'menu.team.plugin' }),
         icon: 'api',
         path: `team/${teamName}/region/${regionName}/myplugns`,
-        authority: ['admin', 'user'],
+        authority: ['admin', 'user']
       });
     }
 
@@ -128,12 +128,12 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
         name: formatMessage({ id: 'menu.team.setting' }),
         icon: 'setting',
         path: `team/${teamName}/region/${regionName}/team`,
-        authority: ['admin', 'user'],
+        authority: ['admin', 'user']
       });
     }
     if (newbieGuide === 'false') {
       return menuArr;
-    } 
+    }
     // else if (newbieGuide !== undefined) {
     //   addMenuArr({
     //     name: '任务',
@@ -156,7 +156,7 @@ function formatter(data, parentPath = '', parentAuthority) {
     const result = {
       ...item,
       path,
-      authority: item.authority || parentAuthority,
+      authority: item.authority || parentAuthority
     };
     if (item.children) {
       result.children = formatter(
@@ -168,7 +168,15 @@ function formatter(data, parentPath = '', parentAuthority) {
     return result;
   });
 }
-export const getMenuData = (teamName, regionName, permissionsInfo, teamId, enterprise) => {
-  const menus = formatter(menuData(teamName, regionName, permissionsInfo, teamId, enterprise));
+export const getMenuData = (
+  teamName,
+  regionName,
+  permissionsInfo,
+  teamId,
+  enterprise
+) => {
+  const menus = formatter(
+    menuData(teamName, regionName, permissionsInfo, teamId, enterprise)
+  );
   return menus;
 };

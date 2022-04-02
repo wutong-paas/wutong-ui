@@ -84,24 +84,29 @@ export default class Index extends PureComponent {
     const { dispatch } = this.props;
     dispatch({ type: 'application/clearGroupDetail' });
   }
+
   onCancel = () => {
     this.setState({
       customSwitch: false
     });
   };
+
   getGroupId() {
     return this.props.appID;
   }
+
   closeTimer = () => {
     if (this.timer) {
       clearInterval(this.timer);
     }
   };
+
   loading = () => {
     this.fetchAppDetail();
     this.loadTopology(true);
     this.fetchAppDetailState();
   };
+
   handleNewbieGuiding = info => {
     const { nextStep } = info;
     return (
@@ -120,11 +125,13 @@ export default class Index extends PureComponent {
       />
     );
   };
+
   handleGuideStep = guideStep => {
     this.setState({
       guideStep
     });
   };
+
   loadTopology(isCycle) {
     const { dispatch } = this.props;
     const teamName = globalUtil.getCurrTeamName();
@@ -217,6 +224,7 @@ export default class Index extends PureComponent {
       }
     });
   }
+
   handleError = err => {
     const { componentTimer } = this.state;
     if (!componentTimer) {
@@ -229,6 +237,7 @@ export default class Index extends PureComponent {
       });
     }
   };
+
   handleTimers = (timerName, callback, times) => {
     const { componentTimer } = this.state;
     if (!componentTimer) {
@@ -272,6 +281,7 @@ export default class Index extends PureComponent {
       }
     });
   };
+
   handleWaitLevel = () => {
     const { dispatch } = this.props;
     const { teamName, appID } = this.props.match.params;
@@ -290,6 +300,7 @@ export default class Index extends PureComponent {
       }
     });
   };
+
   fetchAppDetailState = () => {
     const { dispatch } = this.props;
     const { teamName, appID } = this.props.match.params;
@@ -313,17 +324,21 @@ export default class Index extends PureComponent {
     form.resetFields();
     this.loadApps();
   };
+
   handleSearch = e => {
     e.preventDefault();
     this.loadApps();
   };
+
   changeType = type => {
     this.setState({ type });
   };
+
   toDelete = () => {
     this.closeComponentTimer();
     this.setState({ toDelete: true });
   };
+
   cancelDelete = (isOpen = true) => {
     this.setState({ toDelete: false });
     if (isOpen) {
@@ -335,6 +350,7 @@ export default class Index extends PureComponent {
     this.setState({ componentTimer: false });
     this.closeTimer();
   };
+
   openComponentTimer = () => {
     this.setState({ componentTimer: true }, () => {
       this.loadTopology(true);
@@ -393,6 +409,7 @@ export default class Index extends PureComponent {
       }
     });
   };
+
   toEdit = () => {
     this.setState({ toEdit: true });
   };
@@ -400,12 +417,15 @@ export default class Index extends PureComponent {
   cancelEdit = () => {
     this.setState({ toEdit: false });
   };
+
   handleToEditAppDirector = () => {
     this.setState({ toEditAppDirector: true });
   };
+
   cancelEditAppDirector = () => {
     this.setState({ toEditAppDirector: false });
   };
+
   handleEdit = vals => {
     const { dispatch } = this.props;
     dispatch({
@@ -446,6 +466,7 @@ export default class Index extends PureComponent {
       }
     });
   };
+
   handleUpDataHeader = () => {
     const { dispatch } = this.props;
     dispatch({
@@ -519,6 +540,7 @@ export default class Index extends PureComponent {
       code: ''
     });
   };
+
   handleSizeChange = e => {
     this.setState({ size: e.target.value });
   };
@@ -537,6 +559,7 @@ export default class Index extends PureComponent {
       )
     );
   };
+
   render() {
     const {
       groupDetail,
@@ -1021,7 +1044,13 @@ export default class Index extends PureComponent {
               group_id={this.getGroupId()}
             />
           )}
-          {type === 'monitor' && <Monitor teamName={teamName} regionName={regionName} groupId={groupId} />}
+          {type === 'monitor' && (
+            <Monitor
+              teamName={teamName}
+              regionName={regionName}
+              groupId={this.getGroupId()}
+            />
+          )}
         </Row>
         {guideStep === 2 &&
           this.handleNewbieGuiding({

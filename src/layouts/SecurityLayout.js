@@ -9,7 +9,7 @@ import ErrorBoundary from './ErrorBoundary';
 
 class SecurityLayout extends React.PureComponent {
   state = {
-    isReady: false,
+    isReady: false
   };
 
   componentDidMount() {
@@ -21,7 +21,7 @@ class SecurityLayout extends React.PureComponent {
           if (info) {
             this.fetchUserInfo();
           }
-        },
+        }
       });
     }
   }
@@ -33,14 +33,14 @@ class SecurityLayout extends React.PureComponent {
         type: 'user/fetchCurrent',
         callback: () => {
           this.setState({
-            isReady: true,
+            isReady: true
           });
         },
         handleError: () => {
           this.setState({
-            isReady: true,
+            isReady: true
           });
-        },
+        }
       });
     }
   };
@@ -52,7 +52,7 @@ class SecurityLayout extends React.PureComponent {
     const token = cookie.get('token');
     const isLogin = token && currentUser;
     const queryString = stringify({
-      redirect: window.location.href,
+      redirect: window.location.href
     });
     if (needLogin) {
       globalUtil.removeCookie();
@@ -73,5 +73,5 @@ class SecurityLayout extends React.PureComponent {
 export default connect(({ user, loading, global }) => ({
   currentUser: user.currentUser,
   loading: loading.models.user,
-  needLogin: global.needLogin,
+  needLogin: global.needLogin
 }))(SecurityLayout);
