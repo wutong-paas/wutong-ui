@@ -7,7 +7,8 @@
     "start": "umi dev",
     "start:no-mock": "cross-env MOCK=none umi dev",
     "build": "umi build",
-    "image": "umi build && docker build -t registry.cn-hangzhou.aliyuncs.com/goodrain/rainbond-ui:V5.2.1-pre-release .",
+    "image": "umi build && docker build -t swr.cn-southwest-2.myhuaweicloud.com/wutong/wutong-ui:v1.0.0-stable .",
+    "push": "docker push swr.cn-southwest-2.myhuaweicloud.com/wutong/wutong-ui:v1.0.0-stable",
     "site": "roadhog-api-doc static && gh-pages -d dist",
     "analyze": "cross-env ANALYZE=true roadhog build"
   },

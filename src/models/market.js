@@ -2,7 +2,7 @@ import {
   appExport,
   cancelImportApp,
   CheckWarehouseAppName,
-  createAppMarket,
+  // createAppMarket,
   createAppModel,
   createMarketAppModel,
   createTag,
@@ -15,7 +15,7 @@ import {
   fetchHelmMarkets,
   fetchHelmMarketsTab,
   fetchMarkets,
-  fetchMarketsTab,
+  // fetchMarketsTab,
   getAppMarketInfo,
   getAppModelsDetails,
   getBindingMarketsList,
@@ -128,12 +128,12 @@ export default {
         callback(response);
       }
     },
-    *createAppMarket({ payload, callback }, { call }) {
-      const response = yield call(createAppMarket, payload);
-      if (response && callback) {
-        callback(response);
-      }
-    },
+    // *createAppMarket({ payload, callback }, { call }) {
+    //   const response = yield call(createAppMarket, payload);
+    //   if (response && callback) {
+    //     callback(response);
+    //   }
+    // },
     *createMarketAppModel({ payload, callback }, { call }) {
       const response = yield call(createMarketAppModel, payload);
       if (response && callback) {
@@ -164,18 +164,18 @@ export default {
         callback(response);
       }
     },
-    *fetchMarketsTab({ payload, callback }, { call }) {
-      const response = yield call(fetchMarketsTab, payload);
-      if (response && callback) {
-        callback(response);
-      }
-    },
-    *fetchHelmMarketsTab({ payload, callback }, { call }) {
-      const response = yield call(fetchHelmMarketsTab, payload);
-      if (response && callback) {
-        callback(response);
-      }
-    },
+    // *fetchMarketsTab({ payload, callback }, { call }) {
+    //   const response = yield call(fetchMarketsTab, payload);
+    //   if (response && callback) {
+    //     callback(response);
+    //   }
+    // },
+    // *fetchHelmMarketsTab({ payload, callback }, { call }) {
+    //   const response = yield call(fetchHelmMarketsTab, payload);
+    //   if (response && callback) {
+    //     callback(response);
+    //   }
+    // },
     *fetchHelmMarkets({ payload, callback }, { call }) {
       const response = yield call(fetchHelmMarkets, payload);
       if (response && callback) {

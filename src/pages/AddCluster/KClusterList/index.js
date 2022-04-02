@@ -445,7 +445,7 @@ export default class EnterpriseClusters extends PureComponent {
             updateKubernetes={updateKubernetes}
             updateKubernetesClusterID={clusterID}
           />
-          {next && (guideStep === 3 || guideStep === 8)
+          {/*{next && (guideStep === 3 || guideStep === 8)
             ? this.handleNewbieGuiding({
                 tit: '请选择Kubernetes集群',
                 desc: '可选择已经正常运行的集群',
@@ -460,7 +460,7 @@ export default class EnterpriseClusters extends PureComponent {
                   });
                 }
               })
-            : ''}
+            : ''}*/}
           {showBuyClusterConfig && this.renderCreateClusterShow()}
           <Col style={{ textAlign: 'center', marginTop: '32px' }} span={24}>
             <Button onClick={this.preStep}>上一步</Button>

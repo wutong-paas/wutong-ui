@@ -55,25 +55,25 @@ export async function fetchMarkets(params = {}) {
     }
   );
 }
-export async function fetchMarketsTab(param) {
-  return request(
-    `${apiconfig.baseUrl}/console/enterprise/${param.enterprise_id}/cloud/markets`,
-    {
-      method: 'get',
-      params: {
-        extend: true
-      }
-    }
-  );
-}
-export async function fetchHelmMarketsTab(param) {
-  return request(
-    `${apiconfig.baseUrl}/console/proxy/enterprise-server/api/v1/enterprises/${param.enterprise_id}/appstores`,
-    {
-      method: 'get'
-    }
-  );
-}
+// export async function fetchMarketsTab(param) {
+//   return request(
+//     `${apiconfig.baseUrl}/console/enterprise/${param.enterprise_id}/cloud/markets`,
+//     {
+//       method: 'get',
+//       params: {
+//         extend: true
+//       }
+//     }
+//   );
+// }
+// export async function fetchHelmMarketsTab(param) {
+//   return request(
+//     `${apiconfig.baseUrl}/console/proxy/enterprise-server/api/v1/enterprises/${param.enterprise_id}/appstores`,
+//     {
+//       method: 'get'
+//     }
+//   );
+// }
 export async function fetchHelmMarkets(param) {
   return request(
     `${apiconfig.baseUrl}/console/enterprise/${param.enterprise_id}/helm/${param.repo_name}/apps`,
@@ -285,15 +285,15 @@ export async function postHelmAppStore(body, handleError) {
 }
 
 /* create  App  Market */
-export async function createAppMarket(body) {
-  return request(
-    `${apiconfig.baseUrl}/console/enterprise/${body.enterprise_id}/cloud/markets`,
-    {
-      method: 'post',
-      data: body
-    }
-  );
-}
+// export async function createAppMarket(body) {
+//   return request(
+//     `${apiconfig.baseUrl}/console/enterprise/${body.enterprise_id}/cloud/markets`,
+//     {
+//       method: 'post',
+//       data: body
+//     }
+//   );
+// }
 
 /* 创建本地应用 */
 export async function createAppModel(body) {
@@ -498,6 +498,7 @@ export async function getRecommendMarketAppList(body = {}) {
 }
 
 /* 获取企业开通的商店列表 */
+/*
 export async function getStoreList(
   body = {
     enterprise_id
@@ -513,6 +514,7 @@ export async function getStoreList(
     }
   );
 }
+*/
 
 /* 获取发布的应用模型列表 */
 export async function getShareModelList(body) {

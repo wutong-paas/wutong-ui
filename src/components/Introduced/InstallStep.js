@@ -239,7 +239,7 @@ export default class InstallStep extends PureComponent {
             >
               开始安装应用
             </Button>
-            <Button onClick={() => onViewInstance()}>查看应用实例</Button>
+            {/*<Button onClick={() => onViewInstance()}>查看应用实例</Button>*/}
           </p>
         ) : (
           <p style={{ textAlign: 'center', padding: '16px 0' }}>
