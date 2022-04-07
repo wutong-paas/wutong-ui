@@ -1251,11 +1251,12 @@ class Main extends PureComponent {
       {
         key: 'log',
         tab: '实时日志'
-      },
-      {
-        key: 'log2',
-        tab: '日志'
-      },
+      }
+      // ,
+      // {
+      //   key: 'log2',
+      //   tab: '日志'
+      // },
     ];
 
     if (isTelescopic) {
