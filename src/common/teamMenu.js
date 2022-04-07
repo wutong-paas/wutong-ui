@@ -64,11 +64,11 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
         path: `team/${teamName}/region/${regionName}/create`,
         authority: ['admin', 'user'],
         children: [
-          {
-            name: formatMessage({ id: 'menu.team.create.code' }),
-            path: `/code`,
-            authority: ['admin', 'user']
-          },
+          // {
+          //   name: formatMessage({ id: 'menu.team.create.code' }),
+          //   path: `/code`,
+          //   authority: ['admin', 'user'],
+          // },
           {
             name: formatMessage({ id: 'menu.team.create.image' }),
             path: `/image`,
