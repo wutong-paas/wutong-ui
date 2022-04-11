@@ -34,7 +34,7 @@ export default class Index extends PureComponent {
       componentPermissions: this.handlePermissions('queryComponentInfo')
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { dispatch } = this.props;
     const {
       appPermissions: { isAccess }

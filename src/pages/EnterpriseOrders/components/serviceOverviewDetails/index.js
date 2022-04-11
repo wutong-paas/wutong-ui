@@ -47,7 +47,7 @@ export default class ServiceOverview extends PureComponent {
       computingNewOrder: ''
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     // this.fetchEnterpriseService();
   }
   componentDidMount() {}

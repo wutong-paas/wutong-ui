@@ -51,7 +51,7 @@ export default class TcpTable extends PureComponent {
       tcpType: ''
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.load();
   }
   onPageChange = page_num => {

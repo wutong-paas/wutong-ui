@@ -265,13 +265,13 @@ export default class Enterprise extends PureComponent {
     this.props.dispatch({
       type: 'teamControl/createTeam',
       payload: values,
-      callback: (res) => {
-        const { response_data } = res
+      callback: res => {
+        const { response_data } = res;
         if (response_data && response_data.code) {
           if (response_data.code === 400) {
             notification.warning({ message: response_data.msg_show });
           } else {
-            notification.success({ message: response_data.msg_show })
+            notification.success({ message: response_data.msg_show });
           }
         }
         this.cancelCreateTeam();
@@ -866,7 +866,13 @@ export default class Enterprise extends PureComponent {
                     </Col>
                     <Col span={11} offset={1}>
                       {active_teams.map(item => {
-                        const { team_name, region, team_alias, enterprise_id, tenant_id } = item
+                        const {
+                          team_name,
+                          region,
+                          team_alias,
+                          enterprise_id,
+                          tenant_id
+                        } = item;
                         return (
                           <Card
                             hoverable

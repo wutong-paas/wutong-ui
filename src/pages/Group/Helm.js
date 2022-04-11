@@ -143,6 +143,7 @@ export default class Index extends PureComponent {
     const { dispatch } = this.props;
     dispatch({ type: 'application/clearGroupDetail' });
   }
+
   onChangeSteps = currentSteps => {
     this.setState({ currentSteps });
   };
@@ -152,9 +153,11 @@ export default class Index extends PureComponent {
       clearInterval(this.timer);
     }
   };
+
   loading = () => {
     this.fetchAppDetail(true);
   };
+
   handleError = err => {
     const { componentTimer } = this.state;
     if (!componentTimer) {
@@ -167,6 +170,7 @@ export default class Index extends PureComponent {
       });
     }
   };
+
   handleTimers = (timerName, callback, times) => {
     const { componentTimer } = this.state;
     if (!componentTimer) {
@@ -329,14 +333,17 @@ export default class Index extends PureComponent {
     form.resetFields();
     this.loadApps();
   };
+
   handleSearch = e => {
     e.preventDefault();
     this.loadApps();
   };
+
   toDelete = () => {
     this.closeComponentTimer();
     this.setState({ toDelete: true });
   };
+
   cancelDelete = (isOpen = true) => {
     this.setState({ toDelete: false });
     if (isOpen) {
@@ -348,6 +355,7 @@ export default class Index extends PureComponent {
     this.setState({ componentTimer: false });
     this.closeTimer();
   };
+
   openComponentTimer = () => {
     this.setState({ componentTimer: true }, () => {
       this.fetchAppDetailState();
@@ -400,18 +408,23 @@ export default class Index extends PureComponent {
       }
     });
   };
+
   toEdit = () => {
     this.setState({ toEdit: true });
   };
+
   cancelEdit = () => {
     this.setState({ toEdit: false });
   };
+
   handleToEditAppDirector = () => {
     this.setState({ toEditAppDirector: true });
   };
+
   cancelEditAppDirector = () => {
     this.setState({ toEditAppDirector: false });
   };
+
   handleEdit = vals => {
     const { dispatch } = this.props;
     const { team_name, group_id } = this.fetchParameter();
@@ -442,6 +455,7 @@ export default class Index extends PureComponent {
       }
     });
   };
+
   handleUpDataHeader = () => {
     const { dispatch } = this.props;
     dispatch({
@@ -504,12 +518,14 @@ export default class Index extends PureComponent {
       routerRedux.push(`${this.fetchPrefixUrl()}apps/${appID}/${target}`)
     );
   };
+
   handleJumpStore = target => {
     const { dispatch } = this.props;
     const { enterprise_id } = this.fetchParameter();
 
     dispatch(routerRedux.push(`/enterprise/${enterprise_id}/shared/${target}`));
   };
+
   beforeUpload = (file, isMessage) => {
     const fileArr = file.name.split('.');
     const { length } = fileArr;
@@ -540,6 +556,7 @@ export default class Index extends PureComponent {
     }
     return commonContent;
   };
+
   handleSubmit = type => {
     const { form } = this.props;
     const { validateFields, setFields } = form;
@@ -585,7 +602,7 @@ export default class Index extends PureComponent {
           ) {
             if (
               !Object.prototype.toString.call(overrides) ===
-              '[Object Object]' ||
+                '[Object Object]' ||
               overrides === undefined
             ) {
               overrides = {};
@@ -645,6 +662,7 @@ export default class Index extends PureComponent {
       }
     });
   };
+
   handleThird = appAlias => {
     const { dispatch } = this.props;
     dispatch(
@@ -653,6 +671,7 @@ export default class Index extends PureComponent {
       )
     );
   };
+
   handleComponent = appAlias => {
     const { dispatch } = this.props;
     dispatch(
@@ -661,6 +680,7 @@ export default class Index extends PureComponent {
       )
     );
   };
+
   handleInstallHelmApp = values => {
     const { dispatch } = this.props;
     const { team_name, group_id } = this.fetchParameter();
@@ -712,6 +732,7 @@ export default class Index extends PureComponent {
       }
     });
   };
+
   scrollToBottom = () => {
     const messagesEndRef = document.getElementById('messagesEndRef');
     if (messagesEndRef) {
@@ -719,6 +740,7 @@ export default class Index extends PureComponent {
       this.setState({ isScrollToBottom: false });
     }
   };
+
   handleOperationBtn = type => {
     const { submitLoading, errPrompt, noVersion, upDataVersion } = this.state;
     return (
@@ -779,10 +801,12 @@ export default class Index extends PureComponent {
       group_id: appID
     };
   };
+
   fetchPrefixUrl = () => {
     const { team_name, region_name } = this.fetchParameter();
     return `/team/${team_name}/region/${region_name}/`;
   };
+
   handleErrPrompt = res => {
     if (res && res.data && res.data.code) {
       const { promptMap } = this.state;
@@ -801,6 +825,7 @@ export default class Index extends PureComponent {
     this.handleAppInfoLoading();
     this.handleUpDataVersionLoading();
   };
+
   handleAppVersion = (value, isParse, isVersion) => {
     const { versions } = this.state;
     let info = {};
@@ -825,6 +850,7 @@ export default class Index extends PureComponent {
     }
     this.handleAppInfoLoading();
   };
+
   handleTemplateFile = value => {
     const { form } = this.props;
     const { setFieldsValue } = form;
@@ -849,11 +875,13 @@ export default class Index extends PureComponent {
     }
     this.handleUpDataVersionLoading();
   };
+
   handleUpDataVersionLoading = () => {
     this.setState({
       upDataVersion: false
     });
   };
+
   handleAppInfoLoading = () => {
     this.setState({
       appInfoLoading: false
@@ -1152,7 +1180,10 @@ export default class Index extends PureComponent {
                     />
                   )}
                 </div>
-                <div title={appInfo.description || currApp.note} className={styles.contentNote}>
+                <div
+                  title={appInfo.description || currApp.note}
+                  className={styles.contentNote}
+                >
                   {appInfo.description || currApp.note}
                 </div>
               </div>
@@ -1217,8 +1248,8 @@ export default class Index extends PureComponent {
                 <span>
                   {currApp.create_time
                     ? moment(currApp.create_time)
-                      .locale('zh-cn')
-                      .format('YYYY-MM-DD HH:mm:ss')
+                        .locale('zh-cn')
+                        .format('YYYY-MM-DD HH:mm:ss')
                     : '-'}
                 </span>
               </div>
@@ -1227,8 +1258,8 @@ export default class Index extends PureComponent {
                 <span>
                   {currApp.update_time
                     ? moment(currApp.update_time)
-                      .locale('zh-cn')
-                      .format('YYYY-MM-DD HH:mm:ss')
+                        .locale('zh-cn')
+                        .format('YYYY-MM-DD HH:mm:ss')
                     : '-'}
                 </span>
               </div>

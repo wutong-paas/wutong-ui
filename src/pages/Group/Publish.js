@@ -45,7 +45,7 @@ export default class AppPublishList extends PureComponent {
       selectStoreShow: false
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { currentTeamPermissionsInfo, dispatch } = this.props;
     const isShare = roleUtil.queryAppInfo(currentTeamPermissionsInfo, 'share');
     if (!isShare) {

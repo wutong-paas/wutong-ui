@@ -40,7 +40,7 @@ export default class Index extends PureComponent {
       this.getGitRepostoryInfo(rainbondInfo, type, enterprise);
     }
   };
-  componentWillUpdate(props) {
+  UNSAFE_componentWillUpdate(props) {
     this.props = props;
     this.setInfo();
   }

@@ -47,7 +47,7 @@ export default class ConfigurationDetails extends PureComponent {
       allChecked: false
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { dispatch } = this.props;
     const {
       appConfigGroupPermissions: { isCreate, isEdit }

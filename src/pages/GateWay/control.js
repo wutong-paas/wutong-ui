@@ -35,7 +35,7 @@ class Control extends Component {
       operationPermissions: this.handlePermissions('queryControlInfo'),
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { dispatch } = this.props;
     const {
       operationPermissions: { isAccess },

@@ -75,7 +75,7 @@ export default class Main extends PureComponent {
       isAppDetails: false
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.getTags();
     this.getEnterpriseTeams();
     this.getAppModelsDetails();
@@ -542,7 +542,7 @@ export default class Main extends PureComponent {
         )}
         <PageHeaderLayout
           title="应用市场管理"
-          content="应用市场支持Rainstore应用商店和Helm应用商店的对接和管理。"
+          content="企业和团队组件库管理。"
         >
           <Form onSubmit={this.handleSubmit} layout="horizontal">
             <Card

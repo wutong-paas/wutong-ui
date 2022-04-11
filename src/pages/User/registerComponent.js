@@ -5,7 +5,6 @@ import { Button, Col, Form, Input, Row } from 'antd';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
 import React, { Component } from 'react';
-import apiconfig from '../../../config/api.config';
 import userUtil from '../../utils/global';
 import wutongUtil from '../../utils/wutong';
 import styles from './Register.less';
@@ -103,7 +102,6 @@ export default class RegisterComponent extends Component {
     } = this.props;
     const { getFieldDecorator } = form;
     const firstRegist = !wutongUtil.fetchIsFirstRegist(rainbondInfo);
-    const { time } = this.state;
     const checks = message => {
       return [
         {
@@ -236,40 +234,6 @@ export default class RegisterComponent extends Component {
               autoComplete="new-password"
             />
           )}
-        </FormItem>
-        <FormItem>
-          <Row gutter={8}>
-            <Col span={16}>
-              {getFieldDecorator('captcha_code', {
-                rules: [
-                  {
-                    required: true,
-                    message: '请输入验证码！'
-                  },
-                  {
-                    min: 4,
-                    message: '请输入4位的验证码'
-                  },
-                  {
-                    max: 4,
-                    message: '请输入正确的验证码'
-                  }
-                ]
-              })(
-                <Input autoComplete="off" size="large" placeholder="验证码" />
-              )}
-            </Col>
-            <Col span={8}>
-              <img
-                onClick={this.changeTime}
-                src={`${apiconfig.baseUrl}/console/captcha?_=${time}`}
-                style={{
-                  width: '100%',
-                  height: 40
-                }}
-              />
-            </Col>
-          </Row>
         </FormItem>
         <FormItem>
           <Button

@@ -16,7 +16,7 @@ class UserLayout extends React.PureComponent {
       isRender: false
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { dispatch } = this.props;
     // 初始化 获取RainbondInfo信息
     dispatch({

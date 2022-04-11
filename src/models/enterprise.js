@@ -1,5 +1,5 @@
 import {
-  getStoreList,
+  // getStoreList,
   getShareModelList,
 } from '../services/market'
 export default {
@@ -13,12 +13,12 @@ export default {
     *fetchCurrentEnterprise({ payload }, { call, put }) {
         yield put({ type: "saveCurrentEnterprise", payload: payload });
     },
-    *fetchEnterpriseStoreList({ payload, callback }, { call, put }) {
-      const response = yield call(getStoreList, payload);
-      if (response) {
-        callback && callback(response);
-      }
-    },
+    // *fetchEnterpriseStoreList({ payload, callback }, { call, put }) {
+    //   const response = yield call(getStoreList, payload);
+    //   if (response) {
+    //     callback && callback(response);
+    //   }
+    // },
     *fetchShareModels({ payload, callback }, { call, put }) {
       const response = yield call(getShareModelList, payload);
       if (response) {

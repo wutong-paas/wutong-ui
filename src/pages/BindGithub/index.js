@@ -6,7 +6,7 @@ import globalUtil from '../../utils/global';
 export default class CreateCheck extends PureComponent {
     constructor(props) {}
 
-    componentWillMount() {
+    UNSAFE_componentWillMount() {
         var params = this.props.match.params;
         this
             .props

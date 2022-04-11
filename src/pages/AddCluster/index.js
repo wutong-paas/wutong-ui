@@ -56,7 +56,7 @@ export default class EnterpriseClusters extends PureComponent {
       initTask: {}
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { adminer } = this.state;
     const { dispatch } = this.props;
 
@@ -467,14 +467,14 @@ export default class EnterpriseClusters extends PureComponent {
                   <p>提供至少一台主机，自动完成集群的安装和接入。</p>
                 </div>
               </div>
-              {guideStep === 2 &&
+{/*              {guideStep === 2 &&
                 this.handleNewbieGuiding({
                   tit: '主机安装',
                   configName: 'hostInstall',
                   desc: '从主机开始是最常用的途径，你也可以选择其他几种方式。',
                   nextStep: 3,
                   svgPosition: { marginLeft: '58px' }
-                })}
+                })}*/}
             </Col>
             <Col span={8}>
               <div

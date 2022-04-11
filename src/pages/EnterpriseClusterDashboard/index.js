@@ -23,7 +23,7 @@ export default class EnterpriseClusters extends PureComponent {
       adminer
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { adminer } = this.state;
     const { dispatch } = this.props;
     if (!adminer) {

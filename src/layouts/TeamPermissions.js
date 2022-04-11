@@ -15,7 +15,7 @@ class TeamPermissions extends React.PureComponent {
       loading: true
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.fetchUserInfo();
   }
 

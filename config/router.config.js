@@ -25,6 +25,7 @@ export default [
       { path: '/user/third/register', component: './User/ThirdRegister' }
     ]
   },
+  // exception
   {
     path: '/exception/trigger',
     component: './Exception/triggerException'

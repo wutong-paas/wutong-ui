@@ -62,7 +62,7 @@ class Login extends Component {
       },
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { rainbondInfo, dispatch } = this.props;
     const firstRegist = !wutongUtil.fetchIsFirstRegist(rainbondInfo);
     // first user, to register admin

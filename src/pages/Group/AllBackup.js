@@ -114,7 +114,7 @@ class Index extends React.Component {
       group_id: ''
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.fetchAllBackup();
   }
   fetchAllBackup = () => {

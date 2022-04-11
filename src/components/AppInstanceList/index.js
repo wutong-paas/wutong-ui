@@ -12,7 +12,7 @@ class InstanceList extends PureComponent {
       list: this.props.list
     };
   }
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.list !== this.props.list) {
       this.setState({
         list: nextProps.list

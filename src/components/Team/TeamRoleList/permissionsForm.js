@@ -34,7 +34,7 @@ export default class RoleList extends PureComponent {
       this.handleRoleName(rolesID, roleList);
     }
   }
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (
       (this.props.rolesID !== nextProps.rolesID && nextProps.rolesID) ||
       (this.props.isAddRole !== nextProps.isAddRole && !nextProps.isAddRole)

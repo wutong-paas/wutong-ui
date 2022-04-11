@@ -14,7 +14,7 @@ class KvInput extends Component {
     const { values } = this.state;
     this.setState({ values: values.concat({ key: '', value: '' }) });
   };
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if ('value' in nextProps) {
       const { value } = nextProps;
       this.initFromProps(value);

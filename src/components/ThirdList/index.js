@@ -54,7 +54,7 @@ class Index extends React.Component {
     this.handleCodeWarehouseInfo(this.props);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.type !== this.props.type) {
       this.setState({ visible: false, search: '' }, () => {
         this.handleCodeWarehouseInfo(nextProps);

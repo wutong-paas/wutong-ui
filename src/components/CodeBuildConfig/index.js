@@ -57,7 +57,7 @@ class CodeBuildConfig extends PureComponent {
     this.setArr(this.props);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (
       nextProps.runtimeInfo !== this.props.runtimeInfo ||
       nextProps.languageType !== this.state.languageType

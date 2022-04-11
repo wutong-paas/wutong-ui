@@ -63,7 +63,7 @@ export default class Index extends PureComponent {
       isShowModal: true
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     // eslint-disable-next-line func-names
     window.addEventListener('message', res => {
       if (res.data && res.data.accessKey) {

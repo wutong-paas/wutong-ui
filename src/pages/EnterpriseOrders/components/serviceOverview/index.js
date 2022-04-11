@@ -16,7 +16,7 @@ export default class ServiceOverview extends PureComponent {
     this.state = { loading: true };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     // this.fetchEnterpriseService();
   }
   handlRefresh = () => {

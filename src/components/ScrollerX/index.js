@@ -10,7 +10,7 @@ export default class Index extends PureComponent {
     this.listener();
     this.addListener();
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.removeListener();
   }
   listener = () => {

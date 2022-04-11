@@ -73,7 +73,7 @@ export default class EnterpriseClusters extends PureComponent {
       isEnterpriseEdition: wutongUtil.isEnterpriseEdition(rainbondInfo)
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { adminer } = this.state;
     const { dispatch } = this.props;
     if (!adminer) {
@@ -833,16 +833,18 @@ export default class EnterpriseClusters extends PureComponent {
         clusters &&
         clusters.length &&
         clusters[0].status === '1' ? (
-          <InstallStep
+          /*<InstallStep
             onCancel={this.handleClusterIntroduced}
             isCluster
             eid={eid}
             onStartInstall={this.onStartInstall}
             onViewInstance={this.onViewInstance}
-          />
+          />*/
+          ''
         ) : (
           ''
-        )}
+        )
+        }
         <Row style={{ marginBottom: '20px' }}>
           <Col span={24} style={{ textAlign: 'right' }}>
             <Link to={`/enterprise/${eid}/addCluster`}>
@@ -856,7 +858,7 @@ export default class EnterpriseClusters extends PureComponent {
             >
               <Icon type="reload" />
             </Button>
-            {guideStep === 1 &&
+{/*            {guideStep === 1 &&
               this.props.novices &&
               wutongUtil.handleNewbie(this.props.novices, 'addCluster') &&
               this.handleNewbieGuiding({
@@ -867,7 +869,7 @@ export default class EnterpriseClusters extends PureComponent {
                 isSuccess: false,
                 conPosition: { right: 0, bottom: '-180px' },
                 svgPosition: { right: '50px', marginTop: '-11px' }
-              })}
+              })}*/}
           </Col>
         </Row>
         <Card>

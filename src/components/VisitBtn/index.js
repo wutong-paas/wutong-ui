@@ -46,7 +46,7 @@ export default class Index extends PureComponent {
     this.fetchVisitInfo();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { timers: newTimers } = nextProps;
     const { timers } = this.props;
     if (newTimers !== timers) {

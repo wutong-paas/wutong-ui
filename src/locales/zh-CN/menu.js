@@ -1,3 +1,4 @@
+// 'menu.team.create.code': '基于源码创建组件',
 export default {
   'menu.enterprise.dashboard': '总览',
   'menu.enterprise.share': '应用市场',
@@ -5,7 +6,6 @@ export default {
   'menu.enterprise.setting': '设置',
   'menu.team.dashboard': '总览',
   'menu.team.create': '新增',
-  'menu.team.create.code': '基于源码创建组件',
   'menu.team.create.image': '基于镜像创建组件',
   'menu.team.create.market': '基于应用市场创建组件',
   'menu.team.create.third': '创建第三方组件',

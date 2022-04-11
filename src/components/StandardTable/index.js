@@ -10,7 +10,7 @@ class StandardTable extends PureComponent {
     totalCallNo: 0
   };
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     // clean state
     if (nextProps.selectedRows.length === 0) {
       this.setState({

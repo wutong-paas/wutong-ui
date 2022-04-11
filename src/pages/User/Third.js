@@ -23,7 +23,7 @@ export default class ThirdLogin extends Component {
     };
   }
   // eslint-disable-next-line consistent-return
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const code = wutongUtil.OauthParameter('code');
     const service_id = wutongUtil.OauthParameter('service_id');
     const { dispatch } = this.props;

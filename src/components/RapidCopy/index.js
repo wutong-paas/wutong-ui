@@ -259,6 +259,7 @@ export default class Index extends PureComponent {
         change: { build_source: { version: versions } }
       };
       arr.push(objs);
+      return objs;
     });
     obj.services = arr;
     dispatch({

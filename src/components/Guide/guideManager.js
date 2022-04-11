@@ -11,7 +11,7 @@ class GuideManager extends PureComponent {
             show: true
         }
     }
-    componentWillMount(){
+    UNSAFE_componentWillMount(){
         try{
             var task =  localStorage.getItem('goodrain_task');
             if(task){

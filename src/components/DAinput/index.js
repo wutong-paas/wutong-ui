@@ -12,7 +12,7 @@ class DAinput extends Component {
     this.initFromProps();
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if ('value' in nextProps) {
       const { value } = nextProps;
       this.initFromProps(value);

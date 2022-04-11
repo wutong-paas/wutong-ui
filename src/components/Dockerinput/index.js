@@ -14,7 +14,7 @@ class Parameterinput extends Component {
         var values = this.state.values;
         this.setState({ values: values.concat({ key: '', value: '' }) })
     }
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         if (nextProps.editInfo.length !== this.props.editInfo.length) {
             this.initFromProps(nextProps.editInfo)
         }

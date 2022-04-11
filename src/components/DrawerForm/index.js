@@ -62,7 +62,7 @@ class DrawerForm extends PureComponent {
       )
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     this.heandleEditInfo(this.props);
   }
 

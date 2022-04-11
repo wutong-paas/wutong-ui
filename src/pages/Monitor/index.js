@@ -2,36 +2,30 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable react/sort-comp */
 /* eslint-disable no-underscore-dangle */
-import {
-  Collapse,
-  Select,
-  Row,
-  Col,
-  Table
-} from 'antd'
-import { connect } from 'dva'
-import React, { PureComponent } from 'react'
-import PageHeaderLayout from '../../layouts/PageHeaderLayout'
-import AreaChart from './AreaChart'
-import styles from './index.less'
-import cookie from '../../utils/cookie'
+import { Collapse, Select, Row, Col, Table } from 'antd';
+import { connect } from 'dva';
+import React, { PureComponent } from 'react';
+import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import AreaChart from './AreaChart';
+import styles from './index.less';
+import cookie from '../../utils/cookie';
 
-import CPUQuotaColumns from './columns/CPUQuotaColumns'
-import memoryQuotaColumns from './columns/memoryQuotaColumns'
-import networkQuotaColumns from './columns/networkQuotaColumns'
+import CPUQuotaColumns from './columns/CPUQuotaColumns';
+import memoryQuotaColumns from './columns/memoryQuotaColumns';
+import networkQuotaColumns from './columns/networkQuotaColumns';
 
-import configOfCPUUsage from './config/configOfCPUUsage'
-import configOfMemoryUsage from './config/configOfMemoryUsage'
+import configOfCPUUsage from './config/configOfCPUUsage';
+import configOfMemoryUsage from './config/configOfMemoryUsage';
+import { number } from 'prop-types';
 
-const { Panel } = Collapse
+const { Panel } = Collapse;
 
 @connect(({ global }) => ({
   enterprise: global.enterprise
 }))
-
 export default class Monitor extends PureComponent {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       headLinesData: null,
       CPUQuotaData: null,
@@ -42,47 +36,47 @@ export default class Monitor extends PureComponent {
       CPUQuotaLoading: true,
       memoryQuotaLoading: true,
       networkQuotaLoading: true
-    }
+    };
   }
-  
+
   componentDidMount() {
-    this.initData()
+    this.initData();
     this.rollPollInterval = setInterval(() => {
-      this.initData()
-    }, 10000)
+      this.initData();
+    }, 10000);
   }
 
   componentWillUnmount() {
-    clearInterval(this.rollPollInterval)
+    clearInterval(this.rollPollInterval);
   }
 
   initData = () => {
-    this.getSpecialItemData('headLines')
-    this.getSpecialItemData('CPUQuota')
-    this.getSpecialItemData('memoryQuota')
-    this.getSpecialItemData('networkQuota')
+    this.getSpecialItemData('headLines');
+    this.getSpecialItemData('CPUQuota');
+    this.getSpecialItemData('memoryQuota');
+    this.getSpecialItemData('networkQuota');
 
-    this.getChartItemData('CPUUsage')
-    this.getChartItemData('memoryUsage')
-  }
+    this.getChartItemData('CPUUsage');
+    this.getChartItemData('memoryUsage');
+  };
 
-  getSpecialItemData = (itemType) => {
-    const { dispatch } = this.props
-    const { teamName, regionName } = this.props.match.params
-    const enterprise_id = cookie.get('enterprise_id')
-    const start = this.getTimeBySeconds()
-    var type = ''
+  getSpecialItemData = itemType => {
+    const { dispatch } = this.props;
+    const { teamName, regionName } = this.props.match.params;
+    const enterprise_id = cookie.get('enterprise_id');
+    const start = this.getTimeBySeconds();
+    let type = '';
 
     if (itemType === 'headLines') {
-      type = 'region/headlinesDataGet'
+      type = 'region/headlinesDataGet';
     } else if (itemType === 'CPUQuota') {
-      type = 'region/CPUQuotaDataGet'
+      type = 'region/CPUQuotaDataGet';
     } else if (itemType === 'memoryQuota') {
-      type = 'region/memoryQuotaDataGet'
+      type = 'region/memoryQuotaDataGet';
     } else if (itemType === 'networkQuota') {
-      type = 'region/networkQuotaDataGet'
+      type = 'region/networkQuotaDataGet';
     }
-    
+
     dispatch({
       type,
       payload: {
@@ -93,46 +87,45 @@ export default class Monitor extends PureComponent {
       },
       callback: res => {
         if (res && res.status_code === 200) {
-          const result = res.response_data.result
+          const { result } = res.response_data;
 
           if (itemType === 'headLines') {
             this.setState({
               headLinesData: result
-            })
+            });
           } else if (itemType === 'CPUQuota') {
             this.setState({
               CPUQuotaData: result,
               CPUQuotaLoading: false
-            })
+            });
           } else if (itemType === 'memoryQuota') {
             this.setState({
               memoryQuotaData: result,
               memoryQuotaLoading: false
-            })
+            });
           } else if (itemType === 'networkQuota') {
             this.setState({
               networkQuotaData: result,
               networkQuotaLoading: false
-            })
+            });
           }
         }
       }
-    })
+    });
+  };
 
-  }
-
-  getChartItemData = (itemType) => {
-    const { dispatch } = this.props
-    const { teamName, regionName } = this.props.match.params
-    const enterprise_id = cookie.get('enterprise_id')
-    const end = this.getTimeBySeconds()
-    const start = end - 3600
-    var type = ''
+  getChartItemData = itemType => {
+    const { dispatch } = this.props;
+    const { teamName, regionName } = this.props.match.params;
+    const enterprise_id = cookie.get('enterprise_id');
+    const end = this.getTimeBySeconds();
+    const start = end - 3600;
+    let type = '';
 
     if (itemType === 'CPUUsage') {
-      type = 'region/CPUUsageDataGet'
+      type = 'region/CPUUsageDataGet';
     } else if (itemType === 'memoryUsage') {
-      type = 'region/memoryUsageDataGet'
+      type = 'region/memoryUsageDataGet';
     }
 
     dispatch({
@@ -147,43 +140,53 @@ export default class Monitor extends PureComponent {
       },
       callback: res => {
         if (res && res.status_code === 200) {
-          const result = res.response_data.result
+          const { result } = res.response_data;
 
           result.forEach(item => {
             if (item.value === 'NaN') {
-              item.value = null
+              item.value = null;
             }
-          })
+          });
           if (itemType === 'CPUUsage') {
             this.setState({
               CPUUsageData: result
-            })
+            });
           } else if (itemType === 'memoryUsage') {
             this.setState({
               memoryUsageData: result
-            })
+            });
           }
-          
         }
       }
-    })
-  }
+    });
+  };
 
   getTimeBySeconds = () => {
-    return parseInt(Date.parse(new Date()).toString().substr(0, 10))
-  }
+    return parseInt(
+      Date.parse(new Date())
+        .toString()
+        .slice(0, 10),
+      // .substr(0, 10),
+      number
+    );
+  };
 
   generateTableJsx = (dataSource, columns, loading) => {
     return (
-      <Table scroll={{ x: true }} style={{ margin: '10px 0 30px' }} dataSource={dataSource} columns={columns} loading={loading} pagination={false} />
-    )
-  }
+      <Table
+        scroll={{ x: true }}
+        style={{ margin: '10px 0 30px' }}
+        dataSource={dataSource}
+        columns={columns}
+        loading={loading}
+        pagination={false}
+      />
+    );
+  };
 
   generateAreaChartJsx = (metaData, config) => {
-    return (
-      <AreaChart metaData={metaData} scale={config.scale}></AreaChart>
-    )
-  }
+    return <AreaChart metaData={metaData} scale={config.scale} />;
+  };
 
   render() {
     const {
@@ -196,51 +199,85 @@ export default class Monitor extends PureComponent {
       CPUQuotaLoading,
       memoryQuotaLoading,
       networkQuotaLoading
-    } = this.state
-  
+    } = this.state;
+
     return (
-      <PageHeaderLayout
-        title="监控"
-        content="命名空间下监控指标"
-      >
+      <PageHeaderLayout title="监控" content="命名空间下监控指标">
         <Collapse
           bordered={false}
           defaultActiveKey={['1', '2', '3', '4', '5', '6']}
           className="site-collapse-custom-collapse"
         >
-          <Panel header="Headlines" key="1" className={styles['site-collapse-custom-panel']}>
+          <Panel
+            header="Headlines"
+            key="1"
+            className={styles['site-collapse-custom-panel']}
+          >
             <Row>
-              { 
-                headLinesData && headLinesData.map((item, index) => {
+              {headLinesData &&
+                headLinesData.map(item => {
                   return (
                     <Col span={6} key={item.key}>
                       <div className={styles.headLinesBox}>
                         <div className={styles.headLinesBoxKey}>{item.key}</div>
-                        <div className={styles.headLinesBoxValue}>{(item.value * 100).toFixed(1) + '%'}</div>
+                        <div className={styles.headLinesBoxValue}>
+                          {(item.value * 100).toFixed(1) + '%'}
+                        </div>
                       </div>
                     </Col>
-                  )
-                })
-              }
+                  );
+                })}
             </Row>
           </Panel>
-          <Panel header="CPU Usage" key="2" className="site-collapse-custom-panel">
+          <Panel
+            header="CPU Usage"
+            key="2"
+            className="site-collapse-custom-panel"
+          >
             {this.generateAreaChartJsx(CPUUsageData, configOfCPUUsage)}
           </Panel>
-          <Panel header="CPU Quota" key="3" className="site-collapse-custom-panel">
-            {this.generateTableJsx(CPUQuotaData, CPUQuotaColumns, CPUQuotaLoading)}
+          <Panel
+            header="CPU Quota"
+            key="3"
+            className="site-collapse-custom-panel"
+          >
+            {this.generateTableJsx(
+              CPUQuotaData,
+              CPUQuotaColumns,
+              CPUQuotaLoading
+            )}
           </Panel>
-          <Panel header="Memory Usage" key="4" className="site-collapse-custom-panel">
+          <Panel
+            header="Memory Usage"
+            key="4"
+            className="site-collapse-custom-panel"
+          >
             {this.generateAreaChartJsx(memoryUsageData, configOfMemoryUsage)}
           </Panel>
-          <Panel header="Memory Quota" key="5" className="site-collapse-custom-panel">
-            {this.generateTableJsx(memoryQuotaData, memoryQuotaColumns, memoryQuotaLoading)}
+          <Panel
+            header="Memory Quota"
+            key="5"
+            className="site-collapse-custom-panel"
+          >
+            {this.generateTableJsx(
+              memoryQuotaData,
+              memoryQuotaColumns,
+              memoryQuotaLoading
+            )}
           </Panel>
-          <Panel header="Current Network Usage" key="6" className="site-collapse-custom-panel">
-            {this.generateTableJsx(networkQuotaData, networkQuotaColumns, networkQuotaLoading)}
+          <Panel
+            header="Current Network Usage"
+            key="6"
+            className="site-collapse-custom-panel"
+          >
+            {this.generateTableJsx(
+              networkQuotaData,
+              networkQuotaColumns,
+              networkQuotaLoading
+            )}
           </Panel>
         </Collapse>
       </PageHeaderLayout>
-    )
+    );
   }
 }

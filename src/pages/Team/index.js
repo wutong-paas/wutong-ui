@@ -45,7 +45,7 @@ export default class Index extends PureComponent {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { dispatch } = this.props;
     const {
       eventPermissions,

@@ -115,7 +115,7 @@ export async function deleteEnterpriseCluster(params, handleError) {
 /** 单线集群监控 */
 export async function singleClusterDashboard(params) {
   return request(
-    `${apiconfig.oprationUrl}/monitor/queryRange.json`,
+    `${apiconfig.operationUrl}/monitor/queryRange.json`,
     {
       method: 'post',
       data: {
@@ -134,7 +134,7 @@ export async function singleClusterDashboard(params) {
 /** LoadAverage集群监控 */
 export async function loadAverageClusterDashboard(params) {
   return request(
-    `${apiconfig.oprationUrl}/monitor/extra/load_average.json`,
+    `${apiconfig.operationUrl}/monitor/extra/load_average.json`,
     {
       method: 'post',
       data: {
@@ -153,7 +153,7 @@ export async function loadAverageClusterDashboard(params) {
 /** DiskIO集群监控 */
 export async function diskIOClusterDashboard(params) {
   return request(
-    `${apiconfig.oprationUrl}/monitor/extra/disk_io.json`,
+    `${apiconfig.operationUrl}/monitor/extra/disk_io.json`,
     {
       method: 'post',
       data: {
@@ -172,7 +172,7 @@ export async function diskIOClusterDashboard(params) {
 /** networkTraffic集群监控 */
 export async function networkTrafficClusterDashboard(params) {
   return request(
-    `${apiconfig.oprationUrl}/monitor/extra/network_traffic.json`,
+    `${apiconfig.operationUrl}/monitor/extra/network_traffic.json`,
     {
       method: 'post',
       data: {
@@ -191,7 +191,7 @@ export async function networkTrafficClusterDashboard(params) {
 /** networkIO集群监控 */
 export async function networkIOClusterDashboard(params) {
   return request(
-    `${apiconfig.oprationUrl}/monitor/extra/network_io.json`,
+    `${apiconfig.operationUrl}/monitor/extra/network_io.json`,
     {
       method: 'post',
       data: {
@@ -210,7 +210,7 @@ export async function networkIOClusterDashboard(params) {
 /** ControllerManagerQueueDepth集群监控 */
 export async function controllerManagerQueueDepthClusterDashboard(params) {
   return request(
-    `${apiconfig.oprationUrl}/monitor/extra/controller_manager.json`,
+    `${apiconfig.operationUrl}/monitor/extra/controller_manager.json`,
     {
       method: 'post',
       data: {
@@ -229,7 +229,7 @@ export async function controllerManagerQueueDepthClusterDashboard(params) {
 /** ingressControllerConnections集群监控 */
 export async function ingressControllerConnectionsClusterDashboard(params) {
   return request(
-    `${apiconfig.oprationUrl}/monitor/extra/ingress_controller_connection.json`,
+    `${apiconfig.operationUrl}/monitor/extra/ingress_controller_connection.json`,
     {
       method: 'post',
       data: {
@@ -248,7 +248,7 @@ export async function ingressControllerConnectionsClusterDashboard(params) {
 /** 监控页签下获取Headlines数据 */
 export async function headlinesDataGet(params) {
   return request(
-    `${apiconfig.oprationUrl}/monitor/extra/headlines.json`,
+    `${apiconfig.operationUrl}/monitor/extra/headlines.json`,
     {
       method: 'post',
       data: {
@@ -265,7 +265,7 @@ export async function headlinesDataGet(params) {
 /** 监控页签下获取CPUUsage数据 */
 export async function CPUUsageDataGet(params) {
   return request(
-    `${apiconfig.oprationUrl}/monitor/extra/cpu_usage.json`,
+    `${apiconfig.operationUrl}/monitor/extra/cpu_usage.json`,
     {
       method: 'post',
       data: {
@@ -284,7 +284,7 @@ export async function CPUUsageDataGet(params) {
 /** 监控页签下获取CPUQuota数据 */
 export async function CPUQuotaDataGet(params) {
   return request(
-    `${apiconfig.oprationUrl}/monitor/extra/cpu_quota.json`,
+    `${apiconfig.operationUrl}/monitor/extra/cpu_quota.json`,
     {
       method: 'post',
       data: {
@@ -301,7 +301,7 @@ export async function CPUQuotaDataGet(params) {
 /** 监控页签下获取MemoryUsage数据 */
 export async function memoryUsageDataGet(params) {
   return request(
-    `${apiconfig.oprationUrl}/monitor/extra/memory_usage.json`,
+    `${apiconfig.operationUrl}/monitor/extra/memory_usage.json`,
     {
       method: 'post',
       data: {
@@ -320,7 +320,7 @@ export async function memoryUsageDataGet(params) {
 /** 监控页签下获取MemoryQuota数据 */
 export async function memoryQuotaDataGet(params) {
   return request(
-    `${apiconfig.oprationUrl}/monitor/extra/memory_quota.json`,
+    `${apiconfig.operationUrl}/monitor/extra/memory_quota.json`,
     {
       method: 'post',
       data: {
@@ -337,7 +337,7 @@ export async function memoryQuotaDataGet(params) {
 /** 监控页签下获取NetworkQuotaDataGet数据 */
 export async function networkQuotaDataGet(params) {
   return request(
-    `${apiconfig.oprationUrl}/monitor/extra/network_quota.json`,
+    `${apiconfig.operationUrl}/monitor/extra/network_quota.json`,
     {
       method: 'post',
       data: {

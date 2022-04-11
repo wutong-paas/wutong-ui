@@ -26,7 +26,7 @@ class CodeMirrorForm extends PureComponent {
     };
     this.CodeMirrorRef = '';
   }
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { name, data, setFieldsValue } = this.props;
     const { CodeMirrorRef } = this;
     if (data !== nextProps.data && CodeMirrorRef) {

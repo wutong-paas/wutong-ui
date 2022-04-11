@@ -514,7 +514,7 @@ class Index extends PureComponent {
       operationPermissions: this.handlePermissions('queryPluginInfo')
     };
   }
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { dispatch } = this.props;
     const {
       operationPermissions: { isAccess }

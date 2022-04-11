@@ -25,7 +25,7 @@ export default class Configuration extends PureComponent {
     };
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     const { dispatch } = this.props;
     const {
       appConfigGroupPermissions: { isAccess }
