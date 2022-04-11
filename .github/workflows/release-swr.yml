@@ -38,6 +38,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           platforms: linux/amd64,linux/arm64
+          file: Dockerfile.multiarch
           push: true
           tags: swr.cn-southwest-2.myhuaweicloud.com/wutong/wutong-ui:v1.0.0-stable
       

@@ -1,0 +1,9 @@
+.git
+node_modules/
+dist/
+
+# vscode configration
+.vscode
+.idea
+
+package-lock.json
