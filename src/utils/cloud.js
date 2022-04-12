@@ -651,7 +651,7 @@ const cloud = {
       steps.push(step);
       if (
         item.status === 'failure' ||
-        (item.type === 'InitRainbondRegion' && item.status === 'success')
+        (item.type === 'InitWutongRegionRegionConfig' && item.status === 'success')
       ) {
         complete = true;
       }
