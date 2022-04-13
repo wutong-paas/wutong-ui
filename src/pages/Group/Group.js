@@ -944,7 +944,7 @@ export default class Index extends PureComponent {
                   列表
                 </a>
               )}
-              <a
+              {/*<a
                 onClick={() => {
                   this.changeType('monitor');
                 }}
@@ -954,7 +954,7 @@ export default class Index extends PureComponent {
                 }}
               >
                 监控
-              </a>
+              </a>*/}
             </Col>
             <Col span={4} style={{ textAlign: 'right' }}>
               {isComponentCreate && isComponentConstruct && (

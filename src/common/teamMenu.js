@@ -41,14 +41,14 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
     // 角色
     const roles = results('teamRole', 'describe');
 
-    if (clusters) {
+    /*if (clusters) {
       addMenuArr({
         name: formatMessage({ id: 'menu.app.monitor' }),
         icon: 'monitor',
         path: `team/${teamName}/region/${regionName}/monitor`,
         authority: ['admin', 'user']
       });
-    }
+    }*/
     if (appView) {
       addMenuArr({
         name: formatMessage({ id: 'menu.team.app' }),
