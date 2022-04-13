@@ -538,14 +538,16 @@ export default class EnterpriseClusters extends PureComponent {
       {
         title: '名称',
         dataIndex: 'region_alias',
-        align: 'center',
+        align: 'center'
+        /*,
         render: (val, row) => {
           return (
-            <Link to={`/enterprise/${eid}/clusters/${row.region_id}/dashboard`}>
+            /!*<Link to={`/enterprise/${eid}/clusters/${row.region_id}/dashboard`}>
               {val}
-            </Link>
+            </Link>*!/
+            <span>{val}</span>
           );
-        }
+        }*/
       },
       {
         title: '类型',

@@ -7,8 +7,9 @@
     "start": "umi dev",
     "start:no-mock": "cross-env MOCK=none umi dev",
     "build": "umi build",
-    "image": "umi build && docker build -t swr.cn-southwest-2.myhuaweicloud.com/wutong/wutong-ui:v1.0.0-stable .",
+    "image": "docker build -t swr.cn-southwest-2.myhuaweicloud.com/wutong/wutong-ui:v1.0.0-stable .",
     "push": "docker push swr.cn-southwest-2.myhuaweicloud.com/wutong/wutong-ui:v1.0.0-stable",
+    "push-console": "docker push swr.cn-southwest-2.myhuaweicloud.com/wutong/wutong-console:v1.0.0-stable",
     "site": "roadhog-api-doc static && gh-pages -d dist",
     "analyze": "cross-env ANALYZE=true roadhog build"
   },

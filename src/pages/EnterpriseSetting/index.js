@@ -58,11 +58,12 @@ export default class EnterpriseSetting extends PureComponent {
               <Management {...this.props} />
             </TabPane>
           )}
-          {adminer && (
+          {/*todo 数据备份功能*/}
+          {/*{adminer && (
             <TabPane tab={<div>数据备份</div>} key="backup">
               <BackupManage {...this.props} />
             </TabPane>
-          )}
+          )}*/}
         </Tabs>
       </PageHeaderLayout>
     );
