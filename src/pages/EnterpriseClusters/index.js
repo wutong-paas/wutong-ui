@@ -736,12 +736,13 @@ export default class EnterpriseClusters extends PureComponent {
               }}
             >
               资源限额
-            </a>,
+            </a>
+            /*,
             <Link
             to={`/enterprise/${eid}/ClusterDashboard/${item.enterprise_id}/${item.region_name}`}
           >
             监控
-          </Link>
+          </Link>*/
 
           ];
           if (item.provider === 'rke') {
