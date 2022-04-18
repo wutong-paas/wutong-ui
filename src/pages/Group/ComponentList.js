@@ -47,7 +47,7 @@ export default class ComponentList extends Component {
       apps: [],
       current: 1,
       total: 0,
-      pageSize: 10,
+      pageSize: 20,
       moveGroupShow: false,
       batchDeleteApps: [],
       batchDeleteShow: false,
@@ -510,7 +510,7 @@ export default class ComponentList extends Component {
         customMethods: this.handleBatchDelete
       }
     ];
-    
+
     const menu = (
       <Menu>
         {customBox.map(item => {
