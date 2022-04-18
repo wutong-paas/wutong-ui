@@ -183,7 +183,7 @@ class EnvironmentVariable extends React.Component {
       loading: true,
       env_name: '',
       page: 1,
-      page_size: 5,
+      page_size: 20,
       total: 0,
       editingID: '',
       innerEnvsList: [],
@@ -736,7 +736,7 @@ class EnvironmentVariable extends React.Component {
                   total={Number(total)}
                   defaultCurrent={1}
                   onChange={this.onPageChange}
-                  pageSizeOptions={['5', '10', '20', '50']}
+                  pageSizeOptions={['20', '50', '80', '100']}
                   onShowSizeChange={this.onShowSizeChange}
                 />
               </div>
