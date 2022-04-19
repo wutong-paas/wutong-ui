@@ -1289,18 +1289,19 @@ export default class EnterpriseShared extends PureComponent {
           </a>
         </Menu.Item>
       );
-      const exportOperation = info &&
-        info.versions_info &&
-        info.versions_info.length > 0 && (
-          <Menu.Item>
-            <ExportOperation app={info} eid={eid} />
-          </Menu.Item>
-        );
+      // const exportOperation = info &&
+      //   info.versions_info &&
+      //   info.versions_info.length > 0 && (
+      //     <Menu.Item>
+      //       <ExportOperation app={info} eid={eid} />
+      //     </Menu.Item>
+      //   );
 
-      if (exportOperation || editorApp || delApp) {
+      if (/*exportOperation ||*/ editorApp || delApp) {
         return (
           <Menu>
-            {isExportApp && exportOperation}
+            {/*todo 应用模版导出*/}
+            {/*{isExportApp && exportOperation}*/}
             {editorApp}
             {delApp}
           </Menu>
@@ -1326,11 +1327,12 @@ export default class EnterpriseShared extends PureComponent {
 
     const operation = (
       <Col span={5} style={rightStyle} className={styles.btns}>
-        {isImportApp && (
+        {/* todo */}
+        {/*{isImportApp && (
           <Button style={{ margin: '0 14px 0 10px' }}>
             <Link to={`/enterprise/${eid}/shared/import`}>离线导入</Link>
           </Button>
-        )}
+        )}*/}
         {isCreateApp && (
           <Button type="primary" onClick={this.handleOpenCreateAppModel}>
             创建应用模版
