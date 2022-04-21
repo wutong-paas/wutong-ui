@@ -1,10 +1,20 @@
 FROM --platform=$BUILDPLATFORM node:12 as builder
+ENV JQ_VERSION=1.6
+RUN wget --no-check-certificate https://github.com/stedolan/jq/releases/download/jq-${JQ_VERSION}/jq-linux64 -O /tmp/jq-linux64
+RUN cp /tmp/jq-linux64 /usr/bin/jq
+RUN chmod +x /usr/bin/jq
+
 WORKDIR /app
 COPY . .
-
+RUN jq 'to_entries | map_values({ (.key) : ("$" + .key) }) | reduce .[] as $item ({}; . + $item)' ./config/config.json > ./config/config.tmp.json && mv ./config/config.tmp.json ./config/config.json
 RUN yarn install && yarn run build
 
 FROM --platform=$TARGETPLATFORM  nginx:latest
-COPY --from=builder /app/dist/  /usr/share/nginx/html/
+COPY ./start-ui.sh /usr/bin/start-ui.sh
+RUN chmod +x /usr/bin/start-ui.sh
+WORKDIR /usr/share/nginx/html
+COPY --from=builder /app/dist/ .
+ENTRYPOINT [ "start-ui.sh" ]
 
-CMD ["/bin/bash", "-c", "sed -i \"s@<html@<html base_url=\"$BASE_URL\" operation_url=\"$OPERATION_URL\" log_url=\"$LOG_URL\" upload_url=\"$UPLOAD_URL\" @\" /usr/share/nginx/html/index.html; nginx -g \"daemon off;\""]
+# COPY --from=builder /app/dist/  /usr/share/nginx/html/
+# CMD ["/bin/bash", "-c", "sed -i \"s@<html@<html base_url=\"$BASE_URL\" operation_url=\"$OPERATION_URL\" log_url=\"$LOG_URL\" upload_url=\"$UPLOAD_URL\" @\" /usr/share/nginx/html/index.html; nginx -g \"daemon off;\""]
