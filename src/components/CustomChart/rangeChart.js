@@ -101,7 +101,10 @@ export default class RangeChart extends PureComponent {
       step: Math.ceil((end - start) / 100) || 15,
       teamName: globalUtil.getCurrTeamName(),
       disable_auto_label: !!(
-        type === 'containerNetR' || type === 'containerNetT'
+        type === 'containerMem' ||
+        type === 'containerCpu' ||
+        type === 'containerNetR' ||
+        type === 'containerNetT'
       )
     };
   };
