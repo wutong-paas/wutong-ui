@@ -136,7 +136,7 @@ export default class Index extends PureComponent {
             <Link
               to={`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/components/${
                 appDetail.service.service_alias
-              }/plugin`}
+              }/plugin/service_id/${appDetail.service.service_id}`}
             >
               去开通
             </Link>
