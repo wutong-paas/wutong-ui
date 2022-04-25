@@ -122,10 +122,12 @@ export default class ChartTitle extends PureComponent {
       baseInfo,
       serviceId = '',
       RangeData = [],
-      appAlias = ''
+      appAlias = '',
+      groupDetail
     } = this.props;
     const { start, end, isLoading, isRender } = this.state;
     const parameter = {
+      groupDetail,
       moduleName,
       start,
       end,
@@ -134,7 +136,6 @@ export default class ChartTitle extends PureComponent {
       baseInfo,
       appAlias
     };
-
     const SortableItem = SortableElement(({ value }) => {
       const { title, promql, sequence, ID } = value;
       return (

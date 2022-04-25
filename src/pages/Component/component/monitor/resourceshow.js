@@ -6,6 +6,7 @@ export default class ResourceShow extends PureComponent {
     return (
       <Fragment>
         <CustomChart
+          {...this.props}
           RangeData={[
             'containerMem',
             'containerCpu',

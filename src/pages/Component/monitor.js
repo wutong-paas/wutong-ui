@@ -19,7 +19,7 @@ const ButtonGroup = Button.Group;
   null,
   null,
   {
-    withRef: true,
+    withRef: true
   }
 )
 export default class Index extends PureComponent {
@@ -28,7 +28,7 @@ export default class Index extends PureComponent {
     this.state = {
       type: 'now',
       showMenu: 'pm',
-      anaPlugins: null,
+      anaPlugins: null
     };
   }
   UNSAFE_componentWillMount() {
@@ -44,12 +44,12 @@ export default class Index extends PureComponent {
       type: 'appControl/getAnalyzePlugins',
       payload: {
         team_name: globalUtil.getCurrTeamName(),
-        app_alias: this.props.appAlias,
+        app_alias: this.props.appAlias
       },
       callback: data => {
         const relist = (data && data.list) || [];
         this.setState({ anaPlugins: relist });
-      },
+      }
     });
   }
 
@@ -59,8 +59,8 @@ export default class Index extends PureComponent {
       type: 'appControl/fetchBaseInfo',
       payload: {
         team_name: globalUtil.getCurrTeamName(),
-        app_alias: appAlias,
-      },
+        app_alias: appAlias
+      }
     });
   };
 
@@ -88,7 +88,7 @@ export default class Index extends PureComponent {
           <div
             style={{
               textAlign: 'left',
-              marginBottom: 25,
+              marginBottom: 25
             }}
           >
             <ButtonGroup>
@@ -124,13 +124,13 @@ export default class Index extends PureComponent {
           style={{
             textAlign: 'center',
             fontSize: 18,
-            padding: '30px 0',
+            padding: '30px 0'
           }}
         >
           尚未开通性能分析插件
           <p
             style={{
-              paddingTop: 8,
+              paddingTop: 8
             }}
           >
             <Link
@@ -151,7 +151,7 @@ export default class Index extends PureComponent {
     const { showMenu } = this.state;
     const {
       appDetail,
-      componentPermissions: { isServiceMonitor },
+      componentPermissions: { isServiceMonitor }
     } = this.props;
     const defaultShow = ['pm'];
     const enablePM =
@@ -176,7 +176,7 @@ export default class Index extends PureComponent {
         <Col span={20}>
           {showMenu === 'pm' && this.renderPM()}
           {showMenu === 'trace' && <TraceShow />}
-          {showMenu === 'resource' && <ResourceShow />}
+          {showMenu === 'resource' && <ResourceShow {...this.props} />}
           {showMenu === 'custom' && <CustomMonitor appDetail={appDetail} />}
         </Col>
       </Row>

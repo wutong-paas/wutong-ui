@@ -889,7 +889,7 @@ export default class Index extends PureComponent {
         <Row style={isScrollDiv && guideStep === 1 ? highlighted : {}}>
           {pageHeaderContent}
         </Row>
-{/*        {guideStep === 1 &&
+        {/*        {guideStep === 1 &&
           this.handleNewbieGuiding({
             tit: '应用信息',
             showSvg: false,
