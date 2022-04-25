@@ -111,7 +111,7 @@ export default class RangeChart extends PureComponent {
     if (appDetail && appDetail.service) {
       const {
         // service_id: serviceId,
-        service_alias: serviceAlias,
+        // service_alias: serviceAlias,
         k8s_component_name: componentName,
         // k8s_app: appName,
         namespace: ns
@@ -119,7 +119,7 @@ export default class RangeChart extends PureComponent {
 
       const { k8s_app: appName } = groupDetail;
       const serviceId = `${componentName}_${appName}-${componentName}.*_${ns}`;
-      const podId = `${appName}-${componentName}.*_${ns}.*`;
+      const podId = `${appName}-${componentName}.*_${ns}`;
 
       const isState = globalUtil.isStateComponent(
         baseInfo && baseInfo.extend_method
