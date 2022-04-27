@@ -595,17 +595,6 @@ export async function getMarketApp(body = {}) {
   });
 }
 
-/*
-<<<<<<< HEAD
-<<<<<<< HEAD
-  从好雨云市同步应用
-=======
-  从基石PaaS平台同步应用
->>>>>>> 1be0d10e... 前端初始化
-=======
-  从梧桐云平台同步应用
->>>>>>> 3cb04571... ui改造
-*/
 export async function syncMarketApp(body = {}) {
   return request(
     `${apiconfig.baseUrl}/console/teams/${body.team_name}/apps/all_apps`,
@@ -618,7 +607,7 @@ export async function syncMarketApp(body = {}) {
 /*
    获取云帮的公共信息、配置信息
 */
-export function getRainbondInfo(handleError) {
+export function getWutongInfo(handleError) {
   //
   return request(`${apiconfig.baseUrl}/console/config/info`, {
     passAuthorization: false,

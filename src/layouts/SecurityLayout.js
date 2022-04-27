@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Redirect } from 'umi';
-import PageLoading from '../components/PageLoading';
 import { stringify } from 'querystring';
+import PageLoading from '../components/PageLoading';
 import cookie from '../utils/cookie';
 import globalUtil from '../utils/global';
 import ErrorBoundary from './ErrorBoundary';
@@ -16,7 +16,7 @@ class SecurityLayout extends React.PureComponent {
     const { dispatch } = this.props;
     if (dispatch) {
       dispatch({
-        type: 'global/fetchRainbondInfo',
+        type: 'global/fetchWutongInfo',
         callback: info => {
           if (info) {
             this.fetchUserInfo();

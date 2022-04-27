@@ -20,7 +20,7 @@ class UserLayout extends React.PureComponent {
     const { dispatch } = this.props;
     // 初始化 获取RainbondInfo信息
     dispatch({
-      type: 'global/fetchRainbondInfo',
+      type: 'global/fetchWutongInfo',
       callback: info => {
         if (info) {
           // globalUtil.putLog(info);

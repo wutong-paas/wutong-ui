@@ -1,5 +1,5 @@
-import React, { Fragment, PureComponent } from "react";
-import CustomChart from "@/components/CustomChart";
+import React, { Fragment, PureComponent } from 'react';
+import CustomChart from '@/components/CustomChart';
 
 export default class MonitorHistory extends PureComponent {
   render() {
@@ -7,8 +7,9 @@ export default class MonitorHistory extends PureComponent {
     return (
       <Fragment>
         <CustomChart
+          {...this.props}
           moduleName="PerformanceAnalysis"
-          RangeData={["responseTime", "throughput", "numberOnline"]}
+          RangeData={['responseTime', 'throughput', 'numberOnline']}
           appAlias={appAlias}
         />
       </Fragment>

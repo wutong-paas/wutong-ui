@@ -114,7 +114,7 @@ class EnterpriseLayout extends PureComponent {
     const { dispatch } = this.props;
     const { offLineDisNew } = this.state;
     dispatch({
-      type: 'global/fetchRainbondInfo',
+      type: 'global/fetchWutongInfo',
       callback: res => {
         // 判断是否是离线的状态
         if (
@@ -459,8 +459,8 @@ class EnterpriseLayout extends PureComponent {
       );
     };
     const SiteTitle = '梧桐云平台';
-    console.log('rainbondInfo')
-    console.log(rainbondInfo)
+    console.log('rainbondInfo');
+    console.log(rainbondInfo);
 
     return (
       <Fragment>
