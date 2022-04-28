@@ -1289,19 +1289,18 @@ export default class EnterpriseShared extends PureComponent {
           </a>
         </Menu.Item>
       );
-      // const exportOperation = info &&
-      //   info.versions_info &&
-      //   info.versions_info.length > 0 && (
-      //     <Menu.Item>
-      //       <ExportOperation app={info} eid={eid} />
-      //     </Menu.Item>
-      //   );
+      const exportOperation = info &&
+        info.versions_info &&
+        info.versions_info.length > 0 && (
+          <Menu.Item>
+            <ExportOperation app={info} eid={eid} />
+          </Menu.Item>
+        );
 
-      if (/*exportOperation ||*/ editorApp || delApp) {
+      if (exportOperation || editorApp || delApp) {
         return (
           <Menu>
-            {/*todo 应用模版导出*/}
-            {/*{isExportApp && exportOperation}*/}
+            {isExportApp && exportOperation}
             {editorApp}
             {delApp}
           </Menu>
@@ -1607,15 +1606,12 @@ export default class EnterpriseShared extends PureComponent {
       </div>
     );
     return (
-      <PageHeaderLayout
-        title="应用市场管理"
-        content="企业和团队组件库管理。"
-      >
-{/*        {initShow && isNewbieGuide && (
+      <PageHeaderLayout title="应用市场管理" content="企业和团队组件库管理。">
+        {/*        {initShow && isNewbieGuide && (
           <PlatformIntroduced onCancel={this.hideInitShow} />
         )}*/}
 
-{/*
+        {/*
         {guideStep === 'Jump' && isInStallShow && (
           <InstallStep
             onCancel={this.hideInstallStep}
@@ -1626,7 +1622,7 @@ export default class EnterpriseShared extends PureComponent {
           />
         )}
 */}
-{/*
+        {/*
         {showMarketCloudAuth && (
           <AuthCompany
             eid={eid}
@@ -1837,7 +1833,7 @@ export default class EnterpriseShared extends PureComponent {
             );
           })}
 
-{/*          {isCreateAppStore && (
+          {/*          {isCreateAppStore && (
             <TabPane
               tab={
                 <Tooltip placement="top" title="添加应用市场">
