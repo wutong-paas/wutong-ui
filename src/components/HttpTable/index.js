@@ -603,7 +603,7 @@ export default class HttpTable extends PureComponent {
             <Link
               to={`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/components/${
                 record.service_alias
-              }/port`}
+              }/overview/service_id/${record.service_id}`}
             >
               {text}({record.container_port})
             </Link>

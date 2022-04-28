@@ -57,7 +57,7 @@ export default class InstallStep extends PureComponent {
   handleGetEnterpeiseMsg = () => {
     const { dispatch } = this.props;
     dispatch({
-      type: 'global/fetchRainbondInfo',
+      type: 'global/fetchWutongInfo',
       callback: res => {
         res && res.is_offline && this.setState({ isOffLine: false });
       },

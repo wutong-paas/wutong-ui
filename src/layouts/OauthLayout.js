@@ -12,7 +12,7 @@ class OauthLayout extends React.PureComponent {
     // 初始化 获取RainbondInfo信息
     const { dispatch } = this.props;
     dispatch({
-      type: 'global/fetchRainbondInfo',
+      type: 'global/fetchWutongInfo',
       callback: info => {
         // if (info) {
         //   globalUtil.putLog(info);

@@ -27,6 +27,7 @@ export default class AddDomain extends PureComponent {
   };
   handleCancel = () => {
     this.props.onCancel && this.props.onCancel();
+    return;
   };
   checkKey = (rule, value, callback) => {
     const visitType = this.props.form.getFieldValue('protocol');

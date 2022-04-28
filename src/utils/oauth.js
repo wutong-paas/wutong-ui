@@ -6,7 +6,7 @@ const oauthUtil = {
   getEnableGitOauthServer(enterprise) {
     const servers = [];
     if (wutongUtil.OauthEnterpriseEnable(enterprise)) {
-      enterprise.oauth_services.value.map((item) => {
+      enterprise.oauth_services.value.map(item => {
         if (item.is_git && item.enable) {
           servers.push(item);
         }
@@ -191,7 +191,38 @@ const oauthUtil = {
         />
       </svg>
     );
-
+    const IdaasSvg = () => (
+      <svg
+        t="1606461675119"
+        viewBox="0 0 1639 1024"
+        p-id="6641"
+        width={size}
+        height={size}
+      >
+        <g
+          transform="translate(0.000000,120.000000) scale(0.100000,-0.100000)"
+          fill="#000000"
+          stroke="none"
+        >
+          <path
+            d="M120 735 c-5 -7 -14 -43 -19 -81 -24 -169 46 -356 175 -463 46 -37
+     148 -90 184 -93 l25 -3 3 131 c2 124 1 132 -17 137 -11 3 -22 2 -25 -1 -3 -3
+     -6 -50 -6 -104 0 -54 -4 -98 -8 -98 -20 0 -130 80 -169 122 -85 93 -116 187
+     -111 337 1 60 6 107 11 104 4 -2 7 3 7 11 0 17 -36 18 -50 1z"
+          />
+          <path
+            d="M1047 715 c4 -16 8 -80 8 -141 0 -107 -1 -112 -38 -186 -40 -82 -125
+     -171 -197 -208 -47 -24 -50 -19 -50 84 0 73 0 73 -25 68 l-26 -4 3 -112 c3
+     -108 4 -111 27 -114 33 -5 137 49 198 103 97 85 163 228 166 359 2 98 -10 169
+     -28 162 -8 -3 -12 0 -9 7 3 8 -4 13 -16 13 -18 0 -20 -4 -13 -31z"
+          />
+          <path
+            d="M660 491 c0 -4 -18 -7 -40 -5 l-40 3 2 -202 c3 -194 4 -202 23 -202
+     19 0 20 8 23 170 l3 170 30 31 c25 26 27 32 15 37 -9 4 -16 3 -16 -2z"
+          />
+        </g>
+      </svg>
+    );
     if (item) {
       const { oauth_type: oauthType } = item;
       const map = {
@@ -199,7 +230,8 @@ const oauthUtil = {
         gitlab: GitlabSvg,
         gitee: GiteeSvg,
         dingtalk: NailingSvg,
-        aliyun: AliyunSvg
+        aliyun: AliyunSvg,
+        idaas: OauthSvg
       };
       return <Icon component={map[oauthType] || OauthSvg} />;
     }
@@ -211,7 +243,7 @@ const oauthUtil = {
       wutongUtil.OauthbEnable(rainbondInfo) &&
       wutongUtil.OauthEnterpriseEnable(enterprise)
     ) {
-      enterprise.oauth_services.value.map((item) => {
+      enterprise.oauth_services.value.map(item => {
         if (item.is_git && item.service_id == service_id) {
           selectServer = item;
         }
@@ -224,7 +256,7 @@ const oauthUtil = {
     if (currentUser) {
       // eslint-disable-next-line no-unused-expressions
       currentUser.oauth_services &&
-        currentUser.oauth_services.map((item) => {
+        currentUser.oauth_services.map(item => {
           if (
             item.service_id == service_id &&
             item.is_authenticated &&

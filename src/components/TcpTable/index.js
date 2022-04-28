@@ -461,7 +461,7 @@ export default class TcpTable extends PureComponent {
         render: (text, record) => {
           return record.is_outer_service == 0 &&
             record.service_source != 'third_party' ? (
-              <a href="javascript:void(0)" disabled>
+            <a href="javascript:void(0)" disabled>
               {text}
             </a>
           ) : (
@@ -484,14 +484,14 @@ export default class TcpTable extends PureComponent {
         render: (text, record) => {
           return record.is_outer_service == 0 &&
             record.service_source != 'third_party' ? (
-              <a href="javascript:void(0)" disabled>
+            <a href="javascript:void(0)" disabled>
               {record.service_cname}({text})
             </a>
           ) : (
             <Link
               to={`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/components/${
                 record.service_alias
-              }/port`}
+              }/overview/service_id/${record.service_id}`}
             >
               {record.service_cname}({text})
             </Link>
@@ -507,7 +507,7 @@ export default class TcpTable extends PureComponent {
         render: (_, record) => {
           return record.is_outer_service == 1 ||
             record.service_source == 'third_party' ? (
-              <div>
+            <div>
               {isEdit && (
                 <a
                   style={{ marginRight: '10px' }}

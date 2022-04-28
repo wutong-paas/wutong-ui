@@ -47,7 +47,7 @@ import {
   getMarketPlugins,
   getPayHistory,
   getPermissions,
-  getRainbondInfo,
+  getWutongInfo,
   getRegionOneDayMoney,
   getRegionSource,
   getRegist,
@@ -410,14 +410,14 @@ export default {
         callback(data);
       }
     },
-    *fetchRainbondInfo({ callback, handleError }, { call, put }) {
-      const data = yield call(getRainbondInfo, handleError);
+    *fetchWutongInfo({ callback, handleError }, { call, put }) {
+      const data = yield call(getWutongInfo, handleError);
       if (data) {
         cookie.set(
           'platform_url',
           data.bean && data.bean.document && data.bean.document.enable
             ? data.bean.document.value.platform_url
-            : 'https://www.rainbond.com/'
+            : 'https://wutong.talkweb.com.cn/'
         );
         cookie.setGuide(
           'enterprise_edition',
