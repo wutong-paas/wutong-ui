@@ -70,7 +70,7 @@ export default class AppExporter extends PureComponent {
         <Description term="导出状态">
           {this.getStatus(rainbond_app_status)}
         </Description>
-        {this.getAction(rainbond_app_status, 'rainbond-app')}
+        {this.getAction(rainbond_app_status, 'wutong-app')}
       </DescriptionList>
     );
   };
