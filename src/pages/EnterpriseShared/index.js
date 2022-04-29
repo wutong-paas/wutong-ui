@@ -1326,12 +1326,11 @@ export default class EnterpriseShared extends PureComponent {
 
     const operation = (
       <Col span={5} style={rightStyle} className={styles.btns}>
-        {/* todo */}
-        {/*{isImportApp && (
+        {isImportApp && (
           <Button style={{ margin: '0 14px 0 10px' }}>
             <Link to={`/enterprise/${eid}/shared/import`}>离线导入</Link>
           </Button>
-        )}*/}
+        )}
         {isCreateApp && (
           <Button type="primary" onClick={this.handleOpenCreateAppModel}>
             创建应用模版
