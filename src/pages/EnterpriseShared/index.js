@@ -541,7 +541,7 @@ export default class EnterpriseShared extends PureComponent {
     this.getApps();
     this.getTags();
     // this.getMarketsTab(false, true);
-    // this.getHelmMarketsTab(false, true);
+    this.getHelmMarketsTab(false, true);
     // this.checkStoreHub();
   };
   loadClusters = () => {
