@@ -55,25 +55,25 @@ export async function fetchMarkets(params = {}) {
     }
   );
 }
-// export async function fetchMarketsTab(param) {
-//   return request(
-//     `${apiconfig.baseUrl}/console/enterprise/${param.enterprise_id}/cloud/markets`,
-//     {
-//       method: 'get',
-//       params: {
-//         extend: true
-//       }
-//     }
-//   );
-// }
-// export async function fetchHelmMarketsTab(param) {
-//   return request(
-//     `${apiconfig.baseUrl}/console/proxy/enterprise-server/api/v1/enterprises/${param.enterprise_id}/appstores`,
-//     {
-//       method: 'get'
-//     }
-//   );
-// }
+export async function fetchMarketsTab(param) {
+  return request(
+    `${apiconfig.baseUrl}/console/enterprise/${param.enterprise_id}/cloud/markets`,
+    {
+      method: 'get',
+      params: {
+        extend: true
+      }
+    }
+  );
+}
+export async function fetchHelmMarketsTab(param) {
+  return request(
+    `${apiconfig.baseUrl}/console/proxy/enterprise-server/api/v1/enterprises/${param.enterprise_id}/appstores`,
+    {
+      method: 'get'
+    }
+  );
+}
 export async function fetchHelmMarkets(param) {
   return request(
     `${apiconfig.baseUrl}/console/enterprise/${param.enterprise_id}/helm/${param.repo_name}/apps`,
