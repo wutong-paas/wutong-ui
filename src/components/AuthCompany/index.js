@@ -51,15 +51,10 @@ export default class Index extends PureComponent {
       accessKey: '',
       activeKeyStore: 'rainbondStore',
       marketList: [],
-      // checkedValues: [],
-      // enterprise_alias: this.props.enterprise.enterprise_alias || '',
-      // enterprise_id: this.props.enterprise.enterprise_id || '',
-      // real_name: this.props.currUser.real_name || '',
-      // isShowModal: true
       checkedValues: [],
-      enterprise_alias: this.props.rainbondInfo.enterprise_alias || '',
-      enterprise_id: this.props.rainbondInfo.enterprise_id || '',
-      real_name: this.props.currUser.real_name || '',
+      enterprise_alias: '', // this.props.enterprise.enterprise_alias || '',
+      enterprise_id: '', // this.props.enterprise.enterprise_id || '',
+      real_name: '', // this.props.currUser.real_name || '',
       isShowModal: true
     };
   }
