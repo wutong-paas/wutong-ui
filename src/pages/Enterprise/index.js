@@ -205,7 +205,7 @@ export default class Enterprise extends PureComponent {
         this.getOverviewApp();
         this.getOverview();
         this.getOverviewMonitor();
-        this.fetchMarkets();
+        // this.fetchMarkets();
       } else {
         this.fetchCollectionViewInfo();
       }
