@@ -15,7 +15,7 @@ import {
   fetchHelmMarkets,
   fetchHelmMarketsTab,
   fetchMarkets,
-  // fetchMarketsTab,
+  fetchMarketsTab,
   getAppMarketInfo,
   getAppModelsDetails,
   getBindingMarketsList,
