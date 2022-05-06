@@ -314,73 +314,73 @@ export default class EnterpriseShared extends PureComponent {
       }
     });
   };
-  //
-  // getMarketsTab = (ID, first) => {
-  //   const {
-  //     dispatch,
-  //     match: {
-  //       params: { eid }
-  //     },
-  //     location: {
-  //       query: { init }
-  //     }
-  //   } = this.props;
-  //   const { activeTabKey } = this.state;
-  //   dispatch({
-  //     type: 'market/fetchMarketsTab',
-  //     payload: {
-  //       enterprise_id: eid
-  //     },
-  //     callback: res => {
-  //       if (res && res.status_code === 200) {
-  //         const list = res.list || [];
-  //         this.setState(
-  //           {
-  //             marketTab: list
-  //           },
-  //           () => {
-  //             if (ID || init || (first && activeTabKey)) {
-  //               const marketID = init && list && list.length && list[0].ID;
-  //               const activeID = first && activeTabKey;
-  //               const setID = marketID || activeID || ID;
-  //               this.onTabChange(setID || ID);
-  //             }
-  //           }
-  //         );
-  //       }
-  //     }
-  //   });
-  // };
 
-  // getHelmMarketsTab = (ID, first) => {
-  //   const {
-  //     dispatch,
-  //     match: {
-  //       params: { eid }
-  //     }
-  //   } = this.props;
-  //   const { activeTabKey } = this.state;
-  //   dispatch({
-  //     type: 'market/fetchHelmMarketsTab',
-  //     payload: {
-  //       enterprise_id: eid
-  //     },
-  //     callback: res => {
-  //       if (res && res.status_code === 200) {
-  //         this.setState(
-  //           {
-  //             helmTab: Array.isArray(res) ? res : []
-  //           },
-  //           () => {
-  //             if (ID || (first && activeTabKey)) {
-  //               this.onTabChange(ID || activeTabKey);
-  //             }
-  //           }
-  //         );
-  //       }
-  //     }
-  //   });
-  // };
+  getMarketsTab = (ID, first) => {
+    const {
+      dispatch,
+      match: {
+        params: { eid }
+      },
+      location: {
+        query: { init }
+      }
+    } = this.props;
+    const { activeTabKey } = this.state;
+    dispatch({
+      type: 'market/fetchMarketsTab',
+      payload: {
+        enterprise_id: eid
+      },
+      callback: res => {
+        if (res && res.status_code === 200) {
+          const list = res.list || [];
+          this.setState(
+            {
+              marketTab: list
+            },
+            () => {
+              if (ID || init || (first && activeTabKey)) {
+                const marketID = init && list && list.length && list[0].ID;
+                const activeID = first && activeTabKey;
+                const setID = marketID || activeID || ID;
+                this.onTabChange(setID || ID);
+              }
+            }
+          );
+        }
+      }
+    });
+  };
+
+  getHelmMarketsTab = (ID, first) => {
+    const {
+      dispatch,
+      match: {
+        params: { eid }
+      }
+    } = this.props;
+    const { activeTabKey } = this.state;
+    dispatch({
+      type: 'market/fetchHelmMarketsTab',
+      payload: {
+        enterprise_id: eid
+      },
+      callback: res => {
+        if (res && res.status_code === 200) {
+          this.setState(
+            {
+              helmTab: Array.isArray(res) ? res : []
+            },
+            () => {
+              if (ID || (first && activeTabKey)) {
+                this.onTabChange(ID || activeTabKey);
+              }
+            }
+          );
+        }
+      }
+    });
+  };
 
   getMarkets = name => {
     const {
@@ -506,35 +506,35 @@ export default class EnterpriseShared extends PureComponent {
       }
     });
   };
-  // checkStoreHub = () => {
-  //   const {
-  //     dispatch,
-  //     match: {
-  //       params: { eid }
-  //     }
-  //   } = this.props;
-  //   dispatch({
-  //     type: 'market/storehubCheck',
-  //     payload: {
-  //       eid
-  //     },
-  //     callback: res => {
-  //       if (res && res.status_code === 200 && res.bean.remind) {
-  //         Modal.confirm({
-  //           title: '配置提醒',
-  //           cancelText: '已了解',
-  //           okText: '去配置',
-  //           onCancel: () => {},
-  //           onOk: () => {
-  //             dispatch(routerRedux.push(`/enterprise/${eid}/setting`));
-  //           },
-  //           content:
-  //             '该平台已对接多个集群，但本地组件库暂未配置多集群可用的镜像仓库，将导致应用无法跨集群安装。'
-  //         });
-  //       }
-  //     }
-  //   });
-  // };
+  checkStoreHub = () => {
+    const {
+      dispatch,
+      match: {
+        params: { eid }
+      }
+    } = this.props;
+    dispatch({
+      type: 'market/storehubCheck',
+      payload: {
+        eid
+      },
+      callback: res => {
+        if (res && res.status_code === 200 && res.bean.remind) {
+          Modal.confirm({
+            title: '配置提醒',
+            cancelText: '已了解',
+            okText: '去配置',
+            onCancel: () => {},
+            onOk: () => {
+              dispatch(routerRedux.push(`/enterprise/${eid}/setting`));
+            },
+            content:
+              '该平台已对接多个集群，但本地组件库暂未配置多集群可用的镜像仓库，将导致应用无法跨集群安装。'
+          });
+        }
+      }
+    });
+  };
 
   load = () => {
     this.loadClusters();
@@ -1606,11 +1606,10 @@ export default class EnterpriseShared extends PureComponent {
     );
     return (
       <PageHeaderLayout title="应用市场管理" content="企业和团队组件库管理。">
-        {/*        {initShow && isNewbieGuide && (
+        {/* {initShow && isNewbieGuide && (
           <PlatformIntroduced onCancel={this.hideInitShow} />
-        )}*/}
+        )} */}
 
-        {/*
         {guideStep === 'Jump' && isInStallShow && (
           <InstallStep
             onCancel={this.hideInstallStep}
@@ -1620,8 +1619,7 @@ export default class EnterpriseShared extends PureComponent {
             isStoreCluster={this.state.isStoreCluster}
           />
         )}
-*/}
-        {/*
+
         {showMarketCloudAuth && (
           <AuthCompany
             eid={eid}
@@ -1634,7 +1632,7 @@ export default class EnterpriseShared extends PureComponent {
             isReload
             onCloseLogin={this.onCloseLogin}
           />
-        )}*/}
+        )}
         {showMarketAppDetail && (
           <MarketAppDetailShow
             onOk={this.hideMarketAppDetail}
@@ -1799,7 +1797,7 @@ export default class EnterpriseShared extends PureComponent {
               {localsContent}
             </div>
           </TabPane>
-          {/*{marketTab.map(item => {
+          {marketTab.map(item => {
             const { ID, alias, name } = item;
             return (
               <TabPane
@@ -1814,7 +1812,7 @@ export default class EnterpriseShared extends PureComponent {
                 {marketContent}
               </TabPane>
             );
-          })}*/}
+          })}
           {helmTab.map(item => {
             const { name } = item;
             return (
@@ -1832,7 +1830,7 @@ export default class EnterpriseShared extends PureComponent {
             );
           })}
 
-          {/*          {isCreateAppStore && (
+          {isCreateAppStore && (
             <TabPane
               tab={
                 <Tooltip placement="top" title="添加应用市场">
@@ -1841,7 +1839,7 @@ export default class EnterpriseShared extends PureComponent {
               }
               key="add"
             />
-          )}*/}
+          )}
         </Tabs>
       </PageHeaderLayout>
     );
