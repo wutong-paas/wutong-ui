@@ -11,7 +11,7 @@ import LoginComponent from './loginComponent';
 
 @connect(({ global }) => ({
   isRegist: global.isRegist,
-  rainbondInfo: global.rainbondInfo
+  wutongInfo: global.wutongInfo
 }))
 export default class LoginPage extends Component {
   constructor(props) {
@@ -72,29 +72,29 @@ export default class LoginPage extends Component {
   };
 
   render() {
-    const { rainbondInfo } = this.props;
+    const { wutongInfo } = this.props;
     const oauthInfo =
-      rainbondInfo &&
-      rainbondInfo.enterprise_center_oauth &&
-      rainbondInfo.enterprise_center_oauth.value;
+      wutongInfo &&
+      wutongInfo.enterprise_center_oauth &&
+      wutongInfo.enterprise_center_oauth.value;
     const url = oauthInfo && oauthUtil.getAuthredictURL(oauthInfo);
     const icon = oauthInfo && oauthUtil.getIcon(oauthInfo);
     let oauthServicesList = [];
     if (
-      rainbondInfo &&
-      rainbondInfo.oauth_services &&
-      rainbondInfo.oauth_services.enable &&
-      rainbondInfo.oauth_services.value &&
-      rainbondInfo.oauth_services.value.length > 0
+      wutongInfo &&
+      wutongInfo.oauth_services &&
+      wutongInfo.oauth_services.enable &&
+      wutongInfo.oauth_services.value &&
+      wutongInfo.oauth_services.value.length > 0
     ) {
-      oauthServicesList = rainbondInfo.oauth_services.value;
+      oauthServicesList = wutongInfo.oauth_services.value;
     }
     const inlineBlock = { display: 'inline-block' };
     return (
       <div className={styles.main} style={{ marginTop: '100px' }}>
         <h2>登录</h2>
         <LoginComponent onSubmit={this.handleSubmit} type="login" />
-        {wutongUtil.OauthbEnable(rainbondInfo) &&
+        {wutongUtil.OauthbEnable(wutongInfo) &&
           (oauthInfo ||
             (oauthServicesList && oauthServicesList.length > 0)) && (
             <div className={styles.thirdBox}>

@@ -10,7 +10,7 @@ import OuterCustom from '../Create/outer-custom';
   apps: application.apps,
   groupDetail: application.groupDetail || {},
   groups: global.groups || [],
-  rainbondInfo: global.rainbondInfo
+  wutongInfo: global.wutongInfo
 }))
 export default class AddThirdParty extends PureComponent {
   constructor(arg) {
@@ -146,7 +146,7 @@ export default class AddThirdParty extends PureComponent {
   };
 
   render() {
-    const { rainbondInfo } = this.props;
+    const { wutongInfo } = this.props;
     const {
       ButtonGroup,
       moreState,

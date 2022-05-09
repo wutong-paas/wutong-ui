@@ -9,7 +9,7 @@ import ClusterCreationLog from '../ClusterCreationLog';
 import styles from '../ShowKubernetesCreateDetail/index.less';
 
 @connect(({ global }) => ({
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   enterprise: global.enterprise
 }))
 class ClusterProgressQuery extends PureComponent {
@@ -43,11 +43,11 @@ class ClusterProgressQuery extends PureComponent {
       guideStep,
       handleNewbieGuiding,
       isLog = true,
-      rainbondInfo
+      wutongInfo
     } = this.props;
     const { showCreateLog, isComponents } = this.state;
 
-    const enterpriseEdition = wutongUtil.isEnterpriseEdition(rainbondInfo);
+    const enterpriseEdition = wutongUtil.isEnterpriseEdition(wutongInfo);
     const provider = selectProvider || providerName;
     const operators =
       steps &&

@@ -26,7 +26,7 @@ const { Option } = Select;
 
 @connect(({ user, global }) => ({
   currUser: user.currentUser,
-  rainbondInfo: global.rainbondInfo
+  wutongInfo: global.wutongInfo
 }))
 @Form.create()
 export default class Index extends PureComponent {

@@ -27,7 +27,7 @@ import InitRainbondDetail from '../ShowInitRainbondDetail';
 const { Paragraph } = Typography;
 
 @connect(({ global }) => ({
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   enterprise: global.enterprise
 }))
 @Form.create()
@@ -53,7 +53,7 @@ export default class RainbondClusterInit extends PureComponent {
       clusterID,
       selectProvider,
       eid,
-      rainbondInfo,
+      wutongInfo,
       enterprise
     } = this.props;
     const { checked, task } = this.state;
@@ -69,7 +69,7 @@ export default class RainbondClusterInit extends PureComponent {
         },
         callback: data => {
           if (data) {
-            // globalUtil.putInstallClusterLog(enterprise, rainbondInfo, {
+            // globalUtil.putInstallClusterLog(enterprise, wutongInfo, {
             //   eid,
             //   taskID: data.taskID,
             //   status: 'start',

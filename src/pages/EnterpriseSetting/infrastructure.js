@@ -18,7 +18,7 @@ import OauthTable from './oauthTable';
   user: user.currentUser,
   list,
   loading: loading.models.list,
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   enterprise: global.enterprise,
   isRegist: global.isRegist,
   oauthLongin: loading.effects['global/creatOauth'],
@@ -44,10 +44,8 @@ class Infrastructure extends PureComponent {
       openCloudBackup: false,
       closeCloudBackup: false,
       openBasicInformation: false,
-      israinbondTird: wutongUtil.OauthEnterpriseEnable(enterprise),
-      isEnableAppstoreImageHub: wutongUtil.isEnableAppstoreImageHub(
-        enterprise
-      ),
+      iswutongTird: wutongUtil.OauthEnterpriseEnable(enterprise),
+      isEnableAppstoreImageHub: wutongUtil.isEnableAppstoreImageHub(enterprise),
       AppstoreImageHubValue: wutongUtil.fetchAppstoreImageHub(enterprise),
       isEnableObjectStorage: wutongUtil.isEnableObjectStorage(enterprise),
       MonitoringValue: wutongUtil.fetchMonitoring(enterprise),
@@ -77,8 +75,8 @@ class Infrastructure extends PureComponent {
   };
 
   handlChooseeOpen = () => {
-    const { israinbondTird } = this.state;
-    israinbondTird ? this.handleOpenDomain() : this.handelIsOpen(true);
+    const { iswutongTird } = this.state;
+    iswutongTird ? this.handleOpenDomain() : this.handelIsOpen(true);
   };
 
   handleOpenDomain = () => {
@@ -227,17 +225,13 @@ class Infrastructure extends PureComponent {
       callback: info => {
         if (info && !openCertificate && !closeCertificate) {
           this.setState({
-            israinbondTird: wutongUtil.OauthEnterpriseEnable(info.bean),
+            iswutongTird: wutongUtil.OauthEnterpriseEnable(info.bean),
             isEnableAppstoreImageHub: wutongUtil.isEnableAppstoreImageHub(
               info.bean
             ),
             isEnableMonitoring: wutongUtil.isEnableMonitoring(info.bean),
-            isEnableObjectStorage: wutongUtil.isEnableObjectStorage(
-              info.bean
-            ),
-            AppstoreImageHubValue: wutongUtil.fetchAppstoreImageHub(
-              info.bean
-            ),
+            isEnableObjectStorage: wutongUtil.isEnableObjectStorage(info.bean),
+            AppstoreImageHubValue: wutongUtil.fetchAppstoreImageHub(info.bean),
             MonitoringValue: wutongUtil.fetchMonitoring(info.bean),
             ObjectStorageValue: wutongUtil.fetchObjectStorage(info.bean)
           });
@@ -388,23 +382,21 @@ class Infrastructure extends PureComponent {
       imageHubLongin,
       monitoringLongin,
       objectStorageLongin,
-      rainbondInfo,
+      wutongInfo,
       match: {
         params: { eid }
       }
     } = this.props;
     let infos = {};
-    if (rainbondInfo) {
-      const fetchLogo =
-        wutongUtil.fetchLogo(rainbondInfo, enterprise);
+    if (wutongInfo) {
+      const fetchLogo = wutongUtil.fetchLogo(wutongInfo, enterprise);
       // const fetchFavicon = wutongUtil.fetchFavicon(enterprise);
 
-      const title =
-        rainbondInfo && rainbondInfo.title && rainbondInfo.title.value;
+      const title = wutongInfo && wutongInfo.title && wutongInfo.title.value;
       const enterpriseTitle =
         (enterprise && enterprise.enterprise_alias) ||
-        (rainbondInfo && rainbondInfo.enterprise_alias);
-      const doc_url = wutongUtil.documentPlatform_url(rainbondInfo);
+        (wutongInfo && wutongInfo.enterprise_alias);
+      const doc_url = wutongUtil.documentPlatform_url(wutongInfo);
       const officialDemo = wutongUtil.officialDemoEnable(enterprise);
 
       // eslint-disable-next-line no-const-assign
@@ -413,16 +405,16 @@ class Infrastructure extends PureComponent {
         title,
         doc_url,
         // officialDemo,
-        enterprise_alias: enterpriseTitle,
+        enterprise_alias: enterpriseTitle
         // favicon: fetchFavicon
       };
     }
-    const enterpriseEdition = wutongUtil.isEnterpriseEdition(rainbondInfo);
+    const enterpriseEdition = wutongUtil.isEnterpriseEdition(wutongInfo);
 
     const {
       enterpriseAdminLoading,
       showDeleteDomain,
-      israinbondTird,
+      iswutongTird,
       isEnableAppstoreImageHub,
       AppstoreImageHubValue,
       MonitoringValue,
@@ -480,7 +472,7 @@ class Infrastructure extends PureComponent {
               </span>
             </Col>
             <Col span={4} style={{ textAlign: 'right' }}>
-              {israinbondTird && (
+              {iswutongTird && (
                 <a
                   onClick={() => {
                     this.setState({ openOauthTable: true });
@@ -492,7 +484,7 @@ class Infrastructure extends PureComponent {
               )}
               <Switch
                 onChange={this.handlChooseeOpen}
-                checked={israinbondTird}
+                checked={iswutongTird}
                 className={styles.automaTictelescopingSwitch}
               />
             </Col>

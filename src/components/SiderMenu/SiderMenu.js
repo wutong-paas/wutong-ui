@@ -12,7 +12,7 @@ const { Sider } = Layout;
 const { Search } = Input;
 
 @connect(({ global, user, loading }) => ({
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   collectionList: user.collectionList,
   viewLoading: loading.effects['user/addCollectionView']
 }))
@@ -375,7 +375,7 @@ export default class SiderMenu extends PureComponent {
                   team_alias: teamAlias,
                   team_id,
                   enterprise_id
-                } = item
+                } = item;
                 return (
                   <Link
                     key={teamName}

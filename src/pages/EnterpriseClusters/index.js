@@ -35,7 +35,7 @@ const { confirm } = Modal;
   user: user.currentUser,
   list,
   clusterLoading: loading.effects['region/fetchEnterpriseClusters'],
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   enterprise: global.enterprise,
   isRegist: global.isRegist,
   oauthLongin: loading.effects['global/creatOauth'],
@@ -47,7 +47,7 @@ const { confirm } = Modal;
 export default class EnterpriseClusters extends PureComponent {
   constructor(props) {
     super(props);
-    const { user, rainbondInfo, novices, enterprise } = this.props;
+    const { user, wutongInfo, novices, enterprise } = this.props;
     const adminer = userUtil.isCompanyAdmin(user);
     this.state = {
       isNewbieGuide: wutongUtil.isEnableNewbieGuide(enterprise),
@@ -70,7 +70,7 @@ export default class EnterpriseClusters extends PureComponent {
       ),
       setTenantLimitShow: false,
       guideStep: 1,
-      isEnterpriseEdition: wutongUtil.isEnterpriseEdition(rainbondInfo)
+      isEnterpriseEdition: wutongUtil.isEnterpriseEdition(wutongInfo)
     };
   }
   UNSAFE_componentWillMount() {
@@ -743,7 +743,6 @@ export default class EnterpriseClusters extends PureComponent {
           >
             监控
           </Link>*/
-
           ];
           if (item.provider === 'rke') {
             mlist.push(
@@ -835,23 +834,22 @@ export default class EnterpriseClusters extends PureComponent {
         !clusterLoading &&
         clusters &&
         clusters.length &&
-        clusters[0].status === '1' ? (
-          /*<InstallStep
+        clusters[0].status === '1'
+          ? /*<InstallStep
             onCancel={this.handleClusterIntroduced}
             isCluster
             eid={eid}
             onStartInstall={this.onStartInstall}
             onViewInstance={this.onViewInstance}
           />*/
-          ''
-        ) : (
-          ''
-        )
-        }
+            ''
+          : ''}
         <Row style={{ marginBottom: '20px' }}>
           <Col span={24} style={{ textAlign: 'right' }}>
             <Link to={`/enterprise/${eid}/addCluster`}>
-              <Button type="primary" style={{ background: '#2953E8' }}>添加集群</Button>
+              <Button type="primary" style={{ background: '#2953E8' }}>
+                添加集群
+              </Button>
             </Link>
             <Button
               style={{ marginLeft: '16px' }}
@@ -861,7 +859,7 @@ export default class EnterpriseClusters extends PureComponent {
             >
               <Icon type="reload" />
             </Button>
-{/*            {guideStep === 1 &&
+            {/*            {guideStep === 1 &&
               this.props.novices &&
               wutongUtil.handleNewbie(this.props.novices, 'addCluster') &&
               this.handleNewbieGuiding({

@@ -8,7 +8,7 @@ import RegisterComponent from './registerComponent';
 
 @connect(({ user, global }) => ({
   register: user.register,
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   isRegist: global.isRegist
 }))
 export default class Register extends Component {
@@ -16,7 +16,7 @@ export default class Register extends Component {
   state = {};
 
   handleSubmit = values => {
-    const { rainbondInfo } = this.props;
+    const { wutongInfo } = this.props;
     const { dispatch } = this.props;
     dispatch({
       type: 'user/register',
@@ -37,12 +37,12 @@ export default class Register extends Component {
   };
 
   render() {
-    const { isRegist, dispatch, rainbondInfo } = this.props;
+    const { isRegist, dispatch, wutongInfo } = this.props;
     if (!isRegist) {
       dispatch(routerRedux.replace('/user/login'));
       return null;
     }
-    const firstRegist = !wutongUtil.fetchIsFirstRegist(rainbondInfo);
+    const firstRegist = !wutongUtil.fetchIsFirstRegist(wutongInfo);
     return (
       <div className={styles.main} style={{ marginTop: '37px' }}>
         <h3>{firstRegist ? '管理员注册' : '用户注册'}</h3>

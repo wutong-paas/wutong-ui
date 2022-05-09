@@ -26,7 +26,7 @@ const { confirm } = Modal;
 
 @connect(({ user, global }) => ({
   user: user.currentUser,
-  rainbondInfo: global.rainbondInfo
+  wutongInfo: global.wutongInfo
 }))
 export default class EnterpriseShared extends PureComponent {
   constructor(props) {

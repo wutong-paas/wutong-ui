@@ -95,7 +95,7 @@ class ModifyCompose extends PureComponent {
 @connect(
   ({ user }) => ({
     currUser: user.currentUser,
-    rainbondInfo: global.rainbondInfo
+    wutongInfo: global.wutongInfo
   }),
   null,
   null,
@@ -379,7 +379,7 @@ export default class CreateCheck extends PureComponent {
     );
   };
   renderSuccess = () => {
-    const { rainbondInfo } = this.props;
+    const { wutongInfo } = this.props;
     const serviceInfo = this.state.serviceInfo || [];
     const extra = (
       <div>
@@ -420,7 +420,7 @@ export default class CreateCheck extends PureComponent {
         放弃创建{' '}
       </Button>
     ];
-    const platform_url = wutongUtil.documentPlatform_url(rainbondInfo);
+    const platform_url = wutongUtil.documentPlatform_url(wutongInfo);
     return (
       <Result
         type="success"

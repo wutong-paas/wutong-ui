@@ -13,15 +13,11 @@ class AuthorizedRoute extends React.Component {
       render,
       authority,
       redirectPath,
-      rainbondInfo,
+      wutongInfo,
       ...rest
     } = this.props;
     if (redirectPath === '/user/login') {
-      if (
-        rainbondInfo &&
-        rainbondInfo.is_public &&
-        rainbondInfo.is_public.enable
-      ) {
+      if (wutongInfo && wutongInfo.is_public && wutongInfo.is_public.enable) {
         return <PublicLogin />;
       }
       return (
@@ -57,7 +53,7 @@ class AuthorizedRoute extends React.Component {
       render,
       authority,
       redirectPath,
-      rainbondInfo,
+      wutongInfo,
       ...rest
     } = this.props;
     return (
@@ -76,6 +72,6 @@ class AuthorizedRoute extends React.Component {
     );
   }
 }
-export default connect(({ global }) => ({ rainbondInfo: global.rainbondInfo }))(
+export default connect(({ global }) => ({ wutongInfo: global.wutongInfo }))(
   AuthorizedRoute
 );

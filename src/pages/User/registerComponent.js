@@ -13,7 +13,7 @@ const FormItem = Form.Item;
 
 @connect(({ user, loading, global }) => ({
   register: user.register,
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   isRegist: global.isRegist,
   submitting: loading.effects['user/register'],
   thirdsubmitting: loading.effects['user/thirdRegister']
@@ -98,10 +98,10 @@ export default class RegisterComponent extends Component {
       thirdsubmitting,
       type,
       user_info: userInfo,
-      rainbondInfo
+      wutongInfo
     } = this.props;
     const { getFieldDecorator } = form;
-    const firstRegist = !wutongUtil.fetchIsFirstRegist(rainbondInfo);
+    const firstRegist = !wutongUtil.fetchIsFirstRegist(wutongInfo);
     const checks = message => {
       return [
         {

@@ -57,10 +57,10 @@ export default class AppExporter extends PureComponent {
   };
   getRainbondAppShow = () => {
     const { app_exporte_status } = this.state;
-    if (!app_exporte_status || !app_exporte_status.rainbond_app) {
+    if (!app_exporte_status || !app_exporte_status.wutong_app) {
       return;
     }
-    const rainbond_app_status = app_exporte_status.rainbond_app;
+    const wutong_app_status = app_exporte_status.wutong_app;
     return (
       <DescriptionList
         size="large"
@@ -68,9 +68,9 @@ export default class AppExporter extends PureComponent {
         style={{ marginBottom: 32 }}
       >
         <Description term="导出状态">
-          {this.getStatus(rainbond_app_status)}
+          {this.getStatus(wutong_app_status)}
         </Description>
-        {this.getAction(rainbond_app_status, 'wutong-app')}
+        {this.getAction(wutong_app_status, 'wutong-app')}
       </DescriptionList>
     );
   };
@@ -258,8 +258,8 @@ export default class AppExporter extends PureComponent {
           if (
             (data.list &&
               data.list.length > 0 &&
-              data.list[0].rainbond_app &&
-              data.list[0].rainbond_app.status == 'exporting') ||
+              data.list[0].wutong_app &&
+              data.list[0].wutong_app.status == 'exporting') ||
             (data.list &&
               data.list.length > 0 &&
               data.list[0].docker_compose &&
@@ -274,8 +274,8 @@ export default class AppExporter extends PureComponent {
           if (
             (data.list &&
               data.list.length > 0 &&
-              data.list[0].rainbond_app &&
-              data.list[0].rainbond_app.status != 'exporting') ||
+              data.list[0].wutong_app &&
+              data.list[0].wutong_app.status != 'exporting') ||
             (data.list &&
               data.list.length > 0 &&
               data.list[0].docker_compose &&

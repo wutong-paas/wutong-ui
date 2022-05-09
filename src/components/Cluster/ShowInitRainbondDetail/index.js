@@ -6,7 +6,7 @@ import cloud from '../../../utils/cloud';
 import ClusterProgressQuery from '../ClusterProgressQuery';
 
 @connect(({ global }) => ({
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   enterprise: global.enterprise
 }))
 class InitRainbondDetail extends PureComponent {
@@ -55,7 +55,7 @@ class InitRainbondDetail extends PureComponent {
       dispatch,
       eid,
       taskID,
-      rainbondInfo,
+      wutongInfo,
       enterprise,
       providerName
     } = this.props;
@@ -70,7 +70,7 @@ class InitRainbondDetail extends PureComponent {
           const { complete, steps } = cloud.showInitRainbondSteps(data.events);
 
           // if (complete && steps.length > 0) {
-          //   globalUtil.putInstallClusterLog(enterprise, rainbondInfo, {
+          //   globalUtil.putInstallClusterLog(enterprise, wutongInfo, {
           //     eid,
           //     taskID,
           //     status: steps[steps.length - 1].Status,

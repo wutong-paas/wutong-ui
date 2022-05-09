@@ -45,7 +45,7 @@ const formItemLayout = {
   list,
   groups: global.groups,
   loading: loading.models.list,
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   enterprise: global.enterprise,
   isRegist: global.isRegist,
   overviewInfo: index.overviewInfo
@@ -222,8 +222,8 @@ export default class Index extends PureComponent {
 
   CreateApp = () => {
     const grade = this.getGuide('app_create');
-    const { rainbondInfo } = this.props;
-    const platform_url = wutongUtil.documentPlatform_url(rainbondInfo);
+    const { wutongInfo } = this.props;
+    const platform_url = wutongUtil.documentPlatform_url(wutongInfo);
     if (!grade) {
       return '';
     }
@@ -306,8 +306,8 @@ export default class Index extends PureComponent {
 
   CreateSourceCode = () => {
     const grade = this.getGuide('source_code_service_create');
-    const { rainbondInfo } = this.props;
-    const platform_url = wutongUtil.documentPlatform_url(rainbondInfo);
+    const { wutongInfo } = this.props;
+    const platform_url = wutongUtil.documentPlatform_url(wutongInfo);
 
     if (!grade) {
       return '';
@@ -439,8 +439,8 @@ export default class Index extends PureComponent {
 
   CreateByImageTaskShow = () => {
     const grade = this.getGuide('image_service_create');
-    const { rainbondInfo } = this.props;
-    const platform_url = wutongUtil.documentPlatform_url(rainbondInfo);
+    const { wutongInfo } = this.props;
+    const platform_url = wutongUtil.documentPlatform_url(wutongInfo);
 
     if (!grade) {
       return '';
@@ -539,7 +539,7 @@ export default class Index extends PureComponent {
 
         <p>
           从应用市场安装应用是最便捷的云应用安装交付方式，目前
-          {/* {configureGlobal.rainbondTextShow && (
+          {/* {configureGlobal.wutongTextShow && (
             <a href={languageObj.Rainbond} target="_blank">
               Rainbond
             </a>
@@ -574,8 +574,8 @@ export default class Index extends PureComponent {
 
   Service = () => {
     const grade = this.getGuide('service_connect_db');
-    const { rainbondInfo } = this.props;
-    const platform_url = wutongUtil.documentPlatform_url(rainbondInfo);
+    const { wutongInfo } = this.props;
+    const platform_url = wutongUtil.documentPlatform_url(wutongInfo);
 
     if (!grade) {
       return '';
@@ -640,8 +640,8 @@ export default class Index extends PureComponent {
   };
   ReleaseMarket = () => {
     const grade = this.getGuide('share_app');
-    const { rainbondInfo } = this.props;
-    const platform_url = wutongUtil.documentPlatform_url(rainbondInfo);
+    const { wutongInfo } = this.props;
+    const platform_url = wutongUtil.documentPlatform_url(wutongInfo);
 
     if (!grade) {
       return '';
@@ -707,8 +707,8 @@ export default class Index extends PureComponent {
 
   AccessStrategy = () => {
     const grade = this.getGuide('custom_gw_rule');
-    const { rainbondInfo } = this.props;
-    const platform_url = wutongUtil.documentPlatform_url(rainbondInfo);
+    const { wutongInfo } = this.props;
+    const platform_url = wutongUtil.documentPlatform_url(wutongInfo);
 
     if (!grade) {
       return '';
@@ -869,7 +869,7 @@ export default class Index extends PureComponent {
     const steps = [
       {
         title: '创建应用',
-        content: configureGlobal.rainbondTextShow && this.CreateApp(),
+        content: configureGlobal.wutongTextShow && this.CreateApp(),
         status: guideUtil.getStatus('app_create', GuideList)
       },
       // {
@@ -879,8 +879,7 @@ export default class Index extends PureComponent {
       // },
       {
         title: '基于镜像安装数据库',
-        content:
-          configureGlobal.rainbondTextShow && this.CreateByImageTaskShow(),
+        content: configureGlobal.wutongTextShow && this.CreateByImageTaskShow(),
         status: guideUtil.getStatus('image_service_create', GuideList)
       },
       {
@@ -895,7 +894,7 @@ export default class Index extends PureComponent {
       },
       {
         title: '配置应用访问策略',
-        content: configureGlobal.rainbondTextShow && this.AccessStrategy(),
+        content: configureGlobal.wutongTextShow && this.AccessStrategy(),
         status: guideUtil.getStatus('custom_gw_rule', GuideList)
       },
       {

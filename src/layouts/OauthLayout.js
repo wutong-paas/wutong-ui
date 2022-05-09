@@ -22,8 +22,8 @@ class OauthLayout extends React.PureComponent {
   }
 
   render() {
-    const { rainbondInfo, children } = this.props;
-    if (!rainbondInfo) {
+    const { wutongInfo, children } = this.props;
+    if (!wutongInfo) {
       return null;
     }
     return <div className={styles.container}>{children}</div>;
@@ -31,6 +31,6 @@ class OauthLayout extends React.PureComponent {
 }
 
 export default connect(({ global }) => ({
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   nouse: global.nouse
 }))(OauthLayout);

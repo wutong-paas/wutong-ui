@@ -14,7 +14,7 @@ const oauth_user_id = wutongUtil.OauthParameter('oauth_user_id');
 @connect(({ loading, global }) => ({
   login: {},
   isRegist: global.isRegist,
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   submitting: loading.effects['user/login']
 }))
 export default class LoginPage extends Component {
@@ -86,15 +86,15 @@ export default class LoginPage extends Component {
   };
 
   render() {
-    const { rainbondInfo, isRegist } = this.props;
+    const { wutongInfo, isRegist } = this.props;
     const { user_info } = this.state;
-    const firstRegist = !wutongUtil.fetchIsFirstRegist(rainbondInfo);
+    const firstRegist = !wutongUtil.fetchIsFirstRegist(wutongInfo);
     let oauthServer = null;
     // eslint-disable-next-line no-unused-expressions
-    wutongUtil.OauthbEnable(rainbondInfo) &&
-      rainbondInfo.oauth_services &&
-      rainbondInfo.oauth_services.value &&
-      rainbondInfo.oauth_services.value.map(item => {
+    wutongUtil.OauthbEnable(wutongInfo) &&
+      wutongInfo.oauth_services &&
+      wutongInfo.oauth_services.value &&
+      wutongInfo.oauth_services.value.map(item => {
         if (item.service_id == service_id) {
           oauthServer = item;
         }

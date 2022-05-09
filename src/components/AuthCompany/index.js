@@ -49,7 +49,7 @@ export default class Index extends PureComponent {
       alertText: false,
       marketUrl: '',
       accessKey: '',
-      activeKeyStore: 'rainbondStore',
+      activeKeyStore: 'wutongStore',
       marketList: [],
       checkedValues: [],
       enterprise_alias: '', // this.props.enterprise.enterprise_alias || '',
@@ -312,7 +312,7 @@ export default class Index extends PureComponent {
       title = '企业尚未绑定云端应用商店, 按以下步骤进行绑定认证',
       onCancel,
       onOk,
-      rainbondInfo,
+      wutongInfo,
       form,
       eid,
       isHelm = false
@@ -339,7 +339,7 @@ export default class Index extends PureComponent {
         span: 24
       }
     };
-    const defaultMarketUrl = rainbondInfo && rainbondInfo.default_market_url;
+    const defaultMarketUrl = wutongInfo && wutongInfo.default_market_url;
     const message = (
       <span>
         正在访问
@@ -371,7 +371,7 @@ export default class Index extends PureComponent {
                     RainStore商店
                   </span>
                 }
-                key="rainbondStore"
+                key="wutongStore"
               />
               <TabPane
                 tab={
@@ -390,7 +390,7 @@ export default class Index extends PureComponent {
             </Tabs>
           )}
 
-          {activeKeyStore === 'rainbondStore' ? (
+          {activeKeyStore === 'wutongStore' ? (
             <div>
               {step === 2 && !loading && (
                 <div>

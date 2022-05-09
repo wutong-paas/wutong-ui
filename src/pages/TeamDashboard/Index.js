@@ -38,7 +38,7 @@ const componentLogo = require('@/assets/teamComponentLogo.svg');
   enterprise: global.enterprise,
   events: index.events,
   pagination: index.pagination,
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   currentTeam: teamControl.currentTeam,
   currentRegionName: teamControl.currentRegionName,
   currentEnterprise: enterprise.currentEnterprise,
@@ -561,7 +561,7 @@ export default class Index extends PureComponent {
                       >
                         {(index.overviewInfo &&
                           index.overviewInfo.running_app_num) ||
-                        0}
+                          0}
                         个运行的应用
                       </span>
                     </div>
@@ -578,7 +578,7 @@ export default class Index extends PureComponent {
                         style={{ width: '100%' }}
                       >
                         {index.overviewInfo.team_app_num -
-                        index.overviewInfo.running_app_num || 0}
+                          index.overviewInfo.running_app_num || 0}
                         个未运行的应用
                       </span>
                     </div>
@@ -588,7 +588,7 @@ export default class Index extends PureComponent {
                         {(index.overviewInfo &&
                           index.overviewInfo &&
                           index.overviewInfo.team_app_num) ||
-                        0}
+                          0}
                         个应用
                       </span>
                     </div>
@@ -615,7 +615,7 @@ export default class Index extends PureComponent {
                       >
                         {(index.overviewInfo &&
                           index.overviewInfo.running_component_num) ||
-                        0}
+                          0}
                         个运行的组件
                       </span>
                     </div>
@@ -632,7 +632,7 @@ export default class Index extends PureComponent {
                         style={{ width: '100%' }}
                       >
                         {index.overviewInfo.team_service_num -
-                        index.overviewInfo.running_component_num || 0}
+                          index.overviewInfo.running_component_num || 0}
                         个未运行的组件
                       </span>
                     </div>
@@ -642,7 +642,7 @@ export default class Index extends PureComponent {
                         {(index.overviewInfo &&
                           index.overviewInfo &&
                           index.overviewInfo.team_service_num) ||
-                        0}
+                          0}
                         个组件
                       </span>
                     </div>
@@ -711,7 +711,7 @@ export default class Index extends PureComponent {
                   <div className={styles.userNum}>
                     <p>
                       {(index.overviewInfo && index.overviewInfo.user_nums) ||
-                      0}
+                        0}
                     </p>
                     <span>个</span>
                   </div>
@@ -760,87 +760,87 @@ export default class Index extends PureComponent {
             <div className={styles.teamHotAppList}>
               {/* 1 */}
               {teamHotAppList &&
-              teamHotAppList.length > 0 &&
-              teamHotAppList.map(item => {
-                return (
-                  <div key={item.group_id}>
-                    <div
-                      className={`${styles.teamHotAppItem} ${styles.hoverPointer}`}
-                      onClick={() => {
-                        dispatch(
-                          routerRedux.push(
-                            `/team/${teamName}/region/${regionName}/apps/${item.group_id}`
-                          )
-                        );
-                      }}
-                    >
-                      {/* top */}
-                      <div className={styles.hotAppItemDetails}>
+                teamHotAppList.length > 0 &&
+                teamHotAppList.map(item => {
+                  return (
+                    <div key={item.group_id}>
+                      <div
+                        className={`${styles.teamHotAppItem} ${styles.hoverPointer}`}
+                        onClick={() => {
+                          dispatch(
+                            routerRedux.push(
+                              `/team/${teamName}/region/${regionName}/apps/${item.group_id}`
+                            )
+                          );
+                        }}
+                      >
+                        {/* top */}
+                        <div className={styles.hotAppItemDetails}>
                           <span>
                             {item.logo && <img src={item.logo} />}
                             {!item.logo && <img src={defaultAppLogo} />}
                           </span>
 
-                        <div className={styles.hotAppItemUse}>
-                          {/* 标题 */}
-                          <div
-                            className={`${styles.hotAppItemTitle} ${styles.ellipsis}`}
-                          >
-                            {item.group_name}
-                          </div>
-                          <div className={styles.useDeatil}>
-                            <div className={styles.hotAppUseSave}>
-                              <p style={{ marginBottom: '0px' }}>内存:</p>
-                              <div>
-                                <p style={{ marginBottom: '0px' }}>
-                                  {this.handlUnit(item.used_mem || 0)}
-                                </p>
-                                <span>
+                          <div className={styles.hotAppItemUse}>
+                            {/* 标题 */}
+                            <div
+                              className={`${styles.hotAppItemTitle} ${styles.ellipsis}`}
+                            >
+                              {item.group_name}
+                            </div>
+                            <div className={styles.useDeatil}>
+                              <div className={styles.hotAppUseSave}>
+                                <p style={{ marginBottom: '0px' }}>内存:</p>
+                                <div>
+                                  <p style={{ marginBottom: '0px' }}>
+                                    {this.handlUnit(item.used_mem || 0)}
+                                  </p>
+                                  <span>
                                     {this.handlUnit(item.used_mem || 0, 'MB')}
                                   </span>
+                                </div>
+                              </div>
+                              <div className={styles.hotAppComNum}>
+                                <span>组件:</span>
+                                <span> {item.services_num}</span>
+                                <span>个</span>
                               </div>
                             </div>
-                            <div className={styles.hotAppComNum}>
-                              <span>组件:</span>
-                              <span> {item.services_num}</span>
-                              <span>个</span>
-                            </div>
                           </div>
                         </div>
-                      </div>
-                      {/* under */}
-                      <div className={styles.hotAppItemBackup}>
-                        {/* 更新时间 */}
-                        <div className={styles.comMsg}>
-                          {/* <div className={styles.versions}>版本:1.0.0</div> */}
-                          <div className={styles.update}>
+                        {/* under */}
+                        <div className={styles.hotAppItemBackup}>
+                          {/* 更新时间 */}
+                          <div className={styles.comMsg}>
+                            {/* <div className={styles.versions}>版本:1.0.0</div> */}
+                            <div className={styles.update}>
                               <span>
                                 {item.update_time &&
-                                moment(item.update_time).fromNow()}
+                                  moment(item.update_time).fromNow()}
                               </span>
-                            <span>更新</span>
+                              <span>更新</span>
+                            </div>
                           </div>
+                          {/* 访问 */}
+                          {item.status === 'RUNNING' && (
+                            <div className={styles.visit}>
+                              {item.accesses.length > 0 && (
+                                <VisterBtn
+                                  linkList={item.accesses}
+                                  type="link"
+                                />
+                              )}
+                            </div>
+                          )}
                         </div>
-                        {/* 访问 */}
-                        {item.status === 'RUNNING' && (
-                          <div className={styles.visit}>
-                            {item.accesses.length > 0 && (
-                              <VisterBtn
-                                linkList={item.accesses}
-                                type="link"
-                              />
-                            )}
-                          </div>
-                        )}
-                      </div>
-                      {/* App status */}
-                      <div className={styles.running}>
-                        <AppState AppStatus={item.status} />
+                        {/* App status */}
+                        <div className={styles.running}>
+                          <AppState AppStatus={item.status} />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
             </div>
             {/* 分页 */}
             <div className={styles.pagination}>
@@ -869,26 +869,26 @@ export default class Index extends PureComponent {
         )}
         {/* 集群不健康的情况 */}
         {loadedOverview &&
-        index.overviewInfo &&
-        !index.overviewInfo.region_health && (
-          <div>
-            <Result
-              type="warning"
-              title="集群端失去响应，稍后重试"
-              description="若一直无法加载，请联系集群管理员查看集群状态"
-              actions={[
-                <Button
-                  loading={loadingOverview}
-                  onClick={this.loadOverview}
-                  type="primary"
-                  key="console"
-                >
-                  重新加载
-                </Button>
-              ]}
-            />
-          </div>
-        )}
+          index.overviewInfo &&
+          !index.overviewInfo.region_health && (
+            <div>
+              <Result
+                type="warning"
+                title="集群端失去响应，稍后重试"
+                description="若一直无法加载，请联系集群管理员查看集群状态"
+                actions={[
+                  <Button
+                    loading={loadingOverview}
+                    onClick={this.loadOverview}
+                    type="primary"
+                    key="console"
+                  >
+                    重新加载
+                  </Button>
+                ]}
+              />
+            </div>
+          )}
       </Fragment>
     );
   }

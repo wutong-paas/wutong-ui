@@ -14,7 +14,7 @@ const { TabPane } = Tabs;
   user: user.currentUser,
   list,
   loading: loading.models.list,
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   enterprise: global.enterprise,
   isRegist: global.isRegist,
   oauthLongin: loading.effects['global/creatOauth'],

@@ -33,7 +33,7 @@ const { Option } = Select;
   index,
   events: index.events,
   pagination: index.pagination,
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   enterprise: global.enterprise,
   projectLoading: loading.effects['project/fetchNotice'],
   activitiesLoading: loading.effects['activities/fetchList'],
@@ -227,9 +227,7 @@ export default class Index extends PureComponent {
     dispatch({
       type: 'index/fetchApps',
       payload,
-      callback: res => {
-
-      }
+      callback: res => {}
     });
   };
 

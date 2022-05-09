@@ -16,37 +16,37 @@ class Login extends Component {
     className: '',
     defaultActiveKey: '',
     onTabChange: () => {},
-    onSubmit: () => {},
+    onSubmit: () => {}
   };
   static propTypes = {
     className: PropTypes.string,
     defaultActiveKey: PropTypes.string,
     onTabChange: PropTypes.func,
-    onSubmit: PropTypes.func,
+    onSubmit: PropTypes.func
   };
   static childContextTypes = {
     tabUtil: PropTypes.object,
     form: PropTypes.object,
-    updateActive: PropTypes.func,
+    updateActive: PropTypes.func
   };
   state = {
     type: this.props.defaultActiveKey,
     tabs: [],
-    active: {},
+    active: {}
   };
   getChildContext() {
     return {
       tabUtil: {
         addTab: id => {
           this.setState({
-            tabs: [...this.state.tabs, id],
+            tabs: [...this.state.tabs, id]
           });
         },
         removeTab: id => {
           this.setState({
-            tabs: this.state.tabs.filter(currentId => currentId !== id),
+            tabs: this.state.tabs.filter(currentId => currentId !== id)
           });
-        },
+        }
       },
       form: this.props.form,
       updateActive: activeItem => {
@@ -57,14 +57,14 @@ class Login extends Component {
           active[type] = [activeItem];
         }
         this.setState({
-          active,
+          active
         });
-      },
+      }
     };
   }
   UNSAFE_componentWillMount() {
-    const { rainbondInfo, dispatch } = this.props;
-    const firstRegist = !wutongUtil.fetchIsFirstRegist(rainbondInfo);
+    const { wutongInfo, dispatch } = this.props;
+    const firstRegist = !wutongUtil.fetchIsFirstRegist(wutongInfo);
     // first user, to register admin
     if (firstRegist) {
       dispatch(routerRedux.replace('/user/register'));
@@ -72,7 +72,7 @@ class Login extends Component {
   }
   onSwitch = type => {
     this.setState({
-      type,
+      type
     });
     this.props.onTabChange(type);
   };
@@ -132,5 +132,5 @@ Object.keys(LoginItem).forEach(item => {
 });
 
 export default connect(({ global }) => ({
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo
 }))(Login);
