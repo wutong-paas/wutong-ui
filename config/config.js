@@ -48,9 +48,9 @@ export default {
   routes: routerConfig,
   proxy: {
     '/console/proxy': {
-      target: 'http://wutong-console.wt-system:8080',
+      target: 'http://wutong-adaptor.wt-system:8080',
       pathRewrite: {
-        '^/console/proxy': '/'
+        '^/console/proxy/(.*)$': '/$1'
       },
       changeOrigin: true
     },

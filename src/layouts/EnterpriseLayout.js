@@ -459,8 +459,6 @@ class EnterpriseLayout extends PureComponent {
       );
     };
     const SiteTitle = '梧桐云平台';
-    console.log('rainbondInfo');
-    console.log(rainbondInfo);
 
     return (
       <Fragment>
