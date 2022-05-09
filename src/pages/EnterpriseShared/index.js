@@ -220,7 +220,7 @@ export default class EnterpriseShared extends PureComponent {
     const isHelms = helms && helms.length > 0;
 
     const showCloudMarketAuth =
-      // (isArr && arr[0].access_key === '' && arr[0].domain === 'rainbond') ||
+      // (isArr && arr[0].access_key === '' && arr[0].domain === 'wutong') ||
       false;
     this.setState(
       {

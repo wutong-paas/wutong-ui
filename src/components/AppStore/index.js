@@ -5,19 +5,19 @@ import styles from '../CreateTeam/index.less';
 
 @connect(({ user, global }) => ({
   currUser: user.currentUser,
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo
 }))
 export default class AppStore extends PureComponent {
   handleSubmit = () => {
-    const { rainbondInfo, eid } = this.props;
+    const { wutongInfo, eid } = this.props;
     const domain =
-      rainbondInfo && rainbondInfo.market_url && rainbondInfo.market_url.enable
-        ? rainbondInfo.market_url.value
+      wutongInfo && wutongInfo.market_url && wutongInfo.market_url.enable
+        ? wutongInfo.market_url.value
         : 'https://market.goodrain.com';
     const callback = window.location.href;
     const version =
-      rainbondInfo && rainbondInfo.version && rainbondInfo.version.enable
-        ? rainbondInfo.version.value
+      wutongInfo && wutongInfo.version && wutongInfo.version.enable
+        ? wutongInfo.version.value
         : '';
     const url = `${domain}/manage/jointcloud?join_id=${eid}&callback_url=${callback}&rbd_version=${version}`;
     window.location.href = url;
@@ -36,7 +36,7 @@ export default class AppStore extends PureComponent {
           <Button onClick={onCancel}> 取消 </Button>,
           <Button type="primary" onClick={this.handleSubmit}>
             绑定
-          </Button>,
+          </Button>
         ]}
       />
     );

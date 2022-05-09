@@ -21,7 +21,7 @@ const formItemLayout = {
   ({ global, loading }) => ({
     groups: global.groups,
     createAppByCodeLoading: loading.effects['createApp/createAppByCode'],
-    rainbondInfo: global.rainbondInfo
+    wutongInfo: global.wutongInfo
   }),
   null,
   null,
@@ -202,7 +202,7 @@ export default class Index extends PureComponent {
   };
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { groups, createAppByCodeLoading, rainbondInfo } = this.props;
+    const { groups, createAppByCodeLoading, wutongInfo } = this.props;
     const data = this.props.data || {};
     return (
       <Form layout="horizontal" hideRequiredMark>
@@ -314,12 +314,11 @@ export default class Index extends PureComponent {
               </Option>
             </Select>
           )}
-          {this.state.demoHref &&
-            wutongUtil.documentPlatform_url(rainbondInfo) && (
-              <a target="_blank" href={this.state.demoHref}>
-                查看源码
-              </a>
-            )}
+          {this.state.demoHref && wutongUtil.documentPlatform_url(wutongInfo) && (
+            <a target="_blank" href={this.state.demoHref}>
+              查看源码
+            </a>
+          )}
         </Form.Item>
         <Form.Item
           wrapperCol={{

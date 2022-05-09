@@ -22,7 +22,7 @@ const { Step } = Steps;
   user: user.currentUser,
   list,
   loading: loading.models.list,
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   enterprise: global.enterprise,
   isRegist: global.isRegist,
   oauthLongin: loading.effects['global/creatOauth'],
@@ -38,7 +38,7 @@ export default class EnterpriseClusters extends PureComponent {
       showBuyClusterConfig: false,
       k8sClusters: [],
       loading: true,
-      rainbondInit: false,
+      wutongInit: false,
       selectClusterID: '',
       showTaskDetail: false,
       linkedClusters: new Map(),
@@ -66,11 +66,11 @@ export default class EnterpriseClusters extends PureComponent {
         params: { eid, provider }
       }
     } = this.props;
-    const { selectClusterID, rainbondInit } = this.state;
+    const { selectClusterID, wutongInit } = this.state;
     dispatch(
       routerRedux.push(
         `/enterprise/${eid}/provider/${provider}/kclusters/${selectClusterID}/${
-          rainbondInit ? 'link' : 'init'
+          wutongInit ? 'link' : 'init'
         }`
       )
     );
@@ -78,7 +78,7 @@ export default class EnterpriseClusters extends PureComponent {
   selectCluster = row => {
     this.setState({
       selectClusterID: row.clusterID,
-      rainbondInit: row.rainbond_init
+      wutongInit: row.wutong_init
     });
   };
 
@@ -153,10 +153,10 @@ export default class EnterpriseClusters extends PureComponent {
       match: {
         params: { eid, provider }
       },
-      rainbondInfo,
+      wutongInfo,
       enterprise
     } = this.props;
-    // globalUtil.putInstallClusterLog(enterprise, rainbondInfo, {
+    // globalUtil.putInstallClusterLog(enterprise, wutongInfo, {
     //   eid,
     //   taskID,
     //   status: isCustomClusterType ? status : 'start',
@@ -266,7 +266,7 @@ export default class EnterpriseClusters extends PureComponent {
           this.handleGuideStep('close');
           this.selectCluster({
             clusterID: '',
-            rainbond_init: false
+            wutong_init: false
           });
           handleClosed();
         }}
@@ -401,13 +401,13 @@ export default class EnterpriseClusters extends PureComponent {
     );
     let next = false;
     let selectedClusterID = '';
-    let rainbondInit = false;
+    let wutongInit = false;
 
     if (k8sClusters && k8sClusters.length) {
       k8sClusters.map(item => {
         const { state } = item;
         if (state === 'running') {
-          rainbondInit = item.rainbond_init;
+          wutongInit = item.wutong_init;
           selectedClusterID = item.cluster_id;
           next = true;
         }
@@ -456,7 +456,7 @@ export default class EnterpriseClusters extends PureComponent {
                 handleClick: () => {
                   this.selectCluster({
                     clusterID: selectedClusterID,
-                    rainbond_init: rainbondInit
+                    wutong_init: wutongInit
                   });
                 }
               })

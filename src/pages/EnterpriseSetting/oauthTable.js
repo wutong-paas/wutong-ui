@@ -24,7 +24,7 @@ import OauthForm from '../../components/OauthForm';
 const { confirm } = Modal;
 
 @connect(({ loading, global, index }) => ({
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   enterprise: global.enterprise,
   isRegist: global.isRegist,
   oauthLongin: loading.effects['global/creatOauth'],

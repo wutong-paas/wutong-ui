@@ -71,10 +71,10 @@ export default class Index extends PureComponent {
     return false;
   };
   render() {
-    const { form, rainbondInfo } = this.props;
+    const { form, wutongInfo } = this.props;
     const { getFieldDecorator } = form;
     const is_public =
-      rainbondInfo && rainbondInfo.is_public && rainbondInfo.is_public.enable;
+      wutongInfo && wutongInfo.is_public && wutongInfo.is_public.enable;
 
     return (
       <div

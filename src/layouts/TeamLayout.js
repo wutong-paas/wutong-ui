@@ -405,7 +405,7 @@ class TeamLayout extends PureComponent {
       location,
       location: { pathname },
       nouse,
-      rainbondInfo,
+      wutongInfo,
       enterprise,
       orders,
       upDataHeader,
@@ -424,7 +424,12 @@ class TeamLayout extends PureComponent {
       currentApp
     } = this.state;
 
-    const { teamName, regionName, teamId, enterprise_id } = this.props.match.params;
+    const {
+      teamName,
+      regionName,
+      teamId,
+      enterprise_id
+    } = this.props.match.params;
     const autoWidth = collapsed ? 'calc(100% - 416px)' : 'calc(100% - 116px)';
     // Parameters of the abnormal
     if (!teamName || !regionName) {
@@ -531,7 +536,7 @@ class TeamLayout extends PureComponent {
         currentTeam.tenant_actions
       );
     }
-    const fetchLogo = wutongUtil.fetchLogo(rainbondInfo, enterprise) || logo;
+    const fetchLogo = wutongUtil.fetchLogo(wutongInfo, enterprise) || logo;
     const SiteTitle = '梧桐云平台';
 
     const layout = () => {
@@ -614,9 +619,9 @@ class TeamLayout extends PureComponent {
               eid={currentEnterprise.enterprise_id}
               logo={fetchLogo}
               isPubCloud={
-                rainbondInfo &&
-                rainbondInfo.is_public &&
-                rainbondInfo.is_public.enable
+                wutongInfo &&
+                wutongInfo.is_public &&
+                wutongInfo.is_public.enable
               }
               currentUser={currentUser}
               collapsed={collapsed}
@@ -631,10 +636,10 @@ class TeamLayout extends PureComponent {
                   currentEnterprise={currentEnterprise}
                   enterpriseList={enterpriseList}
                   title={
-                    rainbondInfo &&
-                    rainbondInfo.title &&
-                    rainbondInfo.title.enable &&
-                    rainbondInfo.title.value
+                    wutongInfo &&
+                    wutongInfo.title &&
+                    wutongInfo.title.enable &&
+                    wutongInfo.title.value
                   }
                   currentUser={currentUser}
                   Authorized={Authorized}
@@ -710,7 +715,7 @@ export default connect(
     groups: global.groups,
     fetchingNotices: loading.effects['global/fetchNotices'],
     notices: global.notices,
-    rainbondInfo: global.rainbondInfo,
+    wutongInfo: global.wutongInfo,
     payTip: global.payTip,
     memoryTip: global.memoryTip,
     noMoneyTip: global.noMoneyTip,

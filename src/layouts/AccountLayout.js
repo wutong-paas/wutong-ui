@@ -97,21 +97,21 @@ class AccountLayout extends PureComponent {
     const {
       children,
       currentUser,
-      rainbondInfo,
+      wutongInfo,
       collapsed,
       enterprise,
       location
     } = this.props;
 
     const { enterpriseList, isMobiles, ready } = this.state;
-    const fetchLogo = wutongUtil.fetchLogo(rainbondInfo, enterprise) || logo;
+    const fetchLogo = wutongUtil.fetchLogo(wutongInfo, enterprise) || logo;
     if (!ready || !enterprise) {
       return <PageLoading />;
     }
     const queryString = stringify({
       redirect: window.location.href
     });
-    if (!currentUser || !rainbondInfo || enterpriseList.length === 0) {
+    if (!currentUser || !wutongInfo || enterpriseList.length === 0) {
       return <Redirect to={`/user/login?${queryString}`} />;
     }
 
@@ -164,9 +164,9 @@ class AccountLayout extends PureComponent {
             <GlobalHeader
               logo={fetchLogo}
               isPubCloud={
-                rainbondInfo &&
-                rainbondInfo.is_public &&
-                rainbondInfo.is_public.enable
+                wutongInfo &&
+                wutongInfo.is_public &&
+                wutongInfo.is_public.enable
               }
               currentUser={currentUser}
               collapsed={collapsed}
@@ -220,7 +220,7 @@ class AccountLayout extends PureComponent {
 
 export default connect(({ user, global }) => ({
   currentUser: user.currentUser,
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   collapsed: global.collapsed,
   enterprise: global.enterprise
 }))(AccountLayout);

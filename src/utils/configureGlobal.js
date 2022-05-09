@@ -1,10 +1,8 @@
-
-
 const configureGlobal = {
-  documentAddressDefault: "https://gitee.com/rainbond/demo-2048.git",
-  rainbondDocumentAddress: "https://www.rainbond.com/",
-  documentAddress: "https://gitee.com/rainbond/",
+  documentAddressDefault: 'https://gitee.com/wutong/demo-2048.git',
+  wutongDocumentAddress: 'https://www.wutong.com/',
+  documentAddress: 'https://gitee.com/wutong/',
   newbieGuideShow: true,
-  rainbondTextShow: true,
+  wutongTextShow: true
 };
 export default configureGlobal;

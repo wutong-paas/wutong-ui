@@ -237,10 +237,10 @@ const oauthUtil = {
     }
     return null;
   },
-  getGitOauthServer(rainbondInfo, service_id, enterprise) {
+  getGitOauthServer(wutongInfo, service_id, enterprise) {
     let selectServer = null;
     if (
-      wutongUtil.OauthbEnable(rainbondInfo) &&
+      wutongUtil.OauthbEnable(wutongInfo) &&
       wutongUtil.OauthEnterpriseEnable(enterprise)
     ) {
       enterprise.oauth_services.value.map(item => {

@@ -1,19 +1,18 @@
 /* eslint-disable prettier/prettier */
-import React, { PureComponent } from "react";
-import { connect } from "dva";
-import { routerRedux } from "dva/router";
-import PageHeaderLayout from "../../layouts/PageHeaderLayout";
-import OrderManagement from "./components/orderManagement";
-import OrderDetails from "./components/orderDetails";
-import ServiceOverview from "./components/serviceOverview";
-import ServiceOverviewDetails from "./components/serviceOverviewDetails";
+import React, { PureComponent } from 'react';
+import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
+import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import OrderManagement from './components/orderManagement';
+import OrderDetails from './components/orderDetails';
+import ServiceOverview from './components/serviceOverview';
+import ServiceOverviewDetails from './components/serviceOverviewDetails';
 import Exception from '../Exception/404';
 import wutongUtil from '../../utils/wutong';
 
-
 @connect(({ user, global, index }) => ({
   user: user.currentUser,
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   enterprise: global.enterprise,
   overviewInfo: index.overviewInfo
 }))
@@ -38,19 +37,19 @@ export default class EnterpriseOrders extends PureComponent {
       }
     } = this.props;
     const EnterpriseServiceOverview =
-      window.location.href.indexOf("overviewService/details") > -1;
+      window.location.href.indexOf('overviewService/details') > -1;
     const tabList = [
       {
-        key: "overviewService",
-        tab: "服务概览"
+        key: 'overviewService',
+        tab: '服务概览'
       },
       {
-        key: "orderManagement",
-        tab: "订单管理"
+        key: 'orderManagement',
+        tab: '订单管理'
       }
     ];
-    if(!wutongUtil.isEnableBillingFunction()){
-      return <Exception />
+    if (!wutongUtil.isEnableBillingFunction()) {
+      return <Exception />;
     }
     return (
       <PageHeaderLayout
@@ -59,13 +58,13 @@ export default class EnterpriseOrders extends PureComponent {
         tabActiveKey={orderType}
         onTabChange={this.callback}
       >
-        {orderType === "overviewService" &&
+        {orderType === 'overviewService' &&
           (EnterpriseServiceOverview ? (
             <ServiceOverviewDetails eid={eid} />
           ) : (
             <ServiceOverview eid={eid} />
           ))}
-        {orderType === "orderManagement" &&
+        {orderType === 'orderManagement' &&
           (orderId ? (
             <OrderDetails eid={eid} orderId={orderId} />
           ) : (

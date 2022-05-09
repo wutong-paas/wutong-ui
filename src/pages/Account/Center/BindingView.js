@@ -6,7 +6,7 @@ import wutongUtil from '../../../utils/wutong';
 
 @connect(({ user, global, appControl }) => ({
   currUser: user.currentUser,
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   enterprise: global.enterprise,
   appDetail: appControl.appDetail
 }))

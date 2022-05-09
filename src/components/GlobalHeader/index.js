@@ -27,7 +27,7 @@ import styles from './index.less';
 const { Header } = Layout;
 
 @connect(({ user, global, appControl }) => ({
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   appDetail: appControl.appDetail,
   currentUser: user.currentUser,
   enterprise: global.enterprise
@@ -108,7 +108,7 @@ export default class GlobalHeader extends PureComponent {
     });
   };
   render() {
-    const { currentUser, customHeader, rainbondInfo, collapsed } = this.props;
+    const { currentUser, customHeader, wutongInfo, collapsed } = this.props;
     if (!currentUser) {
       return null;
     }
@@ -151,13 +151,13 @@ export default class GlobalHeader extends PureComponent {
         <Menu selectedKeys={[]} onClick={this.handleMenuClick}>
           {MenuItems('userCenter', handleUserSvg, '个人中心')}
           {MenuItems('cpw', handleEditSvg, '修改密码')}
-          {!wutongUtil.logoutEnable(rainbondInfo) &&
+          {!wutongUtil.logoutEnable(wutongInfo) &&
             MenuItems('logout', handleLogoutSvg, '退出登录')}
         </Menu>
       </div>
     );
-    const enterpriseEdition = wutongUtil.isEnterpriseEdition(rainbondInfo);
-    const platformUrl = wutongUtil.documentPlatform_url(rainbondInfo);
+    const enterpriseEdition = wutongUtil.isEnterpriseEdition(wutongInfo);
+    const platformUrl = wutongUtil.documentPlatform_url(wutongInfo);
     return (
       <Header className={styles.header}>
         <Icon

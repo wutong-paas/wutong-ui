@@ -651,7 +651,8 @@ const cloud = {
       steps.push(step);
       if (
         item.status === 'failure' ||
-        (item.type === 'InitWutongRegionRegionConfig' && item.status === 'success')
+        (item.type === 'InitWutongRegionRegionConfig' &&
+          item.status === 'success')
       ) {
         complete = true;
       }
@@ -700,7 +701,7 @@ const cloud = {
         if (linkedClusters.get(cluster.cluster_id)) {
           return <span style={{ color: 'green' }}>运行中(已对接)</span>;
         }
-        if (cluster.rainbond_init === true) {
+        if (cluster.wutong_init === true) {
           return <span style={{ color: 'green' }}>运行中(已初始化)</span>;
         }
         if (cluster.parameters && cluster.parameters.Message) {

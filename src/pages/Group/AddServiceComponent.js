@@ -22,7 +22,7 @@ import styles from './Index.less';
   apps: application.apps,
   groupDetail: application.groupDetail || {},
   groups: global.groups || [],
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   enterprise: global.enterprise
 }))
 export default class AddServiceComponent extends PureComponent {
@@ -164,7 +164,7 @@ export default class AddServiceComponent extends PureComponent {
     this.setState({ scopeProMax });
   };
   render() {
-    const { rainbondInfo, enterprise, groupId, onload } = this.props;
+    const { wutongInfo, enterprise, groupId, onload } = this.props;
     const {
       ButtonGroup,
       moreState,
@@ -280,7 +280,7 @@ export default class AddServiceComponent extends PureComponent {
                     })}
                 </Row>
                 <Row style={{ marginBottom: '2px' }}>
-                  {wutongUtil.documentPlatform_url(rainbondInfo) && (
+                  {wutongUtil.documentPlatform_url(wutongInfo) && (
                     <Alert
                       message={
                         <p className={styles.prompt}>

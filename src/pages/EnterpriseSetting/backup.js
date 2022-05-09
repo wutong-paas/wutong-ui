@@ -30,7 +30,7 @@ const { confirm } = Modal;
 @connect(({ user, loading, global }) => ({
   user: user.currentUser,
   loading: loading.models.list,
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   enterprise: global.enterprise
 }))
 @Form.create()

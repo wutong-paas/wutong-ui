@@ -119,7 +119,7 @@ export default {
     currTeam: '',
     currRegion: '',
     // 云帮平台信息
-    rainbondInfo: null,
+    wutongInfo: null,
     apploadingnum: 0,
     // 显示充值提示
     payTip: false,
@@ -900,7 +900,7 @@ export default {
     saveRainBondInfo(state, { payload }) {
       return {
         ...state,
-        rainbondInfo: payload,
+        wutongInfo: payload,
         isRegist: payload.is_regist.enable
       };
     },

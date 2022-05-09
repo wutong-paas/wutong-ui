@@ -12,9 +12,9 @@ import wutongUtil from '../../utils/wutong';
 import styles from './index.less';
 
 @connect(({ user, global }) => ({
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   currentUser: user.currentUser,
-  enterprise: global.enterprise,
+  enterprise: global.enterprise
 }))
 export default class Index extends PureComponent {
   constructor(props) {
@@ -23,21 +23,21 @@ export default class Index extends PureComponent {
       // 是否绑定了oauth仓库
       isAuth: false,
       // oauth url
-      authUrl: '',
+      authUrl: ''
     };
   }
   componentDidMount() {
     this.setInfo();
   }
   setInfo = () => {
-    const { rainbondInfo, enterprise, type } = this.props;
+    const { wutongInfo, enterprise, type } = this.props;
     const oauthType = this.setType();
-    const gitinfo = oauthUtil.getGitOauthServer(rainbondInfo, type, enterprise);
+    const gitinfo = oauthUtil.getGitOauthServer(wutongInfo, type, enterprise);
     if (gitinfo) {
       this.setState({ authUrl: oauthUtil.getAuthredictURL(gitinfo) });
     }
     if (wutongUtil.OauthbTypes(enterprise, oauthType)) {
-      this.getGitRepostoryInfo(rainbondInfo, type, enterprise);
+      this.getGitRepostoryInfo(wutongInfo, type, enterprise);
     }
   };
   UNSAFE_componentWillUpdate(props) {
@@ -61,11 +61,11 @@ export default class Index extends PureComponent {
     return typeList && typeList.length > 0 ? typeList[0].types : '';
   };
 
-  getGitRepostoryInfo = (rainbondInfo, key, enterprise) => {
-    const gitinfo = oauthUtil.getGitOauthServer(rainbondInfo, key, enterprise);
+  getGitRepostoryInfo = (wutongInfo, key, enterprise) => {
+    const gitinfo = oauthUtil.getGitOauthServer(wutongInfo, key, enterprise);
     const { currentUser } = this.props;
     this.setState({
-      isAuth: gitinfo && oauthUtil.userbondOAuth(currentUser, key),
+      isAuth: gitinfo && oauthUtil.userbondOAuth(currentUser, key)
     });
   };
 
@@ -77,7 +77,7 @@ export default class Index extends PureComponent {
       payload: {
         team_name: teamName,
         code_from: type,
-        ...value,
+        ...value
       },
       callback: data => {
         const appAlias = data && data.bean.service_alias;
@@ -88,7 +88,7 @@ export default class Index extends PureComponent {
                 `/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/create/create-check/${appAlias}`
               )
             );
-      },
+      }
     });
   };
 
@@ -98,7 +98,7 @@ export default class Index extends PureComponent {
       dispatch,
       handleType,
       handleServiceGetData,
-      handleServiceBotton,
+      handleServiceBotton
     } = this.props;
     const teamName = globalUtil.getCurrTeamName();
     const payload = {
@@ -112,7 +112,7 @@ export default class Index extends PureComponent {
       git_project_id: value.project_id,
       team_name: teamName,
       open_webhook: value.open_webhook, // 是否开启webhook
-      full_name: value.project_full_name,
+      full_name: value.project_full_name
     };
     dispatch({
       type: 'createApp/createThirtAppByCode',
@@ -129,7 +129,7 @@ export default class Index extends PureComponent {
             )
           );
         }
-      },
+      }
     });
   };
 
@@ -145,7 +145,7 @@ export default class Index extends PureComponent {
               style={{
                 textAlign: 'center',
                 padding: '100px 0',
-                fontSize: 14,
+                fontSize: 14
               }}
             >
               尚未绑定{type}账号
@@ -154,7 +154,7 @@ export default class Index extends PureComponent {
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
-                  marginLeft: 20,
+                  marginLeft: 20
                 }}
                 type="primary"
               >

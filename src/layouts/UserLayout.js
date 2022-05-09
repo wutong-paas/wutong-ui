@@ -69,11 +69,11 @@ class UserLayout extends React.PureComponent {
     });
   };
   render() {
-    const { rainbondInfo, children } = this.props;
+    const { wutongInfo, children } = this.props;
     const { isRender } = this.state;
-    const fetchLogo = wutongUtil.fetchLogo(rainbondInfo) || logo;
-    const isEnterpriseEdition = wutongUtil.isEnterpriseEdition(rainbondInfo);
-    if (!rainbondInfo || !isRender) {
+    const fetchLogo = wutongUtil.fetchLogo(wutongInfo) || logo;
+    const isEnterpriseEdition = wutongUtil.isEnterpriseEdition(wutongInfo);
+    if (!wutongInfo || !isRender) {
       return null;
     }
     return (
@@ -93,5 +93,5 @@ class UserLayout extends React.PureComponent {
 }
 
 export default connect(({ global }) => ({
-  rainbondInfo: global.rainbondInfo
+  wutongInfo: global.wutongInfo
 }))(UserLayout);

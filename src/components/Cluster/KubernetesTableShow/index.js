@@ -264,10 +264,10 @@ export default class KubernetesClusterShow extends PureComponent {
                         clusterID,
                         name: recordName,
                         can_init: record.can_init,
-                        rainbond_init:
+                        wutong_init:
                           record.state &&
                           record.state === 'running' &&
-                          record.rainbond_init
+                          record.wutong_init
                       });
                     }
                   }
@@ -358,7 +358,7 @@ export default class KubernetesClusterShow extends PureComponent {
                 重新安装
               </a>
             )}
-            {row.rainbond_init === true &&
+            {row.wutong_init === true &&
               !linkedClusters.get(row.cluster_id) && (
                 <Link
                   to={`/enterprise/${eid}/provider/${selectProvider}/kclusters/${row.cluster_id}/link`}
@@ -390,7 +390,7 @@ export default class KubernetesClusterShow extends PureComponent {
                 查看日志
               </Button>
             )}
-            {!row.rainbond_init &&
+            {!row.wutong_init &&
               (selectProvider === 'rke' || selectProvider === 'custom') && (
                 <Popconfirm
                   placement="top"
@@ -416,7 +416,7 @@ export default class KubernetesClusterShow extends PureComponent {
                   查看组件
                 </a>
               )}
-            {row.rainbond_init === true && (
+            {row.wutong_init === true && (
               <Popconfirm
                 placement="top"
                 title="卸载后不可恢复，确认要卸载当前集群的平台服务吗？"

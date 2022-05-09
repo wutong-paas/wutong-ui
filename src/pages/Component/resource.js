@@ -40,7 +40,7 @@ const { Option, OptGroup } = Select;
   ({ user, appControl, global }) => ({
     currUser: user.currentUser,
     createWay: appControl.createWay,
-    rainbondInfo: global.rainbondInfo,
+    wutongInfo: global.wutongInfo,
     enterprise: global.enterprise
   }),
   null,
@@ -78,10 +78,10 @@ export default class Index extends PureComponent {
     this.loadBuildSourceInfo();
   }
   setOauthService = () => {
-    const { rainbondInfo, enterprise } = this.props;
+    const { wutongInfo, enterprise } = this.props;
     const tabList = [];
     if (
-      wutongUtil.OauthbEnable(rainbondInfo) &&
+      wutongUtil.OauthbEnable(wutongInfo) &&
       wutongUtil.OauthEnterpriseEnable(enterprise)
     ) {
       enterprise.oauth_services.value.map(item => {

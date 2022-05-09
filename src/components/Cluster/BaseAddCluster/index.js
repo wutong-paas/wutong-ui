@@ -9,7 +9,7 @@ import styles from '../../CreateTeam/index.less';
 const FormItem = Form.Item;
 
 @connect(({ global }) => ({
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   enterprise: global.enterprise
 }))
 class EditClusterInfo extends PureComponent {
@@ -61,7 +61,7 @@ class EditClusterInfo extends PureComponent {
   };
 
   createClusters = values => {
-    const { onOk, dispatch, eid, rainbondInfo, enterprise } = this.props;
+    const { onOk, dispatch, eid, wutongInfo, enterprise } = this.props;
     dispatch({
       type: 'region/createEnterpriseCluster',
       payload: {
@@ -74,7 +74,7 @@ class EditClusterInfo extends PureComponent {
       callback: res => {
         if (res && res._condition === 200) {
           notification.success({ message: '添加成功' });
-          // globalUtil.putInstallClusterLog(enterprise, rainbondInfo, {
+          // globalUtil.putInstallClusterLog(enterprise, wutongInfo, {
           //   eid,
           //   status: 'complete',
           //   install_step: 'directly',

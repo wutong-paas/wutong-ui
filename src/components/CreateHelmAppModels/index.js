@@ -14,7 +14,7 @@ const { Option } = Select;
 @Form.create()
 @connect(({ user, global, teamControl }) => ({
   user: user.currentUser,
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   currentTeam: teamControl.currentTeam
 }))
 class CreateHelmAppModels extends PureComponent {

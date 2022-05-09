@@ -39,7 +39,7 @@ export default class InstallStep extends PureComponent {
           if (
             res.list.length > 0 &&
             res.list[0].access_key !== '' &&
-            res.list[0].domain === 'rainbond'
+            res.list[0].domain === 'wutong'
           ) {
             this.setState({
               isAuthorize: true

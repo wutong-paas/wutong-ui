@@ -14,7 +14,7 @@ import CodeDemo from './code-demo';
 
 @connect(
   ({ teamControl, global, enterprise }) => ({
-    rainbondInfo: global.rainbondInfo,
+    wutongInfo: global.wutongInfo,
     currentTeam: teamControl.currentTeam,
     currentRegionName: teamControl.currentRegionName,
     currentEnterprise: enterprise.currentEnterprise,
@@ -40,7 +40,7 @@ export default class Main extends PureComponent {
   };
   render() {
     const {
-      rainbondInfo,
+      wutongInfo,
       enterprise,
       match,
       currentEnterprise,
@@ -59,7 +59,7 @@ export default class Main extends PureComponent {
         tab: '自定义源码'
       }
     ];
-    if (wutongUtil.officialDemoEnable(rainbondInfo)) {
+    if (wutongUtil.officialDemoEnable(wutongInfo)) {
       tabList.push({ key: 'demo', tab: '官方DEMO' });
     }
     const servers = oauthUtil.getEnableGitOauthServer(enterprise);

@@ -16,7 +16,7 @@ const loginUrl = '/user/login?disable_auto_login=true';
 
 @connect(({ user, global }) => ({
   register: user.register,
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   isRegist: global.isRegist
 }))
 @Form.create()
@@ -98,7 +98,7 @@ export default class Register extends Component {
   };
 
   render() {
-    const { isRegist, dispatch, rainbondInfo } = this.props;
+    const { isRegist, dispatch, wutongInfo } = this.props;
     if (!isRegist) {
       dispatch(
         routerRedux.replace(
@@ -110,13 +110,13 @@ export default class Register extends Component {
       return null;
     }
     const { user_info } = this.state;
-    const firstRegist = !wutongUtil.fetchIsFirstRegist(rainbondInfo);
+    const firstRegist = !wutongUtil.fetchIsFirstRegist(wutongInfo);
     let oauthServer = null;
     // eslint-disable-next-line no-unused-expressions
-    wutongUtil.OauthbEnable(rainbondInfo) &&
-      rainbondInfo.oauth_services &&
-      rainbondInfo.oauth_services.value &&
-      rainbondInfo.oauth_services.value.map(item => {
+    wutongUtil.OauthbEnable(wutongInfo) &&
+      wutongInfo.oauth_services &&
+      wutongInfo.oauth_services.value &&
+      wutongInfo.oauth_services.value.map(item => {
         if (item.service_id === service_id) {
           oauthServer = item;
         }

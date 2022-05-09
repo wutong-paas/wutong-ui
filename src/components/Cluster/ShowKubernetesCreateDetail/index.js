@@ -6,7 +6,7 @@ import cloud from '../../../utils/cloud';
 import ClusterProgressQuery from '../ClusterProgressQuery';
 
 @connect(({ global }) => ({
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   enterprise: global.enterprise
 }))
 class ShowKubernetesCreateDetail extends PureComponent {
@@ -50,7 +50,7 @@ class ShowKubernetesCreateDetail extends PureComponent {
     });
   };
   loadTaskEvents = () => {
-    const { dispatch, eid, taskID, rainbondInfo, enterprise } = this.props;
+    const { dispatch, eid, taskID, wutongInfo, enterprise } = this.props;
     dispatch({
       type: 'cloud/loadTaskEvents',
       payload: {
@@ -64,7 +64,7 @@ class ShowKubernetesCreateDetail extends PureComponent {
           );
 
           // if (complete && steps && steps.length > 0) {
-          //   globalUtil.putInstallClusterLog(enterprise, rainbondInfo, {
+          //   globalUtil.putInstallClusterLog(enterprise, wutongInfo, {
           //     eid,
           //     taskID,
           //     status: steps[steps.length - 1].Status,

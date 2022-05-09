@@ -248,7 +248,7 @@ class EnterpriseLayout extends PureComponent {
     const {
       dispatch,
       currentUser,
-      rainbondInfo,
+      wutongInfo,
       match: {
         params: { eid }
       }
@@ -265,7 +265,7 @@ class EnterpriseLayout extends PureComponent {
       if (selectE == null) {
         selectE = enterpriseList[0];
       }
-      // this.handlePutLog(rainbondInfo, selectE);
+      // this.handlePutLog(wutongInfo, selectE);
       this.fetchEnterpriseInfo(selectE.enterprise_id);
       this.setState({ enterpriseInfo: selectE });
       dispatch(
@@ -275,15 +275,15 @@ class EnterpriseLayout extends PureComponent {
       enterpriseList.map(item => {
         if (item.enterprise_id === eid) {
           this.fetchEnterpriseInfo(eid);
-          // this.handlePutLog(rainbondInfo, item);
+          // this.handlePutLog(wutongInfo, item);
           this.setState({ enterpriseInfo: item });
         }
         return item;
       });
     }
   };
-  // handlePutLog = (rainbondInfo, item) => {
-  //   globalUtil.putLog(Object.assign(rainbondInfo, item));
+  // handlePutLog = (wutongInfo, item) => {
+  //   globalUtil.putLog(Object.assign(wutongInfo, item));
   // };
   getNewbieGuideConfig = eid => {
     const { dispatch } = this.props;
@@ -345,7 +345,7 @@ class EnterpriseLayout extends PureComponent {
       },
       orders,
       children,
-      rainbondInfo,
+      wutongInfo,
       enterprise,
       showAuthCompany
     } = this.props;
@@ -358,10 +358,10 @@ class EnterpriseLayout extends PureComponent {
     if (!ready || !enterpriseInfo) {
       return <PageLoading />;
     }
-    if (!currentUser || !rainbondInfo || enterpriseList.length === 0) {
+    if (!currentUser || !wutongInfo || enterpriseList.length === 0) {
       return <Redirect to={`/user/login?${queryString}`} />;
     }
-    const fetchLogo = wutongUtil.fetchLogo(rainbondInfo, enterprise) || logo;
+    const fetchLogo = wutongUtil.fetchLogo(wutongInfo, enterprise) || logo;
     const customHeader = () => {
       return (
         <div className={headerStype.enterprise}>
@@ -400,9 +400,9 @@ class EnterpriseLayout extends PureComponent {
               eid={eid}
               logo={fetchLogo}
               isPubCloud={
-                rainbondInfo &&
-                rainbondInfo.is_public &&
-                rainbondInfo.is_public.enable
+                wutongInfo &&
+                wutongInfo.is_public &&
+                wutongInfo.is_public.enable
               }
               currentUser={currentUser}
               collapsed={collapsed}
@@ -415,10 +415,10 @@ class EnterpriseLayout extends PureComponent {
                 currentEnterprise={enterpriseInfo}
                 enterpriseList={enterpriseList}
                 title={
-                  rainbondInfo &&
-                  rainbondInfo.title &&
-                  rainbondInfo.title.enable &&
-                  rainbondInfo.title.value
+                  wutongInfo &&
+                  wutongInfo.title &&
+                  wutongInfo.title.enable &&
+                  wutongInfo.title.value
                 }
                 currentUser={currentUser}
                 Authorized={Authorized}
@@ -500,7 +500,7 @@ export default connect(({ user, global, index, loading }) => ({
   notices: global.notices,
   currTeam: globalUtil.getCurrTeamName(),
   currRegion: globalUtil.getCurrRegionName(),
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   payTip: global.payTip,
   memoryTip: global.memoryTip,
   noMoneyTip: global.noMoneyTip,

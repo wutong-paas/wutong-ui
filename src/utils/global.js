@@ -46,7 +46,7 @@ const global = {
     cookie.remove('enterprise_edition');
     cookie.remove('platform_url');
   },
-  // putInstallClusterLog(enterpriseInfo, rainbondInfo, obj) {
+  // putInstallClusterLog(enterpriseInfo, wutongInfo, obj) {
   //   if (
   //     !enterpriseInfo ||
   //     (enterpriseInfo && enterpriseInfo.disable_install_cluster_log)
@@ -55,7 +55,7 @@ const global = {
   //   }
   //   const defaultOptions = {
   //     credentials: 'same-origin',
-  //     url: 'https://log.rainbond.com/log',
+  //     url: 'https://log.wutong.com/log',
   //     method: 'post'
   //   };
   //   const stateMap = {
@@ -70,8 +70,8 @@ const global = {
   //   }
   //   try {
   //     defaultOptions.data = JSON.stringify({
-  //       e_name: rainbondInfo.enterprise_alias,
-  //       version: rainbondInfo.version && rainbondInfo.version.value,
+  //       e_name: wutongInfo.enterprise_alias,
+  //       version: wutongInfo.version && wutongInfo.version.value,
   //       ...obj
   //     });
   //     defaultOptions.data = JSON.parse(defaultOptions.data);
@@ -83,7 +83,7 @@ const global = {
   // putClusterInfoLog(eid, clusters) {
   //   const defaultOptions = {
   //     credentials: 'same-origin',
-  //     url: 'https://log.rainbond.com/log',
+  //     url: 'https://log.wutong.com/log',
   //     method: 'post'
   //   };
   //   try {
@@ -106,7 +106,7 @@ const global = {
   // putRegistLog(info) {
   //   const defaultOptions = {
   //     credentials: 'same-origin',
-  //     url: 'https://log.rainbond.com/log',
+  //     url: 'https://log.wutong.com/log',
   //     method: 'post'
   //   };
   //   try {
@@ -133,7 +133,7 @@ const global = {
   //   }
   //   const defaultOptions = {
   //     credentials: 'same-origin',
-  //     url: 'https://log.rainbond.com/log',
+  //     url: 'https://log.wutong.com/log',
   //     method: 'post'
   //   };
   //   try {
@@ -175,8 +175,8 @@ const global = {
     return '';
   },
   getCurrTeamID() {
-    const hash = window.location.hash
-    return hash.split('/')[3]
+    const hash = window.location.hash;
+    return hash.split('/')[3];
   },
   getComponentID() {
     const reg = /components\/([^\/]+)/;

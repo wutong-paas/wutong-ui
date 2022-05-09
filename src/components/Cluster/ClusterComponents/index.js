@@ -12,7 +12,7 @@ import styless from './index.less';
 const { Panel } = Collapse;
 
 @connect(({ global }) => ({
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   enterprise: global.enterprise
 }))
 class ClusterComponents extends PureComponent {

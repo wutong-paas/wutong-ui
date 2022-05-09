@@ -23,9 +23,14 @@ const FormItem = Form.Item;
 const { TabPane } = Tabs;
 
 // eslint-disable-next-line react/no-redundant-should-component-update
-@connect(({ global }) => ({ rainbondInfo: global.rainbondInfo }), null, null, {
-  withRef: true
-})
+@connect(
+  ({ global }) => ({ wutongInfo: global.wutongInfo }),
+  null,
+  null,
+  {
+    withRef: true
+  }
+)
 @Form.create()
 export default class AutoDeploy extends PureComponent {
   constructor(props) {
@@ -207,7 +212,7 @@ export default class AutoDeploy extends PureComponent {
   render() {
     if (!this.state.display) return null;
     const { getFieldDecorator } = this.props.form;
-    const { rainbondInfo } = this.props;
+    const { wutongInfo } = this.props;
     const {
       tabActiveKey,
       status,
@@ -253,7 +258,7 @@ export default class AutoDeploy extends PureComponent {
         />
       </svg>
     );
-    const platform_url = wutongUtil.documentPlatform_url(rainbondInfo);
+    const platform_url = wutongUtil.documentPlatform_url(wutongInfo);
     return (
       <Card
         style={{

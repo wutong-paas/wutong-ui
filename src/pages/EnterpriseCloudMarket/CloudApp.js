@@ -23,7 +23,7 @@ const { Option } = Select;
 
 @connect(({ user, global }) => ({
   user: user.currentUser,
-  rainbondInfo: global.rainbondInfo
+  wutongInfo: global.wutongInfo
 }))
 export default class CloudApp extends PureComponent {
   constructor(props) {
@@ -274,9 +274,7 @@ export default class CloudApp extends PureComponent {
                 <List.Item.Meta
                   avatar={
                     <Avatar
-                      src={
-                        item.pic
-                      }
+                      src={item.pic}
                       onClick={() => {
                         this.showMarketAppDetail(item);
                       }}

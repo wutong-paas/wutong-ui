@@ -33,7 +33,7 @@ const { Paragraph } = Typography;
   user: user.currentUser,
   list,
   loading: loading.models.list,
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   enterprise: global.enterprise,
   isRegist: global.isRegist,
   oauthLongin: loading.effects['global/creatOauth'],
@@ -467,7 +467,7 @@ export default class EnterpriseClusters extends PureComponent {
                   <p>提供至少一台主机，自动完成集群的安装和接入。</p>
                 </div>
               </div>
-{/*              {guideStep === 2 &&
+              {/*              {guideStep === 2 &&
                 this.handleNewbieGuiding({
                   tit: '主机安装',
                   configName: 'hostInstall',

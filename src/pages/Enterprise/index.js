@@ -41,7 +41,7 @@ import styles from '../List/BasicList.less';
 
 @connect(({ user, global, index }) => ({
   user: user.currentUser,
-  rainbondInfo: global.rainbondInfo,
+  wutongInfo: global.wutongInfo,
   overviewInfo: index.overviewInfo
 }))
 export default class Enterprise extends PureComponent {
@@ -249,7 +249,7 @@ export default class Enterprise extends PureComponent {
           if (
             res.list.length > 0 &&
             res.list[0].access_key === '' &&
-            res.list[0].domain === 'rainbond'
+            res.list[0].domain === 'wutong'
           ) {
             this.setState({
               showMarketCloudAuth: false,
@@ -387,7 +387,7 @@ export default class Enterprise extends PureComponent {
       ...teamBox,
       ...{ height: '68px', padding: '24px', cursor: 'pointer' }
     };
-    const { rainbondInfo } = this.props;
+    const { wutongInfo } = this.props;
     const {
       enterpriseInfo,
       overviewInfo,
@@ -444,10 +444,10 @@ export default class Enterprise extends PureComponent {
     const comTotal = (comInfo && comInfo.total) || 0;
     const comClosed = (comInfo && comInfo.closed) || 0;
     const enterpriseVersion =
-      rainbondInfo && rainbondInfo.version && rainbondInfo.version.enable
-        ? rainbondInfo.version.value
+      wutongInfo && wutongInfo.version && wutongInfo.version.enable
+        ? wutongInfo.version.value
         : '';
-    const enterpriseEdition = wutongUtil.isEnterpriseEdition(rainbondInfo);
+    const enterpriseEdition = wutongUtil.isEnterpriseEdition(wutongInfo);
     const memoryTotalUnit =
       (memoryInfo && this.handlUnit(memoryInfo.total, 'MB')) || 'MB';
     const teamOperation = (
@@ -1135,14 +1135,14 @@ export default class Enterprise extends PureComponent {
       showMarketCloudAuth,
       marketName
     } = this.state;
-    const { rainbondInfo } = this.props;
+    const { wutongInfo } = this.props;
     return (
       <div>
         {this.renderContent()}
-        {rainbondInfo &&
-          rainbondInfo.is_public &&
-          rainbondInfo.is_public.value &&
-          rainbondInfo.is_public.enable && (
+        {wutongInfo &&
+          wutongInfo.is_public &&
+          wutongInfo.is_public.value &&
+          wutongInfo.is_public.enable && (
             <div className={styles.customerService}>
               <Meiqia />
               <div
