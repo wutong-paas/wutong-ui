@@ -508,6 +508,23 @@ export default [
           },
           { component: '404' }
         ]
+      },
+      // check view layout
+      {
+        path: '/check',
+        component: './Check/layouts/CheckLayout',
+        name: 'CheckBasicLayout',
+        authority: ['admin', 'user'],
+        Routes: ['./src/layouts/CheckPermissions.js'],
+        routes: [
+          // 总览
+          {
+            path: '/Check/team/:teamName/region/:regionName/index',
+            component: './TeamDashboard/Index',
+            name: 'teamOverview',
+            authority: ['admin', 'user']
+          }
+        ]
       }
     ]
   }
