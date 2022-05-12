@@ -151,7 +151,7 @@ export default class RegisterComponent extends Component {
           <Col span="12" style={{ padding: '0 0 0 8px' }}>
             <FormItem>
               {getFieldDecorator('user_name', {
-                initialValue: firstRegist ? 'admin' : '',
+                initialValue: userInfo ? userInfo.oauth_name : '',
                 rules: [
                   { required: true, message: '请输入用户名!' },
                   {
@@ -194,7 +194,7 @@ export default class RegisterComponent extends Component {
           <Col span="12" style={{ padding: '0 0 0 8px' }}>
             <FormItem>
               {getFieldDecorator('phone', {
-                initialValue: '',
+                initialValue: userInfo ? userInfo.oauth_mobile : '',
                 rules: [
                   {
                     required: true,
