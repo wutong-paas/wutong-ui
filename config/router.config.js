@@ -510,26 +510,26 @@ export default [
         ]
       }
     ]
-  },
-  // check view layout
-  {
-    path: '/check',
-    component: './Check/layouts/UserLayout',
-    routes: [
-      { path: '/check', redirect: '/check/login' },
-      // 登录
-      { path: '/check/login', component: './Check/Login' },
-      // 注册
-      { path: '/check/register', component: './Check/Register' },
-      // 注册
-      {
-        path: '/check/register-result',
-        component: './Check/RegisterResult'
-      },
-      // 第三方登录
-      { path: '/check/third/login', component: './Check/ThirdLogin' },
-      // 第三方注册
-      { path: '/check/third/register', component: './Check/ThirdRegister' }
-    ]
   }
+  // check view layout
+  // {
+  //   path: '/check',
+  //   component: './Check/layouts/UserLayout',
+  //   routes: [
+  //     { path: '/check', redirect: '/check/login' },
+  //     // 登录
+  //     { path: '/check/login', component: './Check/Login' },
+  //     // 注册
+  //     { path: '/check/register', component: './Check/Register' },
+  //     // 注册
+  //     {
+  //       path: '/check/register-result',
+  //       component: './Check/RegisterResult'
+  //     },
+  //     // 第三方登录
+  //     { path: '/check/third/login', component: './Check/ThirdLogin' },
+  //     // 第三方注册
+  //     { path: '/check/third/register', component: './Check/ThirdRegister' }
+  //   ]
+  // }
 ];
