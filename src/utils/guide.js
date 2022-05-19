@@ -14,11 +14,11 @@ const guideutil = {
             status: this.getStatus("app_create", info),
             key: "app_create"
         },
-        //   {
-        //     title: '基于源码创建组件',
-        //     status: this.getStatus("source_code_service_create", info),
-        //     key: "source_code_service_create"
-        // },
+           {
+             title: '基于源码创建组件',
+             status: this.getStatus("source_code_service_create", info),
+             key: "source_code_service_create"
+         },
           {
             title: '基于镜像安装数据库',
             status: this.getStatus("image_service_create", info),

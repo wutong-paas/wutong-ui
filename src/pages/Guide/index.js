@@ -872,11 +872,11 @@ export default class Index extends PureComponent {
         content: configureGlobal.wutongTextShow && this.CreateApp(),
         status: guideUtil.getStatus('app_create', GuideList)
       },
-      // {
-      //   title: '基于源码创建组件',
-      //   content: this.CreateSourceCode(),
-      //   status: guideUtil.getStatus('source_code_service_create', GuideList)
-      // },
+       {
+         title: '基于源码创建组件',
+         content: this.CreateSourceCode(),
+         status: guideUtil.getStatus('source_code_service_create', GuideList)
+       },
       {
         title: '基于镜像安装数据库',
         content: configureGlobal.wutongTextShow && this.CreateByImageTaskShow(),
