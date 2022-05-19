@@ -572,7 +572,7 @@ export default class Index extends PureComponent {
                     <Link
                       to={`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/components/${
                         data.service_alias
-                      }/overview`}
+                      }/overview/service_id/${data.service_id}`}
                     >
                       {v}
                     </Link>
@@ -591,7 +591,7 @@ export default class Index extends PureComponent {
                     <Link
                       to={`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/components/${
                         data.service_alias
-                      }/plugin`}
+                      }/plugin/service_id/${data.service_id}`}
                     >
                       查看已安装插件
                     </Link>

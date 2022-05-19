@@ -1,4 +1,5 @@
 /* eslint-disable react/react-in-jsx-scope */
+import { formatMessage } from 'umi-plugin-locale';
 import wutongUtil from '../utils/wutong';
 import userUtil from '../utils/user';
 import { isUrl } from '../utils/utils';
@@ -66,16 +67,28 @@ function menuData(eid, currentUser, enterprise) {
 
   const menuArr = [
     {
-      name: '总览',
+      name: formatMessage({ id: 'menu.enterprise.dashboard' }),
       icon: 'dashboard',
       path: `/enterprise/${eid}/index`,
       authority: ['admin', 'user']
     },
     {
-      name: '应用市场',
+      name: formatMessage({ id: 'menu.enterprise.share' }),
       icon: 'share-alt',
-      path: `/enterprise/${eid}/shared/local`,
-      authority: ['admin', 'user']
+      path: `/enterprise/${eid}/shared`,
+      authority: ['admin', 'user'],
+      children: [
+        {
+          name: formatMessage({ id: 'menu.enterprise.share.app' }),
+          path: `/local`,
+          authority: ['admin', 'user']
+        },
+        {
+          name: formatMessage({ id: 'menu.enterprise.share.plugin' }),
+          path: `/plugin`,
+          authority: ['admin', 'user']
+        }
+      ]
     }
   ];
   if (wutongUtil.isEnableBillingFunction()) {
@@ -107,9 +120,7 @@ function menuData(eid, currentUser, enterprise) {
         authority: ['admin', 'user']
       }
     );
-    if (
-      enterprise
-    ) {
+    if (enterprise) {
       const menuMap = {
         slo_monitor_suffix: '服务监控',
         cluster_monitor_suffix: '集群监控',

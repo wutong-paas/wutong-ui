@@ -1,6 +1,8 @@
 export default {
   'menu.enterprise.dashboard': '总览',
-  'menu.enterprise.share': '应用市场',
+  'menu.enterprise.share': '市场',
+  'menu.enterprise.share.app': '应用市场',
+  'menu.enterprise.share.plugin': '插件市场',
   'menu.enterprise.team': '团队',
   'menu.enterprise.setting': '设置',
   'menu.team.dashboard': '总览',
@@ -19,8 +21,7 @@ export default {
   'menu.app.publish': '发布',
   'menu.app.gateway': '网关',
   'menu.app.configgroups': '配置',
-  'menu.app.upgrade': '升级',
-
+  'menu.app.upgrade': '升级'
 };
 //'menu.app.monitor': '监控',
 //'menu.app.backup': '备份',
