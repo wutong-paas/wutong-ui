@@ -887,7 +887,9 @@ export default class Enterprise extends PureComponent {
                               onClick={() => {
                                 this.props.dispatch(
                                   routerRedux.push(
-                                    `/team/${team_name}/region/${region}/index`
+                                    `/team/${team_name}/region/${
+                                      region[0]
+                                    }/index`
                                   )
                                 );
                               }}
@@ -899,7 +901,9 @@ export default class Enterprise extends PureComponent {
                                 onClick={() => {
                                   this.props.dispatch(
                                     routerRedux.push(
-                                      `/team/${team_name}/region/${region}/index`
+                                      `/team/${team_name}/region/${
+                                        region[0]
+                                      }/index`
                                     )
                                   );
                                 }}
