@@ -232,7 +232,7 @@ export default class AddServiceComponent extends PureComponent {
         >
           {ServiceComponentOnePage && (
             <div style={{ marginTop: '-12px' }}>
-              {/*<div className={styles.ServiceBox}>
+              <div className={styles.ServiceBox}>
                 <Row>
                   <p className={styles.ServiceTitle}>从源代码开始</p>
                 </Row>
@@ -306,7 +306,7 @@ export default class AddServiceComponent extends PureComponent {
                     />
                   )}
                 </Row>
-              </div>*/}
+              </div>
               <div className={styles.ServiceBox}>
                 <Row>
                   <p className={styles.ServiceTitle}>从源镜像开始</p>
@@ -322,7 +322,7 @@ export default class AddServiceComponent extends PureComponent {
                     {dockerSvg}
                     <p className={styles.ServiceSmallTitle}>指定镜像</p>
                   </Col>
-                  {/*<Col
+                  <Col
                     span={8}
                     className={styles.ServiceDiv}
                     onClick={() => {
@@ -333,7 +333,7 @@ export default class AddServiceComponent extends PureComponent {
                     <p className={styles.ServiceSmallTitle}>
                       指定DockerRun命令
                     </p>
-                  </Col>*/}
+                  </Col>
                 </Row>
               </div>
               <div className={styles.ServiceBox}>
