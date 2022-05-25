@@ -67,7 +67,12 @@ const { Option } = Select;
 const RadioGroup = Radio.Group;
 
 @Form.create()
-@connect(null, null, null, { withRef: true })
+@connect(
+  null,
+  null,
+  null,
+  { withRef: true }
+)
 class MoveGroup extends PureComponent {
   onCancel = () => {
     this.props.onCancel();
@@ -133,7 +138,12 @@ class MoveGroup extends PureComponent {
 
 /* 修改组件名称 */
 @Form.create()
-@connect(null, null, null, { withRef: true })
+@connect(
+  null,
+  null,
+  null,
+  { withRef: true }
+)
 class EditName extends PureComponent {
   onCancel = () => {
     this.props.onCancel();
@@ -435,7 +445,9 @@ class Main extends PureComponent {
     const { app_alias, service_id } = this.fetchParameter();
 
     dispatch(
-      routerRedux.push(`${this.fetchPrefixUrl()}components/${app_alias}/${key}/service_id/${service_id}`)
+      routerRedux.push(
+        `${this.fetchPrefixUrl()}components/${app_alias}/${key}/service_id/${service_id}`
+      )
     );
   };
 
@@ -1139,7 +1151,8 @@ class Main extends PureComponent {
       group_id,
       group_name: appName,
       service_cname: componentName,
-      k8s_component_name: k8sComponentName
+      k8s_component_name: k8sComponentName,
+      service_id
     } = this.fetchParameter();
     const visitBtns = (
       <VisitBtn
@@ -1165,6 +1178,16 @@ class Main extends PureComponent {
           </Button>
         )}
 
+        {isVisitWebTerminal && !isShowThirdParty && (
+          <Button>
+            <Link
+              to={`${this.fetchPrefixUrl()}components/${serviceAlias}/filemanager/service_id/${service_id}`}
+              target="_blank"
+            >
+              文件管理
+            </Link>
+          </Button>
+        )}
         {isVisitWebTerminal && !isShowThirdParty && (
           <Button>
             <Link

@@ -313,6 +313,13 @@ export default [
           },
           {
             path:
+              '/team/:teamName/region/:regionName/components/:appAlias/filemanager/service_id/:serviceID',
+            component: './FileManager',
+            name: 'FileManager',
+            authority: ['admin', 'user']
+          },
+          {
+            path:
               '/team/:teamName/region/:regionName/components/:appAlias/:type/service_id/:service_id',
             component: './Component',
             name: 'Component',
