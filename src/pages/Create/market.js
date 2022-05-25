@@ -122,7 +122,7 @@ export default class Main extends PureComponent {
   componentDidMount() {
     this.mount = true;
     this.getApps();
-    this.getMarketsTab();
+    // this.getMarketsTab();
     this.getHelmMarketsTab();
   }
   componentWillUnmount() {
@@ -800,11 +800,7 @@ export default class Main extends PureComponent {
                     : { width: 110, height: 110, margin: ' 0 auto' }
                 }
                 alt={item.title}
-                src={
-                  cloud
-                    ? item.logo || item.icon
-                    : item.pic
-                }
+                src={cloud ? item.logo || item.icon : item.pic}
                 height={handleType ? 154 : 80}
                 onClick={() => {
                   this.showMarketAppDetail(item);
