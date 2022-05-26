@@ -55,8 +55,8 @@ export default class FileManager extends PureComponent {
     return (
       <iframe
         // src={`/console/team/${teamName}/region/${regionName}/components/${appAlias}/filemanager/service_id/${serviceID}`}
-        src={`/console/filebrowser/${serviceID}`}
-        // src={`https://wt-api.wutong.talkweb.com.cn/filebrowser/${serviceID}/files`}
+        // src={`/console/filebrowser/${serviceID}`}
+        src={`https://wutong.talkweb.com.cn/console/filebrowser/${serviceID}`}
         style={{
           width: '100%',
           height: 'calc(100vh - 150px)'
