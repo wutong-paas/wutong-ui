@@ -287,6 +287,7 @@ class Main extends PureComponent {
       showApp: {},
       BuildState: null,
       isShowThirdParty: false,
+      isShowFileManager: false,
       promptModal: null,
       websocketURL: '',
       componentTimer: true
@@ -507,6 +508,11 @@ class Main extends PureComponent {
         if (appDetail.service.service_source) {
           this.setState({
             isShowThirdParty: appDetail.is_third ? appDetail.is_third : false
+          });
+          this.setState({
+            isShowFileManager: appDetail.service.is_filebrowser_plugin
+              ? appDetail.service.is_filebrowser_plugin
+              : false
           });
         }
         if (
@@ -1126,6 +1132,7 @@ class Main extends PureComponent {
       BuildList,
       componentTimer,
       isShowThirdParty,
+      isShowFileManager,
       status,
       promptModal,
       showDeleteApp,
@@ -1178,7 +1185,7 @@ class Main extends PureComponent {
           </Button>
         )}
 
-        {isVisitWebTerminal && !isShowThirdParty && (
+        {isShowFileManager && (
           <Button>
             <Link
               to={`${this.fetchPrefixUrl()}components/${serviceAlias}/filemanager/service_id/${service_id}`}
