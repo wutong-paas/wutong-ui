@@ -738,6 +738,8 @@ export default class Index extends PureComponent {
       }
     }
     const { teamName, regionName } = this.props.match.params;
+    const { service_id } = this.props.appDetail.service;
+
     const { getFieldDecorator, getFieldValue } = form;
     const {
       page_num,
@@ -863,7 +865,7 @@ export default class Index extends PureComponent {
               <p style={{ marginBottom: 0 }}>
                 单实例类型组件不能进行水平伸缩，若需要请修改为相应的多实例组件类型。{' '}
                 <Link
-                  to={`/team/${teamName}/region/${regionName}/components/${appAlias}/setting`}
+                  to={`/team/${teamName}/region/${regionName}/components/${appAlias}/setting/service_id/${service_id}`}
                 >
                   去设置
                 </Link>
