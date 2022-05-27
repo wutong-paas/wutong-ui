@@ -534,6 +534,24 @@ export default class Index extends PureComponent {
     } = this.props;
     return isPlugin;
   }
+  fetchParameter = () => {
+    const { match } = this.props;
+    return {
+      app_alias: match && match.params && match.params.appAlias,
+      team_name: globalUtil.getCurrTeamName()
+    };
+  };
+  loadComponentDetail = () => {
+    const { dispatch } = this.props;
+    const { app_alias, team_name } = this.fetchParameter();
+    dispatch({
+      type: 'appControl/fetchDetail',
+      payload: {
+        team_name,
+        app_alias
+      }
+    });
+  };
   getPlugins = () => {
     const team_name = globalUtil.getCurrTeamName();
     const app_alias = this.props.appAlias;
@@ -584,6 +602,7 @@ export default class Index extends PureComponent {
       },
       callback: () => {
         this.getPlugins();
+        this.loadComponentDetail();
         notification.success({ message: '启用成功' });
       }
     });
@@ -600,6 +619,7 @@ export default class Index extends PureComponent {
       },
       callback: () => {
         this.getPlugins();
+        this.loadComponentDetail();
         notification.success({ message: '停用成功' });
       }
     });
@@ -902,6 +922,7 @@ export default class Index extends PureComponent {
       callback: () => {
         notification.success({ message: '开通成功,需要更新才能生效' });
         this.getPlugins();
+        this.loadComponentDetail();
         this.props.onshowRestartTips(true);
       }
     });
@@ -928,6 +949,7 @@ export default class Index extends PureComponent {
         notification.success({ message: '卸载成功，需要更新才能生效' });
         this.cancelDeletePlugin();
         this.getPlugins();
+        this.loadComponentDetail();
         this.props.onshowRestartTips(true);
       }
     });
