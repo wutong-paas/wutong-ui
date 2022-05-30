@@ -1444,6 +1444,15 @@ export default {
         ...state,
         build_upgrade: action.build_upgrade
       };
+    },
+    saveShowFileManagerFlag(state, action) {
+      const appDetail = { ...state.appDetail };
+      appDetail.service.is_filebrowser_plugin = action.payload.flag;
+
+      return {
+        ...state,
+        appDetail
+      };
     }
   }
 };
