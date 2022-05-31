@@ -534,16 +534,11 @@ export default class Index extends PureComponent {
     } = this.props;
     return isPlugin;
   }
-  fetchParameter = () => {
-    const { match } = this.props;
-    return {
-      app_alias: match && match.params && match.params.appAlias,
-      team_name: globalUtil.getCurrTeamName()
-    };
-  };
+
   loadComponentDetail = () => {
     const { dispatch } = this.props;
-    const { app_alias, team_name } = this.fetchParameter();
+    const team_name = globalUtil.getCurrTeamName();
+    const app_alias = this.props.appAlias;
     dispatch({
       type: 'appControl/fetchDetail',
       payload: {
@@ -552,6 +547,16 @@ export default class Index extends PureComponent {
       }
     });
   };
+  setFileBrowserFlag = flag => {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'appControl/saveShowFileManagerFlag',
+      payload: {
+        flag
+      }
+    });
+  };
+
   getPlugins = () => {
     const team_name = globalUtil.getCurrTeamName();
     const app_alias = this.props.appAlias;
@@ -604,6 +609,7 @@ export default class Index extends PureComponent {
         this.getPlugins();
         this.loadComponentDetail();
         notification.success({ message: '启用成功' });
+        // this.setFileBrowserFlag(true);
       }
     });
   };
@@ -621,6 +627,7 @@ export default class Index extends PureComponent {
         this.getPlugins();
         this.loadComponentDetail();
         notification.success({ message: '停用成功' });
+        // this.setFileBrowserFlag(false);
       }
     });
   };
