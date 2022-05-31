@@ -13,7 +13,7 @@ export default class AppStore extends PureComponent {
     const domain =
       wutongInfo && wutongInfo.market_url && wutongInfo.market_url.enable
         ? wutongInfo.market_url.value
-        : 'https://market.goodrain.com';
+        : 'https://market.wutong.com';
     const callback = window.location.href;
     const version =
       wutongInfo && wutongInfo.version && wutongInfo.version.enable

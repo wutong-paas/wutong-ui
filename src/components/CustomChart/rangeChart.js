@@ -110,13 +110,10 @@ export default class RangeChart extends PureComponent {
   };
 
   getQueryByType = T => {
-    const { appDetail, baseInfo, groupDetail } = this.props;
+    const { appDetail, groupDetail } = this.props;
     if (appDetail && appDetail.service) {
       const {
-        // service_id: serviceId,
-        // service_alias: serviceAlias,
         k8s_component_name: componentName,
-        // k8s_app: appName,
         namespace: ns
       } = appDetail.service;
 
@@ -124,11 +121,7 @@ export default class RangeChart extends PureComponent {
       const serviceId = `${componentName}_${appName}-${componentName}.*_${ns}`;
       const podId = `${appName}-${componentName}.*_${ns}`;
 
-      const isState = globalUtil.isStateComponent(
-        baseInfo && baseInfo.extend_method
-      );
-      // const parameter = isState ? serviceAlias : serviceId;
-      const parameter = isState ? podId : serviceId;
+      const parameter = podId;
 
       switch (T) {
         case 'containerMem':
