@@ -221,7 +221,7 @@ class Index extends PureComponent {
         <Form.Item {...formItemLayout} label="MAVEN MIRROR_URL">
           {getFieldDecorator("BUILD_MAVEN_MIRROR_URL", {
             initialValue:
-              (envs && envs.BUILD_MAVEN_MIRROR_URL) || "maven.goodrain.me"
+              (envs && envs.BUILD_MAVEN_MIRROR_URL) || "maven.wutong.me"
           })(<Input placeholder="" />)}
         </Form.Item> */}
         <Form.Item {...formItemLayout} label="Maven构建参数">

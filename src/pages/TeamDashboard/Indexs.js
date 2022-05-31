@@ -108,7 +108,7 @@ export default class Index extends PureComponent {
       codelinks.push({
         title: 'Gitlab仓库',
         icontype: 'gitlab',
-        href: `/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/create/code/goodrain`
+        href: `/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/create/code/wutong`
       });
     }
     codelinks.push(...imagelinks);

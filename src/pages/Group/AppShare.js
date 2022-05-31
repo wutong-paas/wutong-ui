@@ -390,7 +390,7 @@ export default class Main extends PureComponent {
       dep_service_name: [],
       share_service_list: [],
       ShareTypeShow: false,
-      scopeValue: 'goodrain:private',
+      scopeValue: 'wutong:private',
       appDetail: {},
       record: {},
       model: {},
@@ -516,8 +516,8 @@ export default class Main extends PureComponent {
       team_name: teamName,
       app_id: appID
     };
-    if (scope === 'goodrain' && scopeTarget) {
-      body.scope = 'goodrain';
+    if (scope === 'wutong' && scopeTarget) {
+      body.scope = 'wutong';
       body.market_id = scopeTarget.store_id;
     } else {
       body.scope = 'local';
@@ -613,7 +613,7 @@ export default class Main extends PureComponent {
       (err, values) => {
         if (!err) {
           if (
-            record.scope !== 'goodrain' &&
+            record.scope !== 'wutong' &&
             versionInfo &&
             values.version === versionInfo.version &&
             versionInfo.dev_status
@@ -649,7 +649,7 @@ export default class Main extends PureComponent {
           version: values.version,
           version_alias: values.version_alias
         };
-        if (record.scope === 'goodrain') {
+        if (record.scope === 'wutong') {
           appVersionInfo.scope_target = record.scope_target;
           appVersionInfo.scope = record.scope;
           appVersionInfo.market_id =
@@ -1059,7 +1059,7 @@ export default class Main extends PureComponent {
       title: '发布记录列表',
       href: `/team/${currentTeam.team_name}/region/${currentRegionName}/apps/${appDetail.group_id}/publish`
     });
-    if (record && record.scope === 'goodrain') {
+    if (record && record.scope === 'wutong') {
       breadcrumbList.push({ title: '发布到云应用商店' });
     } else {
       breadcrumbList.push({ title: '发布到组件库' });

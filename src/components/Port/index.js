@@ -156,7 +156,7 @@ export default class Index extends PureComponent {
   domainsText = domains => {
     let textBl = false;
     domains.map(order => {
-      if (order.domain_type == 'goodrain-sld') {
+      if (order.domain_type == 'wutong-sld') {
         textBl = true;
       }
     });
@@ -437,7 +437,7 @@ export default class Index extends PureComponent {
                     {domains.map(domain => {
                       return (
                         <div style={{ paddingLeft: '70px' }}>
-                          {domain.domain_type == 'goodrain-sld' ? (
+                          {domain.domain_type == 'wutong-sld' ? (
                             <p>
                               <a
                                 href={`${

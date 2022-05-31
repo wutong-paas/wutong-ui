@@ -18,7 +18,7 @@ export async function editRole(body = {}) {
 // putRolePermissions
 export async function putRolePermissions(body = {}) {
   return request(
-    // `https://doc.goodrain.org/mock/18/console/teams/${body.team_name}/roles/${body.role_id}/perms`,
+    // `https://doc.wutong.org/mock/18/console/teams/${body.team_name}/roles/${body.role_id}/perms`,
     `${apiconfig.baseUrl}/console/teams/${body.team_name}/roles/${body.role_id}/perms`,
     {
       method: 'put',
@@ -32,7 +32,7 @@ export async function putRolePermissions(body = {}) {
 // delete role
 export async function removeRole(body = {}) {
   return request(
-    // `https://doc.goodrain.org/mock/18/console/teams/{team_name}/roles/{role_id}`,
+    // `https://doc.wutong.org/mock/18/console/teams/{team_name}/roles/{role_id}`,
     `${apiconfig.baseUrl}/console/teams/${body.team_name}/roles/${body.role_id}`,
     {
       method: 'delete'
@@ -42,7 +42,7 @@ export async function removeRole(body = {}) {
 // create role
 export async function createRole(body = {}) {
   return request(
-    // `https://doc.goodrain.org/mock/18/console/teams/{team_name}/roles`,{
+    // `https://doc.wutong.org/mock/18/console/teams/{team_name}/roles`,{
     `${apiconfig.baseUrl}/console/teams/${body.team_name}/roles`,
     {
       method: 'post',

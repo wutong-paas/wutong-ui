@@ -9,11 +9,11 @@ import { routerRedux } from 'dva/router';
 export default class PayTip extends React.PureComponent {
   handleCancel = () => {
     this.props.dispatch({
-      type: 'global/hidePayTip',
+      type: 'global/hidePayTip'
     });
   };
   handleClick = () => {
-    window.open('https://www.goodrain.com/spa/#/personalCenter/my/recharge');
+    window.open('https://www.wutong.com/spa/#/personalCenter/my/recharge');
     this.handleCancel();
   };
   getRegionId = () => {
@@ -50,7 +50,7 @@ export default class PayTip extends React.PureComponent {
             <Button onClick={this.handleBuySource} type="primary" size="sm">
               购买资源
             </Button>
-          ) : null,
+          ) : null
         ]}
       >
         <h4 style={{ textAlign: 'center' }}>资源不足</h4>

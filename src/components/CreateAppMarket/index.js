@@ -95,7 +95,7 @@ class CreateAppMarket extends PureComponent {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="https://store.goodrain.com/marketregist"
+            href="https://store.wutong.com/marketregist"
           >
             去开通
           </a>
