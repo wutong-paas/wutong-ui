@@ -152,7 +152,7 @@ export default class AppPublishList extends PureComponent {
   handleSelectStore = values => {
     this.handleStoreLoading(true);
     const selectStore = values.store_id;
-    this.handleShare('goodrain', { store_id: selectStore });
+    this.handleShare('wutong', { store_id: selectStore });
   };
   deleteRecord = recordID => {
     const { teamName, appID } = this.props.match.params;

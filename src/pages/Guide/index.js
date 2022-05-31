@@ -403,7 +403,7 @@ export default class Index extends PureComponent {
         <p>
           完成任务说明: 使用你自己的源码或基于JavaDemo源码创建组件：
           <code style={{ color: '#000000' }}>
-            https://github.com/goodrain/java-maven-demo.git
+            https://github.com/wutong/java-maven-demo.git
           </code>
         </p>
         <p style={{ textAlign: 'center' }}>
@@ -690,7 +690,7 @@ export default class Index extends PureComponent {
         </p>
         <p>
           3. SaaS化应用市场如何建立{' '}
-          <a href="https://www.goodrain.com" target="_blank">
+          <a href="https://www.wutong.com" target="_blank">
             [联系商业支持]
           </a>
         </p>
@@ -872,11 +872,11 @@ export default class Index extends PureComponent {
         content: configureGlobal.wutongTextShow && this.CreateApp(),
         status: guideUtil.getStatus('app_create', GuideList)
       },
-       {
-         title: '基于源码创建组件',
-         content: this.CreateSourceCode(),
-         status: guideUtil.getStatus('source_code_service_create', GuideList)
-       },
+      {
+        title: '基于源码创建组件',
+        content: this.CreateSourceCode(),
+        status: guideUtil.getStatus('source_code_service_create', GuideList)
+      },
       {
         title: '基于镜像安装数据库',
         content: configureGlobal.wutongTextShow && this.CreateByImageTaskShow(),

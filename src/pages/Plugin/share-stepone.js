@@ -1,24 +1,15 @@
 import {
-    Button, Card, Col,
-
-    Form,
-
-
-    Icon, Input,
-
-    Menu,
-
-    Radio, Row,
-
-
-
-
-
-
-
-    Select,
-
-    Upload
+  Button,
+  Card,
+  Col,
+  Form,
+  Icon,
+  Input,
+  Menu,
+  Radio,
+  Row,
+  Select,
+  Upload
 } from 'antd';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
@@ -38,23 +29,23 @@ const { Option } = Select;
 const { SubMenu } = Menu;
 const formItemLayout = {
   labelCol: {
-    span: 8,
+    span: 8
   },
   wrapperCol: {
-    span: 16,
-  },
+    span: 16
+  }
 };
 const tailFormItemLayout = {
   wrapperCol: {
     xs: {
       span: 24,
-      offset: 0,
+      offset: 0
     },
     sm: {
       span: 14,
-      offset: 6,
-    },
-  },
+      offset: 6
+    }
+  }
 };
 
 const token = cookie.get('token');
@@ -76,7 +67,7 @@ const uploadButton = (
   currUser: user.currentUser,
   apps: application.apps,
   groupDetail: application.groupDetail || {},
-  loading,
+  loading
 }))
 @Form.create()
 export default class Main extends PureComponent {
@@ -90,13 +81,13 @@ export default class Main extends PureComponent {
       ID: 0,
       info: null,
       key: '',
-      fileList: [],
+      fileList: []
     };
   }
   getParams() {
     return {
       pluginId: this.props.match.params.pluginId,
-      shareId: this.props.match.params.shareId,
+      shareId: this.props.match.params.shareId
     };
   }
   componentDidMount() {
@@ -111,7 +102,7 @@ export default class Main extends PureComponent {
       type: 'plugin/getPluginShareInfo',
       payload: {
         team_name,
-        ...params,
+        ...params
       },
       callback: data => {
         if (data) {
@@ -123,9 +114,9 @@ export default class Main extends PureComponent {
                   uid: -1,
                   name: data.bean.share_plugin_info.pic,
                   status: 'done',
-                  url: data.bean.share_plugin_info.pic,
-                },
-              ],
+                  url: data.bean.share_plugin_info.pic
+                }
+              ]
             });
           }
         }
@@ -133,7 +124,7 @@ export default class Main extends PureComponent {
       handleError: res => {
         if (res && res.status === 404) {
         }
-      },
+      }
     });
   }
 
@@ -152,7 +143,7 @@ export default class Main extends PureComponent {
       const share_plugin_info = {
         ...this.state.info,
         ...values,
-        pic: url || this.state.info.pic,
+        pic: url || this.state.info.pic
       };
       if (!err) {
         const { dispatch } = this.props;
@@ -162,7 +153,7 @@ export default class Main extends PureComponent {
           payload: {
             team_name: globalUtil.getCurrTeamName(),
             shareId: param.shareId,
-            share_plugin_info,
+            share_plugin_info
           },
           callback: data => {
             dispatch(
@@ -172,7 +163,7 @@ export default class Main extends PureComponent {
                 }/${param.shareId}`
               )
             );
-          },
+          }
         });
       }
     });
@@ -185,7 +176,7 @@ export default class Main extends PureComponent {
       type: 'plugin/giveupSharePlugin',
       payload: {
         team_name: globalUtil.getCurrTeamName(),
-        share_id: this.props.match.params.shareId,
+        share_id: this.props.match.params.shareId
       },
       callback: data => {
         dispatch(
@@ -193,7 +184,7 @@ export default class Main extends PureComponent {
             `/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/myplugns/${pluginId}`
           )
         );
-      },
+      }
     });
   };
   handleLogoChange = ({ fileList }) => {
@@ -214,17 +205,17 @@ export default class Main extends PureComponent {
         <div>
           <Card
             style={{
-              marginBottom: 24,
+              marginBottom: 24
             }}
             title="基本信息"
             bordered={false}
             bodyStyle={{
-              padding: 0,
+              padding: 0
             }}
           >
             <div
               style={{
-                padding: '24px',
+                padding: '24px'
               }}
             >
               <Form layout="horizontal" className={styles.stepForm}>
@@ -236,9 +227,9 @@ export default class Main extends PureComponent {
                         rules: [
                           {
                             required: true,
-                            message: '插件名不能为空',
-                          },
-                        ],
+                            message: '插件名不能为空'
+                          }
+                        ]
                       })(<Input placeholder="默认使用上次插件名" />)}
                     </Form.Item>
                   </Col>
@@ -249,9 +240,9 @@ export default class Main extends PureComponent {
                         rules: [
                           {
                             required: true,
-                            message: '版本不能为空',
-                          },
-                        ],
+                            message: '版本不能为空'
+                          }
+                        ]
                       })(<Input placeholder="默认使用上次的版本" />)}
                     </Form.Item>
                   </Col>
@@ -261,14 +252,14 @@ export default class Main extends PureComponent {
                         initialValue: info.scope || 'team',
                         rules: [
                           {
-                            required: true,
-                          },
-                        ],
+                            required: true
+                          }
+                        ]
                       })(
                         <RadioGroup>
                           <Radio value="team">团队</Radio>
                           <Radio value="enterprise">公司</Radio>
-                          <Radio value="goodrain">公有云应用市场</Radio>
+                          <Radio value="wutong">公有云应用市场</Radio>
                         </RadioGroup>
                       )}
                     </Form.Item>
@@ -280,9 +271,9 @@ export default class Main extends PureComponent {
                         rules: [
                           {
                             required: false,
-                            message: '请输入插件说明',
-                          },
-                        ],
+                            message: '请输入插件说明'
+                          }
+                        ]
                       })(<TextArea placeholder="请输入插件说明" />)}
                     </Form.Item>
                   </Col>
@@ -292,9 +283,9 @@ export default class Main extends PureComponent {
                         rules: [
                           {
                             required: false,
-                            message: '请上传图标',
-                          },
-                        ],
+                            message: '请上传图标'
+                          }
+                        ]
                       })(
                         <Upload
                           className="logo-uploader"
