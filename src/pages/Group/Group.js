@@ -886,10 +886,8 @@ export default class Index extends PureComponent {
     // const groupId = this.getGroupId();
     return (
       <Fragment>
-        <Row style={isScrollDiv && guideStep === 1 ? highlighted : {}}>
-          {pageHeaderContent}
-        </Row>
-        {/*        {guideStep === 1 &&
+        <Row>{pageHeaderContent}</Row>
+        {/* {guideStep === 1 &&
           this.handleNewbieGuiding({
             tit: '应用信息',
             showSvg: false,
@@ -900,7 +898,7 @@ export default class Index extends PureComponent {
               '应用由一个或多个服务组成，可以管理一个完整业务系统，比如：OA、CRM、ERP等，也可以管理一个完整的微服务架构的系统，这里展示了应用的基本信息。',
             nextStep: 2,
             conPosition: { top: '336px', left: '42%' }
-          })}*/}
+          })} */}
         {customSwitch && (
           <ApplicationGovernance
             mode={currApp && currApp.governance_mode}
@@ -909,7 +907,8 @@ export default class Index extends PureComponent {
             onOk={this.fetchAppDetail}
           />
         )}
-        <Row style={guideStep === 2 ? highlighted : {}}>
+
+        <Row>
           <Row
             style={{
               display: 'flex',
