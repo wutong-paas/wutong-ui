@@ -25,3 +25,8 @@ $ yarn build
 
 This command generates static content into the `build` directory and can be served using any static contents hosting service.
 
+### Use Gitpod
+
+Open the project in Gitpod (free online dev environment for GitHub) and start coding immediately.
+
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/wutong-paas/wutong-ui)
