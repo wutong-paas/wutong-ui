@@ -908,7 +908,7 @@ export default class Index extends PureComponent {
           />
         )}
 
-        <Row>
+        <Row style={{ position: 'relative' }}>
           <Row
             style={{
               display: 'flex',

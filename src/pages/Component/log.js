@@ -49,10 +49,12 @@ export default class Index extends PureComponent {
     this.fetchInstanceInfo();
   }
   componentDidUpdate(prevProps, prevState) {
-    if (this.logRef.current) {
-      this.logRef.current.scrollIntoView({
-        behavior: 'smooth'
-      });
+    if (this.state.started) {
+      if (this.logRef.current) {
+        this.logRef.current.scrollIntoView({
+          behavior: 'smooth'
+        });
+      }
     }
   }
   componentWillUnmount() {
