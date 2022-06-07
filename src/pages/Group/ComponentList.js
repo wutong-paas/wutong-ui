@@ -61,7 +61,10 @@ export default class ComponentList extends Component {
     this.updateApp();
     document
       .querySelector('.ant-table-footer')
-      .setAttribute('style', 'position:absolute;background:#fff');
+      .setAttribute(
+        'style',
+        'position:absolute;background:#fff;padding-bottom: 0px;'
+      );
   }
   shouldComponentUpdate() {
     return true;
