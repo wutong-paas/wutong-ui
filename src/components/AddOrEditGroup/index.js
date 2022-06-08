@@ -182,7 +182,7 @@ export default class EditGroupName extends PureComponent {
       isNoEditName = false,
       loading = false,
       k8s_app: k8sApp,
-      isEditEnglishName,
+      isEditEnglishName = true,
       isAddGroup = true
     } = this.props;
     const isDisabled = isAddGroup ? true : isEditEnglishName;

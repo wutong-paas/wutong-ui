@@ -190,6 +190,7 @@ export default class Index extends PureComponent {
               <Option value="init-plugin">初始化类型</Option>
               <Option value="general-plugin">一般类型</Option>
               <Option value="exporter-plugin">监控</Option>
+              <Option value="dbgate-plugin">数据中间件管理</Option>
             </Select>
           )}
         </Form.Item>
