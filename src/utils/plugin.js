@@ -6,6 +6,7 @@ const categoryMap = {
   'init-plugin': '初始化类型',
   'general-plugin': '一般类型',
   'exporter-plugin': '监控',
+  'dbgate-plugin': '数据中间件管理',
   downstream_net_plugin: '网络治理',
   perf_analyze_plugin: '性能分析',
   inandout_net_plugin: '出口入口共治网络',
