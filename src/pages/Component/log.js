@@ -40,7 +40,8 @@ export default class Index extends PureComponent {
       filter: '',
       pod_name: '',
       container_name: '',
-      refreshValue: 5
+      refreshValue: 5,
+      isAutoScroll: true //添加一个标识用来控制日志的自动滚动
     };
   }
   componentDidMount() {
@@ -49,7 +50,7 @@ export default class Index extends PureComponent {
     this.fetchInstanceInfo();
   }
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.started) {
+    if (this.state.isAutoScroll && this.state.started) {
       if (this.logRef.current) {
         this.logRef.current.scrollIntoView({
           behavior: 'smooth'
@@ -364,7 +365,11 @@ export default class Index extends PureComponent {
             </Form.Item>
           )}
         </Form>
-        <div className={styles.logsss}>
+        <div
+          className={styles.logsss}
+          onMouseEnter={() => { this.setState({ isAutoScroll: false }) }}
+          onMouseLeave={() => this.setState({ isAutoScroll: true })}
+        >
           {(containerLog &&
             containerLog.length > 0 &&
             containerLog.map((item, index) => {
@@ -403,7 +408,7 @@ export default class Index extends PureComponent {
                         style={{
                           color:
                             showHighlighted ==
-                            log.substring(0, log.indexOf(':'))
+                              log.substring(0, log.indexOf(':'))
                               ? '#FFFF91'
                               : '#666666'
                         }}
@@ -415,7 +420,7 @@ export default class Index extends PureComponent {
                         style={{
                           color:
                             showHighlighted ==
-                            log.substring(0, log.indexOf(':'))
+                              log.substring(0, log.indexOf(':'))
                               ? '#FFFF91'
                               : '#FFF'
                         }}
@@ -430,7 +435,7 @@ export default class Index extends PureComponent {
                           style={{
                             color:
                               showHighlighted ==
-                              log.substring(0, log.indexOf(':'))
+                                log.substring(0, log.indexOf(':'))
                                 ? '#FFFF91'
                                 : '#bbb',
                             cursor: 'pointer',
@@ -442,7 +447,7 @@ export default class Index extends PureComponent {
                             this.setState({
                               showHighlighted:
                                 showHighlighted ==
-                                log.substring(0, log.indexOf(':'))
+                                  log.substring(0, log.indexOf(':'))
                                   ? ''
                                   : log.substring(0, log.indexOf(':'))
                             });
@@ -453,19 +458,19 @@ export default class Index extends PureComponent {
                       ) : logs.length > 1 &&
                         index >= 1 &&
                         log.substring(0, log.indexOf(':')) ==
-                          logs[index <= 0 ? index + 1 : index - 1].substring(
-                            0,
-                            logs[index <= 0 ? index + 1 : index - 1].indexOf(
-                              ':'
-                            )
-                          ) ? (
+                        logs[index <= 0 ? index + 1 : index - 1].substring(
+                          0,
+                          logs[index <= 0 ? index + 1 : index - 1].indexOf(
+                            ':'
+                          )
+                        ) ? (
                         ''
                       ) : (
                         <span
                           style={{
                             color:
                               showHighlighted ==
-                              log.substring(0, log.indexOf(':'))
+                                log.substring(0, log.indexOf(':'))
                                 ? '#FFFF91'
                                 : '#bbb',
                             cursor: 'pointer',
@@ -481,14 +486,14 @@ export default class Index extends PureComponent {
                                       index <= 0 ? index + 1 : index - 1
                                     ].indexOf(':')
                                   )
-                                ? ''
-                                : '#666'
+                                  ? ''
+                                  : '#666'
                           }}
                           onClick={() => {
                             this.setState({
                               showHighlighted:
                                 showHighlighted ==
-                                log.substring(0, log.indexOf(':'))
+                                  log.substring(0, log.indexOf(':'))
                                   ? ''
                                   : log.substring(0, log.indexOf(':'))
                             });
