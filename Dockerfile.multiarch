@@ -10,6 +10,7 @@ RUN jq 'to_entries | map_values({ (.key) : ("$" + .key) }) | reduce .[] as $item
 RUN yarn install && yarn run build
 
 FROM --platform=$TARGETPLATFORM  nginx:latest
+COPY nginx.conf /etc/nginx/nginx.conf  
 COPY ./start-ui.sh /usr/bin/start-ui.sh
 RUN chmod +x /usr/bin/start-ui.sh
 WORKDIR /usr/share/nginx/html
