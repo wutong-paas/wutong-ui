@@ -482,3 +482,33 @@ export async function installDefaultPlugin(body = { team_name, plugin_type }) {
     }
   );
 }
+
+/**
+ * @author  Leon
+ * @content 共享插件
+ * @date    2022-06-20
+ *
+ */
+export async function shareingPlugin(body = { team_name, plugin_id }) {
+  return request(
+    `${apiconfig.baseUrl}/console/teams/${body.team_name}/plugins/${body.plugin_id}/share`,
+    {
+      method: 'post'
+    }
+  );
+}
+
+/**
+ * @author  Leon
+ * @content 获取已共享插件列表
+ * @date    2022-06-20
+ *
+ */
+export async function fetchSharedPluginList(body = { team_name }) {
+  return request(
+    `${apiconfig.baseUrl}/console/teams/${body.team_name}/plugins/share/list`,
+    {
+      method: 'get'
+    }
+  );
+}

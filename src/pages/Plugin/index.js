@@ -1,5 +1,14 @@
 /* eslint-disable react/no-multi-comp */
-import { Button, Card, Icon, List, Modal, notification } from 'antd';
+import {
+  Button,
+  Card,
+  Icon,
+  List,
+  Modal,
+  notification,
+  Radio,
+  Spin
+} from 'antd';
 import { connect } from 'dva';
 import { Link, routerRedux } from 'dva/router';
 import React, { Fragment, PureComponent } from 'react';
@@ -14,6 +23,7 @@ import roleUtil from '../../utils/role';
 import styles from './Index.less';
 import Manage from './manage';
 const { confirm } = Modal;
+const { Group } = Radio;
 
 class MarketPlugin extends PureComponent {
   constructor(props) {
@@ -181,12 +191,15 @@ class PluginList extends PureComponent {
       installLoading: false,
       deletePlugin: null,
       pluginInfo: null,
-      currentType: false
+      currentType: false,
+      isShareing: false, //共享插件loading状态
+      radioGroupValue: 'team', //radio group button 受控值
+      listLoading: false // 列表加载状态
     };
     this.timer = null;
   }
   componentDidMount() {
-    this.fetchDefaultPlugin();
+    this.fetchPlugins();
   }
 
   onDeletePlugin = plugin => {
@@ -209,18 +222,88 @@ class PluginList extends PureComponent {
             if (res && res.status_code === 200) {
               notification.success({ message: '安装成功' });
             }
-            this.fetchDefaultPlugin();
+            this.fetchPlugins();
           }
         });
       }
     );
   };
 
+  //插件共享
+  handleShare = item => {
+    const { dispatch } = this.props;
+    const { plugin_id, plugin_type } = item;
+    this.setState(
+      {
+        isShareing: true,
+        currentType: plugin_type
+      },
+      () => {
+        dispatch({
+          type: 'plugin/shareingPlugin',
+          payload: {
+            team_name: globalUtil.getCurrTeamName(),
+            plugin_id
+          },
+          callback: res => {
+            if (res && res.status_code === 200) {
+              notification.success({ message: '共享成功' });
+              this.fetchPlugins();
+            }
+          }
+        });
+      }
+    );
+  };
+
+  //获取已分享插件列表
+  fetchSharedPluginList = () => {
+    const { dispatch } = this.props;
+    this.setState({ listLoading: true }, () =>
+      dispatch({
+        type: 'plugin/fetchSharedPluginList',
+        payload: {
+          team_name: globalUtil.getCurrTeamName()
+        },
+        callback: res => {
+          if (res && res.status_code === 200) {
+            this.setState({
+              list: res.list
+            });
+          }
+          this.setState({ listLoading: false });
+        }
+      })
+    );
+  };
+
   getAction = (item, operationPermissions) => {
     const { isCreate, isDelete } = operationPermissions;
-    const { installLoading, currentType } = this.state;
+    const {
+      installLoading,
+      currentType,
+      isShareing,
+      radioGroupValue
+    } = this.state;
+    const isTeam = radioGroupValue === 'team';
     if (item.has_install !== false) {
       const arr = [];
+      if (isTeam) {
+        arr.push(
+          <Button
+            type="link"
+            style={{ height: '17px', color: 'rgba(0, 0, 0, 0.45)' }}
+            loading={
+              currentType && currentType === item.plugin_type && isShareing
+            }
+            onClick={() => {
+              this.handleShare(item);
+            }}
+          >
+            共享
+          </Button>
+        );
+      }
       if (isDelete) {
         arr.push(
           <span
@@ -246,6 +329,20 @@ class PluginList extends PureComponent {
     }
     if (isCreate) {
       return [
+        isTeam && (
+          <Button
+            type="link"
+            style={{ height: '17px', color: 'rgba(0, 0, 0, 0.45)' }}
+            loading={
+              currentType && currentType === item.plugin_type && isShareing
+            }
+            onClick={() => {
+              this.handleShare(item);
+            }}
+          >
+            共享
+          </Button>
+        ),
         <Button
           type="link"
           style={{ height: '17px', color: 'rgba(0, 0, 0, 0.45)' }}
@@ -277,54 +374,60 @@ class PluginList extends PureComponent {
     return item.plugin_alias;
   };
 
-  fetchDefaultPlugin = () => {
-    this.props.dispatch({
-      type: 'plugin/getDefaultPlugin',
-      payload: {
-        team_name: globalUtil.getCurrTeamName()
-      },
-      callback: data => {
-        if (data && data.bean) {
-          this.setState(
-            {
-              defaultList: data.list
-            },
-            () => {
-              this.fetchPlugins();
-            }
-          );
-        }
-      }
-    });
-  };
+  // 不走default接口 列表从all接口里读取 by leon && 冬林
+  // fetchDefaultPlugin = () => {
+  //   this.props.dispatch({
+  //     type: 'plugin/getDefaultPlugin',
+  //     payload: {
+  //       team_name: globalUtil.getCurrTeamName()
+  //     },
+  //     callback: data => {
+  //       if (data && data.bean) {
+  //         this.setState(
+  //           {
+  //             defaultList: data.list
+  //           },
+  //           () => {
+  //             this.fetchPlugins();
+  //           }
+  //         );
+  //       }
+  //     }
+  //   });
+  // };
   fetchPlugins = () => {
     const { defaultList } = this.state;
-    this.props.dispatch({
-      type: 'plugin/getMyPlugins',
-      payload: {
-        team_name: globalUtil.getCurrTeamName()
-      },
-      callback: data => {
-        if (data) {
-          const arr = defaultList.filter(item => {
-            return !item.has_install;
-          });
-          let installList = [];
-          if (data.list && data.list.length > 0) {
-            data.list.map(item => {
-              item.has_install = true;
-              installList.push(item);
+    this.setState({ listLoading: true }, () =>
+      this.props.dispatch({
+        type: 'plugin/getMyPlugins',
+        payload: {
+          team_name: globalUtil.getCurrTeamName()
+        },
+        callback: data => {
+          if (data) {
+            // 现在得接口全部走all 数据无需拼接 by leon && 冬林
+            // const arr = defaultList.filter(item => {
+            //   return !item.has_install;
+            // });
+            // let installList = [];
+            // if (data.list && data.list.length > 0) {
+            //   data.list.map(item => {
+            //     item.has_install = true;
+            //     installList.push(item);
+            //   });
+            // }
+            const list = (data && data.list) || [];
+            this.setState({
+              list,
+              installLoading: false,
+              currentType: false,
+              isShareing: false,
+              listLoading: false
             });
           }
-          const list = [...arr, ...installList] || [];
-          this.setState({
-            list,
-            installLoading: false,
-            currentType: false
-          });
         }
-      }
-    });
+      })
+    );
   };
   handleCreate = () => {
     this.props.dispatch(
@@ -334,7 +437,7 @@ class PluginList extends PureComponent {
     );
   };
   hanldeDeletePlugin = isForce => {
-    const { pluginInfo, deletePlugin } = this.state;
+    const { pluginInfo, deletePlugin, radioGroupValue } = this.state;
     this.props.dispatch({
       type: 'plugin/deletePlugin',
       payload: {
@@ -348,7 +451,11 @@ class PluginList extends PureComponent {
         if (res && res.status_code === 200) {
           notification.success({ message: '删除成功' });
         }
-        this.fetchDefaultPlugin();
+        if (radioGroupValue === 'team') {
+          this.fetchPlugins();
+        } else {
+          this.fetchSharedPluginList();
+        }
         this.cancelDeletePlugin();
         this.cancelDeletePluginInfo();
       },
@@ -388,6 +495,22 @@ class PluginList extends PureComponent {
     });
   };
 
+  handleRadioGroupChange = e => {
+    this.setState(
+      {
+        radioGroupValue: e.target.value
+      },
+      () => {
+        const { radioGroupValue } = this.state;
+        if (radioGroupValue === 'team') {
+          this.fetchPlugins();
+        } else {
+          this.fetchSharedPluginList();
+        }
+      }
+    );
+  };
+
   render() {
     const {
       currentEnterprise,
@@ -396,7 +519,7 @@ class PluginList extends PureComponent {
       operationPermissions,
       deletePluginLoading
     } = this.props;
-    const { list } = this.state;
+    const { list, radioGroupValue, listLoading } = this.state;
     const content = (
       <div className={styles.pageHeaderContent}>
         <p>应用插件是标准化的为应用提供功能扩展，与应用共同运行的程序</p>
@@ -418,71 +541,85 @@ class PluginList extends PureComponent {
         extraContent={extraContent}
       >
         <div className={styles.cardList}>
-          <List
-            rowKey="id"
-            grid={{
-              gutter: 24,
-              lg: 3,
-              md: 2,
-              sm: 1,
-              xs: 1
-            }}
-            dataSource={['', ...list]}
-            renderItem={item =>
-              // eslint-disable-next-line no-nested-ternary
-              item ? (
-                <List.Item key={item.id}>
-                  <Card
-                    className={styles.card}
-                    actions={this.getAction(item, operationPermissions)}
-                  >
-                    <Card.Meta
-                      style={{ height: 100, overflow: 'auto' }}
-                      avatar={
-                        <Icon
-                          style={{ fontSize: 50, color: 'rgba(0, 0, 0, 0.2)' }}
-                          type="api"
-                        />
-                      }
-                      title={this.getItemTitle(item)}
-                      description={
-                        <Fragment>
-                          <p
+          <Group
+            className={styles.group}
+            value={radioGroupValue}
+            onChange={this.handleRadioGroupChange}
+          >
+            <Radio.Button value="team">团队插件</Radio.Button>
+            <Radio.Button value="shared">共享插件</Radio.Button>
+          </Group>
+          <Spin spinning={listLoading}>
+            <List
+              rowKey="id"
+              grid={{
+                gutter: 24,
+                lg: 3,
+                md: 2,
+                sm: 1,
+                xs: 1
+              }}
+              dataSource={['', ...list]}
+              renderItem={item =>
+                // eslint-disable-next-line no-nested-ternary
+                item ? (
+                  <List.Item key={item.plugin_id}>
+                    <Card
+                      className={styles.card}
+                      actions={this.getAction(item, operationPermissions)}
+                    >
+                      <Card.Meta
+                        style={{ height: 100, overflow: 'auto' }}
+                        avatar={
+                          <Icon
                             style={{
-                              display: 'block',
-                              color: 'rgb(220, 220, 220)',
-                              marginBottom: 8
+                              fontSize: 50,
+                              color: 'rgba(0, 0, 0, 0.2)'
                             }}
-                          >
-                            {' '}
-                            {pluginUtil.getCategoryCN(
-                              item.plugin_type || item.category
-                            )}{' '}
-                          </p>
-                          <Ellipsis className={styles.item} lines={3}>
-                            {item.desc}
-                          </Ellipsis>
-                        </Fragment>
-                      }
-                    />
-                  </Card>
-                </List.Item>
-              ) : operationPermissions.isCreate ? (
-                <List.Item key={item.id}>
-                  <Button
-                    type="dashed"
-                    onClick={this.handleCreate}
-                    className={styles.newButton}
-                  >
-                    <Icon type="plus" />
-                    新建插件
-                  </Button>
-                </List.Item>
-              ) : (
-                <div />
-              )
-            }
-          />
+                            type="api"
+                          />
+                        }
+                        title={this.getItemTitle(item)}
+                        description={
+                          <Fragment>
+                            <p
+                              style={{
+                                display: 'block',
+                                color: 'rgb(220, 220, 220)',
+                                marginBottom: 8
+                              }}
+                            >
+                              {' '}
+                              {pluginUtil.getCategoryCN(
+                                item.plugin_type || item.category
+                              )}{' '}
+                            </p>
+                            <Ellipsis className={styles.item} lines={3}>
+                              {item.desc}
+                            </Ellipsis>
+                          </Fragment>
+                        }
+                      />
+                    </Card>
+                  </List.Item>
+                ) : operationPermissions.isCreate &&
+                  radioGroupValue === 'team' ? (
+                  <List.Item key={item.id}>
+                    <Button
+                      type="dashed"
+                      onClick={this.handleCreate}
+                      className={styles.newButton}
+                    >
+                      <Icon type="plus" />
+                      新建插件
+                    </Button>
+                  </List.Item>
+                ) : (
+                  <div />
+                )
+              }
+            />
+          </Spin>
           {this.state.deletePlugin && (
             <ConfirmModal
               title="删除插件"
