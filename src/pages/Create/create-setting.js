@@ -69,6 +69,7 @@ export default class Index extends PureComponent {
   handleBuild = () => {
     const { dispatch } = this.props;
     const { team_name, app_alias } = this.fetchParameter();
+    const { service_id } = this.state.appDetail.service;
     dispatch({
       type: 'createApp/buildApps',
       payload: {
@@ -83,7 +84,9 @@ export default class Index extends PureComponent {
               team_name
             }
           });
-          this.handleJump(`components/${app_alias}/overview`);
+          this.handleJump(
+            `components/${app_alias}/overview/service_id/${service_id}`
+          );
         }
       }
     });

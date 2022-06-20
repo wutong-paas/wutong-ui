@@ -315,15 +315,16 @@ class PluginList extends PureComponent {
           </span>
         );
       }
-      arr.push(
-        <Link
-          to={`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/myplugns/${
-            item.plugin_id
-          }`}
-        >
-          管理
-        </Link>
-      );
+      if (isTeam)
+        arr.push(
+          <Link
+            to={`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/myplugns/${
+              item.plugin_id
+            }`}
+          >
+            管理
+          </Link>
+        );
 
       return arr;
     }
@@ -547,7 +548,7 @@ class PluginList extends PureComponent {
             onChange={this.handleRadioGroupChange}
           >
             <Radio.Button value="team">团队插件</Radio.Button>
-            <Radio.Button value="shared">共享插件</Radio.Button>
+            <Radio.Button value="shared">已共享插件</Radio.Button>
           </Group>
           <Spin spinning={listLoading}>
             <List
