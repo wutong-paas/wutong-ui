@@ -105,6 +105,7 @@ import {
   getVolumeOpts,
   getVolumes,
   installPlugin,
+  installSystemPlugin,
   managePods,
   modifyInstanceList,
   moveGroup,
@@ -385,6 +386,13 @@ export default {
     },
     *installPlugin({ payload, callback }, { call }) {
       const response = yield call(installPlugin, payload);
+      if (response && callback) {
+        callback(response);
+      }
+    },
+    //开通系统插件
+    *installSystemPlugin({ payload, callback }, { call }) {
+      const response = yield call(installSystemPlugin, payload);
       if (response && callback) {
         callback(response);
       }

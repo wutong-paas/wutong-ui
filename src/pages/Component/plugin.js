@@ -515,7 +515,7 @@ export default class Index extends PureComponent {
     this.state = {
       installedList: null,
       unInstalledList: null,
-      category: '',
+      category: 'sys',
       type: 'installed',
       showDeletePlugin: null,
       openedPlugin: {}
@@ -916,15 +916,19 @@ export default class Index extends PureComponent {
     return installedList && !!installedList.length;
   };
   installPlugin = plugin => {
+    const { category } = this.state;
     const team_name = globalUtil.getCurrTeamName();
     const app_alias = this.props.appAlias;
     this.props.dispatch({
-      type: 'appControl/installPlugin',
+      type: `appControl/${
+        category === 'sys' ? 'installSystemPlugin' : 'installPlugin'
+      }`,
       payload: {
         team_name,
         app_alias,
         plugin_id: plugin.plugin_id,
-        build_version: plugin.build_version
+        build_version: plugin.build_version,
+        plugin_type: plugin.plugin_type
       },
       callback: () => {
         notification.success({ message: '开通成功,需要更新才能生效' });
@@ -1004,15 +1008,21 @@ export default class Index extends PureComponent {
           </RadioGroup>
           <RadioGroup
             onChange={this.handleCategoryChange}
-            defaultValue=""
+            defaultValue="sys"
             style={{
               marginRight: 16,
               float: 'right'
             }}
           >
+            {/*
+            //modify by leon 
             <RadioButton value="">全部</RadioButton>
             <RadioButton value="analysis">性能分析类</RadioButton>
-            <RadioButton value="net_manage">网络治理类</RadioButton>
+            <RadioButton value="net_manage">网络治理类</RadioButton> 
+            */}
+            <RadioButton value="sys">系统插件</RadioButton>
+            <RadioButton value="tenant">团队插件</RadioButton>
+            <RadioButton value="shared">共享插件</RadioButton>
           </RadioGroup>
         </p>
         {type === 'installed'

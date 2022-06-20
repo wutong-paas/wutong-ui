@@ -2577,7 +2577,7 @@ export async function getPlugins(
     {
       method: 'get',
       params: {
-        category: body.category
+        origin: body.category
       }
     }
   );
@@ -2638,6 +2638,32 @@ export async function installPlugin(
     {
       method: 'post',
       data: {
+        build_version: body.build_version
+      }
+    }
+  );
+}
+
+/**
+ *
+ * @author  Leon
+ * @content 系统插件开通接口
+ * @date    2022-06-20
+ */
+export async function installSystemPlugin(
+  body = {
+    team_name,
+    app_alias,
+    plugin_type,
+    build_version
+  }
+) {
+  return request(
+    `${apiconfig.baseUrl}/console/teams/${body.team_name}/apps/${body.app_alias}/plugins/sys/install`,
+    {
+      method: 'post',
+      data: {
+        plugin_type: body.plugin_type,
         build_version: body.build_version
       }
     }
