@@ -27,7 +27,9 @@ import {
   getShareOneEventInfo,
   startShareOneEvent,
   installMarketPlugin,
-  getUnInstalledPlugin
+  getUnInstalledPlugin,
+  shareingPlugin,
+  fetchSharedPluginList
 } from '../services/plugin';
 
 export default {
@@ -209,6 +211,20 @@ export default {
     },
     *deletePlugin({ payload, callback, handleError }, { call }) {
       const response = yield call(deletePlugin, payload, handleError);
+      if (response && callback) {
+        callback(response);
+      }
+    },
+    //共享插件
+    *shareingPlugin({ payload, callback }, { call }) {
+      const response = yield call(shareingPlugin, payload);
+      if (response && callback) {
+        callback(response);
+      }
+    },
+    //获取已共享插件列表
+    *fetchSharedPluginList({ payload, callback }, { call }) {
+      const response = yield call(fetchSharedPluginList, payload);
       if (response && callback) {
         callback(response);
       }
