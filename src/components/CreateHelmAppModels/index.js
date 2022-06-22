@@ -28,11 +28,15 @@ class CreateHelmAppModels extends PureComponent {
       isDeploy: true,
       addGroup: false,
       showAddTeam: false,
-      helmInstallLoading: false
+      helmInstallLoading: false,
+      cloudApplicationVersion: [] // 梧桐云市场应用版本列表
     };
   }
   componentDidMount() {
     this.fetchCreateAppTeams();
+    if (this.props.marketId) {
+      this.fetchCloudApplicationVersionList();
+    }
   }
   onAddGroup = () => {
     const { form } = this.props;
@@ -152,13 +156,34 @@ class CreateHelmAppModels extends PureComponent {
     });
   };
   handleCreate = vals => {
-    const { dispatch, appInfo } = this.props;
+    const { dispatch, appInfo, marketId, eid } = this.props;
     const { isDeploy } = this.state;
+    //如果有marketId 则表示是从云应用市场店铺进行的安装，需要走特定的安装接口，入参也改变
+    if (marketId) {
+      dispatch({
+        type: 'store/installApplication',
+        payload: {
+          // ...vals,
+          enterprise_id: eid,
+          market_id: marketId,
+          market_app_id: appInfo.id,
+          application_id: vals.group_id,
+          market_app_version_id: vals.version,
+          is_deploy: isDeploy,
+          install_from_cloud: false,
+          market_app_name: appInfo.name || 'localApplication'
+        },
+        callback: () => {
+          this.handleRefresh(vals);
+        }
+      });
+      return;
+    }
     dispatch({
       type: 'createApp/installApp',
       payload: {
         ...vals,
-        app_id: appInfo.app_id,
+        app_id: appInfo.app_id || appInfo.id,
         is_deploy: isDeploy,
         app_version: vals.version,
         install_from_cloud: false,
@@ -305,8 +330,40 @@ class CreateHelmAppModels extends PureComponent {
       isDeploy: !this.state.isDeploy
     });
   };
+
+  fetchCloudApplicationVersionList = () => {
+    const { dispatch, eid, marketId, appInfo } = this.props;
+    dispatch({
+      type: 'store/fetchApplicationVersionList',
+      payload: {
+        enterprise_id: eid,
+        market_id: marketId,
+        app_id: appInfo?.id
+      },
+      callback: res => {
+        if (res?.status_code === 200) {
+          const cloudApplicationVersion = res?.list?.records?.map(item => ({
+            version: item?.numbers,
+            versionId: item?.id
+          }));
+          this.setState({
+            cloudApplicationVersion
+          });
+        }
+      }
+    });
+  };
+
   render() {
-    const { eid, onCancel, title, appInfo, form, appTypes } = this.props;
+    const {
+      eid,
+      onCancel,
+      title,
+      appInfo,
+      form,
+      appTypes,
+      marketId
+    } = this.props;
     const { getFieldDecorator, getFieldValue } = form;
     const {
       regionList,
@@ -322,7 +379,13 @@ class CreateHelmAppModels extends PureComponent {
     let versions = [];
 
     if (appTypes === 'localsContent') {
-      versions = appInfo.versions_info && appInfo.versions_info;
+      //如果从云应用市场店铺进来，安装应用的版本需要从接口获取，同时传给后端的值是跟版本号有关的id
+      if (!marketId) {
+        versions = appInfo.versions_info && appInfo.versions_info;
+      } else {
+        if (this.state.cloudApplicationVersion.length !== 0)
+          versions = this.state.cloudApplicationVersion;
+      }
     } else if (appTypes === 'marketContent') {
       versions = appInfo.versions && appInfo.versions;
     } else {
@@ -505,8 +568,10 @@ class CreateHelmAppModels extends PureComponent {
 
             <FormItem {...formItemLayout} label="应用版本">
               {getFieldDecorator('version', {
-                initialValue:
-                  versions && (versions[0].version || versions[0].app_version),
+                initialValue: marketId
+                  ? versions.length > 0 && versions[0].versionId
+                  : versions.length > 0 &&
+                    (versions[0].version || versions[0].app_version),
                 rules: [
                   {
                     required: true,
@@ -519,7 +584,10 @@ class CreateHelmAppModels extends PureComponent {
                     versions.map(item => {
                       const val = item.version || item.app_version;
                       return (
-                        <Option key={item.version} value={val}>
+                        <Option
+                          key={item.version}
+                          value={marketId ? item.versionId : val}
+                        >
                           {val}
                         </Option>
                       );

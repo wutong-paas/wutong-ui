@@ -1605,7 +1605,10 @@ export default class EnterpriseShared extends PureComponent {
       </div>
     );
     return (
-      <PageHeaderLayout title="应用市场管理" content="企业和团队组件库管理。">
+      <PageHeaderLayout
+        title="本地组件库"
+        content="共享企业创造的业务系统，服务组件，中间件。"
+      >
         {/* {initShow && isNewbieGuide && (
           <PlatformIntroduced onCancel={this.hideInitShow} />
         )} */}
@@ -1662,7 +1665,6 @@ export default class EnterpriseShared extends PureComponent {
             onCancel={this.handleCancelDelete}
           />
         )}
-
         {installHelmApp && (
           <CreateHelmAppModels
             title="安装应用"

@@ -121,6 +121,12 @@ export default [
             authority: ['admin', 'user']
           },
           {
+            path: '/enterprise/:eid/shared/cloudstoremarket',
+            component: './CloudStoreMarket',
+            name: 'CloudStoreMarket',
+            authority: ['admin', 'user']
+          },
+          {
             path: '/enterprise/:eid/shared/import',
             component: './EnterpriseImport',
             name: 'EnterpriseImport',

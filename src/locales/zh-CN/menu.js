@@ -1,8 +1,8 @@
 export default {
   'menu.enterprise.dashboard': '总览',
   'menu.enterprise.share': '市场',
-  'menu.enterprise.share.app': '应用市场',
-  'menu.enterprise.share.plugin': '插件市场',
+  'menu.enterprise.share.app': '本地组件库',
+  'menu.enterprise.share.cloudstoremarket': '云市场应用店铺',
   'menu.enterprise.team': '团队',
   'menu.enterprise.setting': '设置',
   'menu.team.dashboard': '总览',

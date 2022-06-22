@@ -450,10 +450,7 @@ export default class Main extends PureComponent {
   };
 
   render() {
-    const {
-      loading,
-      form
-    } = this.props;
+    const { loading, form } = this.props;
     const {
       appInfo,
       isAddLicense,
@@ -541,8 +538,8 @@ export default class Main extends PureComponent {
           />
         )}
         <PageHeaderLayout
-          title="应用市场管理"
-          content="企业和团队组件库管理。"
+          title="本地组件库"
+          content="共享企业创造的业务系统，服务组件，中间件"
         >
           <Form onSubmit={this.handleSubmit} layout="horizontal">
             <Card
@@ -800,10 +797,10 @@ export default class Main extends PureComponent {
                         appInfo.app_name && (
                           <div
                             style={{
-                            margin: '0 auto',
-                            maxWidth: '60px',
-                            maxHeight: '60px'
-                          }}
+                              margin: '0 auto',
+                              maxWidth: '60px',
+                              maxHeight: '60px'
+                            }}
                           >
                             {defaulAppImg}
                           </div>

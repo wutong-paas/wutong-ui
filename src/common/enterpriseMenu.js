@@ -84,8 +84,10 @@ function menuData(eid, currentUser, enterprise) {
           authority: ['admin', 'user']
         },
         {
-          name: formatMessage({ id: 'menu.enterprise.share.plugin' }),
-          path: `/plugin`,
+          name: formatMessage({
+            id: 'menu.enterprise.share.cloudstoremarket'
+          }),
+          path: `/cloudstoremarket`,
           authority: ['admin', 'user']
         }
       ]
