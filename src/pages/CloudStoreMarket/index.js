@@ -208,7 +208,7 @@ const CloudStore = props => {
                 }}
               >
                 <Col span={3} style={{ display: 'flex' }}>
-                  {
+                  {/* {
                     <div
                       className={styles.lt}
                       onClick={e => {
@@ -221,7 +221,7 @@ const CloudStore = props => {
                         </div>
                       </Tooltip>
                     </div>
-                  }
+                  } */}
                   <div className={styles.imgs}>
                     {icon ? <img src={icon} alt="" /> : defaulAppImg}
                   </div>

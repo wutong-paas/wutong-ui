@@ -41,6 +41,7 @@ const CreateTemplateForm = props => {
     validateFieldsAndScroll(async (err, values) => {
       if (err) {
         notification.warning({ message: '请填写表单！' });
+        setLoading(false);
         return;
       }
       values.enterprise_id = eid;
