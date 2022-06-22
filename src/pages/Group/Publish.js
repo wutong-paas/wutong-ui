@@ -60,8 +60,8 @@ export default class AppPublishList extends PureComponent {
   onPublishStore = () => {
     this.setState({ selectStoreShow: true });
   };
-  onPublishLocal = () => {
-    this.handleShare('', {});
+  onPublishLocal = from => {
+    this.handleShare('', {}, from);
   };
 
   onPageChange = page => {
@@ -126,7 +126,7 @@ export default class AppPublishList extends PureComponent {
     });
   };
 
-  handleShare = (scope, target) => {
+  handleShare = (scope, target, from) => {
     const { teamName, appID } = this.props.match.params;
     const { dispatch } = this.props;
     dispatch({
@@ -138,7 +138,7 @@ export default class AppPublishList extends PureComponent {
         target
       },
       callback: data => {
-        this.continuePublish(data.bean.ID, data.bean.step);
+        this.continuePublish(data.bean.ID, data.bean.step, from);
       }
     });
   };
@@ -189,15 +189,24 @@ export default class AppPublishList extends PureComponent {
     });
   };
 
-  continuePublish = (recordID, step) => {
+  continuePublish = (recordID, step, from) => {
     const { dispatch } = this.props;
     const { teamName, regionName, appID } = this.props.match.params;
     if (step === 1) {
-      dispatch(
-        routerRedux.push(
-          `/team/${teamName}/region/${regionName}/apps/${appID}/share/${recordID}/one`
-        )
-      );
+      if (from === 'cloudMarket') {
+        dispatch(
+          routerRedux.push({
+            pathname: `/team/${teamName}/region/${regionName}/apps/${appID}/share/${recordID}/one`,
+            from
+          })
+        );
+      } else {
+        dispatch(
+          routerRedux.push(
+            `/team/${teamName}/region/${regionName}/apps/${appID}/share/${recordID}/one`
+          )
+        );
+      }
     }
     if (step === 2) {
       dispatch(
@@ -264,9 +273,12 @@ export default class AppPublishList extends PureComponent {
             >
               发布到组件库
             </Button>
-            {/* <Button style={{ marginRight: 8 }} onClick={this.onPublishStore}>
-              发布到云应用商店
-            </Button> */}
+            <Button
+              style={{ marginRight: 8 }}
+              onClick={() => this.onPublishLocal('cloudMarket')}
+            >
+              发布到云应用市场
+            </Button>
           </div>
         }
       >
@@ -333,7 +345,10 @@ export default class AppPublishList extends PureComponent {
                   render: (val, data) => {
                     const storeName =
                       data && data.scope_target && data.scope_target.store_name;
-                    const marketAddress = `/enterprise/${currentEnterprise.enterprise_id}/shared/local`;
+                    const marketAddress =
+                      val === 'market'
+                        ? `/enterprise/${currentEnterprise.enterprise_id}/shared/cloudstoremarket`
+                        : `/enterprise/${currentEnterprise.enterprise_id}/shared/local`;
                     switch (val) {
                       case '':
                         return <Link to={marketAddress}>应用市场</Link>;
@@ -341,6 +356,8 @@ export default class AppPublishList extends PureComponent {
                         return <Link to={marketAddress}>应用市场(团队)</Link>;
                       case 'enterprise':
                         return <Link to={marketAddress}>应用市场(企业)</Link>;
+                      case 'market':
+                        return <Link to={marketAddress}>云应用市场</Link>;
                       default:
                         return (
                           <p style={{ marginBottom: 0 }}>

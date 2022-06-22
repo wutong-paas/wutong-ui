@@ -29,7 +29,7 @@ const CreateTemplateForm = props => {
     eid,
     dispatch,
     market_id,
-    fetchStoreList
+    createdCallback
   } = props;
   const { getFieldDecorator, validateFieldsAndScroll } = form;
   const [isAddLicense, setIsAddLicense] = useState(true);
@@ -45,7 +45,6 @@ const CreateTemplateForm = props => {
         return;
       }
       values.enterprise_id = eid;
-      values.market_id = market_id;
       dispatch({
         type: 'store/createApplicationTemplate',
         payload: values,
@@ -53,7 +52,7 @@ const CreateTemplateForm = props => {
           if (res?.status_code === 200) {
             notification.success({ message: '添加成功！' });
             onCancel();
-            fetchStoreList();
+            createdCallback && createdCallback();
           }
           setLoading(false);
         }

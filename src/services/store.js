@@ -56,9 +56,9 @@ export async function fetchStoreApplicationDetail(body = { enterprise_id }) {
 
 // 创建应用模板
 export async function createApplicationTemplateAPI(body = { enterprise_id }) {
-  const { enterprise_id, market_id, ...data } = body;
+  const { enterprise_id, ...data } = body;
   return request(
-    `${apiconfig.baseUrl}/console/enterprise/${enterprise_id}/market/${market_id}/create_template`,
+    `${apiconfig.baseUrl}/console/enterprise/${enterprise_id}/market/create_template`,
     {
       method: 'post',
       data
@@ -85,6 +85,16 @@ export async function installApplicationAPI(body = { enterprise_id }) {
     {
       method: 'post',
       data
+    }
+  );
+}
+
+export async function fetchStoreSelectListAPI(body = { enterprise_id }) {
+  const { enterprise_id } = body;
+  return request(
+    `${apiconfig.baseUrl}/console/enterprise/${enterprise_id}/store-list`,
+    {
+      method: 'get'
     }
   );
 }

@@ -320,44 +320,40 @@ const CloudStore = props => {
                   key={`${item?.store_id},${item?.ID}`}
                 >
                   <Spin spinning={loading}>
-                    {storeList.length > 0 && (
-                      <div className={styles.actions}>
-                        <Search
-                          style={{ width: '400px' }}
-                          placeholder="请输入名称进行搜索"
-                          onSearch={handleSearch}
-                        />
-                        <div className={styles.right}>
-                          <div className={styles.icon}>
-                            <Tooltip title="刷新" placement="top">
-                              <Icon
-                                type="redo"
-                                onClick={fetchStoreApplicationList}
-                              />
-                            </Tooltip>
-                          </div>
-                          <Button
-                            type="primary"
-                            onClick={() => setCreateTemplateModalVisible(true)}
-                          >
-                            创建应用模板
-                          </Button>
+                    <div className={styles.actions}>
+                      <Search
+                        style={{ width: '400px' }}
+                        placeholder="请输入名称进行搜索"
+                        onSearch={handleSearch}
+                      />
+                      <div className={styles.right}>
+                        <div className={styles.icon}>
+                          <Tooltip title="刷新" placement="top">
+                            <Icon
+                              type="redo"
+                              onClick={fetchStoreApplicationList}
+                            />
+                          </Tooltip>
                         </div>
+                        <Button
+                          type="primary"
+                          onClick={() => setCreateTemplateModalVisible(true)}
+                        >
+                          创建应用模板
+                        </Button>
                       </div>
-                    )}
+                    </div>
                     {renderContent()}
-                    {storeList.length > 0 && (
-                      <div style={{ textAlign: 'right' }}>
-                        <Pagination
-                          showQuickJumper
-                          current={queryApplicationListParam.current}
-                          pageSize={queryApplicationListParam.size}
-                          total={total}
-                          showTotal={total => `共${total}条`}
-                          onChange={handlePage}
-                        />
-                      </div>
-                    )}
+                    <div style={{ textAlign: 'right' }}>
+                      <Pagination
+                        showQuickJumper
+                        current={queryApplicationListParam.current}
+                        pageSize={queryApplicationListParam.size}
+                        total={total}
+                        showTotal={total => `共${total}条`}
+                        onChange={handlePage}
+                      />
+                    </div>
                   </Spin>
                 </TabPane>
               );
@@ -401,9 +397,8 @@ const CloudStore = props => {
           <CreateTemplateModal
             createTemplateModalVisible={createTemplateModalVisible}
             eid={eid}
-            market_id={queryApplicationListParam.market_id}
             onCancel={() => setCreateTemplateModalVisible(false)}
-            fetchStoreList={fetchStoreList}
+            createdCallback={fetchStoreList}
           />
         )}
       </PageHeaderLayout>
