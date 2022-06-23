@@ -24,8 +24,12 @@ export default {
         callback(response);
       }
     },
-    *fetchStoreApplicationList({ payload, callback }, { call }) {
-      const response = yield call(fetchStoreApplicationListAPI, payload);
+    *fetchStoreApplicationList({ payload, callback, handleError }, { call }) {
+      const response = yield call(
+        fetchStoreApplicationListAPI,
+        payload,
+        handleError
+      );
       if (response && callback) {
         callback(response);
       }

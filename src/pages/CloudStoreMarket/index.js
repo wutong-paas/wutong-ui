@@ -119,6 +119,10 @@ const CloudStore = props => {
           setTotal(res?.bean?.total);
         }
         setLoading(false);
+      },
+      handleError: () => {
+        setLoading(false);
+        setStoreList([]);
       }
     });
   };
@@ -406,6 +410,6 @@ const CloudStore = props => {
   );
 };
 
-const CloudStoreMarket = connect(({}) => ({}))(CloudStore);
+const CloudStoreMarket = connect()(CloudStore);
 
 export default CloudStoreMarket;

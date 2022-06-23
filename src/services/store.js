@@ -32,13 +32,17 @@ export async function createApplicationStoreAPI(body) {
 }
 
 // 商店应用列表
-export async function fetchStoreApplicationListAPI(body = { enterprise_id }) {
+export async function fetchStoreApplicationListAPI(
+  body = { enterprise_id },
+  handleError
+) {
   const { enterprise_id, market_id, ...data } = body;
   return request(
     `${apiconfig.baseUrl}/console/enterprise/${enterprise_id}/market-apps/${market_id}`,
     {
       method: 'post',
-      data
+      data,
+      handleError
     }
   );
 }
