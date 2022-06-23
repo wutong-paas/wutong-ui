@@ -35,6 +35,7 @@ import React, { Fragment, PureComponent } from 'react';
 import CreateAppModels from '../../components/CreateAppModels';
 import FooterToolbar from '../../components/FooterToolbar';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
+import CreateTemplateModal from '../CloudStoreMarket/component/CreateTemplateModal';
 import {
   createApp,
   createEnterprise,
@@ -403,7 +404,8 @@ export default class Main extends PureComponent {
       appModelInfo: false,
       batchEditShow: false,
       selectComponentID: [],
-      allSelect: false
+      allSelect: false,
+      storeList: [] //店铺列表
     };
     this.com = [];
     this.share_group_info = null;
@@ -412,6 +414,9 @@ export default class Main extends PureComponent {
     this.fetchAppDetail();
     this.fetchRecord();
     this.getShareInfo();
+    if (this.props?.location?.from) {
+      this.fetchApplicationStoreSelectList();
+    }
   }
   onCancels = () => {
     this.setState({
@@ -485,7 +490,8 @@ export default class Main extends PureComponent {
   fetchRecord = () => {
     this.setState({ loading: true });
     const { teamName, appID, shareId } = this.props.match.params;
-    const { dispatch } = this.props;
+    const { dispatch, location } = this.props;
+    const isCloudMarket = location?.from;
     dispatch({
       type: 'application/fetchShareRecord',
       payload: {
@@ -510,8 +516,9 @@ export default class Main extends PureComponent {
     const scopeTarget = record && record.scope_target;
 
     const { teamName, appID } = this.props.match.params;
-    const { dispatch, form } = this.props;
+    const { dispatch, form, location } = this.props;
     const { setFieldsValue } = form;
+    const isCloudMarket = location.from;
     const body = {
       team_name: teamName,
       app_id: appID
@@ -520,7 +527,11 @@ export default class Main extends PureComponent {
       body.scope = 'wutong';
       body.market_id = scopeTarget.store_id;
     } else {
-      body.scope = 'local';
+      if (isCloudMarket) {
+        body.scope = 'market';
+      } else {
+        body.scope = 'local';
+      }
     }
     // const isMarket = scopeTarget && scopeTarget.store_id;
 
@@ -636,8 +647,9 @@ export default class Main extends PureComponent {
     );
   };
   handleSubmit = () => {
-    const { dispatch, form } = this.props;
+    const { dispatch, form, location } = this.props;
     const { record, sharearrs, share_service_list } = this.state;
+    const isCloudMarket = location?.from;
     const newinfo = {};
     form.validateFields((err, values) => {
       if (!err) {
@@ -743,6 +755,9 @@ export default class Main extends PureComponent {
         newinfo.app_version_info = appVersionInfo;
         newinfo.share_service_list = arr;
         newinfo.share_plugin_list = this.state.plugin_list;
+        if (isCloudMarket) {
+          newinfo.store_id = values?.store_id;
+        }
         const teamName = globalUtil.getCurrTeamName();
         const { appID, shareId } = this.props.match.params;
         dispatch({
@@ -819,6 +834,8 @@ export default class Main extends PureComponent {
   hideCreateAppModel = () => {
     this.setState({ showCreateAppModel: false });
   };
+  toggleShowCreateTemplateModal = flag =>
+    this.setState({ showCreateTemplateModal: flag });
   handleCreateAppModel = () => {
     notification.success({ message: '创建成功' });
     this.fetchModels(true);
@@ -864,6 +881,8 @@ export default class Main extends PureComponent {
       });
     }
   };
+
+  handleChangeStoreSelect = e => {};
 
   handleSetFieldsValue = (versionInfo, isCreate) => {
     const { setFieldsValue } = this.props.form;
@@ -1012,6 +1031,23 @@ export default class Main extends PureComponent {
     }
   };
 
+  fetchApplicationStoreSelectList = () => {
+    const { dispatch, currentEnterprise } = this.props;
+    dispatch({
+      type: 'store/fetchStoreSelectList',
+      payload: {
+        enterprise_id: currentEnterprise.enterprise_id
+      },
+      callback: res => {
+        if (res?.status_code === 200) {
+          this.setState({
+            storeList: res?.list || []
+          });
+        }
+      }
+    });
+  };
+
   render() {
     const { info, tabk, share_service_list, plugin_list } = this.state;
     if (!info) {
@@ -1034,6 +1070,7 @@ export default class Main extends PureComponent {
       models,
       appDetail,
       showCreateAppModel,
+      showCreateTemplateModal,
       editorAppModel,
       model,
       record,
@@ -1041,7 +1078,8 @@ export default class Main extends PureComponent {
       versions,
       submitLoading,
       appModelInfo,
-      batchEditShow
+      batchEditShow,
+      storeList
     } = this.state;
     const Application = getFieldValue('app_id');
     let breadcrumbList = [];
@@ -1067,6 +1105,7 @@ export default class Main extends PureComponent {
     const marketId = record.scope_target && record.scope_target.store_id;
     const marketVersion =
       record.scope_target && record.scope_target.store_version;
+    const isCloudMarket = this.props?.location?.from;
     return (
       <PageHeaderLayout breadcrumbList={breadcrumbList}>
         <div>
@@ -1086,6 +1125,37 @@ export default class Main extends PureComponent {
               }}
             >
               <Row gutter={24}>
+                {isCloudMarket && (
+                  <Col span="12">
+                    <Form.Item {...formItemLayout} label="应用店铺">
+                      {getFieldDecorator('store_id', {
+                        initialValue:
+                          storeList?.length > 0 && storeList[0].store_id,
+                        rules: [
+                          {
+                            required: true,
+                            message: '应用店铺选择是必须的'
+                          }
+                        ]
+                      })(
+                        <Select
+                          getPopupContainer={triggerNode =>
+                            triggerNode.parentNode
+                          }
+                          style={{ width: 280 }}
+                          // onChange={this.changeCurrentModel}
+                          placeholder="选择发布的应用店铺"
+                        >
+                          {storeList.map(item => (
+                            <Option key={item.store_id}>
+                              {item.store_name}
+                            </Option>
+                          ))}
+                        </Select>
+                      )}
+                    </Form.Item>
+                  </Col>
+                )}
                 <Col span="12">
                   <Form.Item {...formItemLayout} label="应用模版">
                     {getFieldDecorator('app_id', {
@@ -1115,7 +1185,14 @@ export default class Main extends PureComponent {
                                 textAlign: 'center'
                               }}
                               onMouseDown={e => e.preventDefault()}
-                              onClick={this.showCreateAppModel}
+                              onClick={() => {
+                                const isMarket = this.props?.location?.from;
+                                if (isMarket) {
+                                  this.toggleShowCreateTemplateModal(true);
+                                  return;
+                                }
+                                this.showCreateAppModel();
+                              }}
                             >
                               <Icon type="plus" /> 新建应用模版
                             </div>
@@ -1127,16 +1204,20 @@ export default class Main extends PureComponent {
                         ))}
                       </Select>
                     )}
-                    {Application && models && models.length > 0 && !marketId && (
-                      <a
-                        style={{ marginLeft: '10px' }}
-                        onClick={() => {
-                          this.showEditorAppModel(Application);
-                        }}
-                      >
-                        编辑应用模版
-                      </a>
-                    )}
+                    {Application &&
+                      models &&
+                      models.length > 0 &&
+                      !marketId &&
+                      !isCloudMarket && (
+                        <a
+                          style={{ marginLeft: '10px' }}
+                          onClick={() => {
+                            this.showEditorAppModel(Application);
+                          }}
+                        >
+                          编辑应用模版
+                        </a>
+                      )}
                   </Form.Item>
                 </Col>
                 <Col span="12">
@@ -1172,46 +1253,51 @@ export default class Main extends PureComponent {
                     )}
                   </Form.Item>
                 </Col>
-                <Col span="12">
-                  <Form.Item {...formItemLayout} label="版本别名">
-                    {getFieldDecorator('version_alias', {
-                      initialValue:
-                        (versionInfo && versionInfo.version_alias) || '',
-                      rules: [
-                        {
-                          max: 64,
-                          message: '最大长度64位'
-                        }
-                      ]
-                    })(
-                      <Input
-                        style={{ width: 280 }}
-                        placeholder="设置版本别名，比如高级版"
-                      />
-                    )}
-                  </Form.Item>
-                </Col>
-                <Col span="12" style={{ height: '104px' }}>
-                  <Form.Item {...formItemLayout} label="版本说明">
-                    {getFieldDecorator('describe', {
-                      initialValue:
-                        (versionInfo &&
-                          (versionInfo.describe || versionInfo.app_describe)) ||
-                        '',
-                      rules: [
-                        {
-                          max: 255,
-                          message: '最大长度255位'
-                        }
-                      ]
-                    })(
-                      <TextArea
-                        placeholder="请输入版本说明"
-                        style={{ height: '70px' }}
-                      />
-                    )}
-                  </Form.Item>
-                </Col>
+                {!isCloudMarket && (
+                  <Col span="12">
+                    <Form.Item {...formItemLayout} label="版本别名">
+                      {getFieldDecorator('version_alias', {
+                        initialValue:
+                          (versionInfo && versionInfo.version_alias) || '',
+                        rules: [
+                          {
+                            max: 64,
+                            message: '最大长度64位'
+                          }
+                        ]
+                      })(
+                        <Input
+                          style={{ width: 280 }}
+                          placeholder="设置版本别名，比如高级版"
+                        />
+                      )}
+                    </Form.Item>
+                  </Col>
+                )}
+                {!isCloudMarket && (
+                  <Col span="12" style={{ height: '104px' }}>
+                    <Form.Item {...formItemLayout} label="版本说明">
+                      {getFieldDecorator('describe', {
+                        initialValue:
+                          (versionInfo &&
+                            (versionInfo.describe ||
+                              versionInfo.app_describe)) ||
+                          '',
+                        rules: [
+                          {
+                            max: 255,
+                            message: '最大长度255位'
+                          }
+                        ]
+                      })(
+                        <TextArea
+                          placeholder="请输入版本说明"
+                          style={{ height: '70px' }}
+                        />
+                      )}
+                    </Form.Item>
+                  </Col>
+                )}
               </Row>
             </div>
           </Card>
@@ -1384,7 +1470,14 @@ export default class Main extends PureComponent {
               onCancel={this.hideCreateAppModel}
             />
           )}
-
+          {showCreateTemplateModal && (
+            <CreateTemplateModal
+              createTemplateModalVisible={showCreateTemplateModal}
+              eid={currentEnterprise.enterprise_id}
+              onCancel={() => this.toggleShowCreateTemplateModal(false)}
+              createdCallback={() => this.fetchModels(true)}
+            />
+          )}
           {editorAppModel && (
             <CreateAppModels
               title="编辑应用模版"

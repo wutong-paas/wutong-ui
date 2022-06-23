@@ -4,7 +4,8 @@ import {
   fetchStoreApplicationListAPI,
   createApplicationTemplateAPI,
   installApplicationAPI,
-  fetchApplicationVersionListAPI
+  fetchApplicationVersionListAPI,
+  fetchStoreSelectListAPI
 } from '../services/store';
 
 export default {
@@ -23,8 +24,12 @@ export default {
         callback(response);
       }
     },
-    *fetchStoreApplicationList({ payload, callback }, { call }) {
-      const response = yield call(fetchStoreApplicationListAPI, payload);
+    *fetchStoreApplicationList({ payload, callback, handleError }, { call }) {
+      const response = yield call(
+        fetchStoreApplicationListAPI,
+        payload,
+        handleError
+      );
       if (response && callback) {
         callback(response);
       }
@@ -43,6 +48,12 @@ export default {
     },
     *fetchApplicationVersionList({ payload, callback }, { call }) {
       const response = yield call(fetchApplicationVersionListAPI, payload);
+      if (response && callback) {
+        callback(response);
+      }
+    },
+    *fetchStoreSelectList({ payload, callback }, { call }) {
+      const response = yield call(fetchStoreSelectListAPI, payload);
       if (response && callback) {
         callback(response);
       }
