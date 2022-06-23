@@ -1179,7 +1179,7 @@ class Main extends PureComponent {
           </Button>
         )}
 
-        {isShowFileManager && (
+        {/* {isShowFileManager && (
           <Button>
             <Link
               to={`${this.fetchPrefixUrl()}components/${serviceAlias}/filemanager/service_id/${service_id}`}
@@ -1188,7 +1188,7 @@ class Main extends PureComponent {
               文件管理
             </Link>
           </Button>
-        )}
+        )} */}
         {isVisitWebTerminal && !isShowThirdParty && (
           <Button>
             <Link
