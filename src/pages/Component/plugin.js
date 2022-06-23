@@ -13,7 +13,9 @@ import {
   Row,
   Select,
   Spin,
-  Tooltip
+  Tooltip,
+  Tabs,
+  Empty
 } from 'antd';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
@@ -27,6 +29,7 @@ import pluginUtil from '../../utils/plugin';
 import styles from './Index.less';
 
 const { Option } = Select;
+const { TabPane } = Tabs;
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -501,9 +504,10 @@ class PluginConfigs extends PureComponent {
 }
 // eslint-disable-next-line react/no-multi-comp
 @connect(
-  ({ user, loading }) => ({
+  ({ user, loading, appControl }) => ({
     currUser: user.currentUser,
-    loading: loading.appControl
+    loading: loading.appControl,
+    appDetail: appControl.appDetail
   }),
   null,
   null,
@@ -518,7 +522,8 @@ export default class Index extends PureComponent {
       category: 'sys',
       type: 'installed',
       showDeletePlugin: null,
-      openedPlugin: {}
+      openedPlugin: {},
+      loading: false
     };
     this.isInit = true;
   }
@@ -560,6 +565,7 @@ export default class Index extends PureComponent {
   getPlugins = () => {
     const team_name = globalUtil.getCurrTeamName();
     const app_alias = this.props.appAlias;
+    this.setState({ loading: true });
     this.props.dispatch({
       type: 'appControl/getPlugins',
       payload: {
@@ -579,13 +585,14 @@ export default class Index extends PureComponent {
             }
           }
         }
+        this.setState({ loading: false });
       }
     });
   };
   handleCategoryChange = e => {
     this.setState(
       {
-        category: e.target.value
+        category: e
       },
       () => {
         this.getPlugins();
@@ -681,9 +688,16 @@ export default class Index extends PureComponent {
   cancelUpdateMemory = () => {
     this.setState({ updateMemory: null });
   };
+  fetchPrefixUrl = () => {
+    return `/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/`;
+  };
   renderInstalled = () => {
     const { installedList } = this.state;
+    const { appDetail } = this.props;
+    const serviceAlias = appDetail?.service?.service_alias;
+    const service_id = appDetail?.service?.service_id;
     const loading = this.state.unInstalledList === null;
+    if (installedList?.length === 0) return;
     return (
       <List
         size="large"
@@ -692,9 +706,18 @@ export default class Index extends PureComponent {
         pagination={false}
         dataSource={installedList || []}
         renderItem={item => (
-          <div>
+          <div style={{ borderBottom: '1px solid #e8e8e8' }}>
             <List.Item
               actions={[
+                item?.plugin_status &&
+                  item.plugin_type === 'filebrowser_plugin' && (
+                    <Link
+                      to={`${this.fetchPrefixUrl()}components/${serviceAlias}/filemanager/service_id/${service_id}`}
+                      target="_blank"
+                    >
+                      <Tooltip title="访问文件管理">访问</Tooltip>
+                    </Link>
+                  ),
                 this.isOpenedPlugin(item) ? (
                   <a
                     onClick={() => {
@@ -749,8 +772,7 @@ export default class Index extends PureComponent {
                   }}
                   href="javascript:;"
                 >
-                  {' '}
-                  卸载{' '}
+                  卸载
                 </a>
               ]}
             >
@@ -763,33 +785,33 @@ export default class Index extends PureComponent {
                 }
                 title={
                   <div>
-                    {' '}
-                    <Link
-                      to={`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/myplugns/${
-                        item.plugin_id
-                      }`}
-                    >
-                      {item.plugin_alias}
-                    </Link>{' '}
+                    <div className={styles['install-list-title']}>
+                      <Link
+                        to={`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/myplugns/${
+                          item.plugin_id
+                        }`}
+                      >
+                        {item.plugin_alias}
+                      </Link>
+                      <div className={styles.open}>已开通</div>
+                    </div>
                     <p style={{ fontSize: 12, color: '#dcdcdc' }}>
-                      {' '}
                       <span
                         style={{
                           marginRight: 24
                         }}
                       >
                         类别： {pluginUtil.getCategoryCN(item.category)}
-                      </span>{' '}
+                      </span>
                       <span
                         style={{
                           marginRight: 24
                         }}
                       >
-                        {' '}
-                        版本： {item.build_version}{' '}
-                      </span>{' '}
+                        版本： {item.build_version}
+                      </span>
                       <span> 内存： {item.min_memory} MB </span>
-                    </p>{' '}
+                    </p>
                   </div>
                 }
                 description={item.desc}
@@ -839,19 +861,20 @@ export default class Index extends PureComponent {
   renderUnInstalled = () => {
     const { unInstalledList } = this.state;
     const loading = this.state.unInstalledList === null;
-    if (!unInstalledList.length) {
-      return (
-        <center>
-          暂无可用插件{' '}
-          <Link
-            style={{ marginTop: 32 }}
-            to={`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/myplugns`}
-          >
-            去安装
-          </Link>
-        </center>
-      );
-    }
+    if (!unInstalledList?.length) return;
+    // if (!unInstalledList?.length) {
+    //   return (
+    //     <center>
+    //       暂无可用插件{' '}
+    //       <Link
+    //         style={{ marginTop: 32 }}
+    //         to={`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/myplugns`}
+    //       >
+    //         去安装
+    //       </Link>
+    //     </center>
+    //   );
+    // }
     return (
       <List
         size="large"
@@ -868,8 +891,7 @@ export default class Index extends PureComponent {
                 }}
                 href="javascript:;"
               >
-                {' '}
-                开通{' '}
+                开通
               </a>
             ]}
           >
@@ -882,25 +904,26 @@ export default class Index extends PureComponent {
               }
               title={
                 <div>
-                  {' '}
-                  <Link
-                    to={`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/myplugns/${
-                      item.plugin_id
-                    }`}
-                  >
-                    {item.plugin_alias}
-                  </Link>{' '}
+                  <div className={styles['uninstall-list-title']}>
+                    <Link
+                      to={`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/myplugns/${
+                        item.plugin_id
+                      }`}
+                    >
+                      {item.plugin_alias}
+                    </Link>
+                    <div className={styles['not-open']}>未开通</div>
+                  </div>
                   <p style={{ fontSize: 12, color: '#dcdcdc' }}>
-                    {' '}
                     <span
                       style={{
                         marginRight: 24
                       }}
                     >
                       类别： {pluginUtil.getCategoryCN(item.category)}
-                    </span>{' '}
+                    </span>
                     <span> 版本： {item.build_version} </span>
-                  </p>{' '}
+                  </p>
                 </div>
               }
               description={item.desc}
@@ -987,64 +1010,57 @@ export default class Index extends PureComponent {
   };
   render() {
     if (!this.canView()) return <NoPermTip />;
-    const { type } = this.state;
+    const { type, installedList, unInstalledList } = this.state;
+    const renderContent = () => {
+      const { loading } = this.state;
+      if (installedList?.length === 0 && unInstalledList.length === 0) {
+        return (
+          <div>
+            <Empty description={<span>暂无可用插件</span>} />
+          </div>
+        );
+      }
+      return (
+        <>
+          <Spin spinning={loading}>
+            {this.renderInstalled()}
+            {this.renderUnInstalled()}
+            {this.state.showDeletePlugin && (
+              <ConfirmModal
+                onOk={this.hanldeUnInstallPlugin}
+                onCancel={this.cancelDeletePlugin}
+                title="卸载插件"
+                desc="确定要卸载此插件吗？"
+              />
+            )}
+
+            {this.state.updateMemory && (
+              <UpdateMemory
+                onOk={this.handleUpdateMemory}
+                onCancel={this.cancelUpdateMemory}
+                minCpu={this.state.updateMemory.min_cpu}
+                memory={this.state.updateMemory.min_memory}
+              />
+            )}
+          </Spin>
+        </>
+      );
+    };
     return (
       <Card>
-        <p
-          style={{
-            overflow: 'hidden'
-          }}
-        >
-          <RadioGroup
-            onChange={this.handleTypeChange}
-            value={type}
-            style={{
-              marginRight: 16,
-              float: 'left'
-            }}
-          >
-            <RadioButton value="installed">已开通</RadioButton>
-            <RadioButton value="uninstalled">未开通</RadioButton>
-          </RadioGroup>
-          <RadioGroup
-            onChange={this.handleCategoryChange}
-            defaultValue="sys"
-            style={{
-              marginRight: 16,
-              float: 'right'
-            }}
-          >
-            {/*
-            //modify by leon 
-            <RadioButton value="">全部</RadioButton>
-            <RadioButton value="analysis">性能分析类</RadioButton>
-            <RadioButton value="net_manage">网络治理类</RadioButton> 
-            */}
-            <RadioButton value="sys">系统插件</RadioButton>
-            <RadioButton value="tenant">团队插件</RadioButton>
-            <RadioButton value="shared">共享插件</RadioButton>
-          </RadioGroup>
-        </p>
-        {type === 'installed'
-          ? this.renderInstalled()
-          : this.renderUnInstalled()}
-        {this.state.showDeletePlugin && (
-          <ConfirmModal
-            onOk={this.hanldeUnInstallPlugin}
-            onCancel={this.cancelDeletePlugin}
-            title="卸载插件"
-            desc="确定要卸载此插件吗？"
-          />
-        )}
-
-        {this.state.updateMemory && (
-          <UpdateMemory
-            onOk={this.handleUpdateMemory}
-            onCancel={this.cancelUpdateMemory}
-            minCpu={this.state.updateMemory.min_cpu}
-            memory={this.state.updateMemory.min_memory}
-          />
-        )}
+        <div>
+          <Tabs defaultActiveKey="sys" onChange={this.handleCategoryChange}>
+            <TabPane tab="系统插件" key="sys">
+              {renderContent()}
+            </TabPane>
+            <TabPane tab="团队插件" key="tenant">
+              {renderContent()}
+            </TabPane>
+            <TabPane tab="共享插件" key="shared">
+              {renderContent()}
+            </TabPane>
+          </Tabs>
+        </div>
       </Card>
     );
   }
