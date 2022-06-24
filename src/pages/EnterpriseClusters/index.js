@@ -540,12 +540,13 @@ export default class EnterpriseClusters extends PureComponent {
         dataIndex: 'region_alias',
         align: 'center',
         render: (val, row) => {
-          return (
-            <Link to={`/enterprise/${eid}/clusters/${row.region_id}/dashboard`}>
-              {val}
-            </Link>
-            // <span>{val}</span>
-          );
+          return val;
+          // return (
+          //   <Link to={`/enterprise/${eid}/clusters/${row.region_id}/dashboard`}>
+          //     {val}
+          //   </Link>
+          //   // <span>{val}</span>
+          // );
         }
       },
       {
