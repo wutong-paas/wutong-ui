@@ -119,7 +119,7 @@ export default class RangeChart extends PureComponent {
 
       const { k8s_app: appName } = groupDetail;
       const serviceId = `${componentName}_${appName}-${componentName}.*_${ns}`;
-      const podId = `${appName}-${componentName}.*_${ns}`;
+      const podId = `${appName}-${componentName}-.*_${ns}`;
 
       const parameter = podId;
 
