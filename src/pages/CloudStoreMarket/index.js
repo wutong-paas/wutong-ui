@@ -190,7 +190,8 @@ const CloudStore = props => {
         icon,
         appVersion,
         installNumber = 0,
-        shift_status
+        shift_status,
+        front_url
       } = item;
       return (
         <>
@@ -208,7 +209,13 @@ const CloudStore = props => {
                     });
                     return;
                   }
-                  window.open('https://www.talkweb.com.cn/', '_blank');
+                  if (!front_url) {
+                    notification.warning({
+                      message: '当前地址不可用！'
+                    });
+                    return;
+                  }
+                  window.open(front_url, '_blank');
                 }}
               >
                 <Col span={3} style={{ display: 'flex' }}>
