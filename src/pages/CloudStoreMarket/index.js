@@ -211,7 +211,7 @@ const CloudStore = props => {
                   }
                   if (!front_url) {
                     notification.warning({
-                      message: '当前地址不可用！'
+                      message: '非法地址！'
                     });
                     return;
                   }
@@ -241,19 +241,26 @@ const CloudStore = props => {
                   <div>
                     <p>
                       <a
-                        onClick={e => {
-                          e.stopPropagation();
-                          if (shift_status === 0) {
-                            e.preventDefault();
-                            notification.warning({
-                              message: '当前应用未上架，暂不可查看详情!'
-                            });
-                            return;
-                          }
-                          //this.showMarketAppDetail(item);
-                        }}
-                        href="https://www.talkweb.com.cn/"
-                        target="_blank"
+                      // onClick={e => {
+                      //   e.stopPropagation();
+                      //   if (shift_status === 0) {
+                      //     e.preventDefault();
+                      //     notification.warning({
+                      //       message: '当前应用未上架，暂不可查看详情!'
+                      //     });
+                      //     return;
+                      //   }
+                      //   if (!front_url) {
+                      //     e.preventDefault();
+                      //     notification.warning({
+                      //       message: '非法地址!'
+                      //     });
+                      //     return;
+                      //   }
+                      //   this.showMarketAppDetail(item);
+                      // }}
+                      // href={front_url}
+                      // target="_blank"
                       >
                         {name}
                       </a>
