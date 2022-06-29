@@ -186,10 +186,10 @@ export default class EnterpriseClusters extends PureComponent {
   };
 
   handlUnit = num => {
-    if (num) {
-      return (num / 1024).toFixed(2) / 1;
-    }
-    return 0;
+    // if (num) {
+    //   return (num / 1024).toFixed(2) / 1;
+    // }
+    return num;
   };
 
   loadPutCluster = regionID => {
