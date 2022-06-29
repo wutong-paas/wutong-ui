@@ -26,6 +26,7 @@ import Lists from '../../components/Lists';
 import globalUtil from '../../utils/global';
 import NoComponent from '../../../public/images/noComponent.png';
 import { connect } from 'dva';
+import cookie from '../../utils/cookie';
 import styles from './index.less';
 
 const { TabPane } = Tabs;
@@ -193,6 +194,7 @@ const CloudStore = props => {
         shift_status,
         front_url
       } = item;
+      const token = `Bearer ${cookie.get('third_token')}`;
       return (
         <>
           <Lists
@@ -215,7 +217,7 @@ const CloudStore = props => {
                     });
                     return;
                   }
-                  window.open(front_url, '_blank');
+                  window.open(front_url + token, '_blank');
                 }}
               >
                 <Col span={3} style={{ display: 'flex' }}>
