@@ -194,7 +194,7 @@ const CloudStore = props => {
         shift_status,
         front_url
       } = item;
-      const token = `Bearer ${cookie.get('third_token')}`;
+      // const token =  `Bearer ${cookie.get('third_token')}`;
       return (
         <>
           <Lists
@@ -217,7 +217,7 @@ const CloudStore = props => {
                     });
                     return;
                   }
-                  window.open(front_url + token, '_blank');
+                  window.open(front_url, '_blank');
                 }}
               >
                 <Col span={3} style={{ display: 'flex' }}>
