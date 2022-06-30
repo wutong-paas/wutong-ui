@@ -11,6 +11,7 @@ import {
   Modal,
   notification,
   Row,
+  Radio,
   Spin,
   Tooltip
 } from 'antd';
@@ -918,7 +919,7 @@ export default class Index extends PureComponent {
               borderBottom: '1px solid #e8e8e8'
             }}
           >
-            <Col span={16} style={{ paddingleft: '12px' }}>
+            <Col span={5} style={{ paddingleft: '12px' }}>
               <a
                 onClick={() => {
                   this.changeType('shape');
@@ -954,6 +955,34 @@ export default class Index extends PureComponent {
               >
                 监控
               </a>*/}
+            </Col>
+            <Col
+              className={styles.topoBtn}
+              span={11}
+              style={{ paddingleft: '12px' }}
+            >
+              {type !== 'list' && isComponentCreate && (
+                <div className={styles['radio-button']}>
+                  <Radio.Group value={this.state.type} buttonStyle="solid">
+                    <Radio.Button
+                      value="shape"
+                      onClick={() => {
+                        this.changeType('shape');
+                      }}
+                    >
+                      普通模式
+                    </Radio.Button>
+                    <Radio.Button
+                      value="shapes"
+                      onClick={() => {
+                        this.changeType('shapes');
+                      }}
+                    >
+                      编排模式
+                    </Radio.Button>
+                  </Radio.Group>
+                </div>
+              )}
             </Col>
             <Col span={4} style={{ textAlign: 'right' }}>
               {isComponentCreate && isComponentConstruct && (
@@ -998,7 +1027,7 @@ export default class Index extends PureComponent {
             />
           )}
 
-          {type !== 'list' && type !== 'monitor' && isComponentCreate && (
+          {/* {type !== 'list' && type !== 'monitor' && isComponentCreate && (
             <Row
               style={{
                 textAlign: 'right',
@@ -1025,7 +1054,7 @@ export default class Index extends PureComponent {
                 </a>
               )}
             </Row>
-          )}
+          )} */}
 
           {type === 'list' && (
             <ComponentList
