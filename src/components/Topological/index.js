@@ -114,7 +114,7 @@ class Index extends React.Component {
         dispatch(
           // 跳转组件
           routerRedux.push(
-            `/team/${teamName}/region/${regionName}/components/${nodeDetails.service_alias}/overview`
+            `/team/${teamName}/region/${regionName}/components/${nodeDetails.service_alias}/overview/service_id/${nodeDetails.service_id}`
           )
         );
       };
@@ -122,7 +122,7 @@ class Index extends React.Component {
       window.handleClickRelation = function(relation) {
         dispatch(
           routerRedux.push(
-            `/team/${teamName}/region/${regionName}/components/${relation.service_alias}/overview`
+            `/team/${teamName}/region/${regionName}/components/${relation.service_alias}/overview/service_id/${relation.service_id}`
           )
         );
       };
