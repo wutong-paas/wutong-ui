@@ -177,7 +177,7 @@ const CloudStore = props => {
         <>
           <div className={styles.empty}>
             <img src={NoComponent} />
-            <p>当前店铺无应用，请前往云市场管理平台添加应用</p>
+            <p>当前店铺无应用，请先发布应用</p>
           </div>
         </>
       );
@@ -333,7 +333,7 @@ const CloudStore = props => {
                 <TabPane
                   tab={
                     <span className={styles.verticalCen}>
-                      {/* {globalUtil.fetchSvg('cloudMarket')} */}
+                      <Icon type="shop" />
                       {name}
                     </span>
                   }
@@ -390,7 +390,7 @@ const CloudStore = props => {
         {tabpaneList.length === 0 && (
           <div className={styles.empty}>
             <img src={NoComponent} />
-            <p>当前无店铺模版，请选择方式添加</p>
+            <p>当前无可用店铺，请先添加一个店铺</p>
           </div>
         )}
         {installApplication && (
