@@ -285,15 +285,18 @@ export default class Enterprise extends PureComponent {
   };
 
   handlUnit = (num, unit) => {
-    if (num) {
-      let nums = num;
-      let units = unit;
-      if (nums >= 1024) {
-        nums = num / 1024;
-        units = 'GB';
-      }
-      return unit ? units : nums.toFixed(2) / 1;
-    }
+    // 后端默认数据都是GB 暂时不用处理
+    // if (num) {
+    //   let nums = num;
+    //   let units = unit;
+    //   if (nums >= 1024) {
+    //     nums = num / 1024;
+    //     units = 'GB';
+    //   }
+    //   return unit ? units : nums.toFixed(2) / 1;
+    // }
+    if (unit) return unit;
+    if (num) return num;
     return null;
   };
 
@@ -429,7 +432,7 @@ export default class Enterprise extends PureComponent {
     const memoryInfo = overviewMonitorInfo && overviewMonitorInfo.memory;
     const memoryUsed = (memoryInfo && this.handlUnit(memoryInfo.used)) || 0;
     const memoryUsedUnit =
-      (memoryInfo && this.handlUnit(memoryInfo.used, 'MB')) || 'MB';
+      (memoryInfo && this.handlUnit(memoryInfo.used, 'GB')) || 'GB';
     const memoryTotal = (memoryInfo && this.handlUnit(memoryInfo.total)) || 0;
     const cpuInfo = (overviewMonitorInfo && overviewMonitorInfo.cpu) || 0;
     const cpuUsed = (cpuInfo && cpuInfo.used && parseInt(cpuInfo.used)) || 0;
@@ -449,7 +452,7 @@ export default class Enterprise extends PureComponent {
         : '';
     const enterpriseEdition = wutongUtil.isEnterpriseEdition(wutongInfo);
     const memoryTotalUnit =
-      (memoryInfo && this.handlUnit(memoryInfo.total, 'MB')) || 'MB';
+      (memoryInfo && this.handlUnit(memoryInfo.total, 'GB')) || 'GB';
     const teamOperation = (
       <div
         style={{
