@@ -9,6 +9,7 @@ import { Modal, Form, Input, notification } from 'antd';
 import { useEffect, useState } from 'react';
 import { connect } from 'dva';
 import styles from './index.less';
+import { string } from 'prop-types';
 
 const formItemLayout = {
   labelCol: {
@@ -76,6 +77,11 @@ const CreateTemplateForm = props => {
                 {
                   required: true,
                   message: '请输入应用模板名称！'
+                },
+                {
+                  max: 32,
+                  type: 'string',
+                  message: '应用模板名称最大长度为32位！'
                 }
               ]
             })(<Input placeholder="请输入应用模板名称" />)}
