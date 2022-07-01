@@ -171,7 +171,7 @@ const CreateMarkeForm = props => {
             })(<Input placeholder="请输入AccessSecret" />)}
           </Form.Item>
           <Form.Item {...formItemLayout} label="发布范围">
-            {getFieldDecorator('type', {
+            {getFieldDecorator('scope', {
               // initialValue: appInfo
               //   ? isShared && appInfo.scope && appInfo.scope === 'team'
               //     ? appInfo.create_team
