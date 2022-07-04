@@ -121,9 +121,10 @@ const CloudStore = props => {
         }
         setLoading(false);
       },
-      handleError: () => {
+      handleError: err => {
         setLoading(false);
         setStoreList([]);
+        notification.error({ message: err?.data?.msg || '请求出错' });
       }
     });
   };
