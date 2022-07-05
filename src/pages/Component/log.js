@@ -49,7 +49,6 @@ export default class Index extends PureComponent {
     if (!this.canView()) return;
     this.loadLog();
     this.fetchInstanceInfo();
-    console.log(this.props, 'coming');
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.state.isAutoScroll && this.state.started) {
