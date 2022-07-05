@@ -342,10 +342,12 @@ class CreateHelmAppModels extends PureComponent {
       },
       callback: res => {
         if (res?.status_code === 200) {
-          const cloudApplicationVersion = res?.list?.records?.map(item => ({
-            version: item?.numbers,
-            versionId: item?.id
-          }));
+          const cloudApplicationVersion = res?.list?.records
+            ?.filter(i => i.status === true)
+            .map(item => ({
+              version: item?.numbers,
+              versionId: item?.id
+            }));
           this.setState({
             cloudApplicationVersion
           });
@@ -569,13 +571,14 @@ class CreateHelmAppModels extends PureComponent {
             <FormItem {...formItemLayout} label="应用版本">
               {getFieldDecorator('version', {
                 initialValue: marketId
-                  ? versions.length > 0 && versions[0].versionId
-                  : versions.length > 0 &&
-                    (versions[0].version || versions[0].app_version),
+                  ? (versions.length > 0 && versions[0].versionId) || null
+                  : (versions.length > 0 &&
+                      (versions[0].version || versions[0].app_version)) ||
+                    null,
                 rules: [
                   {
                     required: true,
-                    message: '请选择版本'
+                    message: marketId ? '暂无可用版本' : '请选择版本'
                   }
                 ]
               })(
