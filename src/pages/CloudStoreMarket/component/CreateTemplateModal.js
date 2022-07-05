@@ -82,6 +82,10 @@ const CreateTemplateForm = props => {
                   max: 32,
                   type: 'string',
                   message: '应用模板名称最大长度为32位！'
+                },
+                {
+                  whitespace: true,
+                  message: '应用模板名称不能为空字符！'
                 }
               ]
             })(<Input placeholder="请输入应用模板名称" />)}
