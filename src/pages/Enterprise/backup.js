@@ -9,7 +9,6 @@ import {
   Icon,
   notification,
   Pagination,
-  Popover,
   Row,
   Tooltip
 } from 'antd';
@@ -512,24 +511,68 @@ export default class Enterprise extends PureComponent {
             onCancel={this.handleCloseDelCollectionVisible}
           />
         )}
-        {/* <div className={styles['home-title']}>
-          {enterpriseInfo.enterprise_alias}
-          <Popover placement="right">
-            <Icon
-              type="info-circle"
-              style={{ marginLeft: 6, cursor: 'pointer' }}
-            />
-          </Popover>
-        </div> */}
+        <Card
+          style={{
+            marginBottom: 24
+          }}
+          style={{ marginBottom: '20px' }}
+          loading={enterpriseInfoLoading}
+          bordered={false}
+        >
+          <Fragment>
+            <div className={styles.eidbox}>
+              <div>
+                <div className={styles.enterpriseInfo}>
+                  <img src={EnterpriseInfo} alt="" />
+                  <span>企业信息</span>
+                </div>
+                {enterpriseInfo && (
+                  <div className={styles.enterpriseName}>
+                    企业名称：{enterpriseInfo.enterprise_alias}
+                  </div>
+                )}
+                {enterpriseInfo && (
+                  <div className={styles.enterpriseBox}>
+                    <p>
+                      <Tooltip title={enterpriseInfo.enterprise_id}>
+                        联合云ID&nbsp;
+                        {enterpriseInfo.enterprise_id}
+                      </Tooltip>
+                    </p>
+                    <p>
+                      <Tooltip title={enterpriseVersion}>
+                        平台版本&nbsp;
+                        {enterpriseVersion}
+                      </Tooltip>
+                    </p>
+                    <p>
+                      <Tooltip title={enterpriseInfo.create_time}>
+                        创建时间&nbsp;
+                        {enterpriseInfo.create_time}
+                      </Tooltip>
+                    </p>
+                  </div>
+                )}
+              </div>
+              {/* <div>
+                <img
+                  src={EnterpriseBj}
+                  alt=""
+                  style={{ marginRight: '54px' }}
+                />
+              </div> */}
+            </div>
+          </Fragment>
+        </Card>
+
         <div>
           {this.state.adminer && (
             <Row
               style={{
                 marginBottom: 24
               }}
-              gutter={25}
             >
-              {/* <Col span={13}>
+              <Col span={13}>
                 <Card
                   bordered={false}
                   loading={overviewAppInfoLoading}
@@ -645,9 +688,9 @@ export default class Enterprise extends PureComponent {
                     </Col>
                   </Row>
                 </Card>
-              </Col> */}
+              </Col>
 
-              <Col span={12}>
+              <Col span={11}>
                 <Card
                   bordered={false}
                   loading={overviewInfoLoading}
@@ -709,421 +752,21 @@ export default class Enterprise extends PureComponent {
                   </Row>
                 </Card>
               </Col>
-              {this.state.adminer ? (
-                <Col span={12}>
-                  <Card
-                    bordered={false}
-                    loading={overviewMonitorInfoLoading}
-                    style={{ height: '243px' }}
-                  >
-                    {overviewMonitorInfo && (
-                      <Row>
-                        <Col span={7}>
-                          <ul className={styles.Box}>
-                            <li>
-                              <img src={Records} alt="" />
-                            </li>
-                            <li>
-                              <Link
-                                style={colors}
-                                to={`/enterprise/${eid}/clusters`}
-                              >
-                                {overviewMonitorInfo.total_regions || 0}
-                              </Link>
-                            </li>
-                            <li>集群数量</li>
-                            <li>——</li>
-                          </ul>
-                        </Col>
-                        <Col span={10}>
-                          <ul className={styles.Box}>
-                            <li>
-                              <img src={Memory} alt="" />
-                            </li>
-                            <li>
-                              <Tooltip
-                                className={styles.cen}
-                                title={`${memoryUsed}${memoryUsedUnit} 包含各团队内存使用量、系统使用量和平台组件使用量`}
-                              >
-                                <span className={styles.numbers}>
-                                  {memoryUsed}
-                                  <span className={styles.units}>
-                                    {memoryUsedUnit}
-                                  </span>
-                                </span>
-                              </Tooltip>
-                              <Tooltip
-                                title={`${memoryTotal} ${memoryTotalUnit}`}
-                                className={styles.cen}
-                              >
-                                <span className={styles.numbers}>
-                                  /{memoryTotal}
-                                  <span className={styles.units}>
-                                    {memoryTotalUnit}
-                                  </span>
-                                </span>
-                              </Tooltip>
-                            </li>
-                            <li>内存使用量/总量</li>
-                            <li>——</li>
-                          </ul>
-                        </Col>
-                        <Col span={7}>
-                          <ul className={styles.Box}>
-                            <li>
-                              <img src={Cpus} alt="" />
-                            </li>
-                            <li>
-                              <Tooltip
-                                className={styles.cen}
-                                title={`${cpuUsed}Core`}
-                              >
-                                <span className={styles.numbers}>
-                                  {cpuUsed}
-                                  <span className={styles.units}>Core</span>
-                                </span>
-                              </Tooltip>
-                              <Tooltip
-                                className={styles.cen}
-                                title={`${cpuTotal}Core`}
-                              >
-                                <span className={styles.numbers}>
-                                  /{cpuTotal}
-                                  <span className={styles.units}>Core</span>
-                                </span>
-                              </Tooltip>
-                            </li>
-                            <li>CPU使用量/总量</li>
-                            <li>——</li>
-                          </ul>
-                        </Col>
-                      </Row>
-                    )}
-                  </Card>
-                </Col>
-              ) : (
-                <Col span={12}>
-                  <Card
-                    bordered={false}
-                    loading={collectionInfoLoading}
-                    style={{ height: '243px' }}
-                  >
-                    <Row style={{ marginBottom: '4px' }}>
-                      <Col className={styles.grays} span={12}>
-                        便捷入口
-                      </Col>
-                      <Col
-                        className={styles.grays}
-                        style={{ textAlign: 'right' }}
-                        span={12}
-                      >
-                        <span
-                          style={{
-                            marginRight: '10px',
-                            color: '#3D54C4',
-                            cursor: 'pointer'
-                          }}
-                          onClick={() => {
-                            this.onConvenientEntrance();
-                          }}
-                        >
-                          新增
-                        </span>
-                        {collections && (
-                          <span
-                            style={colors}
-                            onClick={() => {
-                              this.handleIsConvenientEntrance();
-                            }}
-                          >
-                            编辑
-                          </span>
-                        )}
-                      </Col>
-                    </Row>
-
-                    <Col span={24}>
-                      <Row>
-                        {collections ? (
-                          collections.map((item, index) => {
-                            const { url, name } = item;
-                            const startPage = (page - 1) * page_size;
-
-                            const totals = page * page_size;
-                            if (page !== 1 && index < startPage) {
-                              return null;
-                            }
-                            if (index >= totals) {
-                              return null;
-                            }
-                            return (
-                              <Col
-                                span={12}
-                                key={name}
-                                onClick={() => {
-                                  editorConvenient
-                                    ? this.deleteConvenient(item)
-                                    : this.props.dispatch(
-                                        routerRedux.push(url)
-                                      );
-                                }}
-                              >
-                                <Card
-                                  bodyStyle={teamBoxList}
-                                  bordered={false}
-                                  style={{
-                                    height: '40px',
-                                    paddingRight: '10px'
-                                  }}
-                                >
-                                  <div
-                                    className={styles.overText}
-                                    style={{
-                                      width: '93%',
-                                      cursor: 'pointer'
-                                    }}
-                                  >
-                                    <Tooltip title={name}>{name}</Tooltip>
-                                  </div>
-                                  <div>
-                                    {editorConvenient ? (
-                                      <Icon type="close" />
-                                    ) : (
-                                      <img src={Arrow} alt="" />
-                                    )}
-                                  </div>
-                                </Card>
-                              </Col>
-                            );
-                          })
-                        ) : (
-                          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-                        )}
-                      </Row>
-
-                      <div style={{ textAlign: 'right', marginTop: '8px' }}>
-                        <Pagination
-                          size="small"
-                          current={page}
-                          pageSize={page_size}
-                          total={Number(total)}
-                          onChange={this.onPageChangeCollectionView}
-                        />
-                      </div>
-                    </Col>
-                  </Card>
-                </Col>
-              )}
             </Row>
           )}
-        </div>
-        {/* <Col span={12}>
-            <Card
-              // style={{
-              //   marginBottom: 24
-              // }}
-              // style={{ marginBottom: '20px' }}
-              style={{ height: '243px' }}
-              loading={enterpriseInfoLoading}
-              bordered={false}
-            >
-              <Fragment>
-                <div className={styles.eidbox}>
-                  <div>
-                    <div className={styles.enterpriseInfo}>
-                      <img src={EnterpriseInfo} alt="" />
-                      <span>企业信息</span>
-                    </div>
-                    {enterpriseInfo && (
-                      <div className={styles.enterpriseName}>
-                        企业名称：{enterpriseInfo.enterprise_alias}
-                      </div>
-                    )}
-                    {enterpriseInfo && (
-                      <div className={styles.enterpriseBox}>
-                        <p>
-                          <Tooltip title={enterpriseInfo.enterprise_id}>
-                            联合云ID&nbsp;
-                            {enterpriseInfo.enterprise_id}
-                          </Tooltip>
-                        </p>
-                        <p>
-                          <Tooltip title={enterpriseVersion}>
-                            平台版本&nbsp;
-                            {enterpriseVersion}
-                          </Tooltip>
-                        </p>
-                        <p>
-                          <Tooltip title={enterpriseInfo.create_time}>
-                            创建时间&nbsp;
-                            {enterpriseInfo.create_time}
-                          </Tooltip>
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                  <div>
-                <img
-                  src={EnterpriseBj}
-                  alt=""
-                  style={{ marginRight: '54px' }}
-                />
-              </div>
-                </div>
-              </Fragment>
-            </Card>
-          </Col> */}
-        {this.state.adminer && (
-          <Row gutter={25} style={{marginBottom:24}}>
-            <Col span={12}>
-              <Card
-                bordered={false}
-                loading={overviewAppInfoLoading}
-                style={{
-                  height: '243px'
-                  // marginRight: '25px'
-                }}
-              >
-                <Row style={{ marginBottom: '6px' }} gutter={25}>
-                  <Col className={styles.grays} span={12}>
-                    应用数量
-                  </Col>
-                </Row>
-                <Row>
-                  <Col span={14}>
-                    <Pie
-                      percent={Math.round((runApp / appTotal) * 10000) / 100.0}
-                      types="app"
-                      lineWidth={16}
-                      color="#3D58DA"
-                      subTitle={
-                        <div className={styles.appContent}>
-                          <h6>{runApp}个</h6>
-                          <div>
-                            共{appTotal}
-                            个应用数量
-                          </div>
-                        </div>
-                      }
-                      height={168}
-                    />
-                  </Col>
-                  <Col span={4}>
-                    <div>
-                      <div>
-                        <div className={styles.appnumno}>运行中应用</div>
-                        <div className={styles.nums}>
-                          <span>{runApp}个</span>
-                          <span>|</span>
-                          <span>{appTotal}个</span>
-                        </div>
-                      </div>
-                      <div>
-                        <div
-                          className={styles.appnums}
-                          style={{ marginTop: '26px' }}
-                        >
-                          未运行应用
-                        </div>
-                        <div className={styles.nums}>
-                          <span>{appClosed}个</span>
-                          <span>|</span>
-                          <span>{appTotal}个</span>
-                        </div>
-                      </div>
-                    </div>
-                  </Col>
-                  <Col span={4}></Col>
-                </Row>
-              </Card>
-            </Col>
-            <Col span={12}>
-              <Card
-                bordered={false}
-                loading={overviewAppInfoLoading}
-                style={{
-                  height: '243px'
-                  // marginRight: '25px'
-                }}
-              >
-                <Row style={{ marginBottom: '6px' }}>
-                  <Col className={styles.grays} span={12}>
-                    组件数量
-                  </Col>
-                </Row>
-                <Row>
-                  <Col span={14}>
-                    <div style={{ marginTop: '10px' }}>
-                      <Pie
-                        percent={
-                          Math.round((runCom / comTotal) * 10000) / 100.0
-                        }
-                        types="component"
-                        color="#2953E8"
-                        subTitle={
-                          <div className={styles.elements}>
-                            <div>
-                              <div>{comClosed}</div>
-                              <div>未运行</div>
-                            </div>
-                            <div />
-                            <div>
-                              <div>{runCom}</div>
-                              <div>运行中</div>
-                            </div>
-                          </div>
-                        }
-                        height={156}
-                      />
-                    </div>
-                  </Col>
-                  <Col span={4}>
-                    <div>
-                      <div>
-                        <div className={styles.appnumno}>运行中组件</div>
-                        <div className={styles.nums}>
-                          <span>{runCom}个</span>
-                          <span>|</span>
-                          <span>{comTotal}个</span>
-                        </div>
-                      </div>
-                      <div>
-                        <div
-                          className={styles.appnums}
-                          style={{ marginTop: '26px' }}
-                        >
-                          未运行组件
-                        </div>
-                        <div className={styles.nums}>
-                          <span>{comClosed}个</span>
-                          <span>|</span>
-                          <span>{comTotal}个</span>
-                        </div>
-                      </div>
-                    </div>
-                  </Col>
-                  <Col span={4}></Col>
-                </Row>
-              </Card>
-            </Col>
-          </Row>
-        )}
-        <div>
+
           <Row
             style={{
               marginBottom: 24
             }}
           >
-            <Col span={24}>
+            <Col span={13}>
               <Card
                 bordered={false}
                 loading={overviewTeamInfoLoading}
-                style={{
-                  height: '243px'
-                  // marginRight: '25px'
-                }}
+                style={{ height: '243px', marginRight: '25px' }}
               >
-                <Row style={{ marginBottom: '4px' }} gutter={25}>
+                <Row style={{ marginBottom: '4px' }}>
                   <Col className={styles.grays} span={12}>
                     团队
                   </Col>
@@ -1137,7 +780,7 @@ export default class Enterprise extends PureComponent {
                         justifyContent: 'space-between'
                       }}
                     >
-                      <span style={{ marginLeft: 24 }}>常用团队</span>
+                      常用团队
                       <Link style={colors} to={`/enterprise/${eid}/teams`}>
                         更多
                       </Link>
@@ -1281,6 +924,210 @@ export default class Enterprise extends PureComponent {
                 )}
               </Card>
             </Col>
+
+            {this.state.adminer ? (
+              <Col span={11}>
+                <Card
+                  bordered={false}
+                  loading={overviewMonitorInfoLoading}
+                  style={{ height: '243px' }}
+                >
+                  {overviewMonitorInfo && (
+                    <Row>
+                      <Col span={7}>
+                        <ul className={styles.Box}>
+                          <li>
+                            <img src={Records} alt="" />
+                          </li>
+                          <li>
+                            <Link
+                              style={colors}
+                              to={`/enterprise/${eid}/clusters`}
+                            >
+                              {overviewMonitorInfo.total_regions || 0}
+                            </Link>
+                          </li>
+                          <li>集群数量</li>
+                          <li>——</li>
+                        </ul>
+                      </Col>
+                      <Col span={10}>
+                        <ul className={styles.Box}>
+                          <li>
+                            <img src={Memory} alt="" />
+                          </li>
+                          <li>
+                            <Tooltip
+                              className={styles.cen}
+                              title={`${memoryUsed}${memoryUsedUnit} 包含各团队内存使用量、系统使用量和平台组件使用量`}
+                            >
+                              <span className={styles.numbers}>
+                                {memoryUsed}
+                                <span className={styles.units}>
+                                  {memoryUsedUnit}
+                                </span>
+                              </span>
+                            </Tooltip>
+                            <Tooltip
+                              title={`${memoryTotal} ${memoryTotalUnit}`}
+                              className={styles.cen}
+                            >
+                              <span className={styles.numbers}>
+                                /{memoryTotal}
+                                <span className={styles.units}>
+                                  {memoryTotalUnit}
+                                </span>
+                              </span>
+                            </Tooltip>
+                          </li>
+                          <li>内存使用量/总量</li>
+                          <li>——</li>
+                        </ul>
+                      </Col>
+                      <Col span={7}>
+                        <ul className={styles.Box}>
+                          <li>
+                            <img src={Cpus} alt="" />
+                          </li>
+                          <li>
+                            <Tooltip
+                              className={styles.cen}
+                              title={`${cpuUsed}Core`}
+                            >
+                              <span className={styles.numbers}>
+                                {cpuUsed}
+                                <span className={styles.units}>Core</span>
+                              </span>
+                            </Tooltip>
+                            <Tooltip
+                              className={styles.cen}
+                              title={`${cpuTotal}Core`}
+                            >
+                              <span className={styles.numbers}>
+                                /{cpuTotal}
+                                <span className={styles.units}>Core</span>
+                              </span>
+                            </Tooltip>
+                          </li>
+                          <li>CPU使用量/总量</li>
+                          <li>——</li>
+                        </ul>
+                      </Col>
+                    </Row>
+                  )}
+                </Card>
+              </Col>
+            ) : (
+              <Col span={11}>
+                <Card
+                  bordered={false}
+                  loading={collectionInfoLoading}
+                  style={{ height: '243px' }}
+                >
+                  <Row style={{ marginBottom: '4px' }}>
+                    <Col className={styles.grays} span={12}>
+                      便捷入口
+                    </Col>
+                    <Col
+                      className={styles.grays}
+                      style={{ textAlign: 'right' }}
+                      span={12}
+                    >
+                      <span
+                        style={{
+                          marginRight: '10px',
+                          color: '#3D54C4',
+                          cursor: 'pointer'
+                        }}
+                        onClick={() => {
+                          this.onConvenientEntrance();
+                        }}
+                      >
+                        新增
+                      </span>
+                      {collections && (
+                        <span
+                          style={colors}
+                          onClick={() => {
+                            this.handleIsConvenientEntrance();
+                          }}
+                        >
+                          编辑
+                        </span>
+                      )}
+                    </Col>
+                  </Row>
+
+                  <Col span={24}>
+                    <Row>
+                      {collections ? (
+                        collections.map((item, index) => {
+                          const { url, name } = item;
+                          const startPage = (page - 1) * page_size;
+
+                          const totals = page * page_size;
+                          if (page !== 1 && index < startPage) {
+                            return null;
+                          }
+                          if (index >= totals) {
+                            return null;
+                          }
+                          return (
+                            <Col
+                              span={12}
+                              key={name}
+                              onClick={() => {
+                                editorConvenient
+                                  ? this.deleteConvenient(item)
+                                  : this.props.dispatch(routerRedux.push(url));
+                              }}
+                            >
+                              <Card
+                                bodyStyle={teamBoxList}
+                                bordered={false}
+                                style={{
+                                  height: '40px',
+                                  paddingRight: '10px'
+                                }}
+                              >
+                                <div
+                                  className={styles.overText}
+                                  style={{
+                                    width: '93%',
+                                    cursor: 'pointer'
+                                  }}
+                                >
+                                  <Tooltip title={name}>{name}</Tooltip>
+                                </div>
+                                <div>
+                                  {editorConvenient ? (
+                                    <Icon type="close" />
+                                  ) : (
+                                    <img src={Arrow} alt="" />
+                                  )}
+                                </div>
+                              </Card>
+                            </Col>
+                          );
+                        })
+                      ) : (
+                        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                      )}
+                    </Row>
+
+                    <div style={{ textAlign: 'right', marginTop: '8px' }}>
+                      <Pagination
+                        size="small"
+                        current={page}
+                        pageSize={page_size}
+                        total={Number(total)}
+                        onChange={this.onPageChangeCollectionView}
+                      />
+                    </div>
+                  </Col>
+                </Card>
+              </Col>
+            )}
           </Row>
         </div>
       </div>
