@@ -157,10 +157,16 @@ class EditName extends PureComponent {
     });
   };
   handleValiateNameSpace = (_, value, callback) => {
+    const { isEditEnglishName } = this.props;
+    const isDisabled =
+      isEditEnglishName === 'closed' || isEditEnglishName === 'undeploy';
+    if (isDisabled) {
+      callback();
+    }
     if (!value) {
       return callback(new Error('请输入组件英文名称'));
     }
-    if (value && value.length <= 32) {
+    if (value && value.length <= 64) {
       const Reg = /^[a-z]([-a-z0-9]*[a-z0-9])?$/;
       if (!Reg.test(value)) {
         return callback(
@@ -171,8 +177,8 @@ class EditName extends PureComponent {
       }
       callback();
     }
-    if (value.length > 32) {
-      return callback(new Error('不能大于32个字符'));
+    if (value.length > 64) {
+      return callback(new Error('不能大于64个字符'));
     }
   };
   render() {

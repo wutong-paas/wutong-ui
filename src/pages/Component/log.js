@@ -41,13 +41,15 @@ export default class Index extends PureComponent {
       pod_name: '',
       container_name: '',
       refreshValue: 5,
-      isAutoScroll: true //添加一个标识用来控制日志的自动滚动
+      isAutoScroll: true, //添加一个标识用来控制日志的自动滚动
+      isStopMouseMoveEvent: false //当日志信息不推送时 阻止鼠标移入事件
     };
   }
   componentDidMount() {
     if (!this.canView()) return;
     this.loadLog();
     this.fetchInstanceInfo();
+    console.log(this.props, 'coming');
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.state.isAutoScroll && this.state.started) {
@@ -156,6 +158,9 @@ export default class Index extends PureComponent {
             const newlogs = logs.concat(messages);
             this.setLogs(newlogs);
           }
+          this.setState({
+            isStopMouseMoveEvent: messages.length === 0
+          });
         },
         messages => {
           if (this.state.started) {
@@ -163,6 +168,9 @@ export default class Index extends PureComponent {
             logs = logs.concat(messages);
             this.setLogs(logs);
           }
+          this.setState({
+            isStopMouseMoveEvent: messages.length === 0
+          });
         }
       );
     }
@@ -301,7 +309,8 @@ export default class Index extends PureComponent {
       started,
       refreshValue,
       showHistoryLog,
-      showHistory1000Log
+      showHistory1000Log,
+      isStopMouseMoveEvent
     } = this.state;
     return (
       <Card
@@ -378,7 +387,12 @@ export default class Index extends PureComponent {
           onMouseEnter={() => {
             this.setState({ isAutoScroll: false });
           }}
-          onMouseLeave={() => this.setState({ isAutoScroll: true })}
+          onMouseLeave={() => {
+            if (isStopMouseMoveEvent) {
+              return;
+            }
+            this.setState({ isAutoScroll: true });
+          }}
         >
           {(containerLog &&
             containerLog.length > 0 &&
