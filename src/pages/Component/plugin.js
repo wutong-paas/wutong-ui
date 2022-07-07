@@ -1,4 +1,5 @@
 /* eslint-disable no-sparse-arrays */
+import { menu } from '@/defaultSettings';
 import {
   Button,
   Card,
@@ -698,6 +699,77 @@ export default class Index extends PureComponent {
     const service_id = appDetail?.service?.service_id;
     const loading = this.state.unInstalledList === null;
     if (installedList?.length === 0) return;
+    const actionsList = item => {
+      let list = [
+        this.isOpenedPlugin(item) ? (
+          <a
+            onClick={() => {
+              this.closePlugin(item);
+            }}
+            href="javascript:;"
+          >
+            隐藏配置
+          </a>
+        ) : (
+          <a
+            onClick={() => {
+              this.openPlugin(item);
+            }}
+            href="javascript:;"
+          >
+            查看配置
+          </a>
+        ),
+        ,
+        appPluginUtil.isStart(item) ? (
+          <a
+            onClick={() => {
+              this.handleStopPlugin(item);
+            }}
+            href="javascript:;"
+          >
+            停用
+          </a>
+        ) : (
+          <a
+            onClick={() => {
+              this.handleStartPlugin(item);
+            }}
+            href="javascript:;"
+          >
+            启用
+          </a>
+        ),
+        <a
+          onClick={() => {
+            this.onUpdateMemory(item);
+          }}
+          href="javascript:;"
+        >
+          资源配置
+        </a>,
+        ,
+        <a
+          onClick={() => {
+            this.onDeletePlugin(item);
+          }}
+          href="javascript:;"
+        >
+          卸载
+        </a>
+      ];
+      if (item?.plugin_status && item.plugin_type === 'filebrowser_plugin') {
+        list.unshift(
+          <Link
+            to={`${this.fetchPrefixUrl()}components/${serviceAlias}/filemanager/service_id/${service_id}`}
+            target="_blank"
+          >
+            <Tooltip title="访问文件管理">访问</Tooltip>
+          </Link>
+        );
+      }
+      return list;
+    };
     return (
       <List
         size="large"
@@ -708,73 +780,7 @@ export default class Index extends PureComponent {
         renderItem={item => (
           <div style={{ borderBottom: '1px solid #e8e8e8' }}>
             <List.Item
-              actions={[
-                item?.plugin_status &&
-                  item.plugin_type === 'filebrowser_plugin' && (
-                    <Link
-                      to={`${this.fetchPrefixUrl()}components/${serviceAlias}/filemanager/service_id/${service_id}`}
-                      target="_blank"
-                    >
-                      <Tooltip title="访问文件管理">访问</Tooltip>
-                    </Link>
-                  ),
-                this.isOpenedPlugin(item) ? (
-                  <a
-                    onClick={() => {
-                      this.closePlugin(item);
-                    }}
-                    href="javascript:;"
-                  >
-                    隐藏配置
-                  </a>
-                ) : (
-                  <a
-                    onClick={() => {
-                      this.openPlugin(item);
-                    }}
-                    href="javascript:;"
-                  >
-                    查看配置
-                  </a>
-                ),
-                ,
-                appPluginUtil.isStart(item) ? (
-                  <a
-                    onClick={() => {
-                      this.handleStopPlugin(item);
-                    }}
-                    href="javascript:;"
-                  >
-                    停用
-                  </a>
-                ) : (
-                  <a
-                    onClick={() => {
-                      this.handleStartPlugin(item);
-                    }}
-                    href="javascript:;"
-                  >
-                    启用
-                  </a>
-                ),
-                <a
-                  onClick={() => {
-                    this.onUpdateMemory(item);
-                  }}
-                  href="javascript:;"
-                >
-                  资源配置
-                </a>,
-                ,
-                <a
-                  onClick={() => {
-                    this.onDeletePlugin(item);
-                  }}
-                  href="javascript:;"
-                >
-                  卸载
-                </a>
-              ]}
+              actions={actionsList(item)}
             >
               <List.Item.Meta
                 avatar={
