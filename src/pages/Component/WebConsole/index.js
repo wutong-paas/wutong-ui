@@ -1,4 +1,4 @@
-import { Col, Row, Spin, Tabs, Tree } from 'antd';
+import { Col, Row, Spin, Tabs, Tree, Dropdown, Menu } from 'antd';
 import { connect } from 'dva';
 import React, { PureComponent } from 'react';
 import globalUtil from '../../../utils/global';
@@ -43,33 +43,41 @@ export default class WebConsole extends PureComponent {
   onChange = key => {
     this.setState({ activeKey: key });
   };
-  onSelect = selectedKeys => {
+  onSelect = (selectedKeys, e) => {
+    const { selectedNodes } = e;
     if (selectedKeys.length > 0) {
       const podNameAndContainerName = selectedKeys[0];
+      const titleSuffix = selectedNodes[0]?.props?.titleName || '';
       if (podNameAndContainerName.indexOf('.') > -1) {
         const names = podNameAndContainerName.split('.');
         const podName = names[0];
         const containerName = names[1];
-        this.setState({ podName, containerName });
-        this.openConsole(podName, containerName);
+        this.setState({ podName, containerName, titleSuffix });
+        this.openConsole(podName, containerName, titleSuffix);
       }
     } else {
-      const { podName, containerName } = this.state;
+      const { podName, containerName, titleSuffix } = this.state;
       if (podName && containerName) {
-        this.openConsole(podName, containerName);
+        this.openConsole(podName, containerName, titleSuffix);
       }
     }
   };
 
-  openConsole = (podName, containerName) => {
-    const activeKey = Math.random()
-      .toString(36)
-      .slice(-8);
+  openConsole = (podName, containerName, titleSuffix) => {
+    const activeKey =
+      Math.random()
+        .toString(36)
+        .slice(-8) +
+      '~' +
+      podName +
+      '.' +
+      titleSuffix;
     const tab = {
       podName,
       containerName,
       title: containerName,
-      key: activeKey
+      key: activeKey,
+      titleSuffix
     };
     const { tabs } = this.state;
     tabs.push(tab);
@@ -81,7 +89,7 @@ export default class WebConsole extends PureComponent {
     const newTabs = [];
     tabs.forEach(item => {
       if (item.key == key) {
-        item.title = title;
+        item.title = `${title}-${item.titleSuffix}`;
       }
       newTabs.push(item);
     });
@@ -125,15 +133,39 @@ export default class WebConsole extends PureComponent {
             noPlugContainers && noPlugContainers.length > 0
               ? noPlugContainers[0].container_name
               : pods[0].container[0].container_name;
-          const activeKey = Math.random()
-            .toString(36)
-            .slice(-8);
+          //默认名称后缀
+          const titleSuffixFlag = pods[0]?.container[0]?.container_name;
+          let titleSuffix = '';
+          if (titleSuffixFlag) {
+            titleSuffix = `容器/${titleSuffixFlag}`;
+            if (titleSuffixFlag.includes('default-tcpmesh')) {
+              titleSuffix = `默认Mesh容器`;
+            } else if (titleSuffixFlag.includes('plugin')) {
+              titleSuffix = `插件容器`;
+            } else if (
+              titleSuffixFlag.includes(
+                this.state?.appDetail?.service?.k8s_component_name
+              )
+            ) {
+              titleSuffix = `组件容器`;
+            }
+          }
+
+          const activeKey =
+            Math.random()
+              .toString(36)
+              .slice(-8) +
+            '~' +
+            pods[0]?.pod_name +
+            '.' +
+            titleSuffix;
 
           const tab = {
             podName: pods[0].pod_name,
             containerName: container_name,
             title: container_name,
-            key: activeKey
+            key: activeKey,
+            titleSuffix
           };
           this.setState({ tabs: [tab], activeKey, pods });
         } else {
@@ -233,21 +265,42 @@ export default class WebConsole extends PureComponent {
                 return (
                   <TreeNode title={`实例/${title}`} key={podName}>
                     {pod.container.map(container => {
+                      const { activeKey } = this.state;
                       const { container_name: containerName } = container;
                       let titleName = `容器/${containerName}`;
                       if (containerName.includes('default-tcpmesh')) {
                         titleName = `默认Mesh容器`;
                       } else if (containerName.includes('plugin')) {
                         titleName = `插件容器`;
-                      } else if (containerName.includes(service.k8s_component_name)) {
+                      } else if (
+                        containerName.includes(service.k8s_component_name)
+                      ) {
                         titleName = `组件容器`;
                       }
-                      
-
+                      // 用来回显当前选中的节点
+                      const suffixInfo = activeKey?.split('~')[1];
+                      const entityInfo = suffixInfo?.split('.')[0];
+                      const titleSuffix = suffixInfo?.split('.')[1];
                       return (
                         <TreeNode
                           isLeaf
-                          title={titleName}
+                          titleName={titleName}
+                          title={
+                            <span
+                              style={
+                                podName === entityInfo &&
+                                titleSuffix === titleName
+                                  ? {
+                                      color: '#19aa8d'
+                                    }
+                                  : {
+                                      color: '#d6cbcb'
+                                    }
+                              }
+                            >
+                              {titleName}
+                            </span>
+                          }
                           key={`${podName}.${containerName}`}
                         />
                       );
@@ -278,9 +331,42 @@ export default class WebConsole extends PureComponent {
     );
   };
 
+  handleClick = (e, type, item, index) => {
+    const { key } = item;
+    e.domEvent.stopPropagation();
+    const { activeKey, tabs } = this.state;
+    let newTab = [...tabs];
+    let newActiveKey = activeKey;
+    if (type === 'all') {
+      newTab = [];
+      newActiveKey = '';
+    }
+    if (type === 'other') {
+      newTab = newTab.filter(i => i.key === key);
+      newActiveKey = newTab[0].key;
+    }
+    if (type === 'right') {
+      newTab = newTab.slice(0, index + 1);
+    }
+    this.setState({ tabs: newTab, activeKey: newActiveKey });
+  };
+
   render() {
     const { leftWidth, tabs, appDetail, activeKey } = this.state;
     const service = appDetail && appDetail.service;
+    const menu = (index, item) => (
+      <Menu>
+        <Menu.Item onClick={e => this.handleClick(e, 'other', item)}>
+          关闭其他标签页
+        </Menu.Item>
+        <Menu.Item onClick={e => this.handleClick(e, 'all', item)}>
+          关闭所有标签页
+        </Menu.Item>
+        <Menu.Item onClick={e => this.handleClick(e, 'right', item, index)}>
+          关闭右侧标签页
+        </Menu.Item>
+      </Menu>
+    );
     return (
       <Row className={styles.box}>
         <Col
@@ -336,15 +422,23 @@ export default class WebConsole extends PureComponent {
                 onEdit={this.onEdit}
                 hideAdd
               >
-                {tabs.map(item => {
+                {tabs.map((item, index) => {
                   const { title, podName, key, containerName } = item;
                   return (
                     <TabPane
+                      draggable={true}
                       tab={
                         <div>
-                          <span className={styles.titleTab}>
-                            {title || podName}
-                          </span>
+                          <Dropdown
+                            trigger={['contextMenu']}
+                            overlay={menu(index, item)}
+                          >
+                            <div>
+                              <span className={styles.titleTab}>
+                                {title || podName}
+                              </span>
+                            </div>
+                          </Dropdown>
                         </div>
                       }
                       className={styles.consoleBox}
