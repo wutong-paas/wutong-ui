@@ -656,6 +656,14 @@ export default class Index extends PureComponent {
         build_version: plugin.build_version
       },
       callback: data => {
+        if (
+          data?.bean?.downstream_env?.length === 0 &&
+          Object.keys(data?.bean?.undefine_env)?.length === 0 &&
+          data?.bean?.upstream_env?.length === 0
+        ) {
+          notification.warning({ message: '插件暂无可配置项' });
+          return;
+        }
         if (data) {
           this.state.openedPlugin[plugin.plugin_id] = data.bean || {};
           this.forceUpdate();
@@ -779,9 +787,7 @@ export default class Index extends PureComponent {
         dataSource={installedList || []}
         renderItem={item => (
           <div style={{ borderBottom: '1px solid #e8e8e8' }}>
-            <List.Item
-              actions={actionsList(item)}
-            >
+            <List.Item actions={actionsList(item)}>
               <List.Item.Meta
                 avatar={
                   <Icon
