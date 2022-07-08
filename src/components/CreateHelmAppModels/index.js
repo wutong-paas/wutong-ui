@@ -7,6 +7,7 @@ import AddGroup from '../../components/AddOrEditGroup';
 import CreateTeam from '../../components/CreateTeam';
 import cookie from '../../utils/cookie';
 import styles from '../CreateTeam/index.less';
+import userUtil from '../../utils/user';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -20,7 +21,10 @@ const { Option } = Select;
 class CreateHelmAppModels extends PureComponent {
   constructor(props) {
     super(props);
+    const { user } = this.props;
+    const adminer = userUtil.isCompanyAdmin(user);
     this.state = {
+      adminer,
       userTeamList: [],
       regionList: [],
       appName: '',
@@ -375,7 +379,8 @@ class CreateHelmAppModels extends PureComponent {
       groups,
       addGroup,
       isDeploy,
-      showAddTeam
+      showAddTeam,
+      adminer
     } = this.state;
     const userTeams = userTeamList && userTeamList.length > 0 && userTeamList;
     let versions = [];
@@ -472,7 +477,7 @@ class CreateHelmAppModels extends PureComponent {
                     ))}
                 </Select>
               )}
-              <Button onClick={this.onAddTeam}>新建团队</Button>
+              {adminer && <Button onClick={this.onAddTeam}>新建团队</Button>}
               <div className={styles.conformDesc}>
                 请选择安装该应用模版的团队
               </div>
