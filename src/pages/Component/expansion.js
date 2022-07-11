@@ -390,6 +390,7 @@ export default class Index extends PureComponent {
       });
     }
 
+
     const _th = this;
     if (id) {
       dispatch({
@@ -425,7 +426,7 @@ export default class Index extends PureComponent {
                 showEditAutoScaling: false,
                 addindicators: false,
                 toDeleteMnt: false,
-                id: res.bean.id
+                id: res?.bean?.id
               },
               () => {
                 _th.getScalingRules();
@@ -827,7 +828,7 @@ export default class Index extends PureComponent {
                 }
               />
               <Divider />
-              <div>
+              {/* <div>
                 <Row>
                   <Col span={24} style={{ display: 'flex' }}>
                     <span className={styles.commandText}>查询命令：</span>
@@ -853,7 +854,7 @@ export default class Index extends PureComponent {
                     </CopyToClipboard>
                   </Col>
                 </Row>
-              </div>
+              </div> */}
             </div>
           )}
         </Card>
