@@ -84,7 +84,7 @@ export default class AddVolumes extends PureComponent {
     }
   };
   checkVolumeCapacity = (rules, value, callback) => {
-    if (value) {
+    if (value && !this.props.editor) {
       if (value > 1000) {
         callback(`限额最大值为1000GB`);
         return;
@@ -221,10 +221,10 @@ export default class AddVolumes extends PureComponent {
             {getFieldDecorator('volume_capacity', {
               initialValue: defaultVolumeCapacity,
               rules: [
-                {
-                  min: 0,
-                  message: '最小值为0，即不限制'
-                },
+                // {
+                //   min: 0,
+                //   message: '最小值为0，即不限制'
+                // },
                 {
                   validator: this.checkVolumeCapacity
                 }
