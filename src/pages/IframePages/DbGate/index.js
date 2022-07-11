@@ -44,11 +44,11 @@ export default class DbGateManager extends PureComponent {
     return (
       <iframe
         // src={`/console/team/${teamName}/region/${regionName}/components/${appAlias}/filemanager/service_id/${serviceID}`}
-        src={`/console/dbgate/${serviceID}`}
+        src={`/console/dbgate/${serviceID}/`}
         // src={`https://wutong.talkweb.com.cn/console/filebrowser/${serviceID}`}
         style={{
           width: '100%',
-          height: 'calc(100vh - 150px)'
+          height: 'calc(100vh - 70px)'
         }}
         sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
         scrolling="auto"

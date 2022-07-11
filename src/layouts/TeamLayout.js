@@ -661,9 +661,15 @@ class TeamLayout extends PureComponent {
                 className="globalContentBox"
               >
                 <div
-                  style={{
-                    margin: '24px 24px 0'
-                  }}
+                  style={
+                    this.props.children?.props?.location?.pathname?.indexOf(
+                      '/dbgatemanager/service_id'
+                    ) === -1
+                      ? {
+                          margin: '24px 24px 0'
+                        }
+                      : {}
+                  }
                 >
                   {renderContent()}
                 </div>
