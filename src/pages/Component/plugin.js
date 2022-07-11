@@ -35,6 +35,18 @@ const { TabPane } = Tabs;
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
+
+const canViewPluginType = {
+  'filebrowser_plugin':'filemanager',
+  'mysql_dbgate_plugin':'dbgatemanager',
+  'redis_dbgate_plugin':'dbgatemanager'
+}
+
+const canViewPluginTypeText = {
+  'filebrowser_plugin':'文件管理',
+  'mysql_dbgate_plugin':'数据中间件管理',
+  'redis_dbgate_plugin':'数据中间件管理'
+}
 @Form.create()
 class UpdateMemory extends PureComponent {
   handleOk = () => {
@@ -766,13 +778,13 @@ export default class Index extends PureComponent {
           卸载
         </a>
       ];
-      if (item?.plugin_status && item.plugin_type === 'filebrowser_plugin') {
+      if (item?.plugin_status && canViewPluginType[item.plugin_type]) {
         list.unshift(
           <Link
-            to={`${this.fetchPrefixUrl()}components/${serviceAlias}/filemanager/service_id/${service_id}`}
+            to={`${this.fetchPrefixUrl()}components/${serviceAlias}/${canViewPluginType[item.plugin_type]}/service_id/${service_id}`}
             target="_blank"
           >
-            <Tooltip title="访问文件管理">访问</Tooltip>
+            <Tooltip title={ `访问${canViewPluginTypeText[item.plugin_type]}`}>访问</Tooltip>
           </Link>
         );
       }

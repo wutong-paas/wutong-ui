@@ -326,6 +326,13 @@ export default [
           },
           {
             path:
+              '/team/:teamName/region/:regionName/components/:appAlias/dbgatemanager/service_id/:serviceID',
+            component: './IframePages/DbGate',
+            name: 'dbgatemanager',
+            authority: ['admin', 'user']
+          },
+          {
+            path:
               '/team/:teamName/region/:regionName/components/:appAlias/:type/service_id/:service_id',
             component: './Component',
             name: 'Component',
