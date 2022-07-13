@@ -25,6 +25,7 @@ import VisterBtn from '../../components/visitBtnForAlllink';
 import globalUtil from '../../utils/global';
 import userUtil from '../../utils/user';
 import styles from './Index.less';
+import roleUtil from '@/utils/role';
 
 const { Search } = Input;
 const echarts = require('echarts');
@@ -81,12 +82,13 @@ export default class Index extends PureComponent {
       // 新建应用显示与隐藏
       createAppVisible: false,
       emptyConfig: false,
-      searchVisible: false
+      searchVisible: false,
+      permissionsInfo: {}
     };
   }
   componentDidMount() {
     //  获取团队的权限
-    const { currUser } = this.props;
+    const { currUser, currentTeamPermissionsInfo } = this.props;
     const teamPermissions = userUtil.getTeamByTeamPermissions(
       currUser.teams,
       globalUtil.getCurrTeamName()
@@ -94,6 +96,15 @@ export default class Index extends PureComponent {
     if (teamPermissions && teamPermissions.length !== 0) {
       // 加载团队下的资源
       this.loadOverview();
+    }
+    if (currentTeamPermissionsInfo) {
+      const permissionsInfo = roleUtil.querySpecifiedPermissionsInfo(
+        currentTeamPermissionsInfo,
+        'queryAppInfo'
+      );
+      this.setState({
+        permissionsInfo
+      });
     }
   }
   // 组件销毁停止计时器
@@ -509,7 +520,8 @@ export default class Index extends PureComponent {
       page_size,
       query,
       emptyConfig,
-      searchVisible
+      searchVisible,
+      permissionsInfo
     } = this.state;
     const {
       index,
@@ -736,14 +748,16 @@ export default class Index extends PureComponent {
                   allowClear
                   style={{ width: 400 }}
                 />
-                <span
-                  onClick={() => {
-                    this.setState({ createAppVisible: true });
-                  }}
-                  style={{ cursor: 'pointer' }}
-                >
-                  新建应用
-                </span>
+                {permissionsInfo?.isCreate && (
+                  <span
+                    onClick={() => {
+                      this.setState({ createAppVisible: true });
+                    }}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    新建应用
+                  </span>
+                )}
               </div>
             )}
           </div>
