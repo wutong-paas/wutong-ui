@@ -429,7 +429,7 @@ export default class Enterprise extends PureComponent {
     const collections =
       collectionList && collectionList.length > 0 && collectionList;
 
-    const colors = { color: '#2953E8', cursor: 'pointer' };
+    const colors = { color: '#2953E8', cursor: 'pointer', marginLeft: 24 };
     const memoryInfo = overviewMonitorInfo && overviewMonitorInfo.memory;
     const memoryUsed = (memoryInfo && this.handlUnit(memoryInfo.used)) || 0;
     const memoryUsedUnit =
@@ -974,7 +974,7 @@ export default class Enterprise extends PureComponent {
             </Card>
           </Col> */}
         {this.state.adminer && (
-          <Row gutter={25} style={{marginBottom:24}}>
+          <Row gutter={25} style={{ marginBottom: 24 }}>
             <Col span={12}>
               <Card
                 bordered={false}
@@ -1172,7 +1172,7 @@ export default class Enterprise extends PureComponent {
                 </Row>
 
                 {active_teams ? (
-                  <Row>
+                  <Row gutter={60}>
                     <Col span={12}>
                       {new_join_team && (
                         <Card
@@ -1224,7 +1224,10 @@ export default class Enterprise extends PureComponent {
                         {teamOperation}
                       </Card>
                     </Col>
-                    <Col span={11} offset={1}>
+                    <Col
+                      span={12}
+                      //  offset={1}
+                    >
                       {active_teams.map(item => {
                         const {
                           team_name,
