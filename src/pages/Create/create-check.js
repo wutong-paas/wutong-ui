@@ -234,12 +234,16 @@ export default class CreateCheck extends React.Component {
             team_name: teamName
           }
         });
-        if (ServiceGetData && isDeploy) {
+        if ((ServiceGetData && isDeploy )) {
           refreshCurrent();
         } else if (appDetail.service_source === 'third_party') {
-          this.handleJump(`components/${appAlias}/thirdPartyServices`);
+          this.handleJump(
+            `components/${appAlias}/thirdPartyServices/service_id/${appDetail.service_id}`
+          );
         } else {
-          this.handleJump(`components/${appAlias}/overview`);
+          this.handleJump(
+            `components/${appAlias}/overview/service_id/${appDetail.service_id}`
+          );
         }
       }
     });
