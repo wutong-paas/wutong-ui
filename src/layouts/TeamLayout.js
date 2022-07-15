@@ -34,6 +34,8 @@ import TeamHeader from './components/TeamHeader';
 import MemoryTip from './MemoryTip';
 import Context from './MenuContext';
 
+const pathList = ['/dbgatemanager/service_id', '/filemanager/service_id'];
+
 const { Content } = Layout;
 
 const query = {
@@ -662,9 +664,10 @@ class TeamLayout extends PureComponent {
               >
                 <div
                   style={
-                    this.props.children?.props?.location?.pathname?.indexOf(
-                      '/dbgatemanager/service_id'
-                    ) === -1
+                    pathList.every(
+                      i =>
+                        this.props.children?.props?.location?.pathname?.indexOf(i) === -1
+                    )
                       ? {
                           margin: '24px 24px 0'
                         }

@@ -59,7 +59,7 @@ export default class FileManager extends PureComponent {
         // src={`https://wutong.talkweb.com.cn/console/filebrowser/${serviceID}`}
         style={{
           width: '100%',
-          height: 'calc(100vh - 150px)'
+          height: 'calc(100vh - 70px)'
         }}
         sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
         scrolling="auto"
