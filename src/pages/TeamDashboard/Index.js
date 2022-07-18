@@ -668,6 +668,20 @@ export default class Index extends PureComponent {
                 <h3 className={styles.teamDiskTitle}>使用资源</h3>
                 <div className={styles.teamDiskContent}>
                   <div>
+                    <div className={styles.disk}>
+                      <div>
+                        <p style={{ marginBottom: '0px' }}>
+                          {
+                           index?.overviewInfo?.team_service_use_cpu  ?  (Number(index?.overviewInfo?.team_service_use_cpu)/1000).toFixed(1) : '0'
+                          }
+                        </p>
+                        <span>
+                          Core
+                        </span>
+                      </div>
+                      <p style={{ marginBottom: '0px' }}>CPU使用量</p>
+                    </div>
+                    <span className={styles.useLine} />
                     <div className={styles.save}>
                       <div>
                         <p style={{ marginBottom: '0px' }}>
@@ -683,23 +697,6 @@ export default class Index extends PureComponent {
                         </span>
                       </div>
                       <p style={{ marginBottom: '0px' }}>内存使用量</p>
-                    </div>
-                    <span className={styles.useLine} />
-                    <div className={styles.disk}>
-                      <div>
-                        <p style={{ marginBottom: '0px' }}>
-                          {this.handlUnit(
-                            index.overviewInfo.team_service_total_disk || 0
-                          )}
-                        </p>
-                        <span>
-                          {this.handlUnit(
-                            index.overviewInfo.team_service_total_disk || 0,
-                            'MB'
-                          )}
-                        </span>
-                      </div>
-                      <p style={{ marginBottom: '0px' }}>磁盘使用量</p>
                     </div>
                   </div>
                 </div>
