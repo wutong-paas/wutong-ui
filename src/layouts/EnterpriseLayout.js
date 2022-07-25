@@ -32,7 +32,7 @@ import userUtil from '../utils/user';
 import MemoryTip from './MemoryTip';
 import Context from './MenuContext';
 
-const { Content } = Layout;
+const { Content, Sider } = Layout;
 
 const getBreadcrumbNameMap = memoizeOne(meun => {
   const routerMap = {};
@@ -350,7 +350,8 @@ class EnterpriseLayout extends PureComponent {
       showAuthCompany
     } = this.props;
     const { enterpriseList, enterpriseInfo, ready } = this.state;
-    const autoWidth = collapsed ? 'calc(100% - 416px)' : 'calc(100% - 116px)';
+    //const autoWidth = collapsed ? 'calc(100% - 416px)' : 'calc(100% - 116px)';
+    const autoWidth = collapsed ? '100%' : '100%';
     const BillingFunction = wutongUtil.isEnableBillingFunction();
     const queryString = stringify({
       redirect: window.location.href
@@ -384,7 +385,7 @@ class EnterpriseLayout extends PureComponent {
     const layout = () => {
       return (
         <Layout>
-          <SiderMenu
+          {/* <SiderMenu
             currentEnterprise={enterpriseInfo}
             enterpriseList={enterpriseList}
             currentUser={currentUser}
@@ -394,23 +395,9 @@ class EnterpriseLayout extends PureComponent {
             location={location}
             isMobile={this.state.isMobile}
             onCollapse={this.handleMenuCollapse}
-          />
+          /> */}
           <Layout>
-            <GlobalHeader
-              eid={eid}
-              logo={fetchLogo}
-              isPubCloud={
-                wutongInfo &&
-                wutongInfo.is_public &&
-                wutongInfo.is_public.enable
-              }
-              currentUser={currentUser}
-              collapsed={collapsed}
-              onCollapse={this.handleMenuCollapse}
-              isMobile={this.state.isMobile}
-              customHeader={customHeader}
-            />
-            <Layout style={{ flexDirection: 'row' }}>
+            <Sider width={220} collapsed={collapsed} collapsedWidth={48}>
               <GlobalRouter
                 currentEnterprise={enterpriseInfo}
                 enterpriseList={enterpriseList}
@@ -430,17 +417,33 @@ class EnterpriseLayout extends PureComponent {
                 collapsed={collapsed}
                 onCollapse={this.handleMenuCollapse}
               />
+            </Sider>
+            <Layout>
+              <GlobalHeader
+                eid={eid}
+                logo={fetchLogo}
+                isPubCloud={
+                  wutongInfo &&
+                  wutongInfo.is_public &&
+                  wutongInfo.is_public.enable
+                }
+                currentUser={currentUser}
+                collapsed={collapsed}
+                onCollapse={this.handleMenuCollapse}
+                isMobile={this.state.isMobile}
+                customHeader={customHeader}
+              />
               <Content
                 key={eid}
                 style={{
-                  height: 'calc(100vh - 64px)',
+                  height: 'calc(100vh - 56px)',
                   overflow: 'auto',
                   width: autoWidth
                 }}
               >
                 <div
                   style={{
-                    margin: '24px 24px 0'
+                    margin: '12px'
                   }}
                 >
                   <Authorized

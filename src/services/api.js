@@ -1338,3 +1338,35 @@ export async function toSearchTenant(params) {
     }
   );
 }
+//获取新版首页总览集群资源使用信息
+export async function fetchHomeInfoAPI(params) {
+  const { enterprise_id } = params;
+  return request(
+    `${apiconfig.baseUrl}/console/v1.0/metrics/${enterprise_id}/cluster`,
+    {
+      method: 'get'
+    }
+  );
+}
+
+//获取集群运行状态
+export async function fetchHomeAppInfoAPI(params) {
+  const { enterprise_id } = params;
+  return request(
+    `${apiconfig.baseUrl}/console/v1.0/metrics/${enterprise_id}/overview/app`,
+    {
+      method: 'get'
+    }
+  );
+}
+
+//获取集群事件
+export async function fetchHomeGroupEventAPI(params) {
+  const { enterprise_id } = params;
+  return request(
+    `${apiconfig.baseUrl}/console/v1.0/metrics/${enterprise_id}/event`,
+    {
+      method: 'get'
+    }
+  );
+}

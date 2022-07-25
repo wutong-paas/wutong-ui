@@ -212,7 +212,7 @@ function formatter(data, parentPath = '', parentAuthority) {
     if (item.children) {
       result.children = formatter(
         item.children,
-        `${parentPath}${item.path}/`,
+        `${parentPath}${item.path}`,
         item.authority
       );
     }

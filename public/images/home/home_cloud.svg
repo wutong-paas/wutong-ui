@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="36px" height="32px" viewBox="0 0 36 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>云上云下</title>
+    <defs>
+        <linearGradient x1="11.6510007%" y1="25.1269489%" x2="68.4992737%" y2="82.000386%" id="linearGradient-1">
+            <stop stop-color="#27427D" offset="0%"></stop>
+            <stop stop-color="#08153A" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-2">
+            <stop stop-color="#63CAFF" offset="0%"></stop>
+            <stop stop-color="#0070FF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-3">
+            <stop stop-color="#86FFE4" offset="0%"></stop>
+            <stop stop-color="#1FF4A4" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="总览确定版3" transform="translate(-256.000000, -91.000000)">
+            <g id="欢迎页头" transform="translate(236.000000, 72.000000)">
+                <g id="云上云下" transform="translate(20.000000, 19.000000)">
+                    <path d="M17.3494884,17.3494884 L17.3494884,24.2891163 L6.93962791,24.2891163 C3.10688372,24.2891163 0,21.1822326 0,17.3494884 C0,13.5167442 3.10688372,10.4094419 6.93962791,10.4094419 C10.7723721,10.4094419 13.8796744,13.5167442 13.8796744,17.3494884 L17.3494884,17.3494884 L17.3494884,17.3494884 Z" id="路径" fill="url(#linearGradient-1)" fill-rule="nonzero"></path>
+                    <path d="M30.3613953,12.1445581 C30.3613953,16.0790233 28.4906512,19.5760465 25.5901395,21.7954884 L25.5901395,24.2891163 L18.2168372,24.2891163 C11.5095349,24.2891163 6.07227907,18.8518605 6.07227907,12.1445581 C6.07227907,5.43725581 11.5095349,0 18.2168372,0 C24.9241395,0 30.3613953,5.43725581 30.3613953,12.1445581 Z" id="路径" fill="url(#linearGradient-2)" fill-rule="nonzero"></path>
+                    <rect id="矩形" fill="#0070FF" x="12" y="26.4" width="12" height="5" rx="2.5"></rect>
+                    <path d="M16.915814,14.7470233 C16.915814,20.0169757 21.1879545,24.2891163 26.457907,24.2891163 C31.7278594,24.2891163 36,20.0169757 36,14.7470233 C36,9.4770708 31.7278594,5.20493023 26.457907,5.20493023 C21.1879545,5.20493023 16.915814,9.4770708 16.915814,14.7470233 L16.915814,14.7470233 Z" id="路径" fill="url(#linearGradient-3)" fill-rule="nonzero"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
