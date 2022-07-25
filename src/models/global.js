@@ -99,7 +99,10 @@ import {
   toQueryTopology,
   toSearchTenant,
   upDataEnterpriseAdminTeams,
-  upEnterpriseUsers
+  upEnterpriseUsers,
+  fetchHomeInfoAPI,
+  fetchHomeAppInfoAPI,
+  fetchHomeGroupEventAPI
 } from '../services/api';
 import { getTeamRegionGroups } from '../services/team';
 import cookie from '../utils/cookie';
@@ -849,6 +852,24 @@ export default {
     },
     *searchTenant({ payload, callback }, { call }) {
       const response = yield call(toSearchTenant, payload);
+      if (callback) {
+        callback(response);
+      }
+    },
+    *fetchHomeInfo({ payload, callback }, { call }) {
+      const response = yield call(fetchHomeInfoAPI, payload);
+      if (callback) {
+        callback(response);
+      }
+    },
+    *fetchHomeAppInfo({ payload, callback }, { call }) {
+      const response = yield call(fetchHomeAppInfoAPI, payload);
+      if (callback) {
+        callback(response);
+      }
+    },
+     *fetchHomeGroupEvent({ payload, callback }, { call }) {
+      const response = yield call(fetchHomeGroupEventAPI, payload);
       if (callback) {
         callback(response);
       }

@@ -12,11 +12,13 @@ import GlobalHeader from '../components/GlobalHeader';
 import headerStype from '../components/GlobalHeader/index.less';
 import PageLoading from '../components/PageLoading';
 import SiderMenu from '../components/SiderMenu';
+import GlobalRouter from '../components/GlobalRouter';
 import Authorized from '../utils/Authorized';
 import wutongUtil from '../utils/wutong';
+import { getMenuData } from '../common/enterpriseMenu';
 import Context from './MenuContext';
 
-const { Content } = Layout;
+const { Content,Sider} = Layout;
 let isMobile;
 enquireScreen(b => {
   isMobile = b;
@@ -100,7 +102,10 @@ class AccountLayout extends PureComponent {
       wutongInfo,
       collapsed,
       enterprise,
-      location
+      location,
+      match: {
+        params: { eid }
+      }
     } = this.props;
 
     const { enterpriseList, isMobiles, ready } = this.state;
@@ -149,7 +154,7 @@ class AccountLayout extends PureComponent {
     const layout = () => {
       return (
         <Layout>
-          <SiderMenu
+          {/* <SiderMenu
             currentEnterprise={currentUser}
             enterpriseList={enterpriseList}
             currentUser={currentUser}
@@ -159,7 +164,28 @@ class AccountLayout extends PureComponent {
             location={location}
             isMobile={isMobiles}
             onCollapse={this.handleMenuCollapse}
-          />
+          /> */}
+          <Sider width={220} collapsed={collapsed} collapsedWidth={48}>
+            <GlobalRouter
+              // currentEnterprise={enterpriseInfo}
+              enterpriseList={enterpriseList}
+              title={
+                wutongInfo &&
+                wutongInfo.title &&
+                wutongInfo.title.enable &&
+                wutongInfo.title.value
+              }
+              currentUser={currentUser}
+              Authorized={Authorized}
+              menuData={getMenuData(eid, currentUser, enterprise)}
+              showMenu
+              pathname={location.pathname}
+              location={location}
+              // isMobile={this.state.isMobile}
+              collapsed={collapsed}
+              onCollapse={this.handleMenuCollapse}
+            />
+          </Sider>
           <Layout>
             <GlobalHeader
               logo={fetchLogo}
@@ -177,7 +203,7 @@ class AccountLayout extends PureComponent {
             <Content
               key="sdfds"
               style={{
-                height: 'calc(100vh - 64px)',
+                height: 'calc(100vh - 56px)',
                 overflow: 'auto',
                 width: autoWidth
               }}

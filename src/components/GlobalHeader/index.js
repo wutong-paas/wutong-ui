@@ -22,6 +22,7 @@ import React, { PureComponent } from 'react';
 import userIcon from '../../../public/images/user-icon-small.png';
 import { setNewbieGuide } from '../../services/api';
 import ChangePassword from '../ChangePassword';
+import HomeMenu from '../../../public/images/header/header-menu.svg';
 import styles from './index.less';
 
 const { Header } = Layout;
@@ -43,9 +44,9 @@ export default class GlobalHeader extends PureComponent {
     };
   }
   handleMenuClick = ({ key }) => {
-    const { dispatch } = this.props;
+    const { dispatch, enterprise } = this.props;
     if (key === 'userCenter') {
-      dispatch(routerRedux.push(`/account/center`));
+      dispatch(routerRedux.push(`/account/${enterprise.enterprise_id}/center`));
     }
     if (key === 'cpw') {
       this.showChangePass();
@@ -160,38 +161,53 @@ export default class GlobalHeader extends PureComponent {
     const platformUrl = wutongUtil.documentPlatform_url(wutongInfo);
     return (
       <Header className={styles.header}>
-        <Icon
-          className={styles.trigger}
-          type={!collapsed ? 'menu-unfold' : 'menu-fold'}
-          style={{ color: '#ffffff', float: 'left' }}
-          onClick={this.toggle}
-        />
-
-        {customHeader && customHeader()}
-        <div className={styles.right}>
-          {currentUser ? (
-            <Dropdown overlay={menu}>
-              <span className={`${styles.action} ${styles.account}`}>
-                <Avatar size="small" className={styles.avatar} src={userIcon} />
-                <span className={styles.name}>{currentUser.user_name}</span>
-              </span>
-            </Dropdown>
-          ) : (
-            <Spin
-              size="small"
-              style={{
-                marginLeft: 8
-              }}
+        <div className={styles.wrap}>
+          <div>
+            <Icon
+              className={styles.trigger}
+              type={collapsed ? 'menu-unfold' : 'menu-fold'}
+              style={{ color: '#000', float: 'left' }}
+              onClick={this.toggle}
+            />
+            {customHeader && customHeader()}
+          </div>
+          <div className={styles.title}>
+            <img
+              src={HomeMenu}
+              alt=""
+              style={{ marginRight: 10, verticalAlign: 'middle' }}
+            />
+            开发运维一体化平台
+          </div>
+          <div className={styles.right}>
+            {currentUser ? (
+              <Dropdown overlay={menu}>
+                <span className={`${styles.action} ${styles.account}`}>
+                  <Avatar
+                    size="small"
+                    className={styles.avatar}
+                    src={userIcon}
+                  />
+                  <span className={styles.name}>{currentUser.user_name}</span>
+                </span>
+              </Dropdown>
+            ) : (
+              <Spin
+                size="small"
+                style={{
+                  marginLeft: 8
+                }}
+              />
+            )}
+          </div>
+          {/* change password */}
+          {this.state.showChangePassword && (
+            <ChangePassword
+              onOk={this.handleChangePass}
+              onCancel={this.cancelChangePass}
             />
           )}
         </div>
-        {/* change password */}
-        {this.state.showChangePassword && (
-          <ChangePassword
-            onOk={this.handleChangePass}
-            onCancel={this.cancelChangePass}
-          />
-        )}
       </Header>
     );
   }
