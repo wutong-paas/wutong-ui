@@ -8,6 +8,7 @@ body,
 
 .ant-layout {
   min-height: 100%;
+  background-color: #E9F1F7 !important;
 }
 
 canvas {
@@ -28,4 +29,27 @@ body {
 // temp fix for https://github.com/ant-design/ant-design/commit/a1fafb5b727b62cb0be29ce6e9eca8f579d4f8b7
 .ant-spin-container {
   overflow: visible !important;
+}
+
+
+::-webkit-scrollbar {
+  width : 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius   : 5px;
+  border          : 1px solid transparent;
+  height          : 140px;
+  background-clip : content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  /* background-color: #C0C1C1; */
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius   : 5px;
+  border          : 1px solid transparent;
+  height          : 140px;
+  background-clip : content-box;
 }

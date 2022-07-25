@@ -3,6 +3,14 @@ import { formatMessage } from 'umi-plugin-locale';
 import wutongUtil from '../utils/wutong';
 import userUtil from '../utils/user';
 import { isUrl } from '../utils/utils';
+import clusterImg from '../../public/images/menu/cluster.svg';
+import userImg from '../../public/images/menu/user.svg';
+import settingImg from '../../public/images/menu/setting.svg';
+import teamImg from '../../public/images/menu/team.svg';
+import marketImg from '../../public/images/menu/market.svg';
+import dashboardImg from '../../public/images/menu/dashboard.svg'
+
+const renderIcon = src => <img src={src} alt="" style={{ marginRight: 10 }} />;
 
 function menuData(eid, currentUser, enterprise) {
   const adminer = userUtil.isCompanyAdmin(currentUser);
@@ -68,13 +76,13 @@ function menuData(eid, currentUser, enterprise) {
   const menuArr = [
     {
       name: formatMessage({ id: 'menu.enterprise.dashboard' }),
-      icon: 'dashboard',
+      icon: renderIcon(dashboardImg),
       path: `/enterprise/${eid}/index`,
       authority: ['admin', 'user']
     },
     {
       name: formatMessage({ id: 'menu.enterprise.share' }),
-      icon: 'share-alt',
+      icon: renderIcon(marketImg),
       path: `/enterprise/${eid}/shared`,
       authority: ['admin', 'user'],
       children: [
@@ -103,21 +111,22 @@ function menuData(eid, currentUser, enterprise) {
   }
   menuArr.push({
     name: '团队',
-    icon: 'team',
+    icon: renderIcon(teamImg),
     path: `/enterprise/${eid}/teams`,
     authority: ['admin', 'user']
   });
+
   if (adminer) {
     menuArr.push(
       {
         name: '集群',
-        icon: clusterSvg,
+        icon: renderIcon(clusterImg),
         path: `/enterprise/${eid}/clusters`,
         authority: ['admin', 'user']
       },
       {
         name: '用户',
-        icon: 'user',
+        icon: renderIcon(userImg),
         path: `/enterprise/${eid}/users`,
         authority: ['admin', 'user']
       }
@@ -151,7 +160,7 @@ function menuData(eid, currentUser, enterprise) {
     }
     menuArr.push({
       name: '设置',
-      icon: 'setting',
+      icon: renderIcon(settingImg),
       path: `/enterprise/${eid}/setting`,
       authority: ['admin', 'user']
     });
@@ -174,7 +183,7 @@ function formatter(data, parentPath = '', parentAuthority) {
     if (item.children) {
       result.children = formatter(
         item.children,
-        `${parentPath}${item.path}/`,
+        `${parentPath}${item.path}`,
         item.authority
       );
     }

@@ -36,7 +36,7 @@ import Context from './MenuContext';
 
 const pathList = ['/dbgatemanager/service_id', '/filemanager/service_id'];
 
-const { Content } = Layout;
+const { Content, Sider } = Layout;
 
 const query = {
   'screen-xs': {
@@ -432,7 +432,8 @@ class TeamLayout extends PureComponent {
       teamId,
       enterprise_id
     } = this.props.match.params;
-    const autoWidth = collapsed ? 'calc(100% - 416px)' : 'calc(100% - 116px)';
+    //const autoWidth = collapsed ? 'calc(100% - 416px)' : 'calc(100% - 116px)';
+    const autoWidth = collapsed ? '100%' : '100%';
     // Parameters of the abnormal
     if (!teamName || !regionName) {
       return <Redirect to="/" />;
@@ -598,7 +599,7 @@ class TeamLayout extends PureComponent {
       };
       return (
         <Layout>
-          <SiderMenu
+          {/* <SiderMenu
             enterpriseList={enterpriseList}
             currentEnterprise={currentEnterprise}
             currentTeam={currentTeam}
@@ -609,30 +610,9 @@ class TeamLayout extends PureComponent {
             location={location}
             isMobile={this.state.isMobile}
             onCollapse={this.handleMenuCollapse}
-          />
+          /> */}
           <Layout>
-            <GlobalHeader
-              key={
-                currentEnterprise.enterprise_id +
-                currentTeam.team_name +
-                currentRegion.team_region_name +
-                appID
-              }
-              eid={currentEnterprise.enterprise_id}
-              logo={fetchLogo}
-              isPubCloud={
-                wutongInfo &&
-                wutongInfo.is_public &&
-                wutongInfo.is_public.enable
-              }
-              currentUser={currentUser}
-              collapsed={collapsed}
-              onCollapse={this.handleMenuCollapse}
-              isMobile={this.state.isMobile}
-              customHeader={teamView && customHeader}
-            />
-
-            <Layout style={{ flexDirection: 'row' }}>
+            <Sider width={220} collapsed={collapsed} collapsedWidth={48}>
               {teamView && (
                 <GlobalRouter
                   currentEnterprise={currentEnterprise}
@@ -654,9 +634,33 @@ class TeamLayout extends PureComponent {
                   showMenu={!componentID}
                 />
               )}
+            </Sider>
+            <Layout
+            // style={{ flexDirection: 'row' }}
+            >
+              <GlobalHeader
+                key={
+                  currentEnterprise.enterprise_id +
+                  currentTeam.team_name +
+                  currentRegion.team_region_name +
+                  appID
+                }
+                eid={currentEnterprise.enterprise_id}
+                logo={fetchLogo}
+                isPubCloud={
+                  wutongInfo &&
+                  wutongInfo.is_public &&
+                  wutongInfo.is_public.enable
+                }
+                currentUser={currentUser}
+                collapsed={collapsed}
+                onCollapse={this.handleMenuCollapse}
+                isMobile={this.state.isMobile}
+                customHeader={teamView && customHeader}
+              />
               <Content
                 style={{
-                  height: 'calc(100vh - 64px)',
+                  height: 'calc(100vh - 56px)',
                   overflow: 'auto',
                   width: autoWidth
                 }}
@@ -666,10 +670,12 @@ class TeamLayout extends PureComponent {
                   style={
                     pathList.every(
                       i =>
-                        this.props.children?.props?.location?.pathname?.indexOf(i) === -1
+                        this.props.children?.props?.location?.pathname?.indexOf(
+                          i
+                        ) === -1
                     )
                       ? {
-                          margin: '24px 24px 0'
+                          margin: '12px'
                         }
                       : {}
                   }

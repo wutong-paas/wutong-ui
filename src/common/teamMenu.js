@@ -93,7 +93,7 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
       if (control) {
         children.push({
           name: formatMessage({ id: 'menu.team.gateway.control' }),
-          path: 'control',
+          path: '/control',
           authority: ['admin', 'user']
         });
       }
@@ -101,7 +101,7 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
       if (certificate) {
         children.push({
           name: formatMessage({ id: 'menu.team.gateway.certificate' }),
-          path: 'license',
+          path: '/license',
           authority: ['admin', 'user']
         });
       }
@@ -161,7 +161,7 @@ function formatter(data, parentPath = '', parentAuthority) {
     if (item.children) {
       result.children = formatter(
         item.children,
-        `${parentPath}${item.path}/`,
+        `${parentPath}${item.path}`,
         item.authority
       );
     }

@@ -1,260 +1,155 @@
-/* eslint-disable react/jsx-no-duplicate-props */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable camelcase */
-/* eslint-disable no-unused-expressions */
-import {
-  Card,
-  Col,
-  Empty,
-  Icon,
-  notification,
-  Pagination,
-  Popover,
-  Row,
-  Tooltip
-} from 'antd';
+/**
+ * @content  企业总览页-new
+ * @author   Leon
+ * @date     2022-07-22
+ *
+ */
+
+import React, { useCallback, useEffect, useState } from 'react';
 import { connect } from 'dva';
-import { Link, routerRedux } from 'dva/router';
-import React, { Fragment, PureComponent } from 'react';
-import AddTeam from '../../../public/images/addTeam.png';
-import Arrow from '../../../public/images/arrow.png';
-import Cpus from '../../../public/images/cpus.png';
-import CreationTeam from '../../../public/images/creationTeam.png';
-import CustomerService from '../../../public/images/CustomerService.png';
-import Element from '../../../public/images/element.png';
-import EnterpriseBj from '../../../public/images/enterpriseBj.png';
-import EnterpriseInfo from '../../../public/images/enterpriseInfo.png';
-import Memory from '../../../public/images/memory.png';
-import Records from '../../../public/images/records.png';
-import Team from '../../../public/images/team.png';
-import TeamCrew from '../../../public/images/teamCrew.png';
-import User from '../../../public/images/user.png';
-import AuthCompany from '../../components/AuthCompany';
-import { Pie } from '../../components/Charts';
-import ConfirmModal from '../../components/ConfirmModal';
-import Convenient from '../../components/Convenient';
-import CreateTeam from '../../components/CreateTeam';
-import JoinTeam from '../../components/JoinTeam';
-import Meiqia from '../../layouts/Meiqia';
-import wutongUtil from '../../utils/wutong';
-import userUtil from '../../utils/user';
-import styles from '../List/BasicList.less';
+import { Row, Col, Card, Tabs, Table, Tooltip, Spin, Empty } from 'antd';
+import { Text } from '../../contanst';
+import {
+  GroupNodeColunms,
+  GroupEventColunms,
+  tabList,
+  useInfoList,
+  serviceMonitorList,
+  radarOption,
+  pieOptions,
+  appPieOptions,
+  tagColorList,
+  computedPercentage
+} from './conf';
+import HomeCloud from '../../../public/images/home/home_cloud.svg';
+import Tooltips from '../../../public/images/home/tooltip.svg';
+import Close from '../../../public/images/home/home_close.svg';
+import HomeTeam from '../../../public/images/home/home_team.svg';
+import GroupImg from '../../../public/images/home/group.svg';
+import RightImg from '../../../public/images/home/right.svg';
+import GroupHoverImg from '../../../public/images/home/group_hover.svg';
+import RightHoverImg from '../../../public/images/home/right_hover.svg';
+import HomeGropu from '../../../public/images/home/home_group.png';
+import { routerRedux } from 'dva/router';
+import * as echarts from 'echarts';
+import classNames from 'classnames';
+import styles from './index.less';
 
-@connect(({ user, global, index }) => ({
-  user: user.currentUser,
-  wutongInfo: global.wutongInfo,
-  overviewInfo: index.overviewInfo
-}))
-export default class Enterprise extends PureComponent {
-  constructor(props) {
-    super(props);
-    const { user } = this.props;
-    const params = this.getParam();
-    const adminer = userUtil.isCompanyAdmin(user);
-    this.state = {
-      showAddTeam: false,
-      eid: params ? params.eid : '',
-      adminer,
-      enterpriseInfo: false,
-      enterpriseInfoLoading: true,
-      overviewAppInfo: false,
-      overviewInfo: false,
-      overviewTeamInfo: false,
-      overviewAppInfoLoading: true,
-      overviewInfoLoading: true,
-      overviewTeamInfoLoading: true,
-      overviewMonitorInfoLoading: true,
-      joinTeam: false,
-      collectionList: [],
-      convenientVisible: false,
-      editorConvenient: false,
-      delcollectionVisible: false,
-      collectionInfo: false,
-      collectionInfoLoading: true,
-      page_size: 6,
-      page: 1,
-      total: 0,
-      showMarketCloudAuth: false,
-      marketName: '',
-      guideStep: 1
+const { TabPane } = Tabs;
+const { enterprise } = Text;
+
+const {
+  HOME_HEAD_TITLE,
+  HOME_HEAD_INTRODUCE,
+  HOME_CONTENT_USEINFO_TITLE,
+  HOME_CONTENT_USEINFO_TOTAL,
+  HOME_CONTENT_USEINFO_USED,
+  HOME_CONTENT_USEINFO_TOOLTIP
+} = enterprise;
+
+const Home = props => {
+  const {
+    dispatch,
+    match,
+    homeInfoLoading,
+    groupEventLoading,
+    teamListLoading
+  } = props;
+  const { params } = match;
+  const [radarCharts, setRadarCharts] = useState();
+  const [pieChartsId, setPieChartsId] = useState([]);
+  const [activeKey, setActiveKey] = useState(0);
+  const [isShowAdvice, setIsShowAdvice] = useState(true);
+  const [useList, setUseList] = useState([]);
+  const [groupList, setGroupList] = useState([]);
+  const [serviceList, setServiceList] = useState([]);
+  const [groupInfo, setGroupInfo] = useState({});
+  const [serviceInfo, setServiceInfo] = useState({});
+  const [groupNodeList, setGroupNodeList] = useState([]);
+  const [groupEventList, setGroupEventList] = useState([]);
+  const [overviewInfo, setOverviewInfo] = useState([]);
+  const [overviewMonitorInfo, setOverviewMonitorInfo] = useState([]);
+  const [teamList, setTeamList] = useState([]);
+  const [isHover, setIsHover] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(-1);
+  const [currentParentIndex, setCurrentParentIndex] = useState(-1);
+
+  useEffect(() => {
+    fetchHomeInfoList();
+    fetchHomeAppInfoList();
+    fetchHomeGroupEventList();
+    getOverview();
+    getOverviewMonitor();
+    getUserTeams();
+  }, []);
+
+  useEffect(() => {
+    if (activeKey === 0) initServiceCharts(groupInfo, serviceInfo);
+  }, [activeKey, groupInfo, serviceInfo]);
+
+  const initRadarCharts = res => {
+    const radarChartsEntity = echarts.init(document.getElementById('radar'));
+    radarChartsEntity.setOption(radarOption(res));
+    window.onresize = () => {
+      radarChartsEntity.resize();
     };
-  }
-  componentDidMount() {
-    this.loading();
-  }
-  onPageChangeCollectionView = (page, pageSize) => {
-    this.setState({ page, pageSize }, () => {
-      this.fetchCollectionViewInfo();
-    });
   };
 
-  onAddTeam = () => {
-    this.setState({ showAddTeam: true });
+  const initPieCharts = (ref, item) => {
+    const { percentage } = item;
+    const pieCharts = echarts.init(ref);
+    pieCharts.setOption(pieOptions(percentage));
   };
 
-  getParam() {
-    return this.props.match.params;
-  }
+  const initServiceCharts = (groupInfo, serviceInfo) => {
+    const appPieCharts = echarts.init(document.getElementById('app-charts'));
+    const serficePieCharts = echarts.init(
+      document.getElementById('service-charts')
+    );
+    appPieCharts.setOption(appPieOptions('应用', groupInfo));
+    serficePieCharts.setOption(appPieOptions('服务', serviceInfo));
+  };
 
-  getOverviewMonitor = () => {
-    const { dispatch } = this.props;
-    const { eid } = this.state;
-
+  const fetchHomeInfoList = () => {
     dispatch({
-      type: 'global/fetchOverviewMonitor',
+      type: 'global/fetchHomeInfo',
       payload: {
-        enterprise_id: eid
+        enterprise_id: params?.eid
       },
       callback: res => {
-        if (res && res.status_code === 200) {
-          this.setState({
-            overviewMonitorInfo: res.bean,
-            overviewMonitorInfoLoading: false
-          });
-        }
-      }
-    });
-  };
-
-  getOverviewTeam = () => {
-    const { dispatch } = this.props;
-    const { eid } = this.state;
-
-    dispatch({
-      type: 'global/fetchOverviewTeam',
-      payload: {
-        enterprise_id: eid
-      },
-      callback: res => {
-        if (res && res.status_code === 200) {
-          this.setState({
-            overviewTeamInfo: res.bean,
-            overviewTeamInfoLoading: false
-          });
-        }
-      }
-    });
-  };
-
-  getOverview = () => {
-    const { dispatch } = this.props;
-    const { eid } = this.state;
-
-    dispatch({
-      type: 'global/fetchOverview',
-      payload: {
-        enterprise_id: eid
-      },
-      callback: res => {
-        if (res && res.status_code === 200) {
-          this.setState({
-            overviewInfo: res.bean,
-            overviewInfoLoading: false
-          });
-        }
-      }
-    });
-  };
-
-  getOverviewApp = () => {
-    const { dispatch } = this.props;
-    const { eid } = this.state;
-
-    dispatch({
-      type: 'global/fetchOverviewApp',
-      payload: {
-        enterprise_id: eid
-      },
-      callback: res => {
-        if (res && res.status_code === 200) {
-          this.setState({
-            overviewAppInfo:
-              res.bean && JSON.stringify(res.bean) !== '{}' ? res.bean : false,
-            overviewAppInfoLoading: false
-          });
-        }
-      }
-    });
-  };
-
-  getEnterpriseInfo = () => {
-    const { dispatch } = this.props;
-    const { eid } = this.state;
-
-    dispatch({
-      type: 'global/fetchEnterpriseInfo',
-      payload: {
-        enterprise_id: eid
-      },
-      callback: res => {
-        if (res && res.status_code === 200) {
-          this.setState({
-            enterpriseInfo: res.bean,
-            enterpriseInfoLoading: false
-          });
-        }
-      }
-    });
-  };
-
-  loading = () => {
-    const { adminer, eid } = this.state;
-    if (eid) {
-      this.getEnterpriseInfo();
-      this.getOverviewTeam();
-      if (adminer) {
-        this.getOverviewApp();
-        this.getOverview();
-        this.getOverviewMonitor();
-        // this.fetchMarkets();
-      } else {
-        this.fetchCollectionViewInfo();
-      }
-    }
-  };
-
-  fetchCollectionViewInfo = () => {
-    const { dispatch } = this.props;
-    const { eid } = this.state;
-    dispatch({
-      type: 'user/fetchCollectionViewInfo',
-      payload: {
-        enterprise_id: eid
-      },
-      callback: res => {
-        if (res && res.status_code === 200) {
-          this.setState({
-            total: res.list.length,
-            collectionInfoLoading: false,
-            collectionList: res.list
-          });
-        }
-      }
-    });
-  };
-
-  fetchMarkets = () => {
-    const {
-      dispatch,
-      match: {
-        params: { eid }
-      }
-    } = this.props;
-    dispatch({
-      type: 'market/fetchMarketsTab',
-      payload: {
-        enterprise_id: eid
-      },
-      callback: res => {
-        if (res && res.status_code === 200) {
-          if (
-            res.list.length > 0 &&
-            res.list[0].access_key === '' &&
-            res.list[0].domain === 'wutong'
-          ) {
-            this.setState({
-              showMarketCloudAuth: false,
-              marketName: res.list[0].name
+        if (res.status_code === 200) {
+          const { node, pod, store } = res?.bean || {};
+          setUseList(useInfoList(res?.bean));
+          initRadarCharts(res?.bean);
+          if (node?.info) {
+            const list = node.info.map(i => {
+              const {
+                name,
+                used_cpu,
+                total_cpu,
+                used_memory,
+                total_memory,
+                used_pod,
+                total_pod
+              } = i;
+              const cpuPercentAge = computedPercentage(used_cpu, total_cpu);
+              const memoryPercentAge = computedPercentage(
+                used_memory,
+                total_memory
+              );
+              const diskPercentAge = computedPercentage(used_pod, total_pod);
+              return {
+                name,
+                cpu: `${cpuPercentAge}%  ${used_cpu}/${total_cpu}`,
+                memory: `${memoryPercentAge}%  ${used_memory}/${total_memory}`,
+                pod: `${diskPercentAge}%  ${used_pod}/${total_pod}`
+              };
+            });
+            setGroupNodeList(list);
+          }
+          if (pieChartsId.length > 0) {
+            pieChartsId.map(i => {
+              initPieCharts(document.getElementById(i.id), i.item);
             });
           }
         }
@@ -262,1080 +157,626 @@ export default class Enterprise extends PureComponent {
     });
   };
 
-  handleCreateTeam = values => {
-    this.props.dispatch({
-      type: 'teamControl/createTeam',
-      payload: values,
-      callback: res => {
-        const { response_data } = res;
-        if (response_data && response_data.code) {
-          if (response_data.code === 400) {
-            notification.warning({ message: response_data.msg_show });
-          } else {
-            notification.success({ message: response_data.msg_show });
-          }
-        }
-        this.cancelCreateTeam();
-        this.getOverviewTeam();
-        this.props.dispatch({ type: 'user/fetchCurrent' });
-      }
-    });
-  };
-  cancelCreateTeam = () => {
-    this.setState({ showAddTeam: false });
-  };
-
-  handlUnit = (num, unit) => {
-    // 后端默认数据都是GB 暂时不用处理
-    // if (num) {
-    //   let nums = num;
-    //   let units = unit;
-    //   if (nums >= 1024) {
-    //     nums = num / 1024;
-    //     units = 'GB';
-    //   }
-    //   return unit ? units : nums.toFixed(2) / 1;
-    // }
-    if (unit) return unit;
-    if (num) return num;
-    return null;
-  };
-
-  handleJoinTeam = values => {
-    this.props.dispatch({
-      type: 'global/joinTeam',
-      payload: values,
-      callback: () => {
-        notification.success({ message: '申请成功，请等待审核' });
-        this.cancelJoinTeam();
-      }
-    });
-  };
-
-  handleConvenientEntrance = () => {
-    notification.success({ message: '添加成功' });
-    this.fetchCollectionViewInfo();
-    this.cancelConvenientEntrance();
-  };
-  cancelConvenientEntrance = () => {
-    this.setState({ convenientVisible: false });
-  };
-  onConvenientEntrance = () => {
-    this.setState({ convenientVisible: true });
-  };
-  onJoinTeam = () => {
-    this.setState({ joinTeam: true });
-  };
-  cancelJoinTeam = () => {
-    this.setState({ joinTeam: false });
-  };
-
-  handleIsConvenientEntrance = () => {
-    this.setState({ editorConvenient: !this.state.editorConvenient });
-  };
-
-  deleteConvenient = collectionInfo => {
-    this.setState({
-      delcollectionVisible: true,
-      collectionInfo
-    });
-  };
-
-  deleteCollectionViewInfo = () => {
-    const { dispatch } = this.props;
-    const { collectionInfo, eid } = this.state;
+  const fetchHomeAppInfoList = () => {
     dispatch({
-      type: 'user/deleteCollectionViewInfo',
+      type: 'global/fetchHomeAppInfo',
       payload: {
-        favorite_id: collectionInfo && collectionInfo.favorite_id,
-        enterprise_id: eid
+        enterprise_id: params?.eid
+      },
+      callback: res => {
+        if (res.status_code === 200) {
+          setGroupList(serviceMonitorList(res?.bean?.group_info));
+          setServiceList(serviceMonitorList(res?.bean?.service_info));
+          setGroupInfo(res?.bean?.group_info);
+          setServiceInfo(res?.bean?.service_info);
+        }
+      }
+    });
+  };
+
+  const fetchHomeGroupEventList = () => {
+    dispatch({
+      type: 'global/fetchHomeGroupEvent',
+      payload: {
+        enterprise_id: params?.eid
+      },
+      callback: res => {
+        if (res.status_code === 200) {
+          setGroupEventList(res?.bean);
+        }
+      }
+    });
+  };
+
+  const getOverview = () => {
+    const { dispatch } = props;
+
+    dispatch({
+      type: 'global/fetchOverview',
+      payload: {
+        enterprise_id: params?.eid
       },
       callback: res => {
         if (res && res.status_code === 200) {
-          notification.success({ message: '删除成功' });
-          this.fetchCollectionViewInfo();
-          this.handleCloseDelCollectionVisible();
+          setOverviewInfo(res?.bean);
         }
       }
     });
   };
-  handleCloseDelCollectionVisible = () => {
-    this.setState({
-      delcollectionVisible: false,
-      collectionInfo: false,
-      editorConvenient: false
+
+  const getOverviewMonitor = () => {
+    const { dispatch } = props;
+
+    dispatch({
+      type: 'global/fetchOverviewMonitor',
+      payload: {
+        enterprise_id: params?.eid
+      },
+      callback: res => {
+        if (res && res.status_code === 200) {
+          setOverviewMonitorInfo(res?.bean);
+        }
+      }
     });
   };
-  handleGuideStep = guideStep => {
-    this.setState({
-      guideStep
+
+  const getUserTeams = () => {
+    const { dispatch } = props;
+    dispatch({
+      type: 'global/fetchMyTeams',
+      payload: {
+        enterprise_id: params?.eid,
+        page: 0,
+        page_size: 5
+        //name
+      },
+      callback: res => {
+        if (res) {
+          const list = res?.list;
+          setTeamList(list);
+        }
+      }
     });
   };
 
-  renderContent = () => {
-    const teamBox = {
-      marginTop: '16px',
-      lineHeight: '1px',
-      borderColor: 'rgba(0, 0, 0, 0.09)',
-      boxShadow: '0 2px 8px rgba(0, 0, 0, 0.09)',
-      color: '#3D54C4',
-      display: 'flex',
-      alignItems: 'center'
-    };
+  const handleTabsChange = key => setActiveKey(key);
 
-    const teamBoxList = {
-      ...teamBox,
-      ...{ height: '40px', padding: '12px' }
-    };
-    const teamBoxs = {
-      ...teamBox,
-      ...{ height: '68px', padding: '24px', cursor: 'pointer' }
-    };
-    const { wutongInfo } = this.props;
-    const {
-      enterpriseInfo,
-      overviewInfo,
-      overviewMonitorInfo,
-      overviewAppInfo,
-      overviewTeamInfo,
-      enterpriseInfoLoading,
-      overviewAppInfoLoading,
-      overviewInfoLoading,
-      overviewTeamInfoLoading,
-      overviewMonitorInfoLoading,
-      collectionList,
-      convenientVisible,
-      editorConvenient,
-      delcollectionVisible,
-      collectionInfoLoading,
-      eid,
-      total,
-      page_size,
-      page,
-      guideStep
-    } = this.state;
+  const handleClose = () => setIsShowAdvice(false);
 
-    const new_join_team =
-      overviewTeamInfo &&
-      overviewTeamInfo.new_join_team &&
-      overviewTeamInfo.new_join_team.length > 0 &&
-      overviewTeamInfo.new_join_team;
-    const active_teams =
-      overviewTeamInfo &&
-      overviewTeamInfo.active_teams &&
-      overviewTeamInfo.active_teams.length > 0 &&
-      overviewTeamInfo.active_teams;
-
-    const collections =
-      collectionList && collectionList.length > 0 && collectionList;
-
-    const colors = { color: '#2953E8', cursor: 'pointer', marginLeft: 24 };
-    const memoryInfo = overviewMonitorInfo && overviewMonitorInfo.memory;
-    const memoryUsed = (memoryInfo && this.handlUnit(memoryInfo.used)) || 0;
-    const memoryUsedUnit =
-      (memoryInfo && this.handlUnit(memoryInfo.used, 'GB')) || 'GB';
-    const memoryTotal = (memoryInfo && this.handlUnit(memoryInfo.total)) || 0;
-    const cpuInfo = (overviewMonitorInfo && overviewMonitorInfo.cpu) || 0;
-    const cpuUsed = (cpuInfo && cpuInfo.used && parseInt(cpuInfo.used)) || 0;
-    const cpuTotal = (cpuInfo && cpuInfo.total && parseInt(cpuInfo.total)) || 0;
-    const AppNumInfo = overviewAppInfo && overviewAppInfo.service_groups;
-    const runApp = (AppNumInfo && AppNumInfo.running) || 0;
-    const appTotal = (AppNumInfo && AppNumInfo.total) || 0;
-    const appClosed = (AppNumInfo && AppNumInfo.closed) || 0;
-
-    const comInfo = overviewAppInfo && overviewAppInfo.components;
-    const runCom = (comInfo && comInfo.running) || 0;
-    const comTotal = (comInfo && comInfo.total) || 0;
-    const comClosed = (comInfo && comInfo.closed) || 0;
-    const enterpriseVersion =
-      wutongInfo && wutongInfo.version && wutongInfo.version.enable
-        ? wutongInfo.version.value
-        : '';
-    const enterpriseEdition = wutongUtil.isEnterpriseEdition(wutongInfo);
-    const memoryTotalUnit =
-      (memoryInfo && this.handlUnit(memoryInfo.total, 'GB')) || 'GB';
-    const teamOperation = (
-      <div
-        style={{
-          width: '100%',
-          display: 'flex',
-          justifyContent: this.state.adminer ? 'space-around' : 'center'
-        }}
-      >
-        <div
-          style={{ textAlign: 'center', cursor: 'pointer' }}
-          onClick={this.onJoinTeam}
-        >
-          <img src={AddTeam} alt="" />
-          <div style={{ marginTop: '5px' }}>
-            <a className={styles.teamTit}>加入团队</a>
+  return (
+    <>
+      <div className={styles['home-view']}>
+        <Row className={styles['home-view-header']}>
+          <div className={styles['home-view-header-wrap']}>
+            <Row className={styles['home-view-header-wrap-title']}>
+              <img src={HomeCloud} alt="" style={{ marginRight: 8 }} />
+              <span>{HOME_HEAD_TITLE}</span>
+            </Row>
+            <Row className={styles['home-view-header-wrap-introduce']}>
+              {HOME_HEAD_INTRODUCE}
+            </Row>
           </div>
-        </div>
-
-        {this.state.adminer && (
-          <div
-            style={{ textAlign: 'center', cursor: 'pointer' }}
-            onClick={this.onAddTeam}
-          >
-            <img src={CreationTeam} alt="" />
-            <div style={{ marginTop: '5px' }}>
-              <a className={styles.teamTit}>创建团队</a>
-            </div>
-          </div>
-        )}
-      </div>
-    );
-    return (
-      <div>
-        {this.state.joinTeam && (
-          <JoinTeam
-            enterpriseID={eid}
-            onOk={this.handleJoinTeam}
-            onCancel={this.cancelJoinTeam}
-          />
-        )}
-        {convenientVisible && (
-          <Convenient
-            {...this.props}
-            title="添加快捷入口"
-            onOk={this.handleConvenientEntrance}
-            onCancel={this.cancelConvenientEntrance}
-          />
-        )}
-
-        {delcollectionVisible && (
-          <ConfirmModal
-            title="删除快捷入口"
-            subDesc="此操作不可恢复"
-            desc="确定要删除此快捷入口吗？"
-            onOk={this.deleteCollectionViewInfo}
-            onCancel={this.handleCloseDelCollectionVisible}
-          />
-        )}
-        {/* <div className={styles['home-title']}>
-          {enterpriseInfo.enterprise_alias}
-          <Popover placement="right">
-            <Icon
-              type="info-circle"
-              style={{ marginLeft: 6, cursor: 'pointer' }}
-            />
-          </Popover>
-        </div> */}
-        <div>
-          {this.state.adminer && (
-            <Row
-              style={{
-                marginBottom: 24
-              }}
-              gutter={25}
-            >
-              {/* <Col span={13}>
+        </Row>
+        <div className={styles['home-view-content']}>
+          <Row gutter={16}>
+            <Col span={18} className={styles['home-view-content-left']}>
+              <Row className={styles['home-view-content-left-useinfo']}>
+                <Row className={styles['home-view-content-left-useinfo-title']}>
+                  {HOME_CONTENT_USEINFO_TITLE}
+                  <Tooltip placement="top" title={HOME_CONTENT_USEINFO_TOOLTIP}>
+                    <img
+                      src={Tooltips}
+                      alt=""
+                      style={{ cursor: 'pointer', marginLeft: 4 }}
+                    />
+                  </Tooltip>
+                </Row>
                 <Card
                   bordered={false}
-                  loading={overviewAppInfoLoading}
-                  style={{
-                    height: '243px',
-                    marginRight: '25px'
-                  }}
+                  className={styles['home-view-content-left-useinfo-card']}
                 >
-                  <Row style={{ marginBottom: '6px' }}>
-                    <Col className={styles.grays} span={12}>
-                      应用数量
-                    </Col>
-                    <Col className={styles.grays} span={12}>
-                      组件数量
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col span={8}>
-                      <Pie
-                        percent={
-                          Math.round((runApp / appTotal) * 10000) / 100.0
-                        }
-                        types="app"
-                        lineWidth={18}
-                        color="#3D58DA"
-                        subTitle={
-                          <div className={styles.appContent}>
-                            <h6>{runApp}个</h6>
-                            <div>
-                              共{appTotal}
-                              个应用数量
-                            </div>
-                          </div>
-                        }
-                        height={168}
-                      />
-                    </Col>
-
-                    <Col span={4}>
-                      <div>
-                        <div>
-                          <div className={styles.appnumno}>运行中应用</div>
-                          <div className={styles.nums}>
-                            <span>{runApp}个</span>
-                            <span>|</span>
-                            <span>{appTotal}个</span>
-                          </div>
-                        </div>
-                        <div>
-                          <div
-                            className={styles.appnums}
-                            style={{ marginTop: '26px' }}
-                          >
-                            未运行应用
-                          </div>
-                          <div className={styles.nums}>
-                            <span>{appClosed}个</span>
-                            <span>|</span>
-                            <span>{appTotal}个</span>
-                          </div>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col span={8}>
-                      <div style={{ marginTop: '10px' }}>
-                        <Pie
-                          percent={
-                            Math.round((runCom / comTotal) * 10000) / 100.0
+                  <Spin spinning={homeInfoLoading}>
+                    <Row gutter={40}>
+                      <Col span={8}>
+                        <div
+                          id="radar"
+                          className={
+                            styles['home-view-content-left-useinfo-card-radar']
                           }
-                          types="component"
-                          color="#2953E8"
-                          subTitle={
-                            <div className={styles.elements}>
-                              <div>
-                                <div>{comClosed}</div>
-                                <div>未运行</div>
-                              </div>
-                              <div />
-                              <div>
-                                <div>{runCom}</div>
-                                <div>运行中</div>
-                              </div>
-                            </div>
-                          }
-                          height={156}
-                        />
-                      </div>
-                    </Col>
-                    <Col span={4}>
-                      <div>
-                        <div>
-                          <div className={styles.appnumno}>运行中组件</div>
-                          <div className={styles.nums}>
-                            <span>{runCom}个</span>
-                            <span>|</span>
-                            <span>{comTotal}个</span>
-                          </div>
-                        </div>
-                        <div>
-                          <div
-                            className={styles.appnums}
-                            style={{ marginTop: '26px' }}
-                          >
-                            未运行组件
-                          </div>
-                          <div className={styles.nums}>
-                            <span>{comClosed}个</span>
-                            <span>|</span>
-                            <span>{comTotal}个</span>
-                          </div>
-                        </div>
-                      </div>
-                    </Col>
-                  </Row>
-                </Card>
-              </Col> */}
-
-              <Col span={12}>
-                <Card
-                  bordered={false}
-                  loading={overviewInfoLoading}
-                  style={{ height: '243px' }}
-                >
-                  <Row>
-                    <Col span={7}>
-                      <ul className={styles.Box}>
-                        <li>
-                          <div>
-                            <img src={Element} alt="" />
-                          </div>
-                        </li>
-                        <li>
-                          <Link
-                            to={`/enterprise/${eid}/shared/local`}
-                            style={colors}
-                          >
-                            {overviewInfo && overviewInfo.shared_apps}
-                          </Link>
-                        </li>
-                        <li>应用模版数量</li>
-                        <li>——</li>
-                      </ul>
-                    </Col>
-                    <Col span={10}>
-                      <ul className={styles.Box}>
-                        <li>
-                          <div>
-                            <img src={Team} alt="" />
-                          </div>
-                        </li>
-                        <li>
-                          <Link to={`/enterprise/${eid}/teams`} style={colors}>
-                            {overviewInfo && overviewInfo.total_teams}
-                          </Link>
-                        </li>
-
-                        <li>团队数量</li>
-                        <li>——</li>
-                      </ul>
-                    </Col>
-                    <Col span={7}>
-                      <ul className={styles.Box}>
-                        <li>
-                          <div>
-                            <img src={User} alt="" />
-                          </div>
-                        </li>
-                        <li>
-                          <Link to={`/enterprise/${eid}/users`} style={colors}>
-                            {overviewInfo && overviewInfo.total_users}
-                          </Link>
-                        </li>
-                        <li>用户数量</li>
-                        <li>——</li>
-                      </ul>
-                    </Col>
-                  </Row>
-                </Card>
-              </Col>
-              {this.state.adminer ? (
-                <Col span={12}>
-                  <Card
-                    bordered={false}
-                    loading={overviewMonitorInfoLoading}
-                    style={{ height: '243px' }}
-                  >
-                    {overviewMonitorInfo && (
-                      <Row>
-                        <Col span={7}>
-                          <ul className={styles.Box}>
-                            <li>
-                              <img src={Records} alt="" />
-                            </li>
-                            <li>
-                              <Link
-                                style={colors}
-                                to={`/enterprise/${eid}/clusters`}
-                              >
-                                {overviewMonitorInfo.total_regions || 0}
-                              </Link>
-                            </li>
-                            <li>集群数量</li>
-                            <li>——</li>
-                          </ul>
-                        </Col>
-                        <Col span={10}>
-                          <ul className={styles.Box}>
-                            <li>
-                              <img src={Memory} alt="" />
-                            </li>
-                            <li>
-                              <Tooltip
-                                className={styles.cen}
-                                title={`${memoryUsed}${memoryUsedUnit} 包含各团队内存使用量、系统使用量和平台组件使用量`}
-                              >
-                                <span className={styles.numbers}>
-                                  {memoryUsed}
-                                  <span className={styles.units}>
-                                    {memoryUsedUnit}
-                                  </span>
-                                </span>
-                              </Tooltip>
-                              <Tooltip
-                                title={`${memoryTotal} ${memoryTotalUnit}`}
-                                className={styles.cen}
-                              >
-                                <span className={styles.numbers}>
-                                  /{memoryTotal}
-                                  <span className={styles.units}>
-                                    {memoryTotalUnit}
-                                  </span>
-                                </span>
-                              </Tooltip>
-                            </li>
-                            <li>内存使用量/总量</li>
-                            <li>——</li>
-                          </ul>
-                        </Col>
-                        <Col span={7}>
-                          <ul className={styles.Box}>
-                            <li>
-                              <img src={Cpus} alt="" />
-                            </li>
-                            <li>
-                              <Tooltip
-                                className={styles.cen}
-                                title={`${cpuUsed}Core`}
-                              >
-                                <span className={styles.numbers}>
-                                  {cpuUsed}
-                                  <span className={styles.units}>Core</span>
-                                </span>
-                              </Tooltip>
-                              <Tooltip
-                                className={styles.cen}
-                                title={`${cpuTotal}Core`}
-                              >
-                                <span className={styles.numbers}>
-                                  /{cpuTotal}
-                                  <span className={styles.units}>Core</span>
-                                </span>
-                              </Tooltip>
-                            </li>
-                            <li>CPU使用量/总量</li>
-                            <li>——</li>
-                          </ul>
-                        </Col>
-                      </Row>
-                    )}
-                  </Card>
-                </Col>
-              ) : (
-                <Col span={12}>
-                  <Card
-                    bordered={false}
-                    loading={collectionInfoLoading}
-                    style={{ height: '243px' }}
-                  >
-                    <Row style={{ marginBottom: '4px' }}>
-                      <Col className={styles.grays} span={12}>
-                        便捷入口
+                        ></div>
                       </Col>
-                      <Col
-                        className={styles.grays}
-                        style={{ textAlign: 'right' }}
-                        span={12}
-                      >
-                        <span
-                          style={{
-                            marginRight: '10px',
-                            color: '#3D54C4',
-                            cursor: 'pointer'
-                          }}
-                          onClick={() => {
-                            this.onConvenientEntrance();
-                          }}
-                        >
-                          新增
-                        </span>
-                        {collections && (
-                          <span
-                            style={colors}
-                            onClick={() => {
-                              this.handleIsConvenientEntrance();
-                            }}
-                          >
-                            编辑
-                          </span>
-                        )}
-                      </Col>
-                    </Row>
-
-                    <Col span={24}>
-                      <Row>
-                        {collections ? (
-                          collections.map((item, index) => {
-                            const { url, name } = item;
-                            const startPage = (page - 1) * page_size;
-
-                            const totals = page * page_size;
-                            if (page !== 1 && index < startPage) {
-                              return null;
-                            }
-                            if (index >= totals) {
-                              return null;
-                            }
-                            return (
-                              <Col
-                                span={12}
-                                key={name}
-                                onClick={() => {
-                                  editorConvenient
-                                    ? this.deleteConvenient(item)
-                                    : this.props.dispatch(
-                                        routerRedux.push(url)
-                                      );
-                                }}
+                      <Col span={16} style={{ margin: '16px 0px 0px' }}>
+                        {useList.map(item => {
+                          pieChartsId.push({
+                            id: `pie-charts-${item.id}`,
+                            item
+                          });
+                          return (
+                            <>
+                              <Row
+                                className={
+                                  styles[
+                                    'home-view-content-left-useinfo-card-list'
+                                  ]
+                                }
+                                key={item.id}
                               >
-                                <Card
-                                  bodyStyle={teamBoxList}
-                                  bordered={false}
-                                  style={{
-                                    height: '40px',
-                                    paddingRight: '10px'
-                                  }}
+                                <div
+                                  className={
+                                    styles[
+                                      'home-view-content-left-useinfo-card-list-type'
+                                    ]
+                                  }
+                                  // span={8}
                                 >
                                   <div
-                                    className={styles.overText}
-                                    style={{
-                                      width: '93%',
-                                      cursor: 'pointer'
-                                    }}
+                                    className={
+                                      styles[
+                                        'home-view-content-left-useinfo-card-list-type-pie'
+                                      ]
+                                    }
+                                    id={`pie-charts-${item.id}`}
+                                  ></div>
+                                </div>
+                                <Row
+                                  className={
+                                    styles[
+                                      'home-view-content-left-useinfo-card-list-wrap'
+                                    ]
+                                  }
+                                >
+                                  <Col span={8}>
+                                    <div
+                                      className={
+                                        styles[
+                                          'home-view-content-left-useinfo-card-list-wrap-info'
+                                        ]
+                                      }
+                                    >
+                                      <div
+                                        className={
+                                          styles[
+                                            'home-view-content-left-useinfo-card-list-wrap-info-text'
+                                          ]
+                                        }
+                                      >
+                                        {item.percentage}
+                                        <span className={styles.unit}>%</span>
+                                      </div>
+                                      <div
+                                        className={
+                                          styles[
+                                            'home-view-content-left-useinfo-card-list-wrap-title'
+                                          ]
+                                        }
+                                      >
+                                        {item.whoUse}
+                                      </div>
+                                    </div>
+                                  </Col>
+                                  <Col
+                                    span={8}
+                                    className={
+                                      styles[
+                                        'home-view-content-left-useinfo-card-list-wrap-info'
+                                      ]
+                                    }
                                   >
-                                    <Tooltip title={name}>{name}</Tooltip>
+                                    <div
+                                      className={
+                                        styles[
+                                          'home-view-content-left-useinfo-card-list-wrap-info-text'
+                                        ]
+                                      }
+                                    >
+                                      {item.use}
+                                      <span className={styles.unit}>
+                                        {item.unit}
+                                      </span>
+                                    </div>
+                                    <div
+                                      className={
+                                        styles[
+                                          'home-view-content-left-useinfo-card-list-wrap-title'
+                                        ]
+                                      }
+                                    >
+                                      {HOME_CONTENT_USEINFO_USED}
+                                    </div>
+                                  </Col>
+                                  <Col
+                                    span={8}
+                                    className={
+                                      styles[
+                                        'home-view-content-left-useinfo-card-list-wrap-total'
+                                      ]
+                                    }
+                                  >
+                                    <div
+                                      className={
+                                        styles[
+                                          'home-view-content-left-useinfo-card-list-wrap-info-text'
+                                        ]
+                                      }
+                                    >
+                                      {item.total}
+                                      <span className={styles.unit}>
+                                        {item.unit}
+                                      </span>
+                                    </div>
+                                    <div
+                                      className={
+                                        styles[
+                                          'home-view-content-left-useinfo-card-list-wrap-title'
+                                        ]
+                                      }
+                                    >
+                                      {HOME_CONTENT_USEINFO_TOTAL}
+                                    </div>
+                                  </Col>
+                                </Row>
+                              </Row>
+                            </>
+                          );
+                        })}
+                      </Col>
+                    </Row>
+                  </Spin>
+                </Card>
+              </Row>
+              <Row className={styles['home-view-content-left-eventinfo']}>
+                <Row>
+                  <div className={styles.tabs}>
+                    {tabList.map((item, index) => {
+                      return (
+                        <div
+                          className={
+                            index === activeKey
+                              ? styles['tab-active']
+                              : styles.tabpane
+                          }
+                          onClick={() => {
+                            setActiveKey(index);
+                          }}
+                        >
+                          {item.name}
+                          <Tooltip placement="top" title={item.tooltip}>
+                            <img
+                              src={Tooltips}
+                              alt=""
+                              style={{ cursor: 'pointer', marginLeft: 4 }}
+                            />
+                          </Tooltip>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </Row>
+                <>
+                  <Card
+                    bordered={false}
+                    className={
+                      styles['home-view-content-left-eventinfo-service']
+                    }
+                  >
+                    {activeKey === 0 && (
+                      <Row>
+                        <Row className={styles.header}>
+                          <Col
+                            span={12}
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'center'
+                            }}
+                          >
+                            <div className={styles['header-wrap-overview']}>
+                              {groupList.map((item, index) => {
+                                return (
+                                  <div
+                                    className={
+                                      styles['header-wrap-overview-container']
+                                    }
+                                  >
+                                    <div className={styles.count}>
+                                      {item.count}
+                                    </div>
+                                    <div className={styles.title}>
+                                      {index !== 0 && (
+                                        <span
+                                          className={styles.tag}
+                                          style={{
+                                            backgroundColor: `${tagColorList[index]}`
+                                          }}
+                                        ></span>
+                                      )}
+                                      {item.text}
+                                    </div>
                                   </div>
-                                  <div>
-                                    {editorConvenient ? (
-                                      <Icon type="close" />
-                                    ) : (
-                                      <img src={Arrow} alt="" />
-                                    )}
+                                );
+                              })}
+                            </div>
+                          </Col>
+                          <Col
+                            span={12}
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'center'
+                            }}
+                          >
+                            <div className={styles['header-wrap-overview']}>
+                              {serviceList.map((item, index) => {
+                                return (
+                                  <div
+                                    className={
+                                      styles['header-wrap-overview-container']
+                                    }
+                                  >
+                                    <div className={styles.count}>
+                                      {item.count}
+                                    </div>
+                                    <div className={styles.title}>
+                                      {index !== 0 && (
+                                        <span
+                                          className={styles.tag}
+                                          style={{
+                                            backgroundColor: `${tagColorList[index]}`
+                                          }}
+                                        ></span>
+                                      )}
+                                      {item.text}
+                                    </div>
                                   </div>
-                                </Card>
-                              </Col>
-                            );
-                          })
-                        ) : (
-                          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-                        )}
+                                );
+                              })}
+                            </div>
+                          </Col>
+                        </Row>
+                        <Row>
+                          <Col span={12}>
+                            <div className={styles.wrap}>
+                              <div
+                                className={styles.appcharts}
+                                id="app-charts"
+                              ></div>
+                            </div>
+                          </Col>
+                          <Col span={12}>
+                            <div className={styles.wrap}>
+                              <div
+                                className={styles.appcharts}
+                                id="service-charts"
+                              ></div>
+                            </div>
+                          </Col>
+                        </Row>
                       </Row>
-
-                      <div style={{ textAlign: 'right', marginTop: '8px' }}>
-                        <Pagination
-                          size="small"
-                          current={page}
-                          pageSize={page_size}
-                          total={Number(total)}
-                          onChange={this.onPageChangeCollectionView}
+                    )}
+                    {activeKey === 1 && (
+                      <div style={{ padding: 12 }}>
+                        <Table
+                          columns={GroupNodeColunms}
+                          dataSource={groupNodeList}
+                          loading={homeInfoLoading}
+                          pagination={{
+                            pageSize: 5,
+                            total: groupNodeList.length,
+                            showTotal: total => `总共${total}条`
+                          }}
                         />
                       </div>
-                    </Col>
+                    )}
+                    {activeKey === 2 && (
+                      <div style={{ padding: 12 }}>
+                        <Table
+                          columns={GroupEventColunms}
+                          dataSource={groupEventList}
+                          loading={groupEventLoading}
+                          pagination={{
+                            pageSize: 5,
+                            total: groupEventList.length,
+                            showTotal: total => `总共${total}条`
+                          }}
+                        />
+                      </div>
+                    )}
                   </Card>
-                </Col>
-              )}
-            </Row>
-          )}
-        </div>
-        {/* <Col span={12}>
-            <Card
-              // style={{
-              //   marginBottom: 24
-              // }}
-              // style={{ marginBottom: '20px' }}
-              style={{ height: '243px' }}
-              loading={enterpriseInfoLoading}
-              bordered={false}
-            >
-              <Fragment>
-                <div className={styles.eidbox}>
-                  <div>
-                    <div className={styles.enterpriseInfo}>
-                      <img src={EnterpriseInfo} alt="" />
-                      <span>企业信息</span>
-                    </div>
-                    {enterpriseInfo && (
-                      <div className={styles.enterpriseName}>
-                        企业名称：{enterpriseInfo.enterprise_alias}
-                      </div>
-                    )}
-                    {enterpriseInfo && (
-                      <div className={styles.enterpriseBox}>
-                        <p>
-                          <Tooltip title={enterpriseInfo.enterprise_id}>
-                            联合云ID&nbsp;
-                            {enterpriseInfo.enterprise_id}
-                          </Tooltip>
-                        </p>
-                        <p>
-                          <Tooltip title={enterpriseVersion}>
-                            平台版本&nbsp;
-                            {enterpriseVersion}
-                          </Tooltip>
-                        </p>
-                        <p>
-                          <Tooltip title={enterpriseInfo.create_time}>
-                            创建时间&nbsp;
-                            {enterpriseInfo.create_time}
-                          </Tooltip>
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                  <div>
-                <img
-                  src={EnterpriseBj}
-                  alt=""
-                  style={{ marginRight: '54px' }}
-                />
-              </div>
-                </div>
-              </Fragment>
-            </Card>
-          </Col> */}
-        {this.state.adminer && (
-          <Row gutter={25} style={{ marginBottom: 24 }}>
-            <Col span={12}>
-              <Card
-                bordered={false}
-                loading={overviewAppInfoLoading}
-                style={{
-                  height: '243px'
-                  // marginRight: '25px'
-                }}
-              >
-                <Row style={{ marginBottom: '6px' }} gutter={25}>
-                  <Col className={styles.grays} span={12}>
-                    应用数量
-                  </Col>
-                </Row>
-                <Row>
-                  <Col span={14}>
-                    <Pie
-                      percent={Math.round((runApp / appTotal) * 10000) / 100.0}
-                      types="app"
-                      lineWidth={16}
-                      color="#3D58DA"
-                      subTitle={
-                        <div className={styles.appContent}>
-                          <h6>{runApp}个</h6>
-                          <div>
-                            共{appTotal}
-                            个应用数量
-                          </div>
-                        </div>
-                      }
-                      height={168}
-                    />
-                  </Col>
-                  <Col span={4}>
-                    <div>
-                      <div>
-                        <div className={styles.appnumno}>运行中应用</div>
-                        <div className={styles.nums}>
-                          <span>{runApp}个</span>
-                          <span>|</span>
-                          <span>{appTotal}个</span>
-                        </div>
-                      </div>
-                      <div>
-                        <div
-                          className={styles.appnums}
-                          style={{ marginTop: '26px' }}
-                        >
-                          未运行应用
-                        </div>
-                        <div className={styles.nums}>
-                          <span>{appClosed}个</span>
-                          <span>|</span>
-                          <span>{appTotal}个</span>
-                        </div>
-                      </div>
-                    </div>
-                  </Col>
-                  <Col span={4}></Col>
-                </Row>
-              </Card>
+                </>
+              </Row>
             </Col>
-            <Col span={12}>
-              <Card
-                bordered={false}
-                loading={overviewAppInfoLoading}
-                style={{
-                  height: '243px'
-                  // marginRight: '25px'
-                }}
-              >
-                <Row style={{ marginBottom: '6px' }}>
-                  <Col className={styles.grays} span={12}>
-                    组件数量
-                  </Col>
-                </Row>
-                <Row>
-                  <Col span={14}>
-                    <div style={{ marginTop: '10px' }}>
-                      <Pie
-                        percent={
-                          Math.round((runCom / comTotal) * 10000) / 100.0
-                        }
-                        types="component"
-                        color="#2953E8"
-                        subTitle={
-                          <div className={styles.elements}>
-                            <div>
-                              <div>{comClosed}</div>
-                              <div>未运行</div>
-                            </div>
-                            <div />
-                            <div>
-                              <div>{runCom}</div>
-                              <div>运行中</div>
-                            </div>
-                          </div>
-                        }
-                        height={156}
-                      />
-                    </div>
-                  </Col>
-                  <Col span={4}>
-                    <div>
-                      <div>
-                        <div className={styles.appnumno}>运行中组件</div>
-                        <div className={styles.nums}>
-                          <span>{runCom}个</span>
-                          <span>|</span>
-                          <span>{comTotal}个</span>
-                        </div>
+            <Col span={6} className={styles['home-view-content-right']}>
+              <Row className={styles['home-view-content-right-teaminfo']}>
+                <Card
+                  bordered={false}
+                  className={styles['home-view-content-right-teaminfo-card']}
+                >
+                  <Row>
+                    <Col span={8} className={styles.wrap}>
+                      <div className={styles.count}>
+                        {overviewInfo?.total_teams || '0'}
                       </div>
-                      <div>
-                        <div
-                          className={styles.appnums}
-                          style={{ marginTop: '26px' }}
-                        >
-                          未运行组件
-                        </div>
-                        <div className={styles.nums}>
-                          <span>{comClosed}个</span>
-                          <span>|</span>
-                          <span>{comTotal}个</span>
-                        </div>
-                      </div>
-                    </div>
-                  </Col>
-                  <Col span={4}></Col>
-                </Row>
-              </Card>
-            </Col>
-          </Row>
-        )}
-        <div>
-          <Row
-            style={{
-              marginBottom: 24
-            }}
-          >
-            <Col span={24}>
-              <Card
-                bordered={false}
-                loading={overviewTeamInfoLoading}
-                style={{
-                  height: '243px'
-                  // marginRight: '25px'
-                }}
-              >
-                <Row style={{ marginBottom: '4px' }} gutter={25}>
-                  <Col className={styles.grays} span={12}>
-                    团队
-                  </Col>
-
-                  {active_teams ? (
-                    <Col
-                      className={styles.grays}
-                      span={12}
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'space-between'
-                      }}
-                    >
-                      <span style={{ marginLeft: 24 }}>常用团队</span>
-                      <Link style={colors} to={`/enterprise/${eid}/teams`}>
-                        更多
-                      </Link>
-                    </Col>
-                  ) : (
-                    <Col
-                      className={styles.grays}
-                      span={12}
-                      style={{
-                        display: 'flex',
-                        justifyContent: 'flex-end'
-                      }}
-                    >
-                      <span style={colors} onClick={this.onJoinTeam}>
-                        加入团队
-                      </span>
-
-                      {this.state.adminer && (
-                        <span
-                          style={{
-                            color: '#2953E8',
-                            marginLeft: '5px',
-                            cursor: 'pointer'
-                          }}
-                          onClick={this.onAddTeam}
-                        >
-                          创建团队
+                      <div className={styles.title}>
+                        <span style={{ verticalAlign: 'middle' }}>
+                          团队数量
                         </span>
-                      )}
+                        <Tooltip placement="top" title="平台管理的团队数">
+                          <img
+                            src={Tooltips}
+                            alt=""
+                            style={{ cursor: 'pointer', marginLeft: 4 }}
+                          />
+                        </Tooltip>
+                      </div>
                     </Col>
-                  )}
-                </Row>
-
-                {active_teams ? (
-                  <Row gutter={60}>
-                    <Col span={12}>
-                      {new_join_team && (
-                        <Card
-                          hoverable
-                          bodyStyle={teamBoxs}
-                          bordered={false}
-                          onClick={() => {
-                            this.props.dispatch(
-                              routerRedux.push(
-                                `/team/${new_join_team[0].team_name}/region/${new_join_team[0].region}/index`
-                              )
-                            );
-                          }}
-                        >
-                          <div className={styles.addTeam}>
-                            <img
-                              onClick={() => {
-                                this.props.dispatch(
-                                  routerRedux.push(
-                                    `/team/${new_join_team[0].team_name}/region/${new_join_team[0].region}/index`
-                                  )
-                                );
-                              }}
-                              src={TeamCrew}
-                              alt=""
-                            />
-                          </div>
-                          <Tooltip title="新加入团队:">
-                            <div
-                              className={`${styles.grays} ${styles.addteam}`}
-                            >
-                              新加入团队:
-                            </div>
-                          </Tooltip>
-
-                          <Tooltip title={new_join_team[0].team_alias}>
-                            <div
-                              className={`${styles.overText} ${styles.teamtest}`}
-                            >
-                              {new_join_team[0].team_alias}
-                            </div>
-                          </Tooltip>
-                          <div>
-                            <img src={Arrow} alt="" />
-                          </div>
-                        </Card>
-                      )}
-                      <Card hoverable bodyStyle={teamBoxs} bordered={false}>
-                        {teamOperation}
-                      </Card>
+                    <Col span={8} className={styles.wrap}>
+                      <div className={styles.count}>
+                        {overviewInfo?.total_users || '0'}
+                      </div>
+                      <div className={styles.title}>
+                        <span style={{ verticalAlign: 'middle' }}>
+                          用户数量
+                        </span>
+                        <Tooltip placement="top" title="所有团队的用户总数">
+                          <img
+                            src={Tooltips}
+                            alt=""
+                            style={{ cursor: 'pointer', marginLeft: 4 }}
+                          />
+                        </Tooltip>
+                      </div>
                     </Col>
-                    <Col
-                      span={12}
-                      //  offset={1}
-                    >
-                      {active_teams.map(item => {
-                        const {
-                          team_name,
-                          region,
-                          team_alias,
-                          enterprise_id,
-                          tenant_id
-                        } = item;
-                        return (
-                          <Card
-                            hoverable
-                            key={team_name}
-                            bodyStyle={teamBoxList}
-                            bordered={false}
-                            style={{ height: '40px' }}
-                          >
-                            <div
-                              className={styles.overText}
-                              style={{ width: '93%', cursor: 'pointer' }}
-                              onClick={() => {
-                                this.props.dispatch(
-                                  routerRedux.push(
-                                    `/team/${team_name}/region/${
-                                      region[0]
-                                    }/index`
-                                  )
-                                );
-                              }}
-                            >
-                              <Tooltip title={team_alias}>{team_alias}</Tooltip>
-                            </div>
-                            <div>
-                              <img
-                                onClick={() => {
-                                  this.props.dispatch(
-                                    routerRedux.push(
-                                      `/team/${team_name}/region/${
-                                        region[0]
-                                      }/index`
-                                    )
-                                  );
-                                }}
-                                src={Arrow}
-                                alt=""
-                              />
-                            </div>
-                          </Card>
-                        );
-                      })}
+                    <Col span={8} className={styles.wrap}>
+                      <div className={styles.count}>
+                        {overviewMonitorInfo?.total_regions || 0}
+                      </div>
+                      <div className={styles.title}>
+                        <span style={{ verticalAlign: 'middle' }}>
+                          集群数量
+                        </span>
+                        <Tooltip placement="top" title="平台纳管的集群数量">
+                          <img
+                            src={Tooltips}
+                            alt=""
+                            style={{ cursor: 'pointer', marginLeft: 4 }}
+                          />
+                        </Tooltip>
+                      </div>
                     </Col>
                   </Row>
-                ) : (
-                  <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-                )}
-              </Card>
+                </Card>
+              </Row>
+              {isShowAdvice && (
+                <Row>
+                  <div className={styles['home-view-content-right-advice']}>
+                    <div>
+                      <img
+                        className={styles.close}
+                        src={Close}
+                        alt=""
+                        onClick={handleClose}
+                      />
+                    </div>
+                  </div>
+                </Row>
+              )}
+              <Row className={styles['home-view-content-right-myteam']}>
+                <div className={styles['home-view-content-right-myteam-title']}>
+                  <div>我的团队</div>
+                </div>
+                <Card
+                  bordered={false}
+                  className={styles['home-view-content-right-myteam-card']}
+                  style={{ height: isShowAdvice ? 438 : 620 }}
+                >
+                  <Row>
+                    <Spin spinning={teamListLoading}>
+                      {teamList.length > 0 ? (
+                        teamList.map((item, n) => {
+                          return (
+                            <div
+                              className={
+                                styles[
+                                  'home-view-content-right-myteam-card-group'
+                                ]
+                              }
+                            >
+                              <div
+                                className={
+                                  styles[
+                                    'home-view-content-right-myteam-card-group-title'
+                                  ]
+                                }
+                              >
+                                <img
+                                  src={HomeTeam}
+                                  alt=""
+                                  style={{ marginRight: 14 }}
+                                />
+                                {item.team_alias}
+                              </div>
+                              <div
+                                className={
+                                  styles[
+                                    'home-view-content-right-myteam-card-group-cluster'
+                                  ]
+                                }
+                              >
+                                {item.region_list.length > 0 &&
+                                  item.region_list.map((i, index) => (
+                                    <div style={{ marginRight: 24 }}>
+                                      <span
+                                        onMouseEnter={() => {
+                                          setIsHover(true);
+                                          setCurrentIndex(index);
+                                          setCurrentParentIndex(n);
+                                        }}
+                                        onMouseLeave={() => {
+                                          setIsHover(true);
+                                          setCurrentIndex(-1);
+                                          setCurrentParentIndex(-1);
+                                        }}
+                                        onClick={() => {
+                                          dispatch(
+                                            routerRedux.push(
+                                              `/team/${item.team_name}/region/${i.region_name}/index`
+                                            )
+                                          );
+                                        }}
+                                      >
+                                        <img
+                                          src={
+                                            isHover &&
+                                            currentIndex === index &&
+                                            currentParentIndex === n
+                                              ? GroupHoverImg
+                                              : GroupImg
+                                          }
+                                          alt=""
+                                        />
+                                        <span
+                                          style={{
+                                            verticalAlign: 'middle',
+                                            margin: '0 4px 0 8px'
+                                          }}
+                                        >
+                                          {i.region_alias}
+                                        </span>
+                                        <img
+                                          src={
+                                            isHover &&
+                                            currentIndex === index &&
+                                            currentParentIndex === n
+                                              ? RightHoverImg
+                                              : RightImg
+                                          }
+                                          alt=""
+                                        />
+                                      </span>
+                                    </div>
+                                  ))}
+                              </div>
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <Empty description="暂无数据" />
+                      )}
+                    </Spin>
+                  </Row>
+                </Card>
+              </Row>
             </Col>
           </Row>
         </div>
       </div>
-    );
-  };
+    </>
+  );
+};
 
-  render() {
-    const {
-      showAddTeam,
-      enterpriseInfo,
-      eid,
-      showMarketCloudAuth,
-      marketName
-    } = this.state;
-    const { wutongInfo } = this.props;
-    return (
-      <div>
-        {this.renderContent()}
-        {wutongInfo &&
-          wutongInfo.is_public &&
-          wutongInfo.is_public.value &&
-          wutongInfo.is_public.enable && (
-            <div className={styles.customerService}>
-              <Meiqia />
-              <div
-                onClick={() => {
-                  _MEIQIA && _MEIQIA('showPanel');
-                }}
-              >
-                <img src={CustomerService} alt="" />
-              </div>
-            </div>
-          )}
-        {showAddTeam && (
-          <CreateTeam
-            enterprise_id={eid}
-            onOk={this.handleCreateTeam}
-            onCancel={this.cancelCreateTeam}
-          />
-        )}
-        {showMarketCloudAuth && (
-          <AuthCompany
-            eid={eid}
-            marketName={marketName}
-            title="欢迎使用该平台，请先完成连接云应用商店授权"
-            onCancel={() => {
-              this.setState({ showMarketCloudAuth: false });
-            }}
-            currStep={2}
-          />
-        )}
-      </div>
-    );
-  }
-}
+export default connect(({ user, global, index, loading }) => ({
+  user: user.currentUser,
+  wutongInfo: global.wutongInfo,
+  overviewInfo: index.overviewInfo,
+  homeInfoLoading: loading.effects['global/fetchHomeInfo'],
+  groupEventLoading: loading.effects['global/fetchHomeGroupEvent'],
+  teamListLoading: loading.effects['global/fetchMyTeams']
+}))(Home);

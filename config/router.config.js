@@ -502,26 +502,26 @@ export default [
       // account view layout
       {
         icon: 'user',
-        path: '/account',
+        path: '/account/:eid',
         component: '../layouts/AccountLayout',
         name: 'AccountLayout',
         authority: ['admin', 'user'],
         routes: [
           {
-            path: '/account/center',
+            path: '/account/:eid/center',
             name: 'UserCenter',
             component: './Account/Center/Info',
             routes: [
               {
-                path: '/account/center',
-                redirect: '/account/center/binding'
+                path: '/account/:eid/center',
+                redirect: '/account/:eid/center/binding'
               },
               {
-                path: '/account/center/binding',
+                path: '/account/:eid/center/binding',
                 component: './Account/Center/BindingView'
               },
               {
-                path: '/account/center/accesstoken',
+                path: '/account/:eid/center/accesstoken',
                 component: './Account/Center/AccesstokenView'
               }
             ]
