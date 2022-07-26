@@ -16,7 +16,8 @@ import {
   Col,
   Spin,
   Card,
-  Table
+  Table,
+  Tooltip
 } from 'antd';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
@@ -510,11 +511,16 @@ export default class Index extends PureComponent {
                 <Col span={12} className={styles.left}>
                   <div className={styles.title}>
                     应用
-                    <img
-                      src={Tooltips}
-                      alt=""
-                      style={{ cursor: 'pointer', marginLeft: 4 }}
-                    />
+                    <Tooltip
+                      placement="top"
+                      title="团队所有应用运行情况统计信息"
+                    >
+                      <img
+                        src={Tooltips}
+                        alt=""
+                        style={{ cursor: 'pointer', marginLeft: 4 }}
+                      />
+                    </Tooltip>
                   </div>
                   <div className={styles.appinfo}>
                     <div className={styles.top}>
@@ -567,11 +573,16 @@ export default class Index extends PureComponent {
                 <Col span={12} className={styles.left}>
                   <div className={styles.title}>
                     组件
-                    <img
-                      src={Tooltips}
-                      alt=""
-                      style={{ cursor: 'pointer', marginLeft: 4 }}
-                    />
+                    <Tooltip
+                      placement="top"
+                      title="团队所有组件运行情况统计信息"
+                    >
+                      <img
+                        src={Tooltips}
+                        alt=""
+                        style={{ cursor: 'pointer', marginLeft: 4 }}
+                      />
+                    </Tooltip>
                   </div>
                   <div className={styles.appinfo}>
                     <div className={styles.top}>
@@ -621,12 +632,14 @@ export default class Index extends PureComponent {
           <Col span={8} bordered={false}>
             <Card className={styles.card} bordered={false}>
               <div className={styles.title}>
-                组件
-                <img
-                  src={Tooltips}
-                  alt=""
-                  style={{ cursor: 'pointer', marginLeft: 4 }}
-                />
+                资源使用
+                <Tooltip placement="top" title="团队所有应用使用资源统计信息">
+                  <img
+                    src={Tooltips}
+                    alt=""
+                    style={{ cursor: 'pointer', marginLeft: 4 }}
+                  />
+                </Tooltip>
               </div>
               <Row gutter={20}>
                 <Col span={12}>
