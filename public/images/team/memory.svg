@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>内存使用率</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="演示项目" transform="translate(-1277.000000, -263.000000)">
+            <g id="内容区" transform="translate(220.000000, 0.000000)">
+                <g id="资源使用" transform="translate(850.000000, 182.000000)">
+                    <g id="内存使用率" transform="translate(187.000000, 58.000000)">
+                        <g id="编组-18" transform="translate(20.000000, 20.000000)">
+                            <g id="内存使用率" transform="translate(0.000000, 3.000000)">
+                                <rect id="矩形" fill="#08153A" x="0" y="0" width="16" height="16" rx="2"></rect>
+                                <g id="34模板、框架" transform="translate(3.000000, 3.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                                    <path d="M10.6666667,2.66666667 L0,2.66666667 L0,0.444444444 C0,0.2 0.2,0 0.444444444,0 L10.2222222,0 C10.4666667,0 10.6666667,0.2 10.6666667,0.444444444 L10.6666667,2.66666667 Z M10.2222222,10.6666667 L3.55555556,10.6666667 L3.55555556,3.55555556 L10.6666667,3.55555556 L10.6666667,10.2222222 C10.6666667,10.4666667 10.4666667,10.6666667 10.2222222,10.6666667 Z" id="形状"></path>
+                                    <path d="M2.66666667,10.6666667 L0.444444444,10.6666667 C0.2,10.6666667 0,10.4666667 0,10.2222222 L0,3.55555556 L2.66666667,3.55555556 L2.66666667,10.6666667 Z" id="路径"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

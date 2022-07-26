@@ -1,301 +1,742 @@
 @import '~antd/lib/style/themes/default.less';
 @import '../../utils/utils.less';
+
 .teamAppTitle {
-  padding: 24px 15px;
-  display: flex;
+  margin     : 4px;
+  padding    : 20px 24px;
+  display    : flex;
+  height     : 94px;
+  background : #FFFFFF;
   align-items: center;
-  span {
-    margin-right: 5px;
+
+  .left {
+    padding-right: 24px;
+    border-right : 1px solid rgba(0, 0, 0, .09);
+
+    .title {
+      font-size: 14px;
+      font-family: PingFangSC-Regular,
+        PingFang SC;
+      font-weight: 400;
+      color      : rgba(0, 0, 0, 0.4500);
+    }
+
+    .teamname {
+      margin-top: 6px;
+      font-size : 18px;
+      font-family: PingFangSC-Semibold,
+        PingFang SC;
+      font-weight: 600;
+      color      : #000000;
+    }
   }
-  h2 {
-    margin-bottom: 5px;
+
+  .right {
+    flex        : 1;
+    padding-left: 24px;
+
+    .title {
+      font-size: 14px;
+      font-family: PingFangSC-Regular,
+        PingFang SC;
+      font-weight: 400;
+      color      : rgba(0, 0, 0, 0.4500);
+    }
+
+    .usercount {
+      margin-top: 6px;
+      font-size : 18px;
+      font-family: PingFangSC-Semibold,
+        PingFang SC;
+      font-weight: 600;
+      color      : #000000;
+    }
+  }
+
+  // span {
+  //   margin-right: 5px;
+  // }
+
+  // h2 {
+  //   margin-bottom: 5px;
+  // }
+}
+
+.info {
+  margin-top: 12px;
+  padding   : 0 4px;
+
+  :global {
+    .ant-card-body {
+      padding: 20px 24px;
+    }
+  }
+
+  .card {
+    height       : 198px;
+    background   : #FFFFFF;
+    box-shadow   : 0px 1px 4px 0px rgba(0, 0, 0, 0.0600);
+    border-radius: 2px;
+
+    .title {
+      font-size: 18px;
+      font-family: PingFangSC-Semibold,
+        PingFang SC;
+      font-weight: 600;
+      color      : #000000;
+    }
+
+    .appinfo {
+      margin-top      : 12px;
+      min-width       : 148px;
+      height          : 120px;
+      background-image: url('../../../public/images/team/team_info.png');
+      padding         : 20px 16px;
+
+      .top {
+        font-size: 14px;
+        font-family: PingFangSC-Regular,
+          PingFang SC;
+        font-weight: 400;
+        color      : #000000;
+
+        img {
+          margin-right: 12px;
+        }
+      }
+
+      .bottom {
+        text-align: center;
+
+        .count {
+          font-size: 42px;
+          font-family: DINAlternate-Bold,
+            DINAlternate;
+          font-weight: bold;
+          color      : #000000;
+        }
+
+        .unit {
+          font-size: 12px;
+          font-family: PingFangSC-Regular,
+            PingFang SC;
+          font-weight: 400;
+          color      : rgba(0, 0, 0, 0.8500);
+        }
+      }
+    }
+
+    .wrap {
+      display        : flex;
+      justify-content: space-between;
+
+      .left {
+        width: 50%;
+
+        .title {
+          font-size: 18px;
+          font-family: PingFangSC-Semibold,
+            PingFang SC;
+          font-weight: 600;
+          color      : #000000;
+        }
+
+        .appinfo {
+          margin-top      : 12px;
+          min-width       : 148px;
+          height          : 120px;
+          background-image: url('../../../public/images/team/team_info.png');
+          padding         : 20px 16px;
+
+          .top {
+            font-size: 14px;
+            font-family: PingFangSC-Regular,
+              PingFang SC;
+            font-weight: 400;
+            color      : #000000;
+
+            img {
+              margin-right: 12px;
+            }
+          }
+
+          .bottom {
+            text-align: center;
+
+            .count {
+              font-size: 42px;
+              font-family: DINAlternate-Bold,
+                DINAlternate;
+              font-weight: bold;
+              color      : #000000;
+            }
+
+            .unit {
+              font-size: 12px;
+              font-family: PingFangSC-Regular,
+                PingFang SC;
+              font-weight: 400;
+              color      : rgba(0, 0, 0, 0.8500);
+            }
+          }
+        }
+      }
+
+      .right {
+        .top {
+          display        : flex;
+          justify-content: center;
+
+          .wrap {
+            height    : 160px;
+            width     : 200px;
+            margin-top: -80px;
+          }
+        }
+
+        .bottom {
+          display: flex;
+          padding: 20px 0 20px 8%;
+
+          .left {
+            width        : 50%;
+            border-right : 1px solid rgba(0, 0, 0, .09);
+            padding-right: 8%;
+
+            .title {
+              text-align: center;
+
+              .badge {
+                display      : inline-block;
+                width        : 12px;
+                height       : 12px;
+                background   : #0E2465;
+                border-radius: 7px;
+                margin-right : 10px;
+              }
+
+              font-size: 14px;
+              font-family: PingFangSC-Regular,
+              PingFang SC;
+              font-weight: 400;
+              color      : #000000;
+            }
+
+            .count {
+              text-align: center;
+              font-size : 20px;
+              font-family: DINAlternate-Bold,
+                DINAlternate;
+              font-weight: bold;
+              color      : rgba(0, 0, 0, 0.8500);
+            }
+          }
+
+          .right {
+            width       : 50%;
+            padding-left: 8%;
+
+            .title {
+              text-align: center;
+
+              .badge {
+                display      : inline-block;
+                width        : 12px;
+                height       : 12px;
+                background   : rgba(204, 217, 255, 1);
+                border-radius: 7px;
+                margin-right : 10px;
+              }
+
+              font-size: 14px;
+              font-family: PingFangSC-Regular,
+              PingFang SC;
+              font-weight: 400;
+              color      : #000000;
+            }
+
+            .count {
+              text-align: center;
+              font-size : 20px;
+              font-family: DINAlternate-Bold,
+                DINAlternate;
+              font-weight: bold;
+              color      : rgba(0, 0, 0, 0.8500);
+            }
+          }
+        }
+
+      }
+    }
   }
 }
+
+.list {
+  margin       : 16px 4px;
+  background   : #FFFFFF;
+  box-shadow   : 0px 1px 4px 0px rgba(0, 0, 0, 0.0600);
+  border-radius: 2px;
+
+  :global {
+    .ant-table-thead>tr {
+      background-color: #F1F9FF;
+      font-size       : 14px;
+      font-family     : PingFangSC-Medium,
+        PingFang SC;
+      font-weight: 400;
+      color      : rgba(0, 0, 0, 0.65);
+    }
+
+    .ant-table-tbody>tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)>td {
+      cursor          : pointer;
+      background-color: rgba(0, 0, 0, 0.0200);
+    }
+
+    .ant-table-tbody>tr {
+      font-size: 14px;
+      font-family: PingFangSC-Medium,
+        PingFang SC;
+      font-weight: 500;
+      color      : #000000;
+    }
+  }
+
+  .title {
+    display        : flex;
+    justify-content: space-between;
+
+    .text {
+      font-size: 18px;
+      font-family: PingFangSC-Semibold,
+        PingFang SC;
+      font-weight: 600;
+      color      : #000000;
+    }
+  }
+
+  .actions {
+    margin         : 24px 0px 14px 0px;
+    display        : flex;
+    justify-content: space-between;
+
+    .search {
+      :global {
+        .ant-input {
+          background-color: rgba(241, 249, 255, 1);
+          border          : none;
+          border-radius   : 15px;
+        }
+      }
+    }
+
+    .tabs {
+      width        : 480px;
+      height       : 30px;
+      background   : rgba(241, 249, 255, 1);
+      border-radius: 15px;
+      display      : flex;
+      text-align   : center;
+
+      .tabpane {
+        width    : 96px;
+        cursor   : pointer;
+        font-size: 14px;
+        font-family: PingFangSC-Medium,
+          PingFang SC;
+        font-weight    : 500;
+        color          : #000000;
+        display        : flex;
+        align-items    : center;
+        justify-content: center;
+
+        .badge {
+          width        : 20px;
+          height       : 20px;
+          border-radius: 10px;
+          background   : #FFBF77;
+          text-align   : center;
+          font-size    : 12px;
+          font-family  : PingFangSC-Regular,
+            PingFang SC;
+          font-weight: 400;
+          color      : #FFFFFF;
+          margin-left: 8px;
+        }
+      }
+    }
+
+    .active {
+      width          : 96px;
+      height         : 30px;
+      background     : #08153A;
+      border-radius  : 15px;
+      color          : #FFFFFF;
+      align-items    : center;
+      justify-content: center;
+      display        : flex;
+
+      .badge {
+        display      : block;
+        width        : 20px;
+        height       : 20px;
+        border-radius: 10px;
+        background   : #FFBF77;
+        text-align   : center;
+        font-size    : 12px;
+        font-family  : PingFangSC-Regular,
+          PingFang SC;
+        font-weight: 400;
+        color      : #FFFFFF;
+        margin-left: 8px;
+      }
+    }
+
+  }
+
+  :global {
+    .ant-card-body {
+      padding: 20px 24px;
+    }
+  }
+}
+
 //  top module
 .topContainer {
   display: flex;
-  width: 100%;
-  height: 170px;
-  > div {
-    width: 25%;
-    height: 100%;
+  width  : 100%;
+  height : 170px;
+
+  >div {
+    width  : 25%;
+    height : 100%;
     padding: 0px 10px;
   }
 }
+
 // 团队应用和团队组件
 .teamApp {
-  height: 100%;
+  height          : 100%;
   background-color: #f7fafd;
+
   .teamAppTitle {
     margin-bottom: 0px !important;
-    padding: 10px 10px 10px 20px;
+    padding      : 10px 10px 10px 20px;
   }
+
   .teamAppContent {
-    height: calc(100% - 44px);
+    height          : calc(100% - 44px);
     background-color: #fff;
-    display: flex;
+    display         : flex;
+
     .appEcharts {
-      width: 50%;
+      width : 50%;
       height: 100%;
     }
+
     .desc {
-      width: 50%;
-      position: relative;
-      display: flex;
-      flex-direction: column;
+      width          : 50%;
+      position       : relative;
+      display        : flex;
+      flex-direction : column;
       justify-content: center;
-      margin-left: -10px;
-      margin-top: -20px;
+      margin-left    : -10px;
+      margin-top     : -20px;
+
       .activeApp,
       .defaultApp {
         display: flex;
       }
+
       .totalApp {
         span {
           position: absolute;
-          bottom: 20px;
-          left: 20px;
+          bottom  : 20px;
+          left    : 20px;
         }
       }
     }
   }
 }
+
 .teamApp:hover,
 .teamDisk:hover,
 .teamHotAppItem:hover {
   box-shadow: 0 0 10px 10px #d8e8f8;
 }
+
 .teamHotAppItem:hover .hotAppItemTitle {
   color: #4d73b1;
 }
+
 .hoverPointer {
   cursor: pointer;
 }
+
 // 使用磁盘 内存 用户
 .teamDisk {
-  height: 100%;
+  height          : 100%;
   background-color: #f7fafd;
+
   // 标题
   .teamDiskTitle {
     margin-bottom: 0px !important;
-    padding: 10px 10px 10px 20px;
+    padding      : 10px 10px 10px 20px;
   }
+
   .teamDiskContent {
-    height: calc(100% - 44px);
-    width: 100%;
+    height          : calc(100% - 44px);
+    width           : 100%;
     background-color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+
     // 用户数量
     .userNum {
       p {
-        color: #457eaf;
-        font-size: 36px;
-        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        color        : #457eaf;
+        font-size    : 36px;
+        font-family  : 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         margin-bottom: 0px !important;
-        margin-right: 5px;
+        margin-right : 5px;
       }
+
       span {
-        color: #aeaeae;
-        font-size: 24px;
+        color      : #aeaeae;
+        font-size  : 24px;
         padding-top: 15px;
       }
     }
-    > div {
+
+    >div {
       display: flex;
+
       // position: relative;
       // 内存
       .save {
         // padding-right: 60px;
       }
+
       .save,
       .disk {
         text-align: center;
-        > p {
+
+        >p {
           // font-size: 18px;
           text-align: center;
         }
-        > div {
-          display: flex;
+
+        >div {
+          display        : flex;
           justify-content: center;
-          align-items: center;
-          > p {
-            color: #457eaf;
+          align-items    : center;
+
+          >p {
+            color    : #457eaf;
             font-size: 36px;
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial,
               sans-serif;
             margin-bottom: 0px !important;
-            margin-right: 5px;
+            margin-right : 5px;
           }
+
           span {
-            color: #aeaeae;
-            font-size: 24px;
+            color      : #aeaeae;
+            font-size  : 24px;
             padding-top: 15px;
           }
         }
       }
+
       // 竖线
       .useLine {
         // position: absolute;
         // left: calc(50% + 2px);
         // top: 50%;
         // transform: translateY(-50%);
-        width: 2px;
-        height: 24px;
-        border-radius: 5px;
+        width           : 2px;
+        height          : 24px;
+        border-radius   : 5px;
         background-color: #aeb7c3;
-        margin: 22px;
+        margin          : 22px;
       }
     }
   }
 }
+
 // 热门应用列表标题
 .teamHotAppTitle {
-  padding: 24px 10px;
-  display: flex;
+  padding        : 24px 10px;
+  display        : flex;
   justify-content: space-between;
+
   .teamHotAppTitleLeft {
     // padding: 5px 0px;
-    display: flex;
+    display    : flex;
     align-items: center;
+
     span {
       margin-right: 5px;
-      padding-top: 2px;
+      padding-top : 2px;
     }
+
     h2 {
       margin-bottom: 5px;
     }
   }
+
   .teamHotAppTitleSearch {
-    display: flex;
+    display    : flex;
     align-items: center;
+
     span {
       margin-left: 10px;
-      color: #4f75af;
+      color      : #4f75af;
     }
   }
 }
 
 .ellipsis {
   text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
+  white-space  : nowrap;
+  overflow     : hidden;
 }
+
 // 团队热门应用列表
 .teamHotAppList {
-  display: flex;
+  display  : flex;
   flex-wrap: wrap;
-  > div {
-    width: 25%;
-    padding: 0px 10px;
+
+  >div {
+    width        : 25%;
+    padding      : 0px 10px;
     margin-bottom: 20px;
 
     .teamHotAppItem {
       background-color: #fff;
-      position: relative;
-      padding: 24px;
+      position        : relative;
+      padding         : 24px;
 
       .hotAppItemDetails {
-        display: flex;
-        align-items: center;
+        display      : flex;
+        align-items  : center;
         margin-bottom: 12px;
-        position: relative;
-        > span {
-          max-width: 48px;
+        position     : relative;
+
+        >span {
+          max-width : 48px;
           max-height: 48px;
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          left: 0px;
+          position  : absolute;
+          top       : 50%;
+          transform : translateY(-50%);
+          left      : 0px;
+
           img {
-            width: 100%;
+            width : 100%;
             height: 100%;
           }
         }
+
         .hotAppItemUse {
-          width: 100%;
+          width       : 100%;
           padding-left: 80px;
+
           .hotAppItemTitle {
-            width: 100%;
+            width         : 100%;
             // font-weight: bold;
-            font-size: 20px;
-            margin-bottom: 5px;
+            font-size     : 20px;
+            margin-bottom : 5px;
           }
+
           .useDeatil {
             position: relative;
+
             // 内存
             .hotAppUseSave {
-              display: flex;
+              display    : flex;
               align-items: center;
-              > p {
+
+              >p {
                 color: #aeaeae;
               }
-              > div {
-                display: flex;
+
+              >div {
+                display    : flex;
                 align-items: center;
                 margin-left: 7px;
+
                 p {
-                  font-size: 16px;
+                  font-size   : 16px;
                   margin-right: 3px;
                 }
+
                 span {
-                  font-size: 12px;
-                  color: #aeaeae;
+                  font-size  : 12px;
+                  color      : #aeaeae;
                   padding-top: 5px;
                 }
               }
             }
+
             // 数量
             .hotAppComNum {
               margin-top: 5px;
-              & > span:nth-child(1) {
+
+              &>span:nth-child(1) {
                 margin-right: 3px;
-                color: #aeaeae;
+                color       : #aeaeae;
               }
-              & > span:nth-child(2) {
-                font-size: 16px;
+
+              &>span:nth-child(2) {
+                font-size   : 16px;
                 margin-right: 3px;
               }
-              & > span:nth-child(3) {
-                font-size: 12px;
+
+              &>span:nth-child(3) {
+                font-size  : 12px;
                 padding-top: 5px;
-                color: #aeaeae;
+                color      : #aeaeae;
               }
             }
           }
         }
       }
+
       .hotAppItemBackup {
-        display: flex;
+        display        : flex;
         justify-content: space-between;
+
         .comMsg {
           .versions {
             margin-bottom: 5px;
           }
+
           .update {
             color: #aeaeae;
           }
         }
+
         .visit {
-          display: flex;
+          display    : flex;
           align-items: flex-end;
-          color: #4f75af;
+          color      : #4f75af;
         }
       }
+
       .running {
-        display: flex;
+        display : flex;
         position: absolute;
-        right: 0px;
-        top: 10px;
-        color: #aeb7c3;
+        right   : 0px;
+        top     : 10px;
+        color   : #aeb7c3;
       }
     }
   }
 }
+
 // 分页
 .pagination {
-  margin: 24px 0px;
-  display: flex;
+  margin         : 24px 0px;
+  display        : flex;
   justify-content: flex-end;
 }
