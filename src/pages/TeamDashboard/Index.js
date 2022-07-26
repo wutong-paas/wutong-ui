@@ -530,7 +530,7 @@ export default class Index extends PureComponent {
                     <div className={styles.bottom}>
                       <span className={styles.count}>
                         {(index.overviewInfo &&
-                          index.overviewInfo.running_app_num) ||
+                          index.overviewInfo.team_app_num) ||
                           0}
                       </span>
                       <span className={styles.unit}>个</span>
@@ -548,8 +548,7 @@ export default class Index extends PureComponent {
                         运行中
                       </div>
                       <div className={styles.count}>
-                        {index.overviewInfo.team_app_num -
-                          index.overviewInfo.running_app_num || 0}
+                        {index.overviewInfo.running_app_num || 0}
                       </div>
                     </div>
                     <div className={styles.right}>
