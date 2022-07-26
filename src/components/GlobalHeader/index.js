@@ -162,7 +162,7 @@ export default class GlobalHeader extends PureComponent {
     return (
       <Header className={styles.header}>
         <div className={styles.wrap}>
-          <div>
+          <div style={{display:'flex'}}>
             <Icon
               className={styles.trigger}
               type={collapsed ? 'menu-unfold' : 'menu-fold'}

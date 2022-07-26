@@ -19,7 +19,7 @@ export const GroupNodeColunms = [
     key: 'name'
   },
   {
-    title: 'Cpu（核数）',
+    title: 'CPU（核数）',
     dataIndex: 'cpu',
     key: 'cpu'
   },
@@ -39,7 +39,8 @@ export const GroupEventColunms = [
   {
     title: '时间',
     dataIndex: 'time',
-    key: 'time'
+    key: 'time',
+    width: 180
   },
   {
     title: '类型',
@@ -55,6 +56,7 @@ export const GroupEventColunms = [
     title: '等级',
     dataIndex: 'level',
     key: 'level',
+    width: 80,
     render: (text, record) => (
       <span style={{ color: levelTextColor[text] }}>{text}</span>
     )
@@ -150,13 +152,27 @@ export const radarOption = res => {
     // legend: {
     //   data: []
     // },
-    // tooltip: {
-    //   formatter: '{b0}: {c0}<br />{b1}: {c1}'
-    // },
+    tooltip: {
+      trigger: 'item',
+      backgroundColor: '#525b75',
+      borderColor: '#525b75', // 修改背景颜色
+      textStyle: {
+        color: '#FFFFFF'
+      }, // 修改字体颜色
+      formatter: function(params) {
+        //使用formatter函数修改需要的样式
+        const titleList = ['CPU', '存储', '容器组', '内存'];
+        let relVal = params.name;
+        for (let i = 0; i < params.value.length; i++) {
+          relVal += '<br/>' + titleList[i] + ' : ' + params.value[i] + '%';
+        }
+        return relVal;
+      }
+    },
     radar: {
       shape: 'circle',
       indicator: [
-        { name: 'GPU', max: 100, color: 'rgba(0, 0, 0, 1)' },
+        { name: 'CPU', max: 100, color: 'rgba(0, 0, 0, 1)' },
         { name: '内存', max: 100, color: 'rgba(0, 0, 0, 1)' },
         { name: '容器组', max: 100, color: 'rgba(0, 0, 0, 1)' },
         { name: '存储', max: 100, color: 'rgba(0, 0, 0, 1)' }
@@ -187,7 +203,7 @@ export const radarOption = res => {
               podPercentAge,
               diskPercentAge
             ],
-            name: 'Allocated Budget'
+            name: '集群资源使用情况'
           }
           // {
           //   value: [20, 80, 30, 90,],
