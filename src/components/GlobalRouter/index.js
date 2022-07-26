@@ -148,7 +148,7 @@ export default class GlobalRouter extends PureComponent {
    * @memberof SiderMenu
    */
   getMenuItemPath = item => {
-    const itemPath = this.conversionPath(item.path);
+    const itemPath = this.conversionPath(item.path, item);
     const icon = getIcon(item.icon);
     const { target, name } = item;
     // Is it a http link
@@ -220,11 +220,11 @@ export default class GlobalRouter extends PureComponent {
       .filter(item => !!item);
   };
   // conversion Path 转化路径
-  conversionPath = path => {
+  conversionPath = (path,item) => {
     if (path && path.indexOf('http') === 0) {
       return path;
     }
-    return `/${path || ''}`.replace(/\/+/g, '/');
+    return { pathname: `/${path || ''}`.replace(/\/+/g, '/'), state: {breadCrumbName:item.name} };
   };
   // permission to check
   checkPermissionItem = (authority, ItemDom) => {
@@ -371,7 +371,6 @@ export default class GlobalRouter extends PureComponent {
                 : null
             }
           >
-            {console.log(this.getNavMenuItems(menuData), 'ddd')}
             {this.getNavMenuItems(menuData || [])}
             {/* <Menu.Item
             key="collection"

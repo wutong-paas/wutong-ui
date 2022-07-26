@@ -53,7 +53,8 @@ const Home = props => {
     match,
     homeInfoLoading,
     groupEventLoading,
-    teamListLoading
+    teamListLoading,
+    homeAppLoading
   } = props;
   const { params } = match;
   const [radarCharts, setRadarCharts] = useState();
@@ -117,7 +118,7 @@ const Home = props => {
         enterprise_id: params?.eid
       },
       callback: res => {
-        if (res.status_code === 200) {
+        if (res) {
           const { node, pod, store } = res?.bean || {};
           setUseList(useInfoList(res?.bean));
           initRadarCharts(res?.bean);
@@ -140,9 +141,9 @@ const Home = props => {
               const diskPercentAge = computedPercentage(used_pod, total_pod);
               return {
                 name,
-                cpu: `${cpuPercentAge}%  ${used_cpu}/${total_cpu}`,
-                memory: `${memoryPercentAge}%  ${used_memory}/${total_memory}`,
-                pod: `${diskPercentAge}%  ${used_pod}/${total_pod}`
+                cpu: `${cpuPercentAge}%\u00A0\u00A0\u00A0${used_cpu}/${total_cpu}`,
+                memory: `${memoryPercentAge}%\u00A0\u00A0\u00A0${used_memory}/${total_memory}`,
+                pod: `${diskPercentAge}%\u00A0\u00A0\u00A0${used_pod}/${total_pod}`
               };
             });
             setGroupNodeList(list);
@@ -164,7 +165,7 @@ const Home = props => {
         enterprise_id: params?.eid
       },
       callback: res => {
-        if (res.status_code === 200) {
+        if (res) {
           setGroupList(serviceMonitorList(res?.bean?.group_info));
           setServiceList(serviceMonitorList(res?.bean?.service_info));
           setGroupInfo(res?.bean?.group_info);
@@ -181,7 +182,7 @@ const Home = props => {
         enterprise_id: params?.eid
       },
       callback: res => {
-        if (res.status_code === 200) {
+        if (res) {
           setGroupEventList(res?.bean);
         }
       }
@@ -197,7 +198,7 @@ const Home = props => {
         enterprise_id: params?.eid
       },
       callback: res => {
-        if (res && res.status_code === 200) {
+        if (res) {
           setOverviewInfo(res?.bean);
         }
       }
@@ -213,7 +214,7 @@ const Home = props => {
         enterprise_id: params?.eid
       },
       callback: res => {
-        if (res && res.status_code === 200) {
+        if (res) {
           setOverviewMonitorInfo(res?.bean);
         }
       }
@@ -459,126 +460,128 @@ const Home = props => {
                       styles['home-view-content-left-eventinfo-service']
                     }
                   >
-                    {activeKey === 0 && (
-                      <Row>
-                        <Row className={styles.header}>
-                          <Col
-                            span={12}
-                            style={{
-                              display: 'flex',
-                              justifyContent: 'center'
-                            }}
-                          >
-                            <div className={styles['header-wrap-overview']}>
-                              {groupList.map((item, index) => {
-                                return (
-                                  <div
-                                    className={
-                                      styles['header-wrap-overview-container']
-                                    }
-                                  >
-                                    <div className={styles.count}>
-                                      {item.count}
-                                    </div>
-                                    <div className={styles.title}>
-                                      {index !== 0 && (
-                                        <span
-                                          className={styles.tag}
-                                          style={{
-                                            backgroundColor: `${tagColorList[index]}`
-                                          }}
-                                        ></span>
-                                      )}
-                                      {item.text}
-                                    </div>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          </Col>
-                          <Col
-                            span={12}
-                            style={{
-                              display: 'flex',
-                              justifyContent: 'center'
-                            }}
-                          >
-                            <div className={styles['header-wrap-overview']}>
-                              {serviceList.map((item, index) => {
-                                return (
-                                  <div
-                                    className={
-                                      styles['header-wrap-overview-container']
-                                    }
-                                  >
-                                    <div className={styles.count}>
-                                      {item.count}
-                                    </div>
-                                    <div className={styles.title}>
-                                      {index !== 0 && (
-                                        <span
-                                          className={styles.tag}
-                                          style={{
-                                            backgroundColor: `${tagColorList[index]}`
-                                          }}
-                                        ></span>
-                                      )}
-                                      {item.text}
-                                    </div>
-                                  </div>
-                                );
-                              })}
-                            </div>
-                          </Col>
-                        </Row>
+                    <Spin spinning={homeAppLoading}>
+                      {activeKey === 0 && (
                         <Row>
-                          <Col span={12}>
-                            <div className={styles.wrap}>
-                              <div
-                                className={styles.appcharts}
-                                id="app-charts"
-                              ></div>
-                            </div>
-                          </Col>
-                          <Col span={12}>
-                            <div className={styles.wrap}>
-                              <div
-                                className={styles.appcharts}
-                                id="service-charts"
-                              ></div>
-                            </div>
-                          </Col>
+                          <Row className={styles.header}>
+                            <Col
+                              span={12}
+                              style={{
+                                display: 'flex',
+                                justifyContent: 'center'
+                              }}
+                            >
+                              <div className={styles['header-wrap-overview']}>
+                                {groupList.map((item, index) => {
+                                  return (
+                                    <div
+                                      className={
+                                        styles['header-wrap-overview-container']
+                                      }
+                                    >
+                                      <div className={styles.count}>
+                                        {item.count}
+                                      </div>
+                                      <div className={styles.title}>
+                                        {index !== 0 && (
+                                          <span
+                                            className={styles.tag}
+                                            style={{
+                                              backgroundColor: `${tagColorList[index]}`
+                                            }}
+                                          ></span>
+                                        )}
+                                        {item.text}
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </Col>
+                            <Col
+                              span={12}
+                              style={{
+                                display: 'flex',
+                                justifyContent: 'center'
+                              }}
+                            >
+                              <div className={styles['header-wrap-overview']}>
+                                {serviceList.map((item, index) => {
+                                  return (
+                                    <div
+                                      className={
+                                        styles['header-wrap-overview-container']
+                                      }
+                                    >
+                                      <div className={styles.count}>
+                                        {item.count}
+                                      </div>
+                                      <div className={styles.title}>
+                                        {index !== 0 && (
+                                          <span
+                                            className={styles.tag}
+                                            style={{
+                                              backgroundColor: `${tagColorList[index]}`
+                                            }}
+                                          ></span>
+                                        )}
+                                        {item.text}
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </Col>
+                          </Row>
+                          <Row>
+                            <Col span={12}>
+                              <div className={styles.wrap}>
+                                <div
+                                  className={styles.appcharts}
+                                  id="app-charts"
+                                ></div>
+                              </div>
+                            </Col>
+                            <Col span={12}>
+                              <div className={styles.wrap}>
+                                <div
+                                  className={styles.appcharts}
+                                  id="service-charts"
+                                ></div>
+                              </div>
+                            </Col>
+                          </Row>
                         </Row>
-                      </Row>
-                    )}
-                    {activeKey === 1 && (
-                      <div style={{ padding: 12 }}>
-                        <Table
-                          columns={GroupNodeColunms}
-                          dataSource={groupNodeList}
-                          loading={homeInfoLoading}
-                          pagination={{
-                            pageSize: 5,
-                            total: groupNodeList.length,
-                            showTotal: total => `总共${total}条`
-                          }}
-                        />
-                      </div>
-                    )}
-                    {activeKey === 2 && (
-                      <div style={{ padding: 12 }}>
-                        <Table
-                          columns={GroupEventColunms}
-                          dataSource={groupEventList}
-                          loading={groupEventLoading}
-                          pagination={{
-                            pageSize: 5,
-                            total: groupEventList.length,
-                            showTotal: total => `总共${total}条`
-                          }}
-                        />
-                      </div>
-                    )}
+                      )}
+                      {activeKey === 1 && (
+                        <div style={{ padding: 12 }}>
+                          <Table
+                            columns={GroupNodeColunms}
+                            dataSource={groupNodeList}
+                            loading={homeInfoLoading}
+                            pagination={{
+                              pageSize: 5,
+                              total: groupNodeList.length,
+                              showTotal: total => `总共${total}条`
+                            }}
+                          />
+                        </div>
+                      )}
+                      {activeKey === 2 && (
+                        <div style={{ padding: 12 }}>
+                          <Table
+                            columns={GroupEventColunms}
+                            dataSource={groupEventList}
+                            loading={groupEventLoading}
+                            pagination={{
+                              pageSize: 5,
+                              total: groupEventList.length,
+                              showTotal: total => `总共${total}条`
+                            }}
+                          />
+                        </div>
+                      )}
+                    </Spin>
                   </Card>
                 </>
               </Row>
@@ -778,5 +781,6 @@ export default connect(({ user, global, index, loading }) => ({
   overviewInfo: index.overviewInfo,
   homeInfoLoading: loading.effects['global/fetchHomeInfo'],
   groupEventLoading: loading.effects['global/fetchHomeGroupEvent'],
-  teamListLoading: loading.effects['global/fetchMyTeams']
+  teamListLoading: loading.effects['global/fetchMyTeams'],
+  homeAppLoading: loading.effects['global/fetchHomeAppInfo']
 }))(Home);

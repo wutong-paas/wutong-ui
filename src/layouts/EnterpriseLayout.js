@@ -2,7 +2,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable prefer-destructuring */
 /* eslint-disable react/sort-comp */
-import { Layout } from 'antd';
+import { Layout, Breadcrumb } from 'antd';
 import classNames from 'classnames';
 import { connect } from 'dva';
 import { Redirect, routerRedux } from 'dva/router';
@@ -31,6 +31,7 @@ import wutongUtil from '../utils/wutong';
 import userUtil from '../utils/user';
 import MemoryTip from './MemoryTip';
 import Context from './MenuContext';
+import { Link } from 'dva/router';
 
 const { Content, Sider } = Layout;
 
@@ -364,6 +365,23 @@ class EnterpriseLayout extends PureComponent {
     }
     const fetchLogo = wutongUtil.fetchLogo(wutongInfo, enterprise) || logo;
     const customHeader = () => {
+      const { location } = this.props;
+      const { state, pathname } = location;
+      return (
+        <div style={{ alignSelf: 'center', fontSize: 14 }}>
+          <Breadcrumb>
+            <Breadcrumb.Item>
+              <Link to={`/enterprise/${eid}/index`}>首页</Link>
+            </Breadcrumb.Item>
+            {state?.breadCrumbName !== '总览' &&
+              state?.breadCrumbName  && (
+                <Breadcrumb.Item>
+                  <Link to={location}>{state?.breadCrumbName}</Link>
+                </Breadcrumb.Item>
+              )}
+          </Breadcrumb>
+        </div>
+      );
       return (
         <div className={headerStype.enterprise}>
           {/* {BillingFunction && (
