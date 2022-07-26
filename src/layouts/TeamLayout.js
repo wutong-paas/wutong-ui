@@ -675,7 +675,7 @@ class TeamLayout extends PureComponent {
                         ) === -1
                     )
                       ? {
-                          margin: '12px'
+                          margin: '24px'
                         }
                       : {}
                   }

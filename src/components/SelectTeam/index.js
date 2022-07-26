@@ -166,7 +166,7 @@ export default class SelectTeam extends PureComponent {
         </div>
       </div>
     );
-    const showstyle = { background: '#4d73b1', color: '#ffffff' };
+    // const showstyle = { background: '#4d73b1', color: '#ffffff' };
     return (
       <div
         className={className}
@@ -177,7 +177,10 @@ export default class SelectTeam extends PureComponent {
           <div>
             {active && (
               <div className={style.selectButton}>
-                <div className={style.selectButtonName} style={showstyle}>
+                <div
+                  className={style.selectButtonName}
+                  // style={showstyle}
+                >
                   <span>
                     {currentTeam.team_alias} | {currentRegion.team_region_alias}
                   </span>
