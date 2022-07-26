@@ -162,7 +162,10 @@ export default class SelectApp extends PureComponent {
           <div>
             {active && (
               <div className={style.selectButton}>
-                <div className={style.selectButtonName} style={showstyle}>
+                <div
+                  className={style.selectButtonName}
+                  // style={showstyle}
+                >
                   <span>{currentApp.group_name}</span>
                   <Icon className={style.selectButtonArray} type="caret-down" />
                 </div>

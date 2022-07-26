@@ -696,14 +696,14 @@ export default class Index extends PureComponent {
               </div>
             </div>
             <div className={styles.actions}>
-              {/* <div className={styles.tabs}>
+              <div className={styles.tabs}>
                 {statusList.map((item, index) => {
                   return (
                     <div
                       className={
                         activeKey === index ? styles.active : styles.tabpane
                       }
-                      key={Math.random()}
+                      key={index}
                       onClick={() => this.setState({ activeKey: index })}
                     >
                       <div>{item}</div>
@@ -711,7 +711,7 @@ export default class Index extends PureComponent {
                     </div>
                   );
                 })}
-              </div> */}
+              </div>
               <div>
                 {(!loadingOfApp || searchVisible) && (
                   <Search
@@ -730,6 +730,18 @@ export default class Index extends PureComponent {
                 columns={listColunms()}
                 loading={loadingOfApp}
                 dataSource={teamHotAppList}
+                onRow={record => {
+                  return {
+                    onClick: event => {}, // 点击行
+                    onDoubleClick: event => {
+                      dispatch(
+                        routerRedux.push(
+                          `/team/${teamName}/region/${regionName}/apps/${record.group_id}`
+                        )
+                      );
+                    }
+                  };
+                }}
                 pagination={{
                   // showSizeChanger,
                   onShowSizeChange: this.handleChangePageSize,

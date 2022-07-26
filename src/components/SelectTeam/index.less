@@ -1,11 +1,11 @@
 @import "~antd/lib/style/themes/default.less";
 
 .selectButton {
-    height: 56px;
-    display: -ms-flexbox;
-    display: flex;
+    height        : 56px;
+    display       : -ms-flexbox;
+    display       : flex;
     -ms-flex-align: center;
-    align-items: center;
+    align-items   : center
 }
 
 .selectButtonLink:hover {
@@ -14,83 +14,108 @@
 
 .selectButtonLink {
     -ms-flex-align: center;
-    align-items: center;
-    font-size: 16px;
-    color: rgba(0, 0, 0, .85);
-    max-width: 240px;
-    overflow: hidden;
+    align-items   : center;
+    // font-size: 16px;
+    // color: rgba(0, 0, 0, .85);
+    font-size     : 14px;
+    font-family   : PingFangSC-Regular,
+        PingFang SC;
+    font-weight  : 400;
+    color        : rgba(0, 0, 0, 0.3500);
+    max-width    : 240px;
+    overflow     : hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
-    display: block;
+    white-space  : nowrap;
+    display      : block;
 }
 
 .selectButtonName {
-    margin: 0 5px 1px 0;
-    padding: 0 7px;
-    background: #ffffff;
-    border-radius: 4px;
-    color: #333333;
-    display: inline-block;
-    overflow: hidden;
-    -o-text-overflow: ellipsis;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 211px;
-    line-height: 30px;
+    margin             : 0 5px 1px 0;
+    padding            : 0 16px;
+    // background      : #ffffff;
+    // border-radius   : 4px;
+    color              : #333333;
+    display            : inline-block;
+    overflow           : hidden;
+    -o-text-overflow   : ellipsis;
+    text-overflow      : ellipsis;
+    white-space        : nowrap;
+    max-width          : 214px;
+    line-height        : 30px;
+    // width           : 214px;
+    height             : 30px;
+    background         : #F1F9FF;
+    border-radius      : 15px;
+    font-size          : 12px;
+    font-family        : PingFangSC-Regular,
+        PingFang SC;
+    font-weight: 400;
+    color      : #000000;
 
     span {
-        display: inline;
-        margin-right: 4px;
+        display     : inline;
+        margin-right: 12px;
     }
 }
 
 .selectButtonArray {
-    margin-top: 1px;
-    opacity: .5;
-    font-size: 12px;
+    margin-top        : 1px;
+    opacity           : .5;
+    font-size         : 12px;
     -webkit-transition: -webkit-transform .1s ease-in-out;
-    transition: -webkit-transform .1s ease-in-out;
-    -o-transition: transform .1s ease-in-out;
-    transition: transform .1s ease-in-out;
-    transition: transform .1s ease-in-out, -webkit-transform .1s ease-in-out;
+    transition        : -webkit-transform .1s ease-in-out;
+    -o-transition     : transform .1s ease-in-out;
+    transition        : transform .1s ease-in-out;
+    transition        : transform .1s ease-in-out, -webkit-transform .1s ease-in-out;
 }
 
 .dropBox {
-    width: 250px;
-    border: 1px solid #dadfe6;
-    border-radius: 2px;
-    background: #fff;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .1);
+    width           : 250px;
+    //border       : 1px solid #dadfe6;
+    //border-radius: 2px;
+    background      : #08153A;
+    border-radius   : 4px;
+    opacity         : 0.8;
+    // box-shadow   : 0 2px 4px 0 rgba(0, 0, 0, .1);
 }
 
 .dropBoxSearch {
-    padding: 9px;
-    background: #f5f7fa;
-    box-shadow: 0 1px 0 0 #d8dde4;
-    border-radius: 2px 2px 0 0;
+    padding        : 9px;
+    background     : #08153A;
+    opacity        : 0.8;
+    //box-shadow   : 0 1px 0 0 #d8dde4;
+    border-radius  : 2px 2px 0 0;
+    border-bottom  : 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .dropBoxSearchInput {
-    width: 100%;
+    width        : 100%;
     border-radius: 2px;
-    background: #fff;
-    font-size: 14px;
-    position: relative;
-    display: inline-block;
+    background   : #08153A;
+    font-size    : 14px;
+    position     : relative;
+    display      : inline-block;
+
+    :global {
+        .ant-input {
+            background-color: #08153A;
+            color           : #FFFFFF
+        }
+    }
 }
 
 .dropBoxSearchInputIcon {
-    cursor: default;
-    position: absolute;
+    cursor     : default;
+    position   : absolute;
     line-height: 38px;
-    text-align: center;
-    top: 0;
-    right: 0;
-    margin: 0;
-    width: 2.6em;
-    height: 100%;
-    opacity: .5;
-    z-index: 1;
+    text-align : center;
+    top        : 0;
+    right      : 0;
+    margin     : 0;
+    width      : 2.6em;
+    height     : 100%;
+    opacity    : .5;
+    z-index    : 1;
 }
 
 .dropBoxSearchInputContrl:focus {
@@ -100,46 +125,61 @@
 .dropBoxList {
     margin: 0;
 
+    :global {
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius   : 5px;
+            border          : 1px solid transparent;
+            height          : 140px;
+            background-clip : content-box;
+        }
+    }
+
     ul {
         max-height: 350px;
-        overflow: auto;
-        margin: 0;
-        padding: 0;
+        overflow  : auto;
+        margin    : 0;
+        padding   : 0;
 
         li {
-            background-color: #f5f7fa;
-            align-items: center;
-            display: flex;
-            height: 42px;
-            width: 100%;
+            background-color: #08153A;
+            align-items     : center;
+            display         : flex;
+            height          : 42px;
+            width           : 100%;
+            font-size       : 12px;
+            font-family     : PingFangSC-Medium,
+                PingFang SC;
+            font-weight: 500;
+            color      : #FFFFFF;
 
             a {
-                align-items: center;
-                display: flex;
-                cursor: pointer;
-                color: #0052cc;
+                align-items     : center;
+                display         : flex;
+                cursor          : pointer;
+                color           : #FFFFFF;
                 background-color: transparent;
 
                 img {
-                    width: 24px;
-                    height: 24px;
-                    margin-left: 16px;
+                    width        : 24px;
+                    height       : 24px;
+                    margin-left  : 16px;
                     border-radius: 2px !important;
-                    padding: 0;
-                    margin: 0;
-                    border: none;
+                    padding      : 0;
+                    margin       : 0;
+                    border       : none;
                 }
 
                 span {
-                    margin-left: 15px;
-                    width: 100%;
-                    color: #202d40;
-                    font-size: 14px;
-                    line-height: 20px;
-                    white-space: nowrap;
-                    word-break: break-all;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
+                    margin-left      : 15px;
+                    width            : 100%;
+                    //  color        : #202d40;
+                    font-size        : 12px;
+                    line-height      : 20px;
+                    white-space      : nowrap;
+                    word-break       : break-all;
+                    overflow         : hidden;
+                    text-overflow    : ellipsis;
                 }
             }
         }
@@ -147,17 +187,17 @@
 }
 
 .dropBoxListCreate {
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: center;
-    align-items: center;
-    height: 42px;
-    padding-left: 15px;
-    cursor: pointer;
-    width: 100%;
+    display           : -ms-flexbox;
+    display           : flex;
+    -ms-flex-align    : center;
+    align-items       : center;
+    height            : 42px;
+    padding-left      : 15px;
+    cursor            : pointer;
+    width             : 100%;
     -webkit-box-shadow: 0 -1px 0 0 rgba(218, 223, 230, .5);
-    box-shadow: 0 -1px 0 0 rgba(218, 223, 230, .5);
-    color: #0052cc;
+    box-shadow        : 0 -1px 0 0 rgba(218, 223, 230, .5);
+    color             : #0052cc;
 
     i {
         margin-right: 8px;
@@ -165,18 +205,18 @@
 }
 
 .dropBoxAll {
-    justify-content: space-between;
-    padding: 0 15px;
-    height: 42px;
-    width: 100%;
-    -webkit-box-shadow: 0 -1px 0 0 #f5f7fa;
-    box-shadow: 0 -1px 0 0 #f5f7fa;
-    color: #202d40;
-    display: flex;
-    -ms-flex-align: center;
-    align-items: center;
+    justify-content      : space-between;
+    padding              : 0 15px;
+    height               : 42px;
+    width                : 100%;
+    // -webkit-box-shadow: 0 -1px 0 0 #f5f7fa;
+    // box-shadow        : 0 -1px 0 0 #f5f7fa;
+    color                : #FFFFFF;
+    display              : flex;
+    -ms-flex-align       : center;
+    align-items          : center;
 
     span {
-        color: #202d40;
+        color: #FFFFFF;
     }
 }

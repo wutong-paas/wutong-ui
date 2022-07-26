@@ -132,7 +132,10 @@ export default class SelectComponent extends PureComponent {
           <div>
             {active && (
               <div className={style.selectButton}>
-                <div className={style.selectButtonName} style={showstyle}>
+                <div
+                  className={style.selectButtonName}
+                  //style={showstyle}
+                >
                   <span>
                     {currentComponent && currentComponent.service_cname}
                     <Icon
