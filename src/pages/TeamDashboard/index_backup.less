@@ -1,0 +1,357 @@
+@import '~antd/lib/style/themes/default.less';
+@import '../../utils/utils.less';
+
+.teamAppTitle {
+  padding    : 24px 15px;
+  display    : flex;
+  align-items: center;
+
+  span {
+    margin-right: 5px;
+  }
+
+  h2 {
+    margin-bottom: 5px;
+  }
+}
+
+//  top module
+.topContainer {
+  display: flex;
+  width  : 100%;
+  height : 170px;
+
+  >div {
+    width  : 25%;
+    height : 100%;
+    padding: 0px 10px;
+  }
+}
+
+// 团队应用和团队组件
+.teamApp {
+  height          : 100%;
+  background-color: #f7fafd;
+
+  .teamAppTitle {
+    margin-bottom: 0px !important;
+    padding      : 10px 10px 10px 20px;
+  }
+
+  .teamAppContent {
+    height          : calc(100% - 44px);
+    background-color: #fff;
+    display         : flex;
+
+    .appEcharts {
+      width : 50%;
+      height: 100%;
+    }
+
+    .desc {
+      width          : 50%;
+      position       : relative;
+      display        : flex;
+      flex-direction : column;
+      justify-content: center;
+      margin-left    : -10px;
+      margin-top     : -20px;
+
+      .activeApp,
+      .defaultApp {
+        display: flex;
+      }
+
+      .totalApp {
+        span {
+          position: absolute;
+          bottom  : 20px;
+          left    : 20px;
+        }
+      }
+    }
+  }
+}
+
+.teamApp:hover,
+.teamDisk:hover,
+.teamHotAppItem:hover {
+  box-shadow: 0 0 10px 10px #d8e8f8;
+}
+
+.teamHotAppItem:hover .hotAppItemTitle {
+  color: #4d73b1;
+}
+
+.hoverPointer {
+  cursor: pointer;
+}
+
+// 使用磁盘 内存 用户
+.teamDisk {
+  height          : 100%;
+  background-color: #f7fafd;
+
+  // 标题
+  .teamDiskTitle {
+    margin-bottom: 0px !important;
+    padding      : 10px 10px 10px 20px;
+  }
+
+  .teamDiskContent {
+    height          : calc(100% - 44px);
+    width           : 100%;
+    background-color: #fff;
+    display         : flex;
+    justify-content : center;
+    align-items     : center;
+
+    // 用户数量
+    .userNum {
+      p {
+        color        : #457eaf;
+        font-size    : 36px;
+        font-family  : 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        margin-bottom: 0px !important;
+        margin-right : 5px;
+      }
+
+      span {
+        color      : #aeaeae;
+        font-size  : 24px;
+        padding-top: 15px;
+      }
+    }
+
+    >div {
+      display: flex;
+
+      // position: relative;
+      // 内存
+      .save {
+        // padding-right: 60px;
+      }
+
+      .save,
+      .disk {
+        text-align: center;
+
+        >p {
+          // font-size: 18px;
+          text-align: center;
+        }
+
+        >div {
+          display        : flex;
+          justify-content: center;
+          align-items    : center;
+
+          >p {
+            color    : #457eaf;
+            font-size: 36px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial,
+              sans-serif;
+            margin-bottom: 0px !important;
+            margin-right : 5px;
+          }
+
+          span {
+            color      : #aeaeae;
+            font-size  : 24px;
+            padding-top: 15px;
+          }
+        }
+      }
+
+      // 竖线
+      .useLine {
+        // position: absolute;
+        // left: calc(50% + 2px);
+        // top: 50%;
+        // transform: translateY(-50%);
+        width           : 2px;
+        height          : 24px;
+        border-radius   : 5px;
+        background-color: #aeb7c3;
+        margin          : 22px;
+      }
+    }
+  }
+}
+
+// 热门应用列表标题
+.teamHotAppTitle {
+  padding        : 24px 10px;
+  display        : flex;
+  justify-content: space-between;
+
+  .teamHotAppTitleLeft {
+    // padding: 5px 0px;
+    display    : flex;
+    align-items: center;
+
+    span {
+      margin-right: 5px;
+      padding-top : 2px;
+    }
+
+    h2 {
+      margin-bottom: 5px;
+    }
+  }
+
+  .teamHotAppTitleSearch {
+    display    : flex;
+    align-items: center;
+
+    span {
+      margin-left: 10px;
+      color      : #4f75af;
+    }
+  }
+}
+
+.ellipsis {
+  text-overflow: ellipsis;
+  white-space  : nowrap;
+  overflow     : hidden;
+}
+
+// 团队热门应用列表
+.teamHotAppList {
+  display  : flex;
+  flex-wrap: wrap;
+
+  >div {
+    width        : 25%;
+    padding      : 0px 10px;
+    margin-bottom: 20px;
+
+    .teamHotAppItem {
+      background-color: #fff;
+      position        : relative;
+      padding         : 24px;
+
+      .hotAppItemDetails {
+        display      : flex;
+        align-items  : center;
+        margin-bottom: 12px;
+        position     : relative;
+
+        >span {
+          max-width : 48px;
+          max-height: 48px;
+          position  : absolute;
+          top       : 50%;
+          transform : translateY(-50%);
+          left      : 0px;
+
+          img {
+            width : 100%;
+            height: 100%;
+          }
+        }
+
+        .hotAppItemUse {
+          width       : 100%;
+          padding-left: 80px;
+
+          .hotAppItemTitle {
+            width         : 100%;
+            // font-weight: bold;
+            font-size     : 20px;
+            margin-bottom : 5px;
+          }
+
+          .useDeatil {
+            position: relative;
+
+            // 内存
+            .hotAppUseSave {
+              display    : flex;
+              align-items: center;
+
+              >p {
+                color: #aeaeae;
+              }
+
+              >div {
+                display    : flex;
+                align-items: center;
+                margin-left: 7px;
+
+                p {
+                  font-size   : 16px;
+                  margin-right: 3px;
+                }
+
+                span {
+                  font-size  : 12px;
+                  color      : #aeaeae;
+                  padding-top: 5px;
+                }
+              }
+            }
+
+            // 数量
+            .hotAppComNum {
+              margin-top: 5px;
+
+              &>span:nth-child(1) {
+                margin-right: 3px;
+                color       : #aeaeae;
+              }
+
+              &>span:nth-child(2) {
+                font-size   : 16px;
+                margin-right: 3px;
+              }
+
+              &>span:nth-child(3) {
+                font-size  : 12px;
+                padding-top: 5px;
+                color      : #aeaeae;
+              }
+            }
+          }
+        }
+      }
+
+      .hotAppItemBackup {
+        display        : flex;
+        justify-content: space-between;
+
+        .comMsg {
+          .versions {
+            margin-bottom: 5px;
+          }
+
+          .update {
+            color: #aeaeae;
+          }
+        }
+
+        .visit {
+          display    : flex;
+          align-items: flex-end;
+          color      : #4f75af;
+        }
+      }
+
+      .running {
+        display : flex;
+        position: absolute;
+        right   : 0px;
+        top     : 10px;
+        color   : #aeb7c3;
+      }
+    }
+  }
+}
+
+// 分页
+.pagination {
+  margin         : 24px 0px;
+  display        : flex;
+  justify-content: flex-end;
+}
