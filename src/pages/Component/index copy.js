@@ -61,8 +61,6 @@ import Relation from './relation';
 import Resource from './resource';
 import Setting from './setting';
 import ThirdPartyServices from './ThirdPartyServices';
-import GobackImg from '../../../public/images/common/goback.svg';
-import AppImg from '../../../public/images/common/app.svg';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -978,18 +976,6 @@ class Main extends PureComponent {
       )
     );
   };
-  renderHeaderTitle() {
-    return (
-      <>
-        <div className={styles['header-title']}>
-          <div className={styles.title}>应用管理</div>
-          <div className={styles.back} onClick={this.goBack}>
-            <img src={GobackImg} alt="" />
-          </div>
-        </div>
-      </>
-    );
-  }
   renderTitle(name) {
     const {
       appDetail,
@@ -1002,13 +988,8 @@ class Main extends PureComponent {
     return (
       <Fragment>
         <div style={{ display: 'flex' }}>
-          <div
-            style={{
-              lineHeight: '48px'
-            }}
-          >
-            {/* {globalUtil.fetchSvg('component')} */}
-            <img src={AppImg} alt="" />
+          <div style={{ marginTop: '3px' }}>
+            {globalUtil.fetchSvg('component')}
           </div>
           <div style={{ marginLeft: '14px' }}>
             <div className={styles.contentTitle}>
@@ -1016,8 +997,7 @@ class Main extends PureComponent {
               {isEdit && (
                 <Icon
                   style={{
-                    cursor: 'pointer',
-                    marginLeft: 8
+                    cursor: 'pointer'
                   }}
                   onClick={this.showEditName}
                   type="edit"
@@ -1193,7 +1173,7 @@ class Main extends PureComponent {
       return null;
     }
     const action = (
-      <div className={styles.actions}>
+      <div>
         {isStart && !appStatusUtil.canStop(status) && (
           <Button
             disabled={!appStatusUtil.canStart(status)}
@@ -1444,17 +1424,6 @@ class Main extends PureComponent {
         breadcrumbList={breadcrumbList}
         action={action}
         title={this.renderTitle(componentName)}
-        headerTitle={
-          <div className={styles['header-title']}>
-            <div className={styles.title}>组件管理</div>
-            <div
-              className={styles.back}
-              onClick={() => this.props.history.goBack()}
-            >
-              <img src={GobackImg} alt="" />
-            </div>
-          </div>
-        }
         onTabChange={this.handleTabChange}
         tabActiveKey={type}
         tabList={tabList}

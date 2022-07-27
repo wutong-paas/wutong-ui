@@ -13,6 +13,7 @@ export interface PageHeaderProps {
   onTabChange?: (key: string) => void;
   linkElement?: React.ReactNode;
   style?: React.CSSProperties;
+  headerTitle?: React.ReactNode;
 }
 
 export default class PageHeader extends React.Component<PageHeaderProps, any> {}

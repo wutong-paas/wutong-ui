@@ -56,9 +56,24 @@
     margin: 0 0 -17px -8px;
 
     :global {
+
       .ant-tabs-bar {
         border-bottom: @border-width-base @border-style-base @border-color-split;
       }
+    }
+  }
+
+  :global {
+    .ant-tabs-nav .ant-tabs-tab:hover {
+      color: #0070FF;
+    }
+
+    .ant-tabs-nav .ant-tabs-tab-active {
+      color: #08153A;
+    }
+
+    .ant-tabs-ink-bar {
+      background-color: #08153A
     }
   }
 
