@@ -158,7 +158,8 @@ export default class PageHeader extends PureComponent {
       tabList,
       className,
       tabActiveKey,
-      isSvg
+      isSvg,
+      headerTitle
     } = this.props;
     const clsString = classNames(styles.pageHeader, className);
     // const { teamName, regionName } = this.props.match.params;
@@ -173,11 +174,14 @@ export default class PageHeader extends PureComponent {
     if (tabActiveKey !== undefined) {
       activeKeyProps.activeKey = tabActiveKey;
     }
-
+    console.log('headerTitle', headerTitle);
     return (
       <div className={clsString}>
         {/* disable breadcrumb */}
         {/* {breadcrumb} */}
+        {headerTitle && (
+          <div className={styles['header-title']}>{headerTitle}</div>
+        )}
         <div className={styles.detail}>
           {logo && <div className={styles.logo}>{logo}</div>}
           <div className={styles.main}>

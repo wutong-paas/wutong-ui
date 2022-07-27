@@ -1125,7 +1125,7 @@ export default class Index extends PureComponent {
                     <span className={styles.text}>待升级</span>
                   </div>
                   <div>
-                    <img src={RightImg} alt="" />
+                    <img src={!isHover ? RightImg : RightHoverImg} alt="" />
                   </div>
                 </div>
               </div>
