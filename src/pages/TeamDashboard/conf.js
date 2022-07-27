@@ -1,4 +1,4 @@
-import GroupImg from '../../../public/images/team/group.svg';
+import AppImg from '../../../public/images/common/app.svg';
 import VisterBtn from '../../components/visitBtnForAlllink';
 const handlUnit = (num, unit) => {
   if (num || unit) {
@@ -45,7 +45,7 @@ export const listColunms = () => {
         return (
           <>
             <img
-              src={logo ? logo : GroupImg}
+              src={logo ? logo : AppImg}
               style={{ marginRight: 12, width: 24, height: 24 }}
             />
             <span>{text}</span>
