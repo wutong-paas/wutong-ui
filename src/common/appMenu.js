@@ -2,6 +2,13 @@
 import { formatMessage } from 'umi-plugin-locale';
 import { isUrl } from '../utils/utils';
 import roleUtil from '../utils/role';
+import updateImg from '../../public/images/menu/update.svg';
+import publishImg from '../../public/images/menu/publish.svg';
+import configImg from '../../public/images/menu/config.svg';
+import gatewayImg from '../../public/images/menu/gateway.svg';
+import dashboardImg from '../../public/images/menu/dashboard.svg';
+
+const renderIcon = src => <img src={src} alt="" style={{ marginRight: 10 }} />;
 
 const publishIcon = (
   <i className="anticon">
@@ -144,7 +151,7 @@ function menuData(teamName, regionName, appID, permissionsInfo) {
   const menuArr = [
     {
       name: formatMessage({ id: 'menu.app.dashboard' }),
-      icon: 'dashboard',
+      icon: renderIcon(dashboardImg),
       path: `team/${teamName}/region/${regionName}/apps/${appID}`,
       authority: ['admin', 'user']
     }
@@ -157,7 +164,7 @@ function menuData(teamName, regionName, appID, permissionsInfo) {
   if (isShare) {
     addMenuArr({
       name: formatMessage({ id: 'menu.app.publish' }),
-      icon: publishIcon,
+      icon: renderIcon(publishImg),
       path: `team/${teamName}/region/${regionName}/apps/${appID}/publish`,
       authority: ['admin', 'user']
     });
@@ -174,7 +181,7 @@ function menuData(teamName, regionName, appID, permissionsInfo) {
   if (control) {
     addMenuArr({
       name: formatMessage({ id: 'menu.app.gateway' }),
-      icon: 'gateway',
+      icon: renderIcon(gatewayImg),
       path: `team/${teamName}/region/${regionName}/apps/${appID}/gateway`,
       authority: ['admin', 'user']
     });
@@ -182,7 +189,7 @@ function menuData(teamName, regionName, appID, permissionsInfo) {
   if (isUpgrade) {
     addMenuArr({
       name: formatMessage({ id: 'menu.app.upgrade' }),
-      icon: upgradeIcon,
+      icon: renderIcon(updateImg),
       path: `team/${teamName}/region/${regionName}/apps/${appID}/upgrade`,
       authority: ['admin', 'user']
     });
@@ -190,7 +197,7 @@ function menuData(teamName, regionName, appID, permissionsInfo) {
   if (isAppConfigGroup) {
     addMenuArr({
       name: formatMessage({ id: 'menu.app.configgroups' }),
-      icon: 'setting',
+      icon: renderIcon(configImg),
       path: `team/${teamName}/region/${regionName}/apps/${appID}/configgroups`,
       authority: ['admin', 'user']
     });
@@ -199,7 +206,7 @@ function menuData(teamName, regionName, appID, permissionsInfo) {
 }
 
 function formatter(data, parentPath = '', parentAuthority) {
-  return data.map((item) => {
+  return data.map(item => {
     let { path } = item;
     if (!isUrl(path)) {
       path = parentPath + item.path;

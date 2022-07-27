@@ -1,5 +1,6 @@
 import AppImg from '../../../public/images/common/app.svg';
 import VisterBtn from '../../components/visitBtnForAlllink';
+import { Divider } from 'antd';
 const handlUnit = (num, unit) => {
   if (num || unit) {
     let nums = num;
@@ -34,7 +35,7 @@ const statusObj = {
     shadow: 'rgba(253, 106, 106, 0.8)'
   }
 };
-export const listColunms = () => {
+export const listColunms = handleGotoApplication => {
   return [
     {
       title: '应用名称',
@@ -115,16 +116,17 @@ export const listColunms = () => {
     {
       title: '操作',
       dataIndex: 'actions',
+      width: 140,
       render: (text, item) => {
-        if (item.status === 'RUNNING') {
-          return (
-            <div>
-              {item.accesses.length > 0 && (
-                <VisterBtn linkList={item.accesses} type="link" />
-              )}
-            </div>
-          );
-        }
+        return (
+          <div>
+            {item.accesses.length > 0 && item.status === 'RUNNING' && (
+              <VisterBtn linkList={item.accesses} type="link" />
+            )}
+            {item.status === 'RUNNING' && <Divider type="vertical" />}
+            <a onClick={() => handleGotoApplication(item)}>管理</a>
+          </div>
+        );
       }
     }
   ];
