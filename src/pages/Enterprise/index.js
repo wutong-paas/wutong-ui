@@ -277,57 +277,89 @@ const Home = props => {
                   className={styles['home-view-content-left-useinfo-card']}
                 >
                   <Spin spinning={homeInfoLoading}>
-                    <Row gutter={40}>
-                      <Col span={8}>
-                        <div
-                          id="radar"
-                          className={
-                            styles['home-view-content-left-useinfo-card-radar']
-                          }
-                        ></div>
-                      </Col>
-                      <Col span={16} style={{ margin: '16px 0px 0px' }}>
-                        {useList.map(item => {
-                          pieChartsId.push({
-                            id: `pie-charts-${item.id}`,
-                            item
-                          });
-                          return (
-                            <>
-                              <Row
-                                className={
-                                  styles[
-                                    'home-view-content-left-useinfo-card-list'
-                                  ]
-                                }
-                                key={item.id}
-                              >
-                                <div
+                    {useList.length !== 0 ? (
+                      <Row gutter={40}>
+                        <Col span={8}>
+                          <div
+                            id="radar"
+                            className={
+                              styles[
+                                'home-view-content-left-useinfo-card-radar'
+                              ]
+                            }
+                          ></div>
+                        </Col>
+                        <Col span={16} style={{ margin: '16px 0px 0px' }}>
+                          {useList.map(item => {
+                            pieChartsId.push({
+                              id: `pie-charts-${item.id}`,
+                              item
+                            });
+                            return (
+                              <>
+                                <Row
                                   className={
                                     styles[
-                                      'home-view-content-left-useinfo-card-list-type'
+                                      'home-view-content-left-useinfo-card-list'
                                     ]
                                   }
-                                  // span={8}
+                                  key={item.id}
                                 >
                                   <div
                                     className={
                                       styles[
-                                        'home-view-content-left-useinfo-card-list-type-pie'
+                                        'home-view-content-left-useinfo-card-list-type'
                                       ]
                                     }
-                                    id={`pie-charts-${item.id}`}
-                                  ></div>
-                                </div>
-                                <Row
-                                  className={
-                                    styles[
-                                      'home-view-content-left-useinfo-card-list-wrap'
-                                    ]
-                                  }
-                                >
-                                  <Col span={8}>
+                                    // span={8}
+                                  >
                                     <div
+                                      className={
+                                        styles[
+                                          'home-view-content-left-useinfo-card-list-type-pie'
+                                        ]
+                                      }
+                                      id={`pie-charts-${item.id}`}
+                                    ></div>
+                                  </div>
+                                  <Row
+                                    className={
+                                      styles[
+                                        'home-view-content-left-useinfo-card-list-wrap'
+                                      ]
+                                    }
+                                  >
+                                    <Col span={8}>
+                                      <div
+                                        className={
+                                          styles[
+                                            'home-view-content-left-useinfo-card-list-wrap-info'
+                                          ]
+                                        }
+                                      >
+                                        <div
+                                          className={
+                                            styles[
+                                              'home-view-content-left-useinfo-card-list-wrap-info-text'
+                                            ]
+                                          }
+                                        >
+                                          {item.percentage}
+                                          <span className={styles.unit}>%</span>
+                                        </div>
+                                        <div
+                                          className={
+                                            styles[
+                                              'home-view-content-left-useinfo-card-list-wrap-title'
+                                            ]
+                                          }
+                                        >
+                                          {item.whoUse}
+                                        </div>
+                                      </div>
+                                    </Col>
+                                    <Col
+                                      span={8}
                                       className={
                                         styles[
                                           'home-view-content-left-useinfo-card-list-wrap-info'
@@ -341,8 +373,10 @@ const Home = props => {
                                           ]
                                         }
                                       >
-                                        {item.percentage}
-                                        <span className={styles.unit}>%</span>
+                                        {item.use}
+                                        <span className={styles.unit}>
+                                          {item.unit}
+                                        </span>
                                       </div>
                                       <div
                                         className={
@@ -351,77 +385,49 @@ const Home = props => {
                                           ]
                                         }
                                       >
-                                        {item.whoUse}
+                                        {HOME_CONTENT_USEINFO_USED}
                                       </div>
-                                    </div>
-                                  </Col>
-                                  <Col
-                                    span={8}
-                                    className={
-                                      styles[
-                                        'home-view-content-left-useinfo-card-list-wrap-info'
-                                      ]
-                                    }
-                                  >
-                                    <div
+                                    </Col>
+                                    <Col
+                                      span={8}
                                       className={
                                         styles[
-                                          'home-view-content-left-useinfo-card-list-wrap-info-text'
+                                          'home-view-content-left-useinfo-card-list-wrap-total'
                                         ]
                                       }
                                     >
-                                      {item.use}
-                                      <span className={styles.unit}>
-                                        {item.unit}
-                                      </span>
-                                    </div>
-                                    <div
-                                      className={
-                                        styles[
-                                          'home-view-content-left-useinfo-card-list-wrap-title'
-                                        ]
-                                      }
-                                    >
-                                      {HOME_CONTENT_USEINFO_USED}
-                                    </div>
-                                  </Col>
-                                  <Col
-                                    span={8}
-                                    className={
-                                      styles[
-                                        'home-view-content-left-useinfo-card-list-wrap-total'
-                                      ]
-                                    }
-                                  >
-                                    <div
-                                      className={
-                                        styles[
-                                          'home-view-content-left-useinfo-card-list-wrap-info-text'
-                                        ]
-                                      }
-                                    >
-                                      {item.total}
-                                      <span className={styles.unit}>
-                                        {item.unit}
-                                      </span>
-                                    </div>
-                                    <div
-                                      className={
-                                        styles[
-                                          'home-view-content-left-useinfo-card-list-wrap-title'
-                                        ]
-                                      }
-                                    >
-                                      {HOME_CONTENT_USEINFO_TOTAL}
-                                    </div>
-                                  </Col>
+                                      <div
+                                        className={
+                                          styles[
+                                            'home-view-content-left-useinfo-card-list-wrap-info-text'
+                                          ]
+                                        }
+                                      >
+                                        {item.total}
+                                        <span className={styles.unit}>
+                                          {item.unit}
+                                        </span>
+                                      </div>
+                                      <div
+                                        className={
+                                          styles[
+                                            'home-view-content-left-useinfo-card-list-wrap-title'
+                                          ]
+                                        }
+                                      >
+                                        {HOME_CONTENT_USEINFO_TOTAL}
+                                      </div>
+                                    </Col>
+                                  </Row>
                                 </Row>
-                              </Row>
-                            </>
-                          );
-                        })}
-                      </Col>
-                    </Row>
+                              </>
+                            );
+                          })}
+                        </Col>
+                      </Row>
+                    ) : (
+                      <Empty description="暂无数据" />
+                    )}
                   </Spin>
                 </Card>
               </Row>
