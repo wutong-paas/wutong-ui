@@ -11,6 +11,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: 🛒 Checkout
+        uses: actions/checkout@v2
+      - name: 🔎 Check IP
+        run: curl https://api.ipify.org
+    steps:
       - uses: actions/checkout@v2
 
       - name: Set ENV
