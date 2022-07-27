@@ -526,199 +526,202 @@ export default class Index extends PureComponent {
             </div>
           </div>
         )}
-        <Row className={styles.info} gutter={16}>
-          <Col span={8}>
-            <Card className={styles.card} bordered={false}>
-              <Row className={styles.wrap}>
-                <Col span={12} className={styles.left}>
-                  <div className={styles.title}>
-                    应用
-                    <Tooltip
-                      placement="top"
-                      title="团队所有应用运行情况统计信息"
-                    >
-                      <img
-                        src={Tooltips}
-                        alt=""
-                        style={{ cursor: 'pointer', marginLeft: 4 }}
-                      />
-                    </Tooltip>
-                  </div>
-                  <div className={styles.appinfo}>
+        {index.overviewInfo.region_health && (
+          <Row className={styles.info} gutter={16}>
+            <Col span={8}>
+              <Card className={styles.card} bordered={false}>
+                <Row className={styles.wrap}>
+                  <Col span={12} className={styles.left}>
+                    <div className={styles.title}>
+                      应用
+                      <Tooltip
+                        placement="top"
+                        title="团队所有应用运行情况统计信息"
+                      >
+                        <img
+                          src={Tooltips}
+                          alt=""
+                          style={{ cursor: 'pointer', marginLeft: 4 }}
+                        />
+                      </Tooltip>
+                    </div>
+                    <div className={styles.appinfo}>
+                      <div className={styles.top}>
+                        <img src={AppTotal} alt="" />
+                        <span>应用服务总数</span>
+                      </div>
+                      <div className={styles.bottom}>
+                        <span className={styles.count}>
+                          {(index.overviewInfo &&
+                            index.overviewInfo.team_app_num) ||
+                            0}
+                        </span>
+                        <span className={styles.unit}>个</span>
+                      </div>
+                    </div>
+                  </Col>
+                  <Col span={12} className={styles.right}>
                     <div className={styles.top}>
-                      <img src={AppTotal} alt="" />
-                      <span>应用服务总数</span>
+                      <div className={styles.wrap} id="app-pies"></div>
                     </div>
                     <div className={styles.bottom}>
-                      <span className={styles.count}>
-                        {(index.overviewInfo &&
-                          index.overviewInfo.team_app_num) ||
-                          0}
-                      </span>
-                      <span className={styles.unit}>个</span>
-                    </div>
-                  </div>
-                </Col>
-                <Col span={12} className={styles.right}>
-                  <div className={styles.top}>
-                    <div className={styles.wrap} id="app-pies"></div>
-                  </div>
-                  <div className={styles.bottom}>
-                    <div className={styles.left}>
-                      <div className={styles.title}>
-                        <span className={styles.badge}></span>
-                        运行中
+                      <div className={styles.left}>
+                        <div className={styles.title}>
+                          <span className={styles.badge}></span>
+                          运行中
+                        </div>
+                        <div className={styles.count}>
+                          {index.overviewInfo.running_app_num || 0}
+                        </div>
                       </div>
-                      <div className={styles.count}>
-                        {index.overviewInfo.running_app_num || 0}
+                      <div className={styles.right}>
+                        <div className={styles.title}>
+                          <span className={styles.badge}></span>
+                          未运行
+                        </div>
+                        <div className={styles.count}>
+                          {index.overviewInfo.team_app_num -
+                            index.overviewInfo.running_app_num || 0}
+                        </div>
                       </div>
                     </div>
-                    <div className={styles.right}>
-                      <div className={styles.title}>
-                        <span className={styles.badge}></span>
-                        未运行
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+            <Col span={8} bordered={false}>
+              <Card className={styles.card} bordered={false}>
+                <Row className={styles.wrap}>
+                  <Col span={12} className={styles.left}>
+                    <div className={styles.title}>
+                      组件
+                      <Tooltip
+                        placement="top"
+                        title="团队所有组件运行情况统计信息"
+                      >
+                        <img
+                          src={Tooltips}
+                          alt=""
+                          style={{ cursor: 'pointer', marginLeft: 4 }}
+                        />
+                      </Tooltip>
+                    </div>
+                    <div className={styles.appinfo}>
+                      <div className={styles.top}>
+                        <img src={ComponentImg} alt="" />
+                        <span>组件总数</span>
                       </div>
-                      <div className={styles.count}>
-                        {index.overviewInfo.team_app_num -
-                          index.overviewInfo.running_app_num || 0}
+                      <div className={styles.bottom}>
+                        <span className={styles.count}>
+                          {(index.overviewInfo &&
+                            index.overviewInfo &&
+                            index.overviewInfo.team_service_num) ||
+                            0}
+                        </span>
+                        <span className={styles.unit}>个</span>
                       </div>
                     </div>
-                  </div>
-                </Col>
-              </Row>
-            </Card>
-          </Col>
-          <Col span={8} bordered={false}>
-            <Card className={styles.card} bordered={false}>
-              <Row className={styles.wrap}>
-                <Col span={12} className={styles.left}>
-                  <div className={styles.title}>
-                    组件
-                    <Tooltip
-                      placement="top"
-                      title="团队所有组件运行情况统计信息"
-                    >
-                      <img
-                        src={Tooltips}
-                        alt=""
-                        style={{ cursor: 'pointer', marginLeft: 4 }}
-                      />
-                    </Tooltip>
-                  </div>
-                  <div className={styles.appinfo}>
+                  </Col>
+                  <Col span={12} className={styles.right}>
                     <div className={styles.top}>
-                      <img src={ComponentImg} alt="" />
-                      <span>组件总数</span>
+                      <div className={styles.wrap} id="components-pies"></div>
                     </div>
                     <div className={styles.bottom}>
-                      <span className={styles.count}>
-                        {(index.overviewInfo &&
-                          index.overviewInfo &&
-                          index.overviewInfo.team_service_num) ||
-                          0}
-                      </span>
-                      <span className={styles.unit}>个</span>
-                    </div>
-                  </div>
-                </Col>
-                <Col span={12} className={styles.right}>
-                  <div className={styles.top}>
-                    <div className={styles.wrap} id="components-pies"></div>
-                  </div>
-                  <div className={styles.bottom}>
-                    <div className={styles.left}>
-                      <div className={styles.title}>
-                        <span className={styles.badge}></span>
-                        运行中
+                      <div className={styles.left}>
+                        <div className={styles.title}>
+                          <span className={styles.badge}></span>
+                          运行中
+                        </div>
+                        <div className={styles.count}>
+                          {index.overviewInfo.running_component_num || 0}
+                        </div>
                       </div>
-                      <div className={styles.count}>
-                        {index.overviewInfo.running_component_num || 0}
+                      <div className={styles.right}>
+                        <div className={styles.title}>
+                          <span className={styles.badge}></span>
+                          未运行
+                        </div>
+                        <div className={styles.count}>
+                          {index.overviewInfo.team_service_num -
+                            index.overviewInfo.running_component_num || 0}
+                        </div>
                       </div>
                     </div>
-                    <div className={styles.right}>
-                      <div className={styles.title}>
-                        <span className={styles.badge}></span>
-                        未运行
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+            <Col span={8} bordered={false}>
+              <Card className={styles.card} bordered={false}>
+                <div className={styles.title}>
+                  资源使用
+                  <Tooltip placement="top" title="团队所有应用使用资源统计信息">
+                    <img
+                      src={Tooltips}
+                      alt=""
+                      style={{ cursor: 'pointer', marginLeft: 4 }}
+                    />
+                  </Tooltip>
+                </div>
+                <Row gutter={20}>
+                  <Col span={12}>
+                    <div className={styles.appinfo}>
+                      <div className={styles.top}>
+                        <img src={CpuImg} alt="" />
+                        <span>CPU使用率</span>
                       </div>
-                      <div className={styles.count}>
-                        {index.overviewInfo.team_service_num -
-                          index.overviewInfo.running_component_num || 0}
+                      <div className={styles.bottom}>
+                        <span className={styles.count}>
+                          {computedPercentage(
+                            index?.overviewInfo?.team_service_use_cpu || 0,
+                            index?.overviewInfo?.team_service_total_cpu || 0
+                          )}
+                        </span>
+                        <span className={styles.unit}>%</span>
                       </div>
                     </div>
-                  </div>
-                </Col>
-              </Row>
-            </Card>
-          </Col>
-          <Col span={8} bordered={false}>
-            <Card className={styles.card} bordered={false}>
+                  </Col>
+                  <Col span={12}>
+                    <div className={styles.appinfo}>
+                      <div className={styles.top}>
+                        <img src={MemoryImg} alt="" />
+                        <span>内存使用率</span>
+                      </div>
+                      <div className={styles.bottom}>
+                        <span className={styles.count}>
+                          {computedPercentage(
+                            index?.overviewInfo?.team_service_memory_count || 0,
+                            index?.overviewInfo?.team_service_total_memory || 0
+                          )}
+                        </span>
+                        <span className={styles.unit}>%</span>
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+              </Card>
+            </Col>
+          </Row>
+        )}
+        {index?.overviewInfo?.region_health && (
+          <Row>
+            <Card className={styles.list} bordered={false}>
               <div className={styles.title}>
-                资源使用
-                <Tooltip placement="top" title="团队所有应用使用资源统计信息">
-                  <img
-                    src={Tooltips}
-                    alt=""
-                    style={{ cursor: 'pointer', marginLeft: 4 }}
-                  />
-                </Tooltip>
+                <div className={styles.text}>应用列表</div>
+                <div>
+                  {permissionsInfo?.isCreate && (
+                    <Button
+                      onClick={() => {
+                        this.setState({ createAppVisible: true });
+                      }}
+                    >
+                      新建应用
+                    </Button>
+                  )}
+                </div>
               </div>
-              <Row gutter={20}>
-                <Col span={12}>
-                  <div className={styles.appinfo}>
-                    <div className={styles.top}>
-                      <img src={CpuImg} alt="" />
-                      <span>CPU使用率</span>
-                    </div>
-                    <div className={styles.bottom}>
-                      <span className={styles.count}>
-                        {computedPercentage(
-                          index?.overviewInfo?.team_service_use_cpu || 0,
-                          index?.overviewInfo?.team_service_total_cpu || 0
-                        )}
-                      </span>
-                      <span className={styles.unit}>%</span>
-                    </div>
-                  </div>
-                </Col>
-                <Col span={12}>
-                  <div className={styles.appinfo}>
-                    <div className={styles.top}>
-                      <img src={MemoryImg} alt="" />
-                      <span>内存使用率</span>
-                    </div>
-                    <div className={styles.bottom}>
-                      <span className={styles.count}>
-                        {computedPercentage(
-                          index?.overviewInfo?.team_service_memory_count || 0,
-                          index?.overviewInfo?.team_service_total_memory || 0
-                        )}
-                      </span>
-                      <span className={styles.unit}>%</span>
-                    </div>
-                  </div>
-                </Col>
-              </Row>
-            </Card>
-          </Col>
-        </Row>
-        <Row>
-          <Card className={styles.list} bordered={false}>
-            <div className={styles.title}>
-              <div className={styles.text}>应用列表</div>
-              <div>
-                {permissionsInfo?.isCreate && (
-                  <Button
-                    onClick={() => {
-                      this.setState({ createAppVisible: true });
-                    }}
-                  >
-                    新建应用
-                  </Button>
-                )}
-              </div>
-            </div>
-            <div className={styles.actions}>
-              {/* <div className={styles.tabs}>
+              <div className={styles.actions}>
+                {/* <div className={styles.tabs}>
                 {statusList.map((item, index) => {
                   return (
                     <div
@@ -734,51 +737,52 @@ export default class Index extends PureComponent {
                   );
                 })}
               </div> */}
-              <div>
-                {(!loadingOfApp || searchVisible) && (
-                  <Search
-                    placeholder="请输入应用名称进行搜索"
-                    onSearch={this.onSearch}
-                    defaultValue={query}
-                    allowClear
-                    style={{ width: 400 }}
-                    className={styles.search}
-                  />
-                )}
+                <div>
+                  {(!loadingOfApp || searchVisible) && (
+                    <Search
+                      placeholder="请输入应用名称进行搜索"
+                      onSearch={this.onSearch}
+                      defaultValue={query}
+                      allowClear
+                      style={{ width: 400 }}
+                      className={styles.search}
+                    />
+                  )}
+                </div>
               </div>
-            </div>
-            <div>
-              <Table
-                columns={listColunms()}
-                loading={loadingOfApp}
-                dataSource={teamHotAppList}
-                onRow={record => {
-                  return {
-                    onClick: event => {}, // 点击行
-                    onDoubleClick: event => {
-                      dispatch(
-                        routerRedux.push(
-                          `/team/${teamName}/region/${regionName}/apps/${record.group_id}`
-                        )
-                      );
-                    }
-                  };
-                }}
-                pagination={{
-                  // showSizeChanger,
-                  onShowSizeChange: this.handleChangePageSize,
-                  current: page,
-                  pageSize: page_size,
-                  total: total,
-                  showTotal: total => `总共${total}条`,
-                  pageSizeOptions: pageSizeOptions,
-                  onChange: this.handleChangePage
-                }}
-                rowKey="group_id"
-              />
-            </div>
-          </Card>
-        </Row>
+              <div>
+                <Table
+                  columns={listColunms()}
+                  loading={loadingOfApp}
+                  dataSource={teamHotAppList}
+                  onRow={record => {
+                    return {
+                      onClick: event => {}, // 点击行
+                      onDoubleClick: event => {
+                        dispatch(
+                          routerRedux.push(
+                            `/team/${teamName}/region/${regionName}/apps/${record.group_id}`
+                          )
+                        );
+                      }
+                    };
+                  }}
+                  pagination={{
+                    // showSizeChanger,
+                    onShowSizeChange: this.handleChangePageSize,
+                    current: page,
+                    pageSize: page_size,
+                    total: total,
+                    showTotal: total => `总共${total}条`,
+                    pageSizeOptions: pageSizeOptions,
+                    onChange: this.handleChangePage
+                  }}
+                  rowKey="group_id"
+                />
+              </div>
+            </Card>
+          </Row>
+        )}
 
         {/* 新建应用 */}
         {createAppVisible && (
@@ -793,7 +797,7 @@ export default class Index extends PureComponent {
         {loadedOverview &&
           index.overviewInfo &&
           !index.overviewInfo.region_health && (
-            <div>
+            <div style={{ marginTop: 300 }}>
               <Result
                 type="warning"
                 title="集群端失去响应，稍后重试"
