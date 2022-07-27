@@ -169,98 +169,120 @@ export default class Index extends PureComponent {
     //     }
     //   ]
     // };
-    const option = (title, index) => ({
-      title: {
-        text: title,
-        textStyle: {
-          color: '#000',
-          fontSize: 12,
-          fontWeight: 'bold'
+    const option = (title, index) => {
+      return {
+        title: {
+          text: title,
+          textStyle: {
+            color: '#000',
+            fontSize: 12,
+            fontWeight: 'bold'
+          },
+          left: 'center',
+          top: 140,
+          bottom: '10%',
+          itemGap: 60
         },
-        left: 'center',
-        top: 140,
-        bottom: '10%',
-        itemGap: 60
-      },
-      tooltip: {
-        show: false
-      },
-      color: ['#01dadc', '#23cea7', '#5096e0'],
-      series: [
-        {
-          name: '危急',
-          type: 'pie',
-          startAngle: 0,
-          hoverAnimation: false,
-          radius: ['60%', '87%'],
-          center: ['50%', '100%'],
-          itemStyle: {
-            borderColor: '#fff',
-            borderWidth: 4
-          },
-          label: {
-            normal: {
-              show: false,
-              position: 'center'
-            },
-            emphasis: {
-              show: true,
-              textStyle: {
-                fontSize: '10',
-                fontWeight: 'bold'
-              }
-            }
-          },
-          labelLine: {
-            normal: {
-              show: false
-            }
-          },
-          data: [
-            {
-              value:
+        tooltip: {
+          show: false
+        },
+        color: ['#01dadc', '#23cea7', '#5096e0'],
+        series: [
+          {
+            name: '危急',
+            type: 'pie',
+            startAngle: 0,
+            hoverAnimation: false,
+            radius: ['60%', '87%'],
+            center: ['50%', '100%'],
+            itemStyle: {
+              borderColor: '#fff',
+              borderWidth:
                 title === '应用统计'
-                  ? index?.overviewInfo?.team_app_num
-                  : index?.overviewInfo?.team_service_num,
-              itemStyle: {
-                normal: {
-                  color: 'rgba(1,218,220,0)'
+                  ? index?.overviewInfo?.running_app_num === 0 &&
+                    index?.overviewInfo?.team_app_num === 0
+                    ? 0
+                    : 4
+                  : index?.overviewInfo?.running_component_num === 0 &&
+                    index?.overviewInfo?.team_service_num === 0
+                  ? 0
+                  : 4
+            },
+            label: {
+              normal: {
+                show: false,
+                position: 'center'
+              },
+              emphasis: {
+                show: true,
+                textStyle: {
+                  fontSize: '10',
+                  fontWeight: 'bold'
                 }
               }
             },
-            {
-              value:
-                title === '应用统计'
-                  ? index?.overviewInfo?.running_app_num
-                  : index?.overviewInfo?.running_component_num,
-              itemStyle: {
-                normal: {
-                  color: 'rgba(8, 21, 58, 1)'
-                }
+            labelLine: {
+              normal: {
+                show: false
               }
             },
-            {
-              value:
-                title === '应用统计'
-                  ? index?.overviewInfo?.team_app_num -
-                    index?.overviewInfo?.running_app_num
-                  : index?.overviewInfo?.team_service_num -
-                    index?.overviewInfo?.running_component_num,
-              itemStyle: {
-                normal: {
-                  color: 'rgba(204, 217, 255, 1)'
+            data: [
+              {
+                value:
+                  title === '应用统计'
+                    ? index?.overviewInfo?.team_app_num
+                    : index?.overviewInfo?.team_service_num,
+                itemStyle: {
+                  normal: {
+                    color: 'rgba(1,218,220,0)'
+                  }
+                }
+              },
+              {
+                value:
+                  title === '应用统计'
+                    ? index?.overviewInfo?.running_app_num
+                    : index?.overviewInfo?.running_component_num,
+                itemStyle: {
+                  normal: {
+                    color:
+                      title === '应用统计'
+                        ? index?.overviewInfo?.running_app_num === 0 &&
+                          index?.overviewInfo?.team_app_num === 0
+                          ? 'rgba(204, 217, 255, 1)'
+                          : 'rgba(8, 21, 58, 1)'
+                        : index?.overviewInfo?.running_component_num === 0 &&
+                          index?.overviewInfo?.team_service_num === 0
+                        ? 'rgba(204, 217, 255, 1)'
+                        : 'rgba(8, 21, 58, 1)'
+                  }
+                }
+              },
+              {
+                value:
+                  title === '应用统计'
+                    ? index?.overviewInfo?.team_app_num -
+                      index?.overviewInfo?.running_app_num
+                    : index?.overviewInfo?.team_service_num -
+                      index?.overviewInfo?.running_component_num,
+                itemStyle: {
+                  normal: {
+                    color: 'rgba(204, 217, 255, 1)'
+                  }
                 }
               }
-            }
-          ]
-        }
-      ]
-    });
+            ]
+          }
+        ]
+      };
+    };
+    console.log(index, 'index');
     appCharts.setOption(option('应用统计', index));
     components.setOption(option('组件统计', index));
     window.addEventListener('resize', function() {
       // 让我们的图表调用 resize这个方法
       appCharts.resize();
+      components.resize();
     });
   };
   // 搜索应用
@@ -696,7 +718,7 @@ export default class Index extends PureComponent {
               </div>
             </div>
             <div className={styles.actions}>
-              <div className={styles.tabs}>
+              {/* <div className={styles.tabs}>
                 {statusList.map((item, index) => {
                   return (
                     <div
@@ -711,7 +733,7 @@ export default class Index extends PureComponent {
                     </div>
                   );
                 })}
-              </div>
+              </div> */}
               <div>
                 {(!loadingOfApp || searchVisible) && (
                   <Search
