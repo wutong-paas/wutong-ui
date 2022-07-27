@@ -475,6 +475,16 @@ export default class Index extends PureComponent {
       loadingOfApp: true
     });
   };
+
+  handleGotoApplication = (teamName, regionName, record) => {
+    const { dispatch } = this.props;
+    dispatch(
+      routerRedux.push(
+        `/team/${teamName}/region/${regionName}/apps/${record.group_id}`
+      )
+    );
+  };
+
   render() {
     const {
       loadingOverview,
@@ -752,7 +762,9 @@ export default class Index extends PureComponent {
               </div>
               <div>
                 <Table
-                  columns={listColunms()}
+                  columns={listColunms(record =>
+                    this.handleGotoApplication(teamName, regionName, record)
+                  )}
                   loading={loadingOfApp}
                   dataSource={teamHotAppList}
                   onRow={record => {

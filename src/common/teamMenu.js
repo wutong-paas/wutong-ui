@@ -2,14 +2,18 @@ import { formatMessage } from 'umi-plugin-locale';
 import cookie from '../utils/cookie';
 import { isUrl } from '../utils/utils';
 import roleUtil from '../utils/role';
+import gatewayImg from '../../public/images/menu/gateway.svg';
+import dashboardImg from '../../public/images/menu/dashboard.svg';
 
 const newbieGuide = cookie.get('newbie_guide');
+
+const renderIcon = src => <img src={src} alt="" style={{ marginRight: 10 }} />;
 
 function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
   const menuArr = [
     {
       name: formatMessage({ id: 'menu.team.dashboard' }),
-      icon: 'dashboard',
+      icon: renderIcon(dashboardImg),
       path: `team/${teamName}/region/${regionName}/index`,
       authority: ['admin', 'user']
     }
@@ -64,11 +68,11 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
         path: `team/${teamName}/region/${regionName}/create`,
         authority: ['admin', 'user'],
         children: [
-           {
-             name: formatMessage({ id: 'menu.team.create.code' }),
-             path: `/code`,
-             authority: ['admin', 'user'],
-           },
+          {
+            name: formatMessage({ id: 'menu.team.create.code' }),
+            path: `/code`,
+            authority: ['admin', 'user']
+          },
           {
             name: formatMessage({ id: 'menu.team.create.image' }),
             path: `/image`,
@@ -107,7 +111,7 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
       }
       addMenuArr({
         name: formatMessage({ id: 'menu.team.gateway' }),
-        icon: 'gateway',
+        icon: renderIcon(gatewayImg),
         path: `team/${teamName}/region/${regionName}/gateway`,
         authority: ['admin', 'user'],
         children
