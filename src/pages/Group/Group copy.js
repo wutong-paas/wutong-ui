@@ -13,9 +13,7 @@ import {
   Row,
   Radio,
   Spin,
-  Tooltip,
-  Card,
-  Switch
+  Tooltip
 } from 'antd';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
@@ -37,96 +35,6 @@ import ComponentList from './ComponentList';
 import EditorTopology from './EditorTopology';
 import Monitor from './Monitor';
 import styles from './Index.less';
-import GobackImg from '../../../public/images/common/goback.svg';
-import AppImg from '../../../public/images/common/app.svg';
-import EditImg from '../../../public/images/common/edit.svg';
-import SwitchImg from '../../../public/images/team/switch.svg';
-import IngressImg from '../../../public/images/team/ingress.svg';
-import ModelImg from '../../../public/images/team/model.svg';
-import ConfigImg from '../../../public/images/team/config.svg';
-import UpdateImg from '../../../public/images/team/update.svg';
-import BackupImg from '../../../public/images/team/backup.svg';
-import RightImg from '../../../public/images/common/right.svg';
-import IngressHoverImg from '../../../public/images/team/ingress_hover.svg';
-import ModelHoverImg from '../../../public/images/team/model_hover.svg';
-import ConfigHoverImg from '../../../public/images/team/config_hover.svg';
-import UpdateHoverImg from '../../../public/images/team/update_hover.svg';
-import BackupHoverImg from '../../../public/images/team/backup_hover.svg';
-import RightHoverImg from '../../../public/images/common/right_hover.svg';
-
-const appState = {
-  RUNNING: '运行中',
-  STARTING: '启动中',
-  CLOSED: '已关闭',
-  STOPPING: '关闭中',
-  ABNORMAL: '异常',
-  PARTIAL_ABNORMAL: '部分异常',
-  'not-configured': '未配置',
-  unknown: '未知',
-  deployed: '已部署',
-  superseded: '可升级',
-  failed: '失败',
-  uninstalled: '已卸载',
-  uninstalling: '卸载中',
-  'pending-install': '安装中',
-  'pending-upgrade': '升级中',
-  'pending-rollback': '回滚中'
-};
-const appStateColor = {
-  RUNNING: 'rgba(8, 199, 127, 0.8000)',
-  STARTING: 'rgba(36, 103, 246, 0.8000)',
-  CLOSED: 'rgba(253, 106, 106, 0.8000)',
-  STOPPING: 'rgba(253, 106, 106, 0.8000)',
-  ABNORMAL: 'rgba(253, 106, 106, 0.8000)',
-  PARTIAL_ABNORMAL: 'rgba(253, 106, 106, 0.8000)',
-  unknown: 'rgba(253, 106, 106, 0.8000)',
-  deployed: 'rgba(8, 199, 127, 0.8000)',
-  superseded: 'rgba(8, 199, 127, 0.8000)',
-  failed: 'rgba(253, 106, 106, 0.8000)',
-  'pending-install': 'rgba(8, 199, 127, 0.8000)',
-  'pending-upgrade': 'rgba(8, 199, 127, 0.8000)',
-  'pending-rollback': 'rgba(8, 199, 127, 0.8000)',
-  default: 'rgba(133, 137, 150, 0.8000)'
-};
-const appStateColorShadow = {
-  RUNNING: 'rgba(8, 199, 127, 0.65000)',
-  STARTING: 'rgba(36, 103, 246, 0.65000)',
-  CLOSED: 'rgba(253, 106, 106, 0.65000)',
-  STOPPING: 'rgba(253, 106, 106, 0.65000)',
-  ABNORMAL: 'rgba(253, 106, 106, 0.65000)',
-  PARTIAL_ABNORMAL: 'rgba(253, 106, 106, 0.65000)',
-  unknown: 'rgba(253, 106, 106, 0.65000)',
-  deployed: 'rgba(8, 199, 127, 0.65000)',
-  superseded: 'rgba(8, 199, 127, 0.65000)',
-  failed: 'rgba(253, 106, 106, 0.8000)',
-  'pending-install': 'rgba(8, 199, 127, 0.65000)',
-  'pending-upgrade': 'rgba(8, 199, 127, 0.65000)',
-  'pending-rollback': 'rgba(8, 199, 127, 0.65000)',
-  default: 'rgba(133, 137, 150, 0.65000)'
-};
-
-const unitArr = ['Byte', 'KB', 'MB', 'GB', 'TB', 'PB'];
-const resolveUnit = (num, baseUnit = 'KB', fixed = 2) => {
-  num = Number(num);
-  let currUnit = baseUnit;
-  let index = unitArr.indexOf(currUnit);
-  while (num >= 1024) {
-    num /= 1024;
-    index++;
-    currUnit = unitArr[index];
-  }
-  if (num % 1 === 0) {
-    return {
-      num: num,
-      currUnit
-    };
-  }
-  return {
-    num: num.toFixed(2),
-    currUnit
-  };
-};
-
 // eslint-disable-next-line react/no-multi-comp
 @connect(({ user, application, teamControl, enterprise, loading, global }) => ({
   buildShapeLoading: loading.effects['global/buildShape'],
@@ -144,7 +52,7 @@ export default class Index extends PureComponent {
   constructor(arg) {
     super(arg);
     this.state = {
-      type: 'list',
+      type: 'shape',
       toDelete: false,
       toEdit: false,
       toEditAppDirector: false,
@@ -163,10 +71,7 @@ export default class Index extends PureComponent {
       upgradableNum: 0,
       upgradableNumLoading: true,
       appStatusConfig: false,
-      guideStep: 1,
-      actionsList: [],
-      currentIndex: -1,
-      isHover: false
+      guideStep: 1
     };
   }
 
@@ -357,67 +262,8 @@ export default class Index extends PureComponent {
       },
       callback: res => {
         if (res && res.status_code === 200) {
-          const {
-            appPermissions: {
-              isShare,
-              isBackup,
-              isUpgrade,
-              isEdit,
-              isDelete,
-              isStart,
-              isStop,
-              isUpdate,
-              isConstruct,
-              isCopy
-            },
-            operationPermissions: { isAccess: isControl },
-            appConfigGroupPermissions: { isAccess: isConfigGroup }
-          } = this.props;
-          const { ingress_num, backup_num, share_num, config_group_num } =
-            res?.bean || {};
-          const list = [
-            {
-              num: backup_num,
-              title: '备份',
-              src: BackupImg,
-              hoverSrc: BackupHoverImg,
-              canJump: isBackup,
-              keys: 'backup'
-            },
-            {
-              num: share_num,
-              title: '模型发布',
-              src: ModelImg,
-              hoverSrc: ModelHoverImg,
-              canJump: isShare,
-              keys: 'publish'
-            },
-            {
-              num: ingress_num,
-              title: '网关策略',
-              src: IngressImg,
-              hoverSrc: IngressHoverImg,
-              canJump: isControl,
-              keys: 'gateway'
-            },
-            // {
-            //   num: this.state.upgradableNum,
-            //   title: '待升级',
-            //   src: UpdateImg,
-            //   canJump: isUpgrade
-            // },
-            {
-              num: config_group_num,
-              title: '配置',
-              src: ConfigImg,
-              hoverSrc: ConfigHoverImg,
-              canJump: isConfigGroup,
-              keys: 'configgroups'
-            }
-          ];
           this.setState({
-            currApp: res.bean,
-            actionsList: list
+            currApp: res.bean
           });
         }
       },
@@ -715,8 +561,6 @@ export default class Index extends PureComponent {
     );
   };
 
-  goBack = () => this.props.history.goBack();
-
   render() {
     const {
       groupDetail,
@@ -763,10 +607,7 @@ export default class Index extends PureComponent {
       upgradableNumLoading,
       upgradableNum,
       appStatusConfig,
-      guideStep,
-      actionsList,
-      currentIndex,
-      isHover
+      guideStep
     } = this.state;
     const codeObj = {
       start: '启动',
@@ -776,363 +617,262 @@ export default class Index extends PureComponent {
     };
     const BtnDisabled = !(jsonDataLength > 0);
     const MR = { marginRight: '10px' };
-    const pageHeaderContentNew = (
-      <Row className={styles['group-header']}>
-        <Card bordered={false} className={styles.card}>
-          <div className={styles.header}>
-            <div className={styles.title}>应用管理</div>
-            <div className={styles.back} onClick={this.goBack}>
-              <img src={GobackImg} alt="" />
+    const pageHeaderContent = (
+      <div className={styles.pageHeaderContent}>
+        <div className={styles.contentl}>
+          <div className={styles.conBoxt}>
+            <div className={styles.contentTitle}>
+              <span>{currApp.group_name || '-'}</span>
+              <Icon
+                style={{
+                  cursor: 'pointer',
+                  marginLeft: '5px'
+                }}
+                onClick={this.toEdit}
+                type="edit"
+              />
             </div>
+            {resources.status && (
+              <div className={styles.extraContent}>
+                {resources.status !== 'CLOSED' && isUpdate && (
+                  <Button
+                    style={MR}
+                    onClick={() => {
+                      this.handleTopology('upgrade');
+                    }}
+                    disabled={BtnDisabled}
+                  >
+                    更新
+                  </Button>
+                )}
+                {isConstruct && isComponentConstruct && (
+                  <Button
+                    style={MR}
+                    disabled={BtnDisabled}
+                    onClick={() => {
+                      this.handleTopology('deploy');
+                    }}
+                  >
+                    构建
+                  </Button>
+                )}
+                {isCopy && (
+                  <Button
+                    style={MR}
+                    disabled={BtnDisabled}
+                    onClick={this.handleOpenRapidCopy}
+                  >
+                    快速复制
+                  </Button>
+                )}
+                {linkList.length > 0 && <VisterBtn linkList={linkList} />}
+              </div>
+            )}
           </div>
-          <Row gutter={16} className={styles.middle}>
-            <Col span={12} className={styles.left}>
-              <div className={styles.wrap}>
-                <div className={styles.top}>
-                  <div className={styles.title}>
-                    <Tooltip placement="top" title="测试">
-                      <img src={AppImg} alt="" />
-                    </Tooltip>
-                    <span className={styles.text}>
-                      {currApp.group_name || '-'}
-                    </span>
-                    <Tooltip placement="top" title="测试">
-                      <img
-                        src={EditImg}
-                        alt=""
-                        onClick={this.toEdit}
-                        style={{ cursor: 'pointer' }}
-                      />
-                    </Tooltip>
-                  </div>
-                  <div className={styles.actions}>
-                    {resources.status && (
-                      <div className={styles.extraContent}>
-                        {resources.status !== 'CLOSED' && isUpdate && (
-                          <Button
-                            style={MR}
-                            onClick={() => {
-                              this.handleTopology('upgrade');
-                            }}
-                            disabled={BtnDisabled}
-                          >
-                            更新
-                          </Button>
-                        )}
-                        {isConstruct && isComponentConstruct && (
-                          <Button
-                            style={MR}
-                            disabled={BtnDisabled}
-                            onClick={() => {
-                              this.handleTopology('deploy');
-                            }}
-                          >
-                            构建
-                          </Button>
-                        )}
-                        {isCopy && (
-                          <Button
-                            style={MR}
-                            disabled={BtnDisabled}
-                            onClick={this.handleOpenRapidCopy}
-                          >
-                            快速复制
-                          </Button>
-                        )}
-                        {linkList.length > 0 && (
-                          <VisterBtn linkList={linkList} />
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className={styles.bottom}>
-                  {appStatusConfig && (
-                    <span>
-                      <span
-                        className={styles.badge}
-                        style={{
-                          background: resources?.status
-                            ? `${appStateColor[(resources?.status)]}`
-                            : `${appStateColor.default}`,
-                          boxShadow: `0px 0px 6px 0px ${
-                            resources?.status
-                              ? `${appStateColor[(resources?.status)]}`
-                              : `${appStateColor.default}`
-                          }`
-                        }}
-                      ></span>
-                      <span className={styles.text}>
-                        {appState[(resources?.status)] || '闲置'}
-                      </span>
-                    </span>
-                  )}
-                  {resources.status && isStart && (
-                    <span>
-                      <a
-                        onClick={() => {
-                          this.handleTopology('start');
-                        }}
-                        disabled={BtnDisabled}
-                      >
-                        启动
-                      </a>
-                      <Divider type="vertical" />
-                    </span>
-                  )}
-                  {resources.status &&
-                    (resources.status === 'ABNORMAL' ||
-                      resources.status === 'PARTIAL_ABNORMAL') &&
-                    serviceIds &&
-                    serviceIds.length > 0 &&
-                    isRestart && (
-                      <span>
-                        <a
-                          onClick={() => {
-                            this.handleTopology('restart');
-                          }}
-                          disabled={BtnDisabled}
-                        >
-                          重启
-                        </a>
-                        <Divider type="vertical" />
-                      </span>
-                    )}
-                  {isDelete && resources.status !== 'RUNNING' && (
-                    <a onClick={this.toDelete}>删除</a>
-                  )}
-                  {resources.status && resources.status !== 'CLOSED' && isStop && (
-                    <span>
-                      {resources.status !== 'RUNNING' && (
-                        <Divider type="vertical" />
-                      )}
-                      <a
-                        onClick={() => {
-                          this.handleTopology('stop');
-                        }}
-                      >
-                        停用
-                      </a>
-                    </span>
-                  )}
-                </div>
-              </div>
-            </Col>
-            <Col span={12} className={styles.right}>
-              <div className={styles.wrap}>
-                <div className={styles.info}>
-                  <div className={styles.top}>
-                    <span className={styles.count}>
-                      {resolveUnit(resources.memory || 0, 'MB').num}
-                    </span>
-                    <span className={styles.unit}>
-                      {resolveUnit(resources.memory || 0, 'MB').currUnit}
-                    </span>
-                  </div>
-                  <div>
-                    <span className={styles.title}>使用内存</span>
-                  </div>
-                </div>
-                <div className={styles.info}>
-                  <div className={styles.top}>
-                    <span className={styles.count}>
-                      {(resources.cpu && resources.cpu / 1000) || 0}
-                    </span>
-                    <span className={styles.unit}>Core</span>
-                  </div>
-                  <div>
-                    <span className={styles.title}>使用CPU</span>
-                  </div>
-                </div>
-                <div className={styles.info}>
-                  <div className={styles.top}>
-                    <span className={styles.count}>
-                      {resolveUnit(resources.disk || 0, 'KB').num || 0}
-                    </span>
-                    <span className={styles.unit}>
-                      {resolveUnit(resources.disk || 0, 'KB').currUnit || 'KB'}
-                    </span>
-                  </div>
-                  <div>
-                    <span className={styles.title}>使用磁盘</span>
-                  </div>
-                </div>
-                <div className={styles.info}>
-                  <div className={styles.top}>
-                    <span className={styles.count}>
-                      {currApp.service_num || 0}
-                    </span>
-                    <span className={styles.unit}>个</span>
-                  </div>
-                  <div>
-                    <span className={styles.title}>组件数量</span>
-                  </div>
-                </div>
-              </div>
-            </Col>
-          </Row>
-          <Row gutter={16} className={styles.bottom}>
-            <Col span={11} className={styles.left}>
-              <div className={styles.wrap}>
-                <div className={styles.left}>
-                  <div>
-                    <span className={styles.label}>创建时间</span>
-                    <span className={styles.value}>
-                      {currApp.create_time
-                        ? moment(currApp.create_time)
-                            .locale('zh-cn')
-                            .format('YYYY-MM-DD HH:mm:ss')
-                        : '-'}
-                    </span>
-                  </div>
-                  <div style={{ marginTop: 20 }}>
-                    <span className={styles.label}>治理模式</span>
-                    <span className={styles.value}>
-                      {currApp.governance_mode
-                        ? globalUtil.fetchGovernanceMode(
-                            currApp.governance_mode
-                          )
-                        : '-'}
-                      {currApp.governance_mode && isEdit && (
-                        <img
-                          style={{ marginLeft: '5px', cursor: 'pointer' }}
-                          onClick={this.handleSwitch}
-                          src={SwitchImg}
-                          alt=""
-                        />
-                      )}
-                    </span>
-                  </div>
-                </div>
-                <div className={styles.right}>
-                  <div>
-                    <span className={styles.label}>更新时间</span>
-                    <span className={styles.value}>
-                      {currApp.update_time
-                        ? moment(currApp.update_time)
-                            .locale('zh-cn')
-                            .format('YYYY-MM-DD HH:mm:ss')
-                        : '-'}
-                    </span>
-                  </div>
-                  <div style={{ marginTop: 20 }}>
-                    <span className={styles.label}>负责人</span>
-                    <span className={styles.value}>
-                      {currApp.principal ? (
-                        <Tooltip
-                          placement="top"
-                          title={
-                            <div>
-                              <div>账号:{currApp.username}</div>
-                              <div>姓名:{currApp.principal}</div>
-                              <div>邮箱:{currApp.email}</div>
-                            </div>
-                          }
-                        >
-                          <span style={{ color: 'rgba(0, 0, 0, 0.85)' }}>
-                            {currApp.principal}
-                          </span>
-                        </Tooltip>
-                      ) : (
-                        '-'
-                      )}
-                      {isEdit && (
-                        <Icon
-                          style={{
-                            cursor: 'pointer',
-                            marginLeft: '5px'
-                          }}
-                          onClick={this.handleToEditAppDirector}
-                          type="edit"
-                        />
-                      )}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </Col>
-            <Col span={13} className={styles.right}>
-              <div className={styles.wrap}>
-                {actionsList.length !== 0 &&
-                  actionsList.map((item, index) => {
-                    const { num, src, title, canJump, keys, hoverSrc } = item;
-                    return (
-                      <div
-                        key={index}
-                        className={styles.info}
-                        onMouseEnter={() => {
-                          this.setState({
-                            currentIndex: index
-                          });
-                        }}
-                        onMouseLeave={() => {
-                          this.setState({
-                            currentIndex: -1
-                          });
-                        }}
-                        onClick={() => {
-                          console.log(canJump, keys, 'ddd');
-                          canJump && this.handleJump(keys);
-                        }}
-                      >
-                        <div className={styles.count}>{num || 0}</div>
-                        <div>
-                          <img
-                            src={currentIndex === index ? hoverSrc : src}
-                            style={{ width: 16, height: 16 }}
-                            alt=""
-                          />
-                          <span className={styles.text}>{title}</span>
-                        </div>
-                        <div>
-                          <img
-                            src={
-                              currentIndex === index ? RightHoverImg : RightImg
-                            }
-                            alt=""
-                          />
-                        </div>
-                      </div>
-                    );
-                  })}
-                <div
-                  className={styles.info}
-                  onMouseEnter={() => {
-                    this.setState({
-                      isHover: true
-                    });
-                  }}
-                  onMouseLeave={() => {
-                    this.setState({
-                      isHover: false
-                    });
-                  }}
+          <div className={styles.content_Box}>
+            {appStatusConfig && <AppState AppStatus={resources.status} />}
+            {resources.status && isStart && (
+              <span>
+                <a
                   onClick={() => {
-                    !upgradableNumLoading &&
-                      isUpgrade &&
-                      this.handleJump('upgrade');
+                    this.handleTopology('start');
+                  }}
+                  disabled={BtnDisabled}
+                >
+                  启动
+                </a>
+                <Divider type="vertical" />
+              </span>
+            )}
+            {resources.status &&
+              (resources.status === 'ABNORMAL' ||
+                resources.status === 'PARTIAL_ABNORMAL') &&
+              serviceIds &&
+              serviceIds.length > 0 &&
+              isRestart && (
+                <span>
+                  <a
+                    onClick={() => {
+                      this.handleTopology('restart');
+                    }}
+                    disabled={BtnDisabled}
+                  >
+                    重启
+                  </a>
+                  <Divider type="vertical" />
+                </span>
+              )}
+            {isDelete && resources.status !== 'RUNNING' && (
+              <a onClick={this.toDelete}>删除</a>
+            )}
+            {resources.status && resources.status !== 'CLOSED' && isStop && (
+              <span>
+                {resources.status !== 'RUNNING' && <Divider type="vertical" />}
+                <a
+                  onClick={() => {
+                    this.handleTopology('stop');
                   }}
                 >
-                  <div className={styles.count}>
-                    {upgradableNumLoading ? <Spin /> : upgradableNum}
-                  </div>
-                  <div>
-                    <img
-                      src={!isHover ? UpdateImg : UpdateHoverImg}
-                      alt=""
-                      style={{ width: 16, height: 16 }}
-                    />
-                    <span className={styles.text}>待升级</span>
-                  </div>
-                  <div>
-                    <img src={RightImg} alt="" />
-                  </div>
-                </div>
+                  停用
+                </a>
+              </span>
+            )}
+          </div>
+          <div className={styles.connect_Bot}>
+            <div className={styles.connect_Box}>
+              <div className={styles.connect_Boxs}>
+                <div>使用内存</div>
+                <div>{`${sourceUtil.unit(resources.memory || 0, 'MB')}`}</div>
               </div>
-            </Col>
-          </Row>
-        </Card>
-      </Row>
+              <div className={styles.connect_Boxs}>
+                <div>使用CPU</div>
+                <div>{(resources.cpu && resources.cpu / 1000) || 0}Core</div>
+              </div>
+            </div>
+            <div className={styles.connect_Box}>
+              <div className={styles.connect_Boxs}>
+                <div>使用磁盘</div>
+                <div>{`${sourceUtil.unit(resources.disk || 0, 'KB')}`}</div>
+              </div>
+              <div className={styles.connect_Boxs}>
+                <div>组件数量</div>
+                <div>{currApp.service_num || 0}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className={styles.contentr}>
+          <div className={styles.conrHeader}>
+            <div>
+              <span>创建时间</span>
+              <span>
+                {currApp.create_time
+                  ? moment(currApp.create_time)
+                      .locale('zh-cn')
+                      .format('YYYY-MM-DD HH:mm:ss')
+                  : '-'}
+              </span>
+            </div>
+            <div>
+              <span>更新时间</span>
+              <span>
+                {currApp.update_time
+                  ? moment(currApp.update_time)
+                      .locale('zh-cn')
+                      .format('YYYY-MM-DD HH:mm:ss')
+                  : '-'}
+              </span>
+            </div>
+          </div>
+          <div className={styles.conrHeader}>
+            <div>
+              <span>治理模式</span>
+              <span>
+                {currApp.governance_mode
+                  ? globalUtil.fetchGovernanceMode(currApp.governance_mode)
+                  : '-'}
+              </span>
+              {currApp.governance_mode && isEdit && (
+                <a style={{ marginLeft: '5px' }} onClick={this.handleSwitch}>
+                  切换
+                </a>
+              )}
+            </div>
+
+            <div>
+              <span>负责人</span>
+              <span>
+                {currApp.principal ? (
+                  <Tooltip
+                    placement="top"
+                    title={
+                      <div>
+                        <div>账号:{currApp.username}</div>
+                        <div>姓名:{currApp.principal}</div>
+                        <div>邮箱:{currApp.email}</div>
+                      </div>
+                    }
+                  >
+                    <span style={{ color: 'rgba(0, 0, 0, 0.85)' }}>
+                      {currApp.principal}
+                    </span>
+                  </Tooltip>
+                ) : (
+                  '-'
+                )}
+                {isEdit && (
+                  <Icon
+                    style={{
+                      cursor: 'pointer',
+                      marginLeft: '5px'
+                    }}
+                    onClick={this.handleToEditAppDirector}
+                    type="edit"
+                  />
+                )}
+              </span>
+            </div>
+          </div>
+          <div className={styles.conrBot}>
+            <div className={styles.conrBox}>
+              <div>备份</div>
+              <div
+                onClick={() => {
+                  isBackup && this.handleJump('backup');
+                }}
+              >
+                <a>{currApp.backup_num || 0}</a>
+              </div>
+            </div>
+
+            <div className={styles.conrBox}>
+              <div>模型发布</div>
+              <div
+                onClick={() => {
+                  isShare && this.handleJump('publish');
+                }}
+              >
+                <a>{currApp.share_num || 0}</a>
+              </div>
+            </div>
+
+            <div className={styles.conrBox}>
+              <div>网关策略</div>
+              <div
+                onClick={() => {
+                  isControl && this.handleJump('gateway');
+                }}
+              >
+                <a>{currApp.ingress_num || 0}</a>
+              </div>
+            </div>
+
+            <div className={styles.conrBox}>
+              <div>待升级</div>
+              <div
+                onClick={() => {
+                  !upgradableNumLoading &&
+                    isUpgrade &&
+                    this.handleJump('upgrade');
+                }}
+              >
+                <a>{upgradableNumLoading ? <Spin /> : upgradableNum}</a>
+              </div>
+            </div>
+
+            <div className={styles.conrBox}>
+              <div>配置组</div>
+              <div
+                onClick={() => {
+                  isConfigGroup && this.handleJump('configgroups');
+                }}
+              >
+                <a>{currApp.config_group_num || 0}</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     );
     const teamName = globalUtil.getCurrTeamName();
     const regionName = globalUtil.getCurrRegionName();
@@ -1147,8 +887,7 @@ export default class Index extends PureComponent {
     // const groupId = this.getGroupId();
     return (
       <Fragment>
-        <Row>{pageHeaderContentNew}</Row>
-        {/* <Row>{pageHeaderContent}</Row> */}
+        <Row>{pageHeaderContent}</Row>
         {/* {guideStep === 1 &&
           this.handleNewbieGuiding({
             tit: '应用信息',
@@ -1177,25 +916,10 @@ export default class Index extends PureComponent {
               background: '#FFFFFF',
               height: '60px',
               alignItems: 'center',
-              borderBottom: '1px solid #E9F1F7',
-              borderRadius: 4,
-              boxShadow: ': 0px 1px 4px 0px rgba(0,0,0,0.0600)'
+              borderBottom: '1px solid #e8e8e8'
             }}
           >
             <Col span={5} style={{ paddingleft: '12px' }}>
-              {isComponentDescribe && (
-                <a
-                  onClick={() => {
-                    this.changeType('list');
-                  }}
-                  style={{
-                    marginLeft: '30px',
-                    color: type === 'list' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'
-                  }}
-                >
-                  组件列表
-                </a>
-              )}
               <a
                 onClick={() => {
                   this.changeType('shape');
@@ -1207,6 +931,19 @@ export default class Index extends PureComponent {
               >
                 拓扑图
               </a>
+              {isComponentDescribe && (
+                <a
+                  onClick={() => {
+                    this.changeType('list');
+                  }}
+                  style={{
+                    marginLeft: '30px',
+                    color: type === 'list' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'
+                  }}
+                >
+                  列表
+                </a>
+              )}
               {/*<a
                 onClick={() => {
                   this.changeType('monitor');

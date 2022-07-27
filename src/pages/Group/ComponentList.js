@@ -59,12 +59,12 @@ export default class ComponentList extends Component {
   }
   componentDidMount() {
     this.updateApp();
-    document
-      .querySelector('.ant-table-footer')
-      .setAttribute(
-        'style',
-        'position:absolute;background:#fff;padding-bottom: 0px;'
-      );
+    // document
+    //   .querySelector('.ant-table-footer')
+    //   .setAttribute(
+    //     'style',
+    //     'position:absolute;background:#fff;padding-bottom: 0px;'
+    //   );
   }
   shouldComponentUpdate() {
     return true;
@@ -540,22 +540,22 @@ export default class ComponentList extends Component {
         })}
       </Menu>
     );
-    const footer = (
-      <div className={styles.tableList}>
-        <div className={styles.tableListOperator}>
-          <Dropdown
-            overlay={menu}
-            trigger={['click']}
-            placement="topCenter"
-            disabled={!this.CanBatchOperation()}
-          >
-            <Button>
-              批量操作 <Icon type="down" />
-            </Button>
-          </Dropdown>
-        </div>
-      </div>
-    );
+    // const footer = (
+    //   <div className={styles.tableList}>
+    //     <div className={styles.tableListOperator}>
+    //       <Dropdown
+    //         overlay={menu}
+    //         trigger={['click']}
+    //         placement="topCenter"
+    //         disabled={!this.CanBatchOperation()}
+    //       >
+    //         <Button>
+    //           批量操作 <Icon type="down" />
+    //         </Button>
+    //       </Dropdown>
+    //     </div>
+    //   </div>
+    // );
     return (
       <div>
         <Card
@@ -565,7 +565,7 @@ export default class ComponentList extends Component {
           bordered={false}
           bodyStyle={{ padding: '10px 10px' }}
         >
-          <Form layout="inline" style={{ marginBottom: '10px' }}>
+          <Form layout="inline" style={{ marginBottom: '10px', float: 'left' }}>
             <Form.Item>
               <Input
                 style={{ width: 250 }}
@@ -579,7 +579,22 @@ export default class ComponentList extends Component {
                 搜索
               </Button>
             </Form.Item>
+            {/* <Form.Item></Form.Item> */}
           </Form>
+          <div className={styles.tableList} style={{ float: 'right' }}>
+            <div className={styles.tableListOperator}>
+              <Dropdown
+                overlay={menu}
+                trigger={['click']}
+                //placement="topCenter"
+                disabled={!this.CanBatchOperation()}
+              >
+                <Button>
+                  批量操作 <Icon type="down" />
+                </Button>
+              </Dropdown>
+            </div>
+          </div>
           <Table
             pagination={pagination}
             rowSelection={rowSelection}
@@ -588,7 +603,7 @@ export default class ComponentList extends Component {
               reStartLoading || startLoading || stopLoading || tableDataLoading
             }
             dataSource={apps || []}
-            footer={() => footer}
+            //footer={() => footer}
           />
           {batchDeleteShow && (
             <BatchDelete
