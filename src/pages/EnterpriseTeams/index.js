@@ -17,7 +17,8 @@ import {
   notification,
   Pagination,
   Row,
-  Spin
+  Spin,
+  Tooltip
 } from 'antd';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
@@ -31,6 +32,7 @@ import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import roleUtil from '../../utils/role';
 import userUtil from '../../utils/user';
 import styles from './index.less';
+import Tooltips from '../../../public/images/home/tooltip.svg';
 
 const { Search } = Input;
 
@@ -625,13 +627,15 @@ export default class EnterpriseTeams extends PureComponent {
     const operation = (
       <Col span={7} style={{ textAlign: 'right' }} className={styles.btns}>
         {adminer ? (
-          <Button
-            type="primary"
-            onClick={this.onAddTeam}
-            style={{ marginRight: '5px' }}
-          >
-            创建团队
-          </Button>
+          <Tooltip placement="top" title="创建一个新的团队">
+            <Button
+              type="primary"
+              onClick={this.onAddTeam}
+              style={{ marginRight: '5px' }}
+            >
+              创建团队
+            </Button>
+          </Tooltip>
         ) : (
           <Button type="primary" onClick={this.onJoinTeam}>
             加入团队
@@ -667,8 +671,26 @@ export default class EnterpriseTeams extends PureComponent {
         </Row>
         <Row className={styles.teamMinTit} type="flex" align="middle">
           <Col span={6}>团队名称</Col>
-          <Col span={3}>拥有人</Col>
-          <Col span={11}>集群</Col>
+          <Col span={3}>
+            <Tooltip placement="top" title="团队的管理员账号">
+              <span>拥有人</span>
+              <img
+                src={Tooltips}
+                alt=""
+                style={{ cursor: 'pointer', marginLeft: 4 }}
+              />
+            </Tooltip>
+          </Col>
+          <Col span={11}>
+            <Tooltip placement="top" title="团队开通的集群，如果有多个集群则显示多个">
+              <span>集群</span>
+              <img
+                src={Tooltips}
+                alt=""
+                style={{ cursor: 'pointer', marginLeft: 4 }}
+              />
+            </Tooltip>
+          </Col>
         </Row>
 
         {teamList.map(item => {

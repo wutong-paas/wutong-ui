@@ -6,12 +6,13 @@ import { Menu } from 'antd';
 
 import styles from './Info.less';
 import wutongUtil from '../../../utils/wutong';
+import enterprise from '@/models/enterprise';
 
 const { Item } = Menu;
 
 @connect(({ user, global }) => ({
   currentUser: user.currentUser,
-  enterprise: global.enterprise,
+  enterprise: global.enterprise
 }))
 class Info extends Component {
   constructor(props) {
@@ -39,10 +40,11 @@ class Info extends Component {
       />
     );
     const key = location.pathname.replace(`${match.path}/`, '');
+    console.log(menuMap,enterprise);
     this.state = {
       mode: 'inline',
       menuMap,
-      selectKey: menuMap[key] ? key : isOpenOauth ? 'binding' : 'accesstoken',
+      selectKey: menuMap[key] ? key : isOpenOauth ? 'binding' : 'accesstoken'
     };
   }
 
@@ -51,8 +53,8 @@ class Info extends Component {
       match,
       location,
       match: {
-        params: { eid },
-      },
+        params: { eid }
+      }
     } = props;
     const filterPath = match.path.replace(/:eid/g, eid);
     let selectKey = location.pathname.replace(`${filterPath}/`, '');
@@ -76,9 +78,9 @@ class Info extends Component {
   };
 
   selectKey = ({ key }) => {
-    router.push(`/account/center/${key}`);
+    router.push(`/account/${this.props.enterprise?.enterprise_id}/center/${key}`);
     this.setState({
-      selectKey: key,
+      selectKey: key
     });
   };
 

@@ -144,7 +144,7 @@ export default class Index extends PureComponent {
   constructor(arg) {
     super(arg);
     this.state = {
-      type: 'list',
+      type: this.props?.componentPermissions?.isAccess ? 'list' : 'shape',
       toDelete: false,
       toEdit: false,
       toEditAppDirector: false,
@@ -796,7 +796,7 @@ export default class Index extends PureComponent {
                     <span className={styles.text}>
                       {currApp.group_name || '-'}
                     </span>
-                    <Tooltip placement="top" title="测试">
+                    <Tooltip placement="top" title="修改应用信息">
                       <img
                         src={EditImg}
                         alt=""
@@ -809,35 +809,50 @@ export default class Index extends PureComponent {
                     {resources.status && (
                       <div className={styles.extraContent}>
                         {resources.status !== 'CLOSED' && isUpdate && (
-                          <Button
-                            style={MR}
-                            onClick={() => {
-                              this.handleTopology('upgrade');
-                            }}
-                            disabled={BtnDisabled}
+                          <Tooltip
+                            placement="top"
+                            title="更新当前应用下的全部组件，将最新的配置属性应用到组件"
                           >
-                            更新
-                          </Button>
+                            <Button
+                              style={MR}
+                              onClick={() => {
+                                this.handleTopology('upgrade');
+                              }}
+                              disabled={BtnDisabled}
+                            >
+                              更新
+                            </Button>
+                          </Tooltip>
                         )}
                         {isConstruct && isComponentConstruct && (
-                          <Button
-                            style={MR}
-                            disabled={BtnDisabled}
-                            onClick={() => {
-                              this.handleTopology('deploy');
-                            }}
+                          <Tooltip
+                            placement="top"
+                            title="构建当前应用下的全部组件，构建成功后将触发滚动升级"
                           >
-                            构建
-                          </Button>
+                            <Button
+                              style={MR}
+                              disabled={BtnDisabled}
+                              onClick={() => {
+                                this.handleTopology('deploy');
+                              }}
+                            >
+                              构建
+                            </Button>
+                          </Tooltip>
                         )}
                         {isCopy && (
-                          <Button
-                            style={MR}
-                            disabled={BtnDisabled}
-                            onClick={this.handleOpenRapidCopy}
+                          <Tooltip
+                            placement="top"
+                            title="将应用模型属性复制到其他团队环境"
                           >
-                            快速复制
-                          </Button>
+                            <Button
+                              style={MR}
+                              disabled={BtnDisabled}
+                              onClick={this.handleOpenRapidCopy}
+                            >
+                              快速复制
+                            </Button>
+                          </Tooltip>
                         )}
                         {linkList.length > 0 && (
                           <VisterBtn linkList={linkList} />
@@ -862,23 +877,27 @@ export default class Index extends PureComponent {
                           }`
                         }}
                       ></span>
-                      <span className={styles.text}>
-                        {appState[(resources?.status)] || '闲置'}
-                      </span>
+                      <Tooltip placement="top" title="应用运行状态">
+                        <span className={styles.text}>
+                          {appState[(resources?.status)] || '闲置'}
+                        </span>
+                      </Tooltip>
                     </span>
                   )}
                   {resources.status && isStart && (
-                    <span>
-                      <a
-                        onClick={() => {
-                          this.handleTopology('start');
-                        }}
-                        disabled={BtnDisabled}
-                      >
-                        启动
-                      </a>
-                      <Divider type="vertical" />
-                    </span>
+                    <Tooltip placement="top" title="启动当前应用的全部组件">
+                      <span>
+                        <a
+                          onClick={() => {
+                            this.handleTopology('start');
+                          }}
+                          disabled={BtnDisabled}
+                        >
+                          启动
+                        </a>
+                        <Divider type="vertical" />
+                      </span>
+                    </Tooltip>
                   )}
                   {resources.status &&
                     (resources.status === 'ABNORMAL' ||
@@ -886,34 +905,46 @@ export default class Index extends PureComponent {
                     serviceIds &&
                     serviceIds.length > 0 &&
                     isRestart && (
-                      <span>
-                        <a
-                          onClick={() => {
-                            this.handleTopology('restart');
-                          }}
-                          disabled={BtnDisabled}
-                        >
-                          重启
-                        </a>
-                        <Divider type="vertical" />
-                      </span>
+                      <Tooltip
+                        placement="top"
+                        title="重新启动  当前应用的全部组件"
+                      >
+                        <span>
+                          <a
+                            onClick={() => {
+                              this.handleTopology('restart');
+                            }}
+                            disabled={BtnDisabled}
+                          >
+                            重启
+                          </a>
+                          <Divider type="vertical" />
+                        </span>
+                      </Tooltip>
                     )}
                   {isDelete && resources.status !== 'RUNNING' && (
-                    <a onClick={this.toDelete}>删除</a>
+                    <Tooltip placement="top" title="删除此应用">
+                      <a onClick={this.toDelete}>删除</a>
+                    </Tooltip>
                   )}
                   {resources.status && resources.status !== 'CLOSED' && isStop && (
-                    <span>
-                      {resources.status !== 'RUNNING' && (
-                        <Divider type="vertical" />
-                      )}
-                      <a
-                        onClick={() => {
-                          this.handleTopology('stop');
-                        }}
-                      >
-                        停用
-                      </a>
-                    </span>
+                    <Tooltip
+                      placement="top"
+                      title="停用当前应用下的全部组件, 释放应用占用资源"
+                    >
+                      <span>
+                        {resources.status !== 'RUNNING' && (
+                          <Divider type="vertical" />
+                        )}
+                        <a
+                          onClick={() => {
+                            this.handleTopology('stop');
+                          }}
+                        >
+                          停用
+                        </a>
+                      </span>
+                    </Tooltip>
                   )}
                 </div>
               </div>
@@ -1037,13 +1068,11 @@ export default class Index extends PureComponent {
                         '-'
                       )}
                       {isEdit && (
-                        <Icon
-                          style={{
-                            cursor: 'pointer',
-                            marginLeft: '5px'
-                          }}
+                        <img
+                          src={EditImg}
+                          alt=""
                           onClick={this.handleToEditAppDirector}
-                          type="edit"
+                          style={{ cursor: 'pointer', marginLeft: '5px' }}
                         />
                       )}
                     </span>
@@ -1071,7 +1100,6 @@ export default class Index extends PureComponent {
                           });
                         }}
                         onClick={() => {
-                          console.log(canJump, keys, 'ddd');
                           canJump && this.handleJump(keys);
                         }}
                       >
@@ -1183,7 +1211,30 @@ export default class Index extends PureComponent {
             }}
           >
             <Col span={5} style={{ paddingleft: '12px' }}>
-              {isComponentDescribe && (
+              <div className={styles.tabs}>
+                {[
+                  { title: '组件列表', keys: 'list' },
+                  { title: '拓扑图', keys: 'shape' }
+                ].map((item, index) => {
+                  if (item.keys === 'list' && !isComponentDescribe) {
+                    return null;
+                  }
+                  return (
+                    <div
+                      className={
+                        type === item.keys ? styles.active : styles.tabpane
+                      }
+                      key={index}
+                      onClick={() => {
+                        this.changeType(item.keys);
+                      }}
+                    >
+                      <div>{item.title}</div>
+                    </div>
+                  );
+                })}
+              </div>
+              {/* {isComponentDescribe && (
                 <a
                   onClick={() => {
                     this.changeType('list');
@@ -1206,7 +1257,7 @@ export default class Index extends PureComponent {
                 }}
               >
                 拓扑图
-              </a>
+              </a> */}
               {/*<a
                 onClick={() => {
                   this.changeType('monitor');
@@ -1227,22 +1278,32 @@ export default class Index extends PureComponent {
               {type !== 'list' && isComponentCreate && (
                 <div className={styles['radio-button']}>
                   <Radio.Group value={this.state.type} buttonStyle="solid">
-                    <Radio.Button
-                      value="shape"
-                      onClick={() => {
-                        this.changeType('shape');
-                      }}
+                    <Tooltip
+                      placement="top"
+                      title="图形化展示应用组件的拓扑关系，该模式不可编辑"
                     >
-                      普通模式
-                    </Radio.Button>
-                    <Radio.Button
-                      value="shapes"
-                      onClick={() => {
-                        this.changeType('shapes');
-                      }}
+                      <Radio.Button
+                        value="shape"
+                        onClick={() => {
+                          this.changeType('shape');
+                        }}
+                      >
+                        普通模式
+                      </Radio.Button>
+                    </Tooltip>
+                    <Tooltip
+                      placement="top"
+                      title="以编辑模式展示应用组件的拓扑关系"
                     >
-                      编排模式
-                    </Radio.Button>
+                      <Radio.Button
+                        value="shapes"
+                        onClick={() => {
+                          this.changeType('shapes');
+                        }}
+                      >
+                        编排模式
+                      </Radio.Button>
+                    </Tooltip>
                   </Radio.Group>
                 </div>
               )}
@@ -1264,7 +1325,7 @@ export default class Index extends PureComponent {
                 />
               )}
             </Col>
-            <Col span={4} style={{ textAlign: 'center' }}>
+            <Col span={4} style={{ textAlign: 'left' }}>
               {isComponentCreate && isComponentConstruct && (
                 <AddServiceComponent
                   groupId={this.getGroupId()}
@@ -1319,7 +1380,7 @@ export default class Index extends PureComponent {
             </Row>
           )} */}
 
-          {type === 'list' && (
+          {type === 'list' && isComponentDescribe && (
             <ComponentList
               componentPermissions={componentPermissions}
               groupId={this.getGroupId()}
@@ -1356,7 +1417,7 @@ export default class Index extends PureComponent {
             nextStep: 3,
             conPosition: { bottom: '-16px', left: '45%' }
           })}
-        {isScrollDiv && <div id="scroll_div" style={{ marginTop: '180px' }} />}
+        {/* {isScrollDiv && <div id="scroll_div" style={{ marginTop: '180px' }} />} */}
 
         {toDelete && (
           <ConfirmModal

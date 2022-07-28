@@ -580,7 +580,7 @@ export default class Index extends PureComponent {
                     })}
                   </div>
                 )}
-                {port && port.protocol == 'http' && (
+                {port && (port.protocol == 'http' || port.protocol == 'tcp') && (
                   <Button
                     size="small"
                     style={{ marginTop: '5px' }}

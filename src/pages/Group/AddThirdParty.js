@@ -1,4 +1,4 @@
-import { Button, Drawer, Icon } from 'antd';
+import { Button, Drawer, Icon, Tooltip } from 'antd';
 import { connect } from 'dva';
 import React, { PureComponent } from 'react';
 import Check from '../Create/create-check';
@@ -280,10 +280,15 @@ export default class AddThirdParty extends PureComponent {
     );
     return (
       <div>
-        <Button type="default" onClick={this.toAddService} style={{}}>
-          <Icon type="plus" />
-          添加第三方组件
-        </Button>
+        <Tooltip
+          placement="top"
+          title="引入不在平台管理的服务，以第三方组件方式添加到应用中"
+        >
+          <Button type="default" onClick={this.toAddService} style={{}}>
+            <Icon type="plus" />
+            添加第三方组件
+          </Button>
+        </Tooltip>
         <Drawer
           title="添加第三方组件"
           placement="right"

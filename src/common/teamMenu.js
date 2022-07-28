@@ -4,6 +4,10 @@ import { isUrl } from '../utils/utils';
 import roleUtil from '../utils/role';
 import gatewayImg from '../../public/images/menu/gateway.svg';
 import dashboardImg from '../../public/images/menu/dashboard.svg';
+import appImg from '../../public/images/menu/app.svg';
+import newImg from '../../public/images/menu/new.svg';
+import pluginImg from '../../public/images/menu/plugin.svg';
+import teamManagerImg from '../../public/images/menu/teammanager.svg';
 
 const newbieGuide = cookie.get('newbie_guide');
 
@@ -56,7 +60,7 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
     if (appView) {
       addMenuArr({
         name: formatMessage({ id: 'menu.team.app' }),
-        icon: 'appstore-o',
+        icon: renderIcon(appImg),
         path: `team/${teamName}/region/${regionName}/apps`,
         authority: ['admin', 'user']
       });
@@ -64,7 +68,7 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
     if (appCreateView && componentCreateView && componentConstructView) {
       addMenuArr({
         name: formatMessage({ id: 'menu.team.create' }),
-        icon: 'plus',
+        icon: renderIcon(newImg),
         path: `team/${teamName}/region/${regionName}/create`,
         authority: ['admin', 'user'],
         children: [
@@ -121,7 +125,7 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
     if (pluginView) {
       addMenuArr({
         name: formatMessage({ id: 'menu.team.plugin' }),
-        icon: 'api',
+        icon: renderIcon(pluginImg),
         path: `team/${teamName}/region/${regionName}/myplugns`,
         authority: ['admin', 'user']
       });
@@ -130,7 +134,7 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
     if (dynamic || members || clusters || roles) {
       addMenuArr({
         name: formatMessage({ id: 'menu.team.setting' }),
-        icon: 'setting',
+        icon: renderIcon(teamManagerImg),
         path: `team/${teamName}/region/${regionName}/team`,
         authority: ['admin', 'user']
       });

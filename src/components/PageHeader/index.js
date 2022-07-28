@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import globalUtil from '@/utils/global';
-import { Breadcrumb, Icon, Tabs } from 'antd';
+import { Breadcrumb, Icon, Tabs, Tooltip } from 'antd';
 import classNames from 'classnames';
 import { connect } from 'dva';
 import pathToRegexp from 'path-to-regexp';
@@ -204,21 +204,23 @@ export default class PageHeader extends PureComponent {
             onChange={this.onChange}
           >
             {tabList.map(item => {
-              const { key, tab } = item;
+              const { key, tab, tooltip } = item;
               return (
                 <TabPane
                   tab={
-                    <span className={styles.verticalCen}>
-                      {isSvg &&
-                        globalUtil.fetchSvg(
-                          key === 'localApplication'
-                            ? 'localMarket'
-                            : key.indexOf('Helm-') > -1
-                            ? 'HelmSvg'
-                            : 'cloudMarket'
-                        )}
-                      {tab}
-                    </span>
+                    <Tooltip placement='top' title={tooltip}>
+                      <span className={styles.verticalCen}>
+                        {isSvg &&
+                          globalUtil.fetchSvg(
+                            key === 'localApplication'
+                              ? 'localMarket'
+                              : key.indexOf('Helm-') > -1
+                              ? 'HelmSvg'
+                              : 'cloudMarket'
+                          )}
+                        {tab}
+                      </span>
+                    </Tooltip>
                   }
                   key={key}
                 />

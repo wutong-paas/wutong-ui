@@ -1,11 +1,55 @@
 @import "~antd/lib/style/themes/default.less";
 @import "../../utils/utils.less";
 
+.header {
+  display        : flex;
+  justify-content: space-between;
+
+  :global {
+    .ant-input {
+      background-color: rgba(241, 249, 255, 1);
+      border          : none;
+      border-radius   : 15px;
+    }
+  }
+
+  .input {
+    margin-right: 6px;
+  }
+}
+
 .tableList {
   .tableListOperator {
     margin-bottom: 16px;
+
     button {
       margin-right: 8px;
+    }
+  }
+}
+
+.table {
+  :global {
+    .ant-table-thead>tr {
+      background-color: #F1F9FF;
+      font-size       : 14px;
+      font-family     : PingFangSC-Medium,
+        PingFang SC;
+      font-weight: 400;
+      color      : rgba(0, 0, 0, 0.65);
+    }
+
+    .ant-table-tbody>tr:hover:not(.ant-table-expanded-row):not(.ant-table-row-selected)>td {
+      cursor          : pointer;
+      background-color: rgba(0, 0, 0, 0.0200);
+    }
+
+    .ant-table-tbody>tr {
+      font-size: 14px;
+      font-family: PingFangSC-Medium,
+        PingFang SC;
+      font-weight: 500;
+      color      : #000000;
     }
   }
 }
