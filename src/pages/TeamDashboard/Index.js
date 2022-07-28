@@ -43,7 +43,13 @@ const echarts = require('echarts');
 const appLogo = require('@/assets/teamAppLogo.svg');
 const defaultAppLogo = require('@/assets/application.png');
 const componentLogo = require('@/assets/teamComponentLogo.svg');
-const statusList = ['全部', '运行中', '关闭', '异常', '闲置'];
+const statusList = [
+  { title: '全部', count: 0, key: 'total', color: 'rgba(0, 112, 255, 1)' },
+  { title: '运行中', count: 0, key: 'running', color: 'rgba(8, 199, 127, 1)' },
+  { title: '关闭', count: 0, key: 'closed', color: 'rgba(133, 137, 150, 1)' },
+  { title: '异常', count: 0, key: 'abnormal', color: 'rgba(253, 106, 106, 1)' },
+  { title: '闲置', count: 0, key: 'nil', color: 'rgba(255, 191, 119, 1)' }
+];
 
 const computedPercentage = (dividend, divisor) => {
   if (dividend == 0 || divisor == 0) {
@@ -103,7 +109,9 @@ export default class Index extends PureComponent {
       emptyConfig: false,
       searchVisible: false,
       permissionsInfo: {},
-      activeKey: 0
+      activeKey: 0,
+      tablist: [],
+      stauts: undefined
     };
   }
   componentDidMount() {
@@ -276,7 +284,6 @@ export default class Index extends PureComponent {
         ]
       };
     };
-    console.log(index, 'index');
     appCharts.setOption(option('应用统计', index));
     components.setOption(option('组件统计', index));
     window.addEventListener('resize', function() {
@@ -299,6 +306,24 @@ export default class Index extends PureComponent {
       }
     );
   };
+  // 筛选应用
+  handleFilter = key => {
+    const { loadingOfApp } = this.state;
+    if (!loadingOfApp) {
+      this.setState(
+        {
+          status: key === 'total' ? undefined : key,
+          loadingOfApp: true,
+          searchVisible: true,
+          page: 1
+        },
+        () => {
+          this.loadHotApp();
+        }
+      );
+    }
+  };
+
   // pageSize变化的回调
   handleChangePageSize = (current, size) => {
     this.setState(
@@ -366,7 +391,7 @@ export default class Index extends PureComponent {
   };
   // 加载热门应用数据源
   loadHotApp = () => {
-    const { page, page_size, query, emptyConfig } = this.state;
+    const { page, page_size, query, emptyConfig, status } = this.state;
     this.props.dispatch({
       type: 'global/getTeamAppList',
       payload: {
@@ -374,13 +399,21 @@ export default class Index extends PureComponent {
         region: globalUtil.getCurrRegionName(),
         query,
         page,
-        page_size
+        page_size,
+        status
       },
       callback: res => {
         if (res && res.status_code === 200) {
+          const list = statusList.map(item => {
+            if (res?.bean[item.key]) {
+              item.count = res?.bean[item.key];
+            }
+            return item;
+          });
           this.setState({
             teamHotAppList: res.list,
             total: res.bean && res.bean.total,
+            tablist: list,
             loadingOfApp: false,
             emptyConfig: false,
             searchVisible: false
@@ -444,11 +477,15 @@ export default class Index extends PureComponent {
   };
   // 定时器获取最新的接口数据
   handleTimers = (timerName, callback, times) => {
-    this.handleTeamPermissions(() => {
-      this[timerName] = setTimeout(() => {
-        callback();
-      }, times);
-    });
+    if (this[timerName])
+    {
+      this.handleClearTimeout(this[timerName]);
+    }
+      this.handleTeamPermissions(() => {
+        this[timerName] = setTimeout(() => {
+          callback();
+        }, times);
+      });
   };
   // 组件销毁 停止定时器
   handleClearTimeout = timer => {
@@ -500,7 +537,8 @@ export default class Index extends PureComponent {
       emptyConfig,
       searchVisible,
       permissionsInfo,
-      activeKey
+      activeKey,
+      tablist
     } = this.state;
     const {
       index,
@@ -523,14 +561,25 @@ export default class Index extends PureComponent {
               {index.overviewInfo.team_alias}
             </h2> */}
             <div className={styles.left}>
-              <div className={styles.title}>演示项目名称</div>
+              <div className={styles.title}>团队名称</div>
               <div className={styles.teamname}>
                 {index?.overviewInfo?.team_alias || '-'}
               </div>
             </div>
             <div className={styles.right}>
               <div className={styles.title}>成员人数</div>
-              <div className={styles.usercount}>
+              <div
+                className={styles.usercount}
+                title="点击可跳转至成员页面"
+                onClick={() => {
+                  dispatch(
+                    routerRedux.push({
+                      pathname: `/team/${teamName}/region/${regionName}/team`,
+                      state: { config: 'member' }
+                    })
+                  );
+                }}
+              >
                 {(index.overviewInfo && index.overviewInfo.user_nums) || 0}
               </div>
             </div>
@@ -717,36 +766,51 @@ export default class Index extends PureComponent {
           <Row>
             <Card className={styles.list} bordered={false}>
               <div className={styles.title}>
-                <div className={styles.text}>应用列表</div>
+                <div className={styles.text}>
+                  <Tooltip placement="top" title="团队中所有应用的列表">
+                    应用列表
+                  </Tooltip>
+                </div>
                 <div>
                   {permissionsInfo?.isCreate && (
-                    <Button
-                      onClick={() => {
-                        this.setState({ createAppVisible: true });
-                      }}
-                    >
-                      新建应用
-                    </Button>
+                    <Tooltip placement="top" title="创建一个新的应用">
+                      <Button
+                        onClick={() => {
+                          this.setState({ createAppVisible: true });
+                        }}
+                      >
+                        新建应用
+                      </Button>
+                    </Tooltip>
                   )}
                 </div>
               </div>
               <div className={styles.actions}>
-                {/* <div className={styles.tabs}>
-                {statusList.map((item, index) => {
-                  return (
-                    <div
-                      className={
-                        activeKey === index ? styles.active : styles.tabpane
-                      }
-                      key={index}
-                      onClick={() => this.setState({ activeKey: index })}
-                    >
-                      <div>{item}</div>
-                      <div className={styles.badge}>8</div>
-                    </div>
-                  );
-                })}
-              </div> */}
+                <div className={styles.tabs}>
+                  {tablist.length > 0 &&
+                    tablist.map((item, index) => {
+                      return (
+                        <div
+                          className={
+                            activeKey === index ? styles.active : styles.tabpane
+                          }
+                          key={index}
+                          onClick={() => {
+                            this.setState({ activeKey: index });
+                            this.handleFilter(item.key);
+                          }}
+                        >
+                          <div>{item.title}</div>
+                          <div
+                            className={styles.badge}
+                            style={{ backgroundColor: `${item.color}` }}
+                          >
+                            {item.count}
+                          </div>
+                        </div>
+                      );
+                    })}
+                </div>
                 <div>
                   {(!loadingOfApp || searchVisible) && (
                     <Search

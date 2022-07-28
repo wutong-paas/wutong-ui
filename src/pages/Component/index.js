@@ -1014,95 +1014,122 @@ class Main extends PureComponent {
             <div className={styles.contentTitle}>
               {name || '-'}
               {isEdit && (
-                <Icon
-                  style={{
-                    cursor: 'pointer',
-                    marginLeft: 8
-                  }}
-                  onClick={this.showEditName}
-                  type="edit"
-                />
+                <Tooltip placement="top" title="修改组件名称">
+                  <Icon
+                    style={{
+                      cursor: 'pointer',
+                      marginLeft: 8
+                    }}
+                    onClick={this.showEditName}
+                    type="edit"
+                  />
+                </Tooltip>
               )}
             </div>
             <div className={styles.content_Box}>
               {!appDetail.is_third && isRestart && (
-                <a
-                  onClick={() => {
-                    if (appStatusUtil.canRestart(status)) {
-                      this.handleDropClick('restart');
-                    }
-                  }}
-                  style={{
-                    cursor: !appStatusUtil.canRestart(status)
-                      ? 'no-drop'
-                      : 'pointer'
-                  }}
+                <Tooltip
+                  placement="top"
+                  title="对组件进行重启操作，该操作不会更新组件代码或镜像"
                 >
-                  重启
-                </a>
+                  <a
+                    onClick={() => {
+                      if (appStatusUtil.canRestart(status)) {
+                        this.handleDropClick('restart');
+                      }
+                    }}
+                    style={{
+                      cursor: !appStatusUtil.canRestart(status)
+                        ? 'no-drop'
+                        : 'pointer'
+                    }}
+                  >
+                    重启
+                  </a>
+                </Tooltip>
               )}
               {!appDetail.is_third && isRestart && <Divider type="vertical" />}
 
               {isStop && !appStatusUtil.canStart(status) ? (
-                <span>
-                  <a
-                    style={{
-                      cursor: !appStatusUtil.canStop(status)
-                        ? 'no-drop'
-                        : 'pointer'
-                    }}
-                    onClick={() => {
-                      if (appStatusUtil.canStop(status)) {
-                        this.handleOpenHelpfulHints('stop');
-                      }
-                    }}
-                  >
-                    关闭
-                  </a>
-                  <Divider type="vertical" />
-                </span>
+                <Tooltip
+                  placement="top"
+                  title="关闭组件所有运行实例，释放组件占用的资源"
+                >
+                  <span>
+                    <a
+                      style={{
+                        cursor: !appStatusUtil.canStop(status)
+                          ? 'no-drop'
+                          : 'pointer'
+                      }}
+                      onClick={() => {
+                        if (appStatusUtil.canStop(status)) {
+                          this.handleOpenHelpfulHints('stop');
+                        }
+                      }}
+                    >
+                      关闭
+                    </a>
+                    <Divider type="vertical" />
+                  </span>
+                </Tooltip>
               ) : isStop &&
                 status &&
                 status.status &&
                 status.status === 'upgrade' ? (
-                <span>
-                  <a
-                    onClick={() => {
-                      this.handleOpenHelpfulHints('stop');
-                    }}
-                  >
-                    关闭
-                  </a>
-                  <Divider type="vertical" />
-                </span>
+                <Tooltip
+                  placement="top"
+                  title="关闭组件所有运行实例，释放组件占用的资源"
+                >
+                  <span>
+                    <a
+                      onClick={() => {
+                        this.handleOpenHelpfulHints('stop');
+                      }}
+                    >
+                      关闭
+                    </a>
+                    <Divider type="vertical" />
+                  </span>
+                </Tooltip>
               ) : null}
 
               {isAppEdit && !loadingDetail && !isHelm && (
-                <a
-                  onClick={() => {
-                    this.handleDropClick('moveGroup');
-                  }}
-                  style={{
-                    cursor: 'pointer'
-                  }}
+                <Tooltip
+                  placement="top"
+                  title="调整组件和应用的绑定关系，组件可以灵活变更所属的应用"
                 >
-                  修改所属应用
-                </a>
+                  <a
+                    onClick={() => {
+                      this.handleDropClick('moveGroup');
+                    }}
+                    style={{
+                      cursor: 'pointer'
+                    }}
+                  >
+                    修改所属应用
+                  </a>
+                </Tooltip>
               )}
               {isEdit && !loadingDetail && !isHelm && (
                 <Divider type="vertical" />
               )}
               {isDelete && (
-                <a
-                  onClick={() => {
-                    this.handleDropClick('deleteApp');
-                  }}
-                  style={{
-                    cursor: 'pointer'
-                  }}
+                <Tooltip
+                  placement="top"
+                  title="对组件进行删除操作，删除组件是一个危险的操作，请慎用"
                 >
-                  删除
-                </a>
+                  <a
+                    onClick={() => {
+                      this.handleDropClick('deleteApp');
+                    }}
+                    style={{
+                      cursor: 'pointer'
+                    }}
+                  >
+                    删除
+                  </a>
+                </Tooltip>
               )}
             </div>
           </div>
@@ -1216,14 +1243,19 @@ class Main extends PureComponent {
           </Button>
         )} */}
         {isVisitWebTerminal && !isShowThirdParty && (
-          <Button>
-            <Link
-              to={`${this.fetchPrefixUrl()}components/${serviceAlias}/webconsole`}
-              target="_blank"
-            >
-              Web终端
-            </Link>
-          </Button>
+          <Tooltip
+            placement="top"
+            title="进入当前组件运行容器的Web 终端控制页面，可同时打开多个Web终端"
+          >
+            <Button>
+              <Link
+                to={`${this.fetchPrefixUrl()}components/${serviceAlias}/webconsole`}
+                target="_blank"
+              >
+                Web终端
+              </Link>
+            </Button>
+          </Tooltip>
         )}
 
         {isShowThirdParty ? (
@@ -1245,20 +1277,30 @@ class Main extends PureComponent {
             </Button>
           </Tooltip>
         ) : status && status.status === 'undeploy' && isConstruct ? (
-          <Button
-            onClick={this.handleOpenBuild}
-            loading={buildInformationLoading}
+          <Tooltip
+            placement="top"
+            title="从构建源获取最新的代码或镜像构建组件的新版本，默认情况下构建成功后将触发滚动升级"
           >
-            构建
-          </Button>
-        ) : (
-          isConstruct && (
             <Button
               onClick={this.handleOpenBuild}
               loading={buildInformationLoading}
             >
               构建
             </Button>
+          </Tooltip>
+        ) : (
+          isConstruct && (
+            <Tooltip
+              placement="top"
+              title="从构建源获取最新的代码或镜像构建组件的新版本，默认情况下构建成功后将触发滚动升级"
+            >
+              <Button
+                onClick={this.handleOpenBuild}
+                loading={buildInformationLoading}
+              >
+                构建
+              </Button>
+            </Tooltip>
           )
         )}
 
@@ -1267,13 +1309,18 @@ class Main extends PureComponent {
         status.status === 'stopping'
           ? ''
           : isUpdate && (
-              <Button
-                onClick={() => {
-                  this.handleOpenHelpfulHints('rolling');
-                }}
+              <Tooltip
+                placement="top"
+                title={`以最新的组件配置属性对组件实例进行${!isShowThirdParty &&'滚动'}升级`}
               >
-                {upDataText}
-              </Button>
+                <Button
+                  onClick={() => {
+                    this.handleOpenHelpfulHints('rolling');
+                  }}
+                >
+                  {upDataText}
+                </Button>
+              </Tooltip>
             )}
 
         {appDetail.service.service_source === 'market' &&
@@ -1292,15 +1339,20 @@ class Main extends PureComponent {
     const tabs = [
       {
         key: 'overview',
-        tab: '总览'
+        tab: '总览',
+        tooltip: '组件总览视图，包含了组件的基本信息'
       },
       {
         key: 'monitor',
-        tab: '监控'
+        tab: '监控',
+        tooltip:
+          '图形化展示组件运行监控信息，包括：性能分析，资源监控，业务监控等'
       },
       {
         key: 'log',
-        tab: '实时日志'
+        tab: '实时日志',
+        tooltip:
+          '实时推送的形式展示组件运行日志，通过查询历史日志文件获取历史日志。'
       }
       // ,
       // {
@@ -1312,56 +1364,64 @@ class Main extends PureComponent {
     if (isTelescopic) {
       tabs.push({
         key: 'expansion',
-        tab: '伸缩'
+        tab: '伸缩',
+        tooltip: '对组件运行实例进行手动伸缩，也可配置规则开通组件自动伸缩'
       });
     }
 
     if (isEnv) {
       tabs.push({
         key: 'environmentConfiguration',
-        tab: '环境配置'
+        tab: '环境配置',
+        tooltip: '对组件的环境变量和配置文件进行配置管理'
       });
     }
 
     if (isRely) {
       tabs.push({
         key: 'relation',
-        tab: '依赖'
+        tab: '依赖',
+        tooltip: '配置组件的链接信息和依赖其他组件的信息'
       });
     }
 
     if (isStorage) {
       tabs.push({
         key: 'mnt',
-        tab: '存储'
+        tab: '存储',
+        tooltip: '为组件配置存储，可以新建存储配置，也可以共享其他组件存储'
       });
     }
 
     if (isPort) {
       tabs.push({
         key: 'port',
-        tab: '端口'
+        tab: '端口',
+        tooltip: '为组件配置对内和对外访问的协议和端口'
       });
     }
 
     if (isPlugin) {
       tabs.push({
         key: 'plugin',
-        tab: '插件'
+        tab: '插件',
+        tooltip: '为组件开通插件，扩展组件的运维能力'
       });
     }
 
     if (isSource) {
       tabs.push({
         key: 'resource',
-        tab: '构建源'
+        tab: '构建源',
+        tooltip: '对组件的构建源进行配置，构建源包括：源码、镜像和应用市场'
       });
     }
 
     if (isDeploytype || isCharacteristic || isHealth) {
       tabs.push({
         key: 'setting',
-        tab: '其他设置'
+        tab: '其他设置',
+        tooltip: '对组件的部署类型，组件特性，构建升级策略，健康检测等进行配置'
       });
     }
 
@@ -1369,19 +1429,23 @@ class Main extends PureComponent {
       ? [
           {
             key: 'thirdPartyServices',
-            tab: '总览'
+            tab: '总览',
+            tooltip: '组件总览视图，包含了组件的基本信息'
           },
           {
             key: 'port',
-            tab: '端口'
+            tab: '端口',
+            tooltip: '为组件配置对内和对外访问的协议和端口'
           },
           {
             key: 'connectionInformation',
-            tab: '连接信息'
+            tab: '连接信息',
+            tooltip: '-'
           },
           {
             key: 'members',
-            tab: '更多设置'
+            tab: '更多设置',
+            tooltip: '-'
           }
         ]
       : tabs;

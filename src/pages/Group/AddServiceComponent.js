@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-shadow */
 /* eslint-disable react/no-unused-state */
-import { Alert, Button, Col, Drawer, Icon, Row } from 'antd';
+import { Alert, Button, Col, Drawer, Icon, Row, Tooltip } from 'antd';
 import { connect } from 'dva';
 import React, { PureComponent } from 'react';
 import CodeGitRepostory from '../../components/GitRepostory';
@@ -214,14 +214,16 @@ export default class AddServiceComponent extends PureComponent {
     };
     return (
       <div>
-        <Button
-          type="primary"
-          onClick={this.toAddService}
-          style={{ marginLeft: '12px' }}
-        >
-          <Icon type="plus" />
-          添加组件
-        </Button>
+        <Tooltip placement="top" title="为应用创建新的组件">
+          <Button
+            // type="primary"
+            onClick={this.toAddService}
+            style={{ marginLeft: '12px' }}
+          >
+            <Icon type="plus" />
+            添加组件
+          </Button>
+        </Tooltip>
         <Drawer
           title="添加组件"
           placement="right"

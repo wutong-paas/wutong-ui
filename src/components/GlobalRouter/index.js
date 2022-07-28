@@ -220,11 +220,14 @@ export default class GlobalRouter extends PureComponent {
       .filter(item => !!item);
   };
   // conversion Path 转化路径
-  conversionPath = (path,item) => {
+  conversionPath = (path, item) => {
     if (path && path.indexOf('http') === 0) {
       return path;
     }
-    return { pathname: `/${path || ''}`.replace(/\/+/g, '/'), state: {breadCrumbName:item.name} };
+    return {
+      pathname: `/${path || ''}`.replace(/\/+/g, '/'),
+      state: { breadCrumbName: item.name }
+    };
   };
   // permission to check
   checkPermissionItem = (authority, ItemDom) => {
@@ -333,7 +336,8 @@ export default class GlobalRouter extends PureComponent {
         <div
           style={{
             height: `calc(100vh - ${!collapsed ? '72' : '56'}px)`,
-            borderRight: '1px solid #DDE4EA'
+            borderRight: '1px solid #DDE4EA',
+            display: 'inline-block'
           }}
         >
           {!collapsed && (

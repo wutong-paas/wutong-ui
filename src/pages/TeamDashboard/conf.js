@@ -49,7 +49,13 @@ export const listColunms = handleGotoApplication => {
               src={logo ? logo : AppImg}
               style={{ marginRight: 12, width: 24, height: 24 }}
             />
-            <span>{text}</span>
+            <a
+              onClick={() => handleGotoApplication(record)}
+              href="javascript:;void(0)"
+              title="点击可跳转至应用管理页面"
+            >
+              {text}
+            </a>
           </>
         );
       }
@@ -120,11 +126,13 @@ export const listColunms = handleGotoApplication => {
       render: (text, item) => {
         return (
           <div>
+            <a onClick={() => handleGotoApplication(item)}>管理</a>
+            {item.accesses.length > 0 && item.status === 'RUNNING' && (
+              <Divider type="vertical" />
+            )}
             {item.accesses.length > 0 && item.status === 'RUNNING' && (
               <VisterBtn linkList={item.accesses} type="link" />
             )}
-            {item.status === 'RUNNING' && <Divider type="vertical" />}
-            <a onClick={() => handleGotoApplication(item)}>管理</a>
           </div>
         );
       }

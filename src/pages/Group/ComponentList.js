@@ -12,7 +12,8 @@ import {
   notification,
   Popconfirm,
   Table,
-  Tooltip
+  Tooltip,
+  Divider
 } from 'antd';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
@@ -434,6 +435,7 @@ export default class ComponentList extends Component {
       {
         title: '操作',
         dataIndex: 'action',
+        width: 180,
         render: (val, data) => (
           <Fragment>
             {data.service_source && data.service_source !== 'third_party' && (
@@ -445,9 +447,10 @@ export default class ComponentList extends Component {
                       this.handleOperation('putReStart', data);
                     }}
                   >
-                    <Button type="link">重启</Button>
+                    <a>重启</a>
                   </Popconfirm>
                 )}
+                {isRestart && <Divider type="vertical" />}
                 {isStart && (
                   <Popconfirm
                     title="确认要启动该组件吗？"
@@ -455,9 +458,10 @@ export default class ComponentList extends Component {
                       this.handleOperation('putStart', data);
                     }}
                   >
-                    <Button type="link">启动</Button>
+                    <a>启动</a>
                   </Popconfirm>
                 )}
+                {isStart && <Divider type="vertical" />}
                 {isStop && (
                   <Popconfirm
                     title="确认要关闭该组件吗？"
@@ -465,7 +469,7 @@ export default class ComponentList extends Component {
                       this.handleOperation('putStop', data);
                     }}
                   >
-                    <Button type="link">关闭</Button>
+                    <a>关闭</a>
                   </Popconfirm>
                 )}
               </Fragment>
@@ -565,9 +569,24 @@ export default class ComponentList extends Component {
           bordered={false}
           bodyStyle={{ padding: '10px 10px' }}
         >
-          <Form layout="inline" style={{ marginBottom: '10px', float: 'left' }}>
+          <div className={styles.header}>
+            <div>
+              <Input
+                className={styles.input}
+                style={{ width: 250 }}
+                placeholder="请搜索组件"
+                onChange={this.handelChange}
+                onPressEnter={this.handleSearch}
+              />
+              <Button type="primary" onClick={this.handleSearch} icon="search">
+                搜索
+              </Button>
+            </div>
+
+            {/* <Form layout="inline" style={{ marginBottom: '10px', float: 'left' }}>
             <Form.Item>
               <Input
+                className={styles.input}
                 style={{ width: 250 }}
                 placeholder="请搜索组件"
                 onChange={this.handelChange}
@@ -579,48 +598,54 @@ export default class ComponentList extends Component {
                 搜索
               </Button>
             </Form.Item>
-            {/* <Form.Item></Form.Item> */}
-          </Form>
-          <div className={styles.tableList} style={{ float: 'right' }}>
-            <div className={styles.tableListOperator}>
-              <Dropdown
-                overlay={menu}
-                trigger={['click']}
-                //placement="topCenter"
-                disabled={!this.CanBatchOperation()}
-              >
-                <Button>
-                  批量操作 <Icon type="down" />
-                </Button>
-              </Dropdown>
+   
+          </Form> */}
+            <div className={styles.tableList}>
+              <div className={styles.tableListOperator}>
+                <Dropdown
+                  overlay={menu}
+                  trigger={['click']}
+                  //placement="topCenter"
+                  disabled={!this.CanBatchOperation()}
+                >
+                  <Button>
+                    批量操作 <Icon type="down" />
+                  </Button>
+                </Dropdown>
+              </div>
             </div>
           </div>
-          <Table
-            pagination={pagination}
-            rowSelection={rowSelection}
-            columns={columns}
-            loading={
-              reStartLoading || startLoading || stopLoading || tableDataLoading
-            }
-            dataSource={apps || []}
-            //footer={() => footer}
-          />
-          {batchDeleteShow && (
-            <BatchDelete
-              batchDeleteApps={batchDeleteApps}
-              onCancel={this.hideBatchDelete}
-              onOk={this.hideBatchDelete}
+          <div className={styles.table}>
+            <Table
+              pagination={pagination}
+              rowSelection={rowSelection}
+              columns={columns}
+              loading={
+                reStartLoading ||
+                startLoading ||
+                stopLoading ||
+                tableDataLoading
+              }
+              dataSource={apps || []}
+              //footer={() => footer}
             />
-          )}
-          {moveGroupShow && (
-            <MoveGroup
-              loading={batchMoveLoading}
-              currGroupID={groupId}
-              groups={groups}
-              onOk={this.handleBatchMove}
-              onCancel={this.hideMoveGroup}
-            />
-          )}
+            {batchDeleteShow && (
+              <BatchDelete
+                batchDeleteApps={batchDeleteApps}
+                onCancel={this.hideBatchDelete}
+                onOk={this.hideBatchDelete}
+              />
+            )}
+            {moveGroupShow && (
+              <MoveGroup
+                loading={batchMoveLoading}
+                currGroupID={groupId}
+                groups={groups}
+                onOk={this.handleBatchMove}
+                onCancel={this.hideMoveGroup}
+              />
+            )}
+          </div>
         </Card>
       </div>
     );

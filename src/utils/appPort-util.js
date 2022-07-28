@@ -18,7 +18,7 @@ const appPortUtil = {
   },
   // 是否可以绑定域名
   canBindDomain(portBean) {
-    return !!(portBean.protocol === 'http');
+    return !!(portBean.protocol === 'http' || portBean.protocol === 'tcp');
   },
   // 获取显示的标明
   getShowAlias(portBean) {

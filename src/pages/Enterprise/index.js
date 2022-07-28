@@ -560,7 +560,7 @@ const Home = props => {
                         </Row>
                       )}
                       {activeKey === 1 && (
-                        <div style={{ padding: 12 }}>
+                        <div style={{ padding: '20px 24px' }}>
                           <Table
                             columns={GroupNodeColunms}
                             dataSource={groupNodeList}
@@ -574,7 +574,7 @@ const Home = props => {
                         </div>
                       )}
                       {activeKey === 2 && (
-                        <div style={{ padding: 12 }}>
+                        <div style={{ padding: '20px 24px' }}>
                           <Table
                             columns={GroupEventColunms}
                             dataSource={groupEventList}
