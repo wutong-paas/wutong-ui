@@ -406,7 +406,7 @@ export default class Index extends PureComponent {
       callback: res => {
         if (res && res.status_code === 200) {
           const list = statusList.map(item => {
-            if (res?.bean[item.key]) {
+            if (typeof res?.bean[item.key] === 'number') {
               item.count = res?.bean[item.key];
             }
             return item;
@@ -478,15 +478,14 @@ export default class Index extends PureComponent {
   };
   // 定时器获取最新的接口数据
   handleTimers = (timerName, callback, times) => {
-    if (this[timerName])
-    {
+    if (this[timerName]) {
       this.handleClearTimeout(this[timerName]);
     }
-      this.handleTeamPermissions(() => {
-        this[timerName] = setTimeout(() => {
-          callback();
-        }, times);
-      });
+    this.handleTeamPermissions(() => {
+      this[timerName] = setTimeout(() => {
+        callback();
+      }, times);
+    });
   };
   // 组件销毁 停止定时器
   handleClearTimeout = timer => {
@@ -608,7 +607,7 @@ export default class Index extends PureComponent {
                     <div className={styles.appinfo}>
                       <div className={styles.top}>
                         <img src={AppTotal} alt="" />
-                        <span>应用服务总数</span>
+                        <span>应用总数</span>
                       </div>
                       <div className={styles.bottom}>
                         <span className={styles.count}>
