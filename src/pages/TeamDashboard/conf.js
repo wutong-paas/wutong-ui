@@ -33,6 +33,11 @@ const statusObj = {
     title: '异常',
     color: 'rgba(253, 106, 106, 1)',
     shadow: 'rgba(253, 106, 106, 0.8)'
+  },
+  STARTING: {
+    title: '启动中',
+    color: 'rgba(0, 112, 255, 1)',
+    shadow: 'rgba(0, 112, 255, 0.8)'
   }
 };
 export const listColunms = handleGotoApplication => {

@@ -44,8 +44,9 @@ const appLogo = require('@/assets/teamAppLogo.svg');
 const defaultAppLogo = require('@/assets/application.png');
 const componentLogo = require('@/assets/teamComponentLogo.svg');
 const statusList = [
-  { title: '全部', count: 0, key: 'total', color: 'rgba(0, 112, 255, 1)' },
+  { title: '全部', count: 0, key: 'total', color: 'rgba(204, 217, 255, 1)' },
   { title: '运行中', count: 0, key: 'running', color: 'rgba(8, 199, 127, 1)' },
+  { title: '启动中', count: 0, key: 'starting', color: 'rgba(0, 112, 255, 1)' },
   { title: '关闭', count: 0, key: 'closed', color: 'rgba(133, 137, 150, 1)' },
   { title: '异常', count: 0, key: 'abnormal', color: 'rgba(253, 106, 106, 1)' },
   { title: '闲置', count: 0, key: 'nil', color: 'rgba(255, 191, 119, 1)' }
