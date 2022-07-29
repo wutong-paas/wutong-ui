@@ -330,6 +330,7 @@ export default class Index extends PureComponent {
             <a onClick={this.showDownHistory1000Log}>最近1000条日志</a>
           </Fragment>
         }
+        className={styles.card}
       >
         <Form layout="inline" name="logFilter" style={{ marginBottom: '16px' }}>
           <Form.Item
