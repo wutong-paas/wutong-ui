@@ -36,32 +36,33 @@ export const GroupNodeColunms = [
 ];
 
 export const GroupEventColunms = [
-  {
-    title: '时间',
-    dataIndex: 'time',
-    key: 'time',
-    width: 180
-  },
-  {
-    title: '类型',
-    dataIndex: 'name',
-    key: 'name'
-  },
-  {
-    title: '描述',
-    dataIndex: 'mesc',
-    key: 'mesc'
-  },
-  {
-    title: '等级',
-    dataIndex: 'level',
-    key: 'level',
-    width: 80,
-    render: (text, record) => (
-      <span style={{ color: levelTextColor[text] }}>{text}</span>
-    )
-  }
-];
+         {
+           title: '时间',
+           dataIndex: 'time',
+           key: 'time',
+           width: 180
+         },
+         {
+           title: '类型',
+           dataIndex: 'name',
+           key: 'name',
+           width: 200
+         },
+         {
+           title: '描述',
+           dataIndex: 'mesc',
+           key: 'mesc'
+         },
+         {
+           title: '等级',
+           dataIndex: 'level',
+           key: 'level',
+           width: 80,
+           render: (text, record) => (
+             <span style={{ color: levelTextColor[text] }}>{text}</span>
+           )
+         }
+       ];
 
 export const tabList = [
   {
