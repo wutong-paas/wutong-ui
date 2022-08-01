@@ -2,15 +2,13 @@
 import { formatMessage } from 'umi-plugin-locale';
 import wutongUtil from '../utils/wutong';
 import userUtil from '../utils/user';
-import { isUrl } from '../utils/utils';
+import { isUrl, renderIcon } from '../utils/utils';
 import clusterImg from '../../public/images/menu/cluster.svg';
 import userImg from '../../public/images/menu/user.svg';
 import settingImg from '../../public/images/menu/setting.svg';
 import teamImg from '../../public/images/menu/team.svg';
 import marketImg from '../../public/images/menu/market.svg';
 import dashboardImg from '../../public/images/menu/dashboard.svg'
-
-const renderIcon = src => <img src={src} alt="" style={{ marginRight: 10 }} />;
 
 function menuData(eid, currentUser, enterprise) {
   const adminer = userUtil.isCompanyAdmin(currentUser);

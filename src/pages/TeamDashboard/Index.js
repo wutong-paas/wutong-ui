@@ -37,6 +37,7 @@ import ComponentImg from '../../../public/images/team/component.svg';
 import styles from './Index.less';
 import roleUtil from '@/utils/role';
 import { listColunms } from './conf';
+import { computedPercentage } from '../../utils/utils';
 
 const { Search } = Input;
 const echarts = require('echarts');
@@ -51,14 +52,6 @@ const statusList = [
   { title: '异常', count: 0, key: 'abnormal', color: 'rgba(253, 106, 106, 1)' },
   { title: '闲置', count: 0, key: 'nil', color: 'rgba(255, 191, 119, 1)' }
 ];
-
-const computedPercentage = (dividend, divisor) => {
-  if (dividend == 0 || divisor == 0) {
-    return 0;
-  }
-  return Math.round(((dividend / divisor) * 100).toFixed(2));
-};
-
 @connect(({ user, index, loading, global, teamControl, enterprise }) => ({
   currUser: user.currentUser,
   index,

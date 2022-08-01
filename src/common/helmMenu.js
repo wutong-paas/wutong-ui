@@ -2,12 +2,10 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { formatMessage } from 'umi-plugin-locale';
 import roleUtil from '../utils/role';
-import { isUrl } from '../utils/utils';
+import { isUrl, renderIcon } from '../utils/utils';
 import updateImg from '../../public/images/menu/update.svg';
 import gatewayImg from '../../public/images/menu/gateway.svg';
 import dashboardImg from '../../public/images/menu/dashboard.svg';
-
-const renderIcon = src => <img src={src} alt="" style={{ marginRight: 10 }} />;
 
 const upgradeIcon = (
   <i className="anticon">

@@ -1,6 +1,6 @@
-import moment from "moment";
-import configureGlobal from "./configureGlobal.js";
-import cookie from "./cookie";
+import moment from 'moment';
+import configureGlobal from './configureGlobal.js';
+import cookie from './cookie';
 
 export function fixedZero(val) {
   return val * 1 < 10 ? `0${val}` : val;
@@ -10,14 +10,14 @@ export function getTimeDistance(type) {
   const now = new Date();
   const oneDay = 1000 * 60 * 60 * 24;
 
-  if (type === "today") {
+  if (type === 'today') {
     now.setHours(0);
     now.setMinutes(0);
     now.setSeconds(0);
     return [moment(now), moment(now.getTime() + (oneDay - 1000))];
   }
 
-  if (type === "week") {
+  if (type === 'week') {
     let day = now.getDay();
     now.setHours(0);
     now.setMinutes(0);
@@ -34,10 +34,10 @@ export function getTimeDistance(type) {
     return [moment(beginTime), moment(beginTime + (7 * oneDay - 1000))];
   }
 
-  if (type === "month") {
+  if (type === 'month') {
     const year = now.getFullYear();
     const month = now.getMonth();
-    const nextDate = moment(now).add(1, "months");
+    const nextDate = moment(now).add(1, 'months');
     const nextYear = nextDate.year();
     const nextMonth = nextDate.month();
 
@@ -51,18 +51,18 @@ export function getTimeDistance(type) {
     ];
   }
 
-  if (type === "year") {
+  if (type === 'year') {
     const year = now.getFullYear();
 
     return [moment(`${year}-01-01 00:00:00`), moment(`${year}-12-31 23:59:59`)];
   }
 }
 
-export function getPlainNode(nodeList, parentPath = "") {
+export function getPlainNode(nodeList, parentPath = '') {
   const arr = [];
   nodeList.forEach(node => {
     const item = node;
-    item.path = `${parentPath}/${item.path || ""}`.replace(/\/+/g, "/");
+    item.path = `${parentPath}/${item.path || ''}`.replace(/\/+/g, '/');
     item.exact = true;
     if (item.children && !item.component) {
       arr.push(...getPlainNode(item.children, item.path));
@@ -77,40 +77,40 @@ export function getPlainNode(nodeList, parentPath = "") {
 }
 
 export function digitUppercase(n) {
-  const fraction = ["角", "分"];
-  const digit = ["零", "壹", "贰", "叁", "肆", "伍", "陆", "柒", "捌", "玖"];
-  const unit = [["元", "万", "亿"], ["", "拾", "佰", "仟"]];
+  const fraction = ['角', '分'];
+  const digit = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+  const unit = [['元', '万', '亿'], ['', '拾', '佰', '仟']];
   let num = Math.abs(n);
-  let s = "";
+  let s = '';
   fraction.forEach((item, index) => {
     s += (digit[Math.floor(num * 10 * 10 ** index) % 10] + item).replace(
       /零./,
-      ""
+      ''
     );
   });
-  s = s || "整";
+  s = s || '整';
   num = Math.floor(num);
   for (let i = 0; i < unit[0].length && num > 0; i += 1) {
-    let p = "";
+    let p = '';
     for (let j = 0; j < unit[1].length && num > 0; j += 1) {
       p = digit[num % 10] + unit[1][j] + p;
       num = Math.floor(num / 10);
     }
-    s = p.replace(/(零.)*零$/, "").replace(/^$/, "零") + unit[0][i] + s;
+    s = p.replace(/(零.)*零$/, '').replace(/^$/, '零') + unit[0][i] + s;
   }
 
   return s
-    .replace(/(零.)*零元/, "元")
-    .replace(/(零.)+/g, "零")
-    .replace(/^整$/, "零元整");
+    .replace(/(零.)*零元/, '元')
+    .replace(/(零.)+/g, '零')
+    .replace(/^整$/, '零元整');
 }
 
 function getRelation(str1, str2) {
   if (str1 === str2) {
-    console.warn("Two path are equal!"); // eslint-disable-line
+    console.warn('Two path are equal!'); // eslint-disable-line
   }
-  const arr1 = str1.split("/");
-  const arr2 = str2.split("/");
+  const arr1 = str1.split('/');
+  const arr2 = str2.split('/');
   if (arr2.every((item, index) => item === arr1[index])) {
     return 1;
   } else if (arr1.every((item, index) => item === arr2[index])) {
@@ -129,8 +129,7 @@ function getRenderArr(routes) {
     // 去重
     renderArr = renderArr.filter(item => getRelation(item, routes[i]) !== 1);
 
-    if(routes[i].indexOf('oauth')>-1){
-
+    if (routes[i].indexOf('oauth') > -1) {
       renderArr.push('oauth/callback');
     }
     if (isAdd) {
@@ -142,7 +141,7 @@ function getRenderArr(routes) {
 
 export function openInNewTab(url) {
   try {
-    var win = window.open(url, "_blank");
+    var win = window.open(url, '_blank');
     win.focus();
   } catch (e) {
     console.log(e);
@@ -161,7 +160,7 @@ export function getRoutes(path, routerData) {
   });
 
   // Replace path to '' eg. path='user' /user/name => name
-  routes = routes.map(item => item.replace(path, ""));
+  routes = routes.map(item => item.replace(path, ''));
 
   // Get the route to be rendered to remove the deep rendering
   const renderArr = getRenderArr(routes);
@@ -188,7 +187,7 @@ export function isUrl(path) {
   return reg.test(path);
 }
 
-let platform_url = cookie.get("platform_url");
+let platform_url = cookie.get('platform_url');
 
 export const languageObj = {
   Dockefile: `${platform_url}docs/user-manual/app-creation/language-support/dockerfile/`,
@@ -203,10 +202,10 @@ export const languageObj = {
 };
 
 export const volumeTypeObj = {
-  "share-file": "共享存储（文件）",
-  "memoryfs": "内存文件存储",
-  "local": "本地存储",
-  "config-file": "配置文件"
+  'share-file': '共享存储（文件）',
+  memoryfs: '内存文件存储',
+  local: '本地存储',
+  'config-file': '配置文件'
 };
 
 export function getVolumeTypeShowName(volumeOpts, volume_type) {
@@ -220,9 +219,22 @@ export function getVolumeTypeShowName(volumeOpts, volume_type) {
   if (showName) {
     return showName;
   }
-  const name = volumeTypeObj[volume_type]
+  const name = volumeTypeObj[volume_type];
   if (name) {
-    return name
+    return name;
   }
   return volume_type;
+}
+
+//渲染Img组件
+export const renderIcon = src => (
+  <img src={src} alt="" style={{ marginRight: 10 }} />
+);
+
+//计算百分比 固定两位小数 四舍五入
+export const computedPercentage = (dividend, divisor) => {
+  if (dividend == 0 || divisor == 0) {
+    return 0;
+  }
+  return Math.round(((dividend / divisor) * 100).toFixed(2));
 };
