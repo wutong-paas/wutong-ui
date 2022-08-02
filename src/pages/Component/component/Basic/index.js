@@ -150,20 +150,12 @@ class Index extends PureComponent {
                         {!resourcesLoading && (
                           <Fragment>
                             <Tooltip title={numeral(disk).format('0,0')}>
-                              <span
-                                style={{
-                                  color: 'rgba(0,0,0,0.45)',
-                                  padding: '0 20px',
-                                  minWidth: '80px'
-                                }}
-                              >
-                                {numeral(disk).format('0,0')}
-                              </span>
+                              <span>{numeral(disk).format('0,0')}</span>
                             </Tooltip>
-                            MB 磁盘
                           </Fragment>
                         )}
                       </span>
+                      <span className={styles.unit}>MB 磁盘</span>
                     </div>
                     <div style={{ marginTop: 10 }}>
                       <span className={styles.lable}>
