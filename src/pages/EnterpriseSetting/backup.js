@@ -233,7 +233,7 @@ export default class BackupManage extends PureComponent {
                 onClick={this.onAddBackup}
                 loading={addLoading}
                 className={styles.btns}
-                style={{ background: '#2953E8' }}
+                //style={{ background: '#2953E8' }}
               >
                 增加备份
               </Button>
