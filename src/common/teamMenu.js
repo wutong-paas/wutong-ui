@@ -1,6 +1,6 @@
 import { formatMessage } from 'umi-plugin-locale';
 import cookie from '../utils/cookie';
-import { isUrl } from '../utils/utils';
+import { isUrl, renderIcon } from '../utils/utils';
 import roleUtil from '../utils/role';
 import gatewayImg from '../../public/images/menu/gateway.svg';
 import dashboardImg from '../../public/images/menu/dashboard.svg';
@@ -10,8 +10,6 @@ import pluginImg from '../../public/images/menu/plugin.svg';
 import teamManagerImg from '../../public/images/menu/teammanager.svg';
 
 const newbieGuide = cookie.get('newbie_guide');
-
-const renderIcon = src => <img src={src} alt="" style={{ marginRight: 10 }} />;
 
 function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
   const menuArr = [

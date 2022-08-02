@@ -1,14 +1,12 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { formatMessage } from 'umi-plugin-locale';
-import { isUrl } from '../utils/utils';
+import { isUrl,renderIcon } from '../utils/utils';
 import roleUtil from '../utils/role';
 import updateImg from '../../public/images/menu/update.svg';
 import publishImg from '../../public/images/menu/publish.svg';
 import configImg from '../../public/images/menu/config.svg';
 import gatewayImg from '../../public/images/menu/gateway.svg';
 import dashboardImg from '../../public/images/menu/dashboard.svg';
-
-const renderIcon = src => <img src={src} alt="" style={{ marginRight: 10 }} />;
 
 const publishIcon = (
   <i className="anticon">

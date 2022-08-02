@@ -1145,11 +1145,12 @@ export default class Index extends PureComponent {
                     {upgradableNumLoading ? <Spin /> : upgradableNum}
                   </div>
                   <div>
-                    <img
+                    {/* <img
                       src={!isHover ? UpdateImg : UpdateHoverImg}
                       alt=""
                       style={{ width: 16, height: 16 }}
-                    />
+                    /> */}
+                    <span className="iconfont icon-shengji"></span>
                     <span className={styles.text}>待升级</span>
                   </div>
                   <div>
