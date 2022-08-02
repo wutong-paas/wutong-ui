@@ -324,8 +324,6 @@ export default class GlobalRouter extends PureComponent {
         <div
           style={{
             height: 56,
-            // borderBottom: '1px solid #d9d9d9',
-            borderRight: ' 1px solid #eee',
             backgroundColor: '#fff',
             textAlign: 'center',
             lineHeight: '56px'
