@@ -1,0 +1,106 @@
+.build_view {
+  background   : #fff;
+  border-radius: 4px;
+  box-shadow   : 0px 1px 4px 0px rgba(0, 0, 0, 0.0600);
+  font-size    : 16px;
+  height       : 210px;
+  padding      : 20px 24px;
+
+  .title {
+    height : 24px;
+    display: flex;
+
+    .left {
+      .badge {
+        display         : inline-block;
+        width           : 8px;
+        height          : 8px;
+        background      : #08C77F;
+        box-shadow      : 0px 0px 6px 0px rgba(8, 199, 127, 0.8000);
+        border-radius   : 8px;
+        margin-right    : 12px;
+        //vertical-align: baseline;
+      }
+
+      .text {
+        font-size: 18px;
+        font-family: PingFangSC-Semibold,
+          PingFang SC;
+        font-weight: 600;
+        color      : #000000;
+      }
+    }
+
+    .middle {
+      width     : 1px;
+      height    : 16px;
+      background: #D7E5EE;
+      margin    : 6px 24px;
+    }
+
+    .right {
+      .version {
+        font-size   : 14px;
+        font-weight : 400;
+        color       : rgba(0, 0, 0, 0.6500);
+        margin-right: 16px;
+      }
+
+      .number {
+        font-size  : 14px;
+        font-weight: 500;
+        color      : #2467F6;
+      }
+    }
+  }
+
+  .info {
+    padding: 20px 0px;
+
+    .lable {
+      font-size   : 14px;
+      font-weight : 400;
+      color       : rgba(0, 0, 0, 0.6500);
+      margin-right: 16px;
+      display     : inline-block;
+      width       : 56px;
+      text-align  : right;
+    }
+
+    .value {
+      font-size  : 14px;
+      font-weight: 500;
+      color      : #000000;
+    }
+
+    .unit {
+      font-size  : 14px;
+      font-weight: 400;
+      color      : rgba(0, 0, 0, 0.6500);
+      margin-left: 12px;
+    }
+
+    border-bottom: 1px solid #D7E5EE;
+  }
+
+  .footer {
+    height         : 72px;
+    width          : 100%;
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+
+    .more {
+      cursor       : pointer;
+      width        : 140px;
+      height       : 30px;
+      border-radius: 15px;
+      border       : 1px solid rgba(8, 21, 58, .4);
+      font-size    : 14px;
+      font-weight  : 500;
+      color        : #08153A;
+      text-align   : center;
+      line-height  : 30px;
+    }
+  }
+}

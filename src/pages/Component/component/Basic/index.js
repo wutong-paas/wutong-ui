@@ -4,7 +4,8 @@ import { Col, Form, Row, Tooltip } from 'antd';
 import numeral from 'numeral';
 import React, { Fragment, PureComponent } from 'react';
 import globalUtil from '../../../../utils/global';
-import styles from '../../Index.less';
+//import styles from '../../Index.less';
+import styles from './index.less';
 
 @Form.create()
 class Index extends PureComponent {
@@ -33,6 +34,195 @@ class Index extends PureComponent {
       buildSource
     } = this.props;
     const setMemory = memory === 0 ? '不限制' : numeral(memory).format('0,0');
+    return (
+      <>
+        <Row gutter={24}>
+          <Col>
+            <div className={styles['build_view']}>
+              <div className={styles.title}>
+                <div className={styles.left}>
+                  <span className={styles.badge}></span>
+                  <span className={styles.text}>
+                    {(status && status.status_cn) || ''}
+                  </span>
+                </div>
+                <div className={styles.middle}></div>
+                <div className={styles.right}>
+                  <span className={styles.version}>版本号</span>
+                  <span className={styles.number}>
+                    {beanData && beanData.build_version
+                      ? beanData.build_version
+                      : '暂无'}
+                  </span>
+                </div>
+              </div>
+              <div className={styles.info}>
+                <Row>
+                  <Col span={8}>
+                    <div>
+                      <span className={styles.lable}>运行</span>
+                      <span className={styles.value}>
+                        {status && status.start_time
+                          ? globalUtil.fetchTime(
+                              Date.parse(new Date()) -
+                                new Date(status.start_time).getTime()
+                            )
+                          : ''}
+                      </span>
+                    </div>
+                    <div style={{ marginTop: 10 }}>
+                      <span className={styles.lable}>
+                        {/* {globalUtil.fetchSvg('warehouse')} */}
+                        {buildSource && buildSource === 'source_code'
+                          ? '代码版本'
+                          : '仓库地址'}
+                      </span>
+                      <Tooltip
+                        title={
+                          beanData &&
+                          (beanData.kind && beanData.kind === '源码构建'
+                            ? beanData.code_version && ''
+                            : beanData.image_domain && beanData.image_domain)
+                        }
+                      >
+                        <span className={styles.value}>
+                          {beanData
+                            ? beanData.kind &&
+                              beanData.kind === '源码构建' &&
+                              beanData.code_version
+                              ? beanData.code_version.substr(0, 8)
+                              : beanData.image_domain
+                              ? beanData.image_domain
+                              : '暂无'
+                            : '暂无'}
+                        </span>
+                      </Tooltip>
+                    </div>
+                  </Col>
+                  <Col span={8}>
+                    <div>
+                      <span className={styles.lable}>分配</span>
+                      <span className={styles.value}>
+                        {!resourcesLoading && (
+                          <Fragment>
+                            <Tooltip title={setMemory}>
+                              <span>{setMemory}</span>
+                            </Tooltip>
+                          </Fragment>
+                        )}
+                      </span>
+                      {memory !== 0 && (
+                        <span className={styles.unit}>MB 内存</span>
+                      )}
+                    </div>
+                    <div style={{ marginTop: 10 }}>
+                      <span className={styles.lable}>
+                        {buildSource && buildSource === 'source_code'
+                          ? '提交信息'
+                          : '镜像名称'}
+                      </span>
+                      <span className={styles.value}>
+                        <Tooltip
+                          title={
+                            beanData &&
+                            (beanData.kind && beanData.kind === '源码构建'
+                              ? beanData.code_commit_msg &&
+                                beanData.code_commit_msg
+                              : beanData.image_repo && beanData.image_repo)
+                          }
+                        >
+                          {beanData
+                            ? beanData.kind && beanData.kind === '源码构建'
+                              ? beanData.code_commit_msg &&
+                                beanData.code_commit_msg
+                              : beanData.image_repo
+                              ? beanData.image_repo
+                              : '暂无'
+                            : '暂无'}
+                        </Tooltip>
+                      </span>
+                    </div>
+                  </Col>
+                  <Col span={8}>
+                    <div>
+                      <span className={styles.lable}>占用</span>
+                      <span className={styles.value}>
+                        {!resourcesLoading && (
+                          <Fragment>
+                            <Tooltip title={numeral(disk).format('0,0')}>
+                              <span
+                                style={{
+                                  color: 'rgba(0,0,0,0.45)',
+                                  padding: '0 20px',
+                                  minWidth: '80px'
+                                }}
+                              >
+                                {numeral(disk).format('0,0')}
+                              </span>
+                            </Tooltip>
+                            MB 磁盘
+                          </Fragment>
+                        )}
+                      </span>
+                    </div>
+                    <div style={{ marginTop: 10 }}>
+                      <span className={styles.lable}>
+                        {buildSource && buildSource === 'source_code'
+                          ? '代码分支'
+                          : '镜像tag'}
+                      </span>
+                      <span className={styles.value}>
+                        <Tooltip
+                          title={
+                            beanData &&
+                            (beanData.kind && beanData.kind === '源码构建'
+                              ? beanData.code_branch && beanData.code_branch
+                              : beanData.image_tag && beanData.image_tag)
+                          }
+                        >
+                          <span className={styles.buildText}>
+                            {beanData
+                              ? beanData.kind && beanData.kind === '源码构建'
+                                ? beanData.code_branch && beanData.code_branch
+                                : beanData.image_tag
+                                ? beanData.image_tag
+                                : '暂无'
+                              : '暂无'}
+                          </span>
+                        </Tooltip>
+                      </span>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
+              <div className={styles.footer}>
+                <div className={styles.more}>
+                  {dataList && dataList.length > 0 && !more ? (
+                    <span
+                      onClick={() => {
+                        this.handleMore(true);
+                      }}
+                    >
+                      查看更多版本
+                    </span>
+                  ) : (
+                    more === true && (
+                      <span
+                        onClick={() => {
+                          this.handleMore(false);
+                        }}
+                      >
+                        返回实例列表
+                      </span>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
+          </Col>
+        </Row>
+      </>
+    );
     return (
       <Row gutter={24}>
         <Col xs={24} xm={24} md={24} lg={24} xl={24}>
