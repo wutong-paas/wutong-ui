@@ -209,8 +209,8 @@ const global = {
   },
   fetchStateColor(status) {
     const statusColorMap = {
-      RUNNING: '#00D777', // 运行中 绿色
-      running: '#00D777', // 运行中 绿色
+      RUNNING: '#08C77F', // 运行中 绿色
+      running: '#08C77F', // 运行中 绿色
       starting: '#F69D4A', // 启动中
       Starting: '#F69D4A', // 启动中
       NOTREADY: '#F69D4A', // 未就绪

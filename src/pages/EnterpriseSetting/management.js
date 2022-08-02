@@ -232,7 +232,7 @@ export default class Management extends PureComponent {
           type="primary"
           onClick={this.onAddAdmin}
           className={styles.btns}
-          style={{ background: '#2953E8' }}
+          //style={{ background: '#2953E8' }}
         >
           添加管理员
         </Button>

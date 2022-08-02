@@ -847,9 +847,7 @@ export default class EnterpriseClusters extends PureComponent {
         <Row style={{ marginBottom: '20px' }}>
           <Col span={24} style={{ textAlign: 'right' }}>
             <Link to={`/enterprise/${eid}/addCluster`}>
-              <Button type="primary" style={{ background: '#2953E8' }}>
-                添加集群
-              </Button>
+              <Button type="primary">添加集群</Button>
             </Link>
             <Button
               style={{ marginLeft: '16px' }}

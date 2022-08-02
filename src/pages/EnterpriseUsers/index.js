@@ -347,7 +347,6 @@ export default class EnterpriseUsers extends PureComponent {
                   type="primary"
                   onClick={this.handleSearch}
                   icon="search"
-                  style={{ background: '#2953E8' }}
                 >
                   搜索
                 </Button>
@@ -359,7 +358,7 @@ export default class EnterpriseUsers extends PureComponent {
               <Button
                 type="primary"
                 icon="plus"
-                style={{ float: 'right', background: '#2953E8' }}
+                style={{ float: 'right'}}
                 onClick={this.addUser}
               >
                 新增用户
