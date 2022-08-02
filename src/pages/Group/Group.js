@@ -381,7 +381,7 @@ export default class Index extends PureComponent {
               title: '备份',
               src: BackupImg,
               hoverSrc: BackupHoverImg,
-              canJump: isBackup,
+              canJump: isBackup && false, //暂时关闭跳转-by leon
               keys: 'backup'
             },
             {

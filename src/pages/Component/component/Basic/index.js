@@ -41,7 +41,17 @@ class Index extends PureComponent {
             <div className={styles['build_view']}>
               <div className={styles.title}>
                 <div className={styles.left}>
-                  <span className={styles.badge}></span>
+                  <span
+                    className={styles.badge}
+                    style={{
+                      background: globalUtil.fetchStateColor(
+                        status && status.status
+                      ),
+                      boxShadow: `0px 0px 6px 0px ${globalUtil.fetchStateColor(
+                        status && status.status
+                      )}65`
+                    }}
+                  ></span>
                   <span className={styles.text}>
                     {(status && status.status_cn) || ''}
                   </span>
