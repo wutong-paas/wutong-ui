@@ -140,7 +140,7 @@ export default class DatacenterList extends PureComponent {
                       {isUninstall && (
                         <a
                           onClick={() => this.showCloseRegion(item.region_name)}
-                          style={{ float: 'right', color: '#1890ff' }}
+                          style={{ float: 'right', color: '#0070FF' }}
                         >
                           卸载
                         </a>

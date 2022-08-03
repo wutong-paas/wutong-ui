@@ -178,7 +178,7 @@ export default class AddDomain extends PureComponent {
               style={{
                 wordBreak: 'break-all',
                 wordWrap: 'break-word',
-                color: '#1890ff'
+                color: '#0070FF'
               }}
             >
               点击进入访问策略设置

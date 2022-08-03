@@ -77,6 +77,10 @@ body {
     font-weight: 500;
     color      : #000000;
   }
+
+  .ant-table-tbody>tr:hover:not(.ant-table-expanded-row)>td {
+    background-color: rgba(0, 0, 0, 0.0200);
+  }
 }
 
 //antd button 主题色修改
@@ -87,6 +91,14 @@ body {
   &:hover {
     background-color: #08153A;
     border-color    : #08153A
+  }
+}
+
+.ant-btn-link {
+  color: #0070FF;
+
+  &:hover {
+    color: #0070FF;
   }
 }
 
@@ -104,10 +116,18 @@ body {
 }
 
 .ant-tabs-nav-wrap .ant-tabs-nav .ant-tabs-tab-active {
-  color: #08153A;
+  color      : #08153A;
   font-weight: 600;
 }
 
 .ant-tabs-nav .ant-tabs-ink-bar {
   background-color: #08153A;
+}
+
+a {
+  color: #0070FF;
+
+  &:hover {
+    color: #0070FF;
+  }
 }
