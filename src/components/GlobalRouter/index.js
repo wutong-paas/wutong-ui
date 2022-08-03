@@ -7,8 +7,8 @@ import globalUtil from '../../utils/global';
 import userUtil from '../../utils/user';
 import CollectionView from '../SiderMenu/CollectionView';
 import styles from './index.less';
-import logoSmall from '../../../public/images/logo/logo_small.png';
-import logoNormal from '../../../public/images/logo/logo_normal.png';
+import logoSmall from '../../../public/images/logo/logo_small_hngs.png';
+import logoNormal from '../../../public/images/logo/logo_normal_hngs.png';
 
 const { SubMenu } = Menu;
 

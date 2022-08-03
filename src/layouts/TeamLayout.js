@@ -540,7 +540,7 @@ class TeamLayout extends PureComponent {
       );
     }
     const fetchLogo = wutongUtil.fetchLogo(wutongInfo, enterprise) || logo;
-    const SiteTitle = '梧桐云平台';
+    const SiteTitle = '开发运维一体化平台';
 
     const layout = () => {
       const team = userUtil.getTeamByTeamName(currentUser, teamName);
