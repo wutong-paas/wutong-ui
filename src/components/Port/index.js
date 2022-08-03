@@ -595,7 +595,7 @@ export default class Index extends PureComponent {
                     style={{
                       wordBreak: 'break-all',
                       wordWrap: 'break-word',
-                      color: '#1890ff'
+                      color: '#0070FF'
                     }}
                   >
                     <Button size="small">管理访问策略</Button>
