@@ -571,16 +571,17 @@ export default class ComponentList extends Component {
         >
           <div className={styles.header}>
             <div>
-              <Input
+              <Input.Search
                 className={styles.input}
-                style={{ width: 250 }}
+                style={{ width: 320 }}
                 placeholder="请搜索组件"
                 onChange={this.handelChange}
                 onPressEnter={this.handleSearch}
+                onSearch={this.handleSearch}
               />
-              <Button type="primary" onClick={this.handleSearch} icon="search">
+              {/* <Button type="primary" onClick={this.handleSearch} icon="search">
                 搜索
-              </Button>
+              </Button> */}
             </div>
 
             {/* <Form layout="inline" style={{ marginBottom: '10px', float: 'left' }}>

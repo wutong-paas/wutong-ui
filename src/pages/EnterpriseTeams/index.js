@@ -183,13 +183,13 @@ export default class EnterpriseTeams extends PureComponent {
     this.props.dispatch({
       type: 'teamControl/createTeam',
       payload: values,
-      callback: (res) => {
-        const { response_data } = res
+      callback: res => {
+        const { response_data } = res;
         if (response_data && response_data.code) {
           if (response_data.code === 400) {
             notification.warning({ message: response_data.msg_show });
           } else {
-            notification.success({ message: response_data.msg_show })
+            notification.success({ message: response_data.msg_show });
           }
         }
         // 添加完查询企业团队列表
@@ -653,16 +653,10 @@ export default class EnterpriseTeams extends PureComponent {
             marginBottom: '20px'
           }}
         >
-          <Col
-            span={2}
-            className={styles.teamsTit}
-            style={{ marginBottom: '0' }}
-          >
-            全部团队
-          </Col>
-          <Col span={15} style={{ textAlign: 'left' }}>
+          <Col span={17} style={{ textAlign: 'left' }}>
+            <span className={styles.teamsTit}> 全部团队</span>
             <Search
-              style={{ width: '500px' }}
+              style={{ width: '320px', marginLeft: 8 }}
               placeholder="请输入团队名称进行搜索"
               onSearch={this.handleSearchTeam}
             />
@@ -682,7 +676,10 @@ export default class EnterpriseTeams extends PureComponent {
             </Tooltip>
           </Col>
           <Col span={11}>
-            <Tooltip placement="top" title="团队开通的集群，如果有多个集群则显示多个">
+            <Tooltip
+              placement="top"
+              title="团队开通的集群，如果有多个集群则显示多个"
+            >
               <span>集群</span>
               <img
                 src={Tooltips}
@@ -822,7 +819,7 @@ export default class EnterpriseTeams extends PureComponent {
 
           <Col span={20} style={{ textAlign: 'right' }}>
             <Search
-              style={{ width: '500px' }}
+              style={{ width: '320px' }}
               placeholder="请输入团队名称进行搜索"
               onSearch={this.handleSearchUserTeam}
             />

@@ -234,6 +234,7 @@ export default class CloudApp extends PureComponent {
               className={BasicListStyles.extraContentSearch}
               placeholder="请输入名称进行搜索"
               onSearch={this.handleSearch}
+              style={{ width: 320 }}
             />
           </div>
         }

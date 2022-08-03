@@ -1223,7 +1223,9 @@ export default class Index extends PureComponent {
                   return (
                     <div
                       className={
-                        type === item.keys ? styles.active : styles.tabpane
+                        type === item.keys || (type === 'shapes' && index === 1)
+                          ? styles.active
+                          : styles.tabpane
                       }
                       key={index}
                       onClick={() => {

@@ -27,7 +27,6 @@ const TwTabs = props => {
         return (
           <div
             onClick={e => {
-              console.log('coming');
               if (
                 !['undefined', 'null'].includes(typeof propsActiveKey) &&
                 onTabChange &&
@@ -35,6 +34,7 @@ const TwTabs = props => {
                   '[object Function]'
               ) {
                 onTabChange(keys ? keys : index);
+                return;
               }
               handleChange(keys ? keys : index);
             }}

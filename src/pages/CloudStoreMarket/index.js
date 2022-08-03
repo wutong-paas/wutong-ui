@@ -343,7 +343,7 @@ const CloudStore = props => {
                   <Spin spinning={loading}>
                     <div className={styles.actions}>
                       <Search
-                        style={{ width: '400px' }}
+                        style={{ width: '320px' }}
                         placeholder="请输入名称进行搜索"
                         onSearch={handleSearch}
                       />

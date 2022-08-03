@@ -335,14 +335,15 @@ export default class EnterpriseUsers extends PureComponent {
           <Col span={12}>
             <Form layout="inline" style={{ display: 'inline-block' }}>
               <FormItem>
-                <Input
+                <Input.Search
                   placeholder="搜索用户"
                   onChange={e => this.handelChange(e.target.value)}
                   onPressEnter={this.handleSearch}
-                  style={{ width: 250 }}
+                  style={{ width: 320 }}
+                  onSearch={this.handleSearch}
                 />
               </FormItem>
-              <FormItem>
+              {/* <FormItem>
                 <Button
                   type="primary"
                   onClick={this.handleSearch}
@@ -350,7 +351,7 @@ export default class EnterpriseUsers extends PureComponent {
                 >
                   搜索
                 </Button>
-              </FormItem>
+              </FormItem> */}
             </Form>
           </Col>
           <Col span={12} style={{ textAlign: 'right' }}>
@@ -358,7 +359,7 @@ export default class EnterpriseUsers extends PureComponent {
               <Button
                 type="primary"
                 icon="plus"
-                style={{ float: 'right'}}
+                style={{ float: 'right' }}
                 onClick={this.addUser}
               >
                 新增用户
