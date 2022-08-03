@@ -83,8 +83,8 @@ export default class Loading extends Component {
     }
 	render() {
 		return (
-			<div ref={this.saveRef} className="loadingbar" style={{display:this.state.show ? 'block': 'none',zIndex:9999999,height:"3px",position:"fixed",left:0,top:-10,width:'100%'}}>
-			  <Progress status="active"  size="small"  percent={this.state.width} />
+			<div ref={this.saveRef} className="loadingbar" style={{display:this.state.show ? 'block': 'none',zIndex:9999999,height:"1px",position:"fixed",left:0,top:-12,width:'100%'}}>
+			  <Progress status="active"  size="small"  percent={this.state.width} strokeWidth={2} />
             </div>
 		)
 	}
