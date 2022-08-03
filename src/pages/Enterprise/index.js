@@ -182,8 +182,11 @@ const Home = props => {
         enterprise_id: params?.eid
       },
       callback: res => {
-        if (res) {
-          setGroupEventList(res?.bean);
+        if (
+          res?.bean &&
+          Object.prototype.toString.call(res?.bean) === '[object Array]'
+        ) {
+          setGroupEventList(res.bean);
         }
       }
     });
