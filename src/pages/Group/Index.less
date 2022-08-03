@@ -1,37 +1,66 @@
 @import '~antd/lib/style/themes/default.less';
 @import '../../utils/utils.less';
 
-.tabs {
-  width        : fit-content;
-  height       : 30px;
-  background   : rgba(241, 249, 255, 1);
-  border-radius: 15px;
-  display      : flex;
-  text-align   : center;
-  align-items  : center;
-  margin-left  : 24px;
-
-  .tabpane {
-    width    : 96px;
-    cursor   : pointer;
-    font-size: 14px;
-    font-family: PingFangSC-Medium,
-      PingFang SC;
-    font-weight: 500;
-    color      : #000000;
-
-  }
-}
-
-.active {
-  width          : 96px;
-  height         : 30px;
-  background     : #08153A;
-  border-radius  : 15px;
-  color          : #FFFFFF;
-  align-items    : center;
-  justify-content: center;
+.header {
+  width          : 100%;
   display        : flex;
+  justify-content: space-between;
+  align-items    : center;
+  padding        : 0 24px;
+
+  .left {
+    width  : 50%;
+    display: flex;
+
+    .radio-button {
+      margin-left: 24px;
+
+      :global {
+        .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+          background  : #4C73B0;
+          border-color: #4C73B0;
+        }
+      }
+    }
+  }
+
+  .right {
+    flex           : 1;
+    display        : flex;
+    justify-content: flex-end;
+  }
+
+  .tabs {
+    width        : fit-content;
+    height       : 30px;
+    background   : rgba(241, 249, 255, 1);
+    border-radius: 15px;
+    display      : flex;
+    text-align   : center;
+    align-items  : center;
+
+    .tabpane {
+      width    : 96px;
+      cursor   : pointer;
+      font-size: 14px;
+      font-family: PingFangSC-Medium,
+        PingFang SC;
+      font-weight: 500;
+      color      : #000000;
+
+    }
+  }
+
+  .active {
+    width          : 96px;
+    height         : 30px;
+    background     : #08153A;
+    border-radius  : 15px;
+    color          : #FFFFFF;
+    align-items    : center;
+    justify-content: center;
+    display        : flex;
+  }
 }
 
 .group-header {
@@ -819,15 +848,6 @@
 
     button {
       margin-right: 8px;
-    }
-  }
-}
-
-.radio-button {
-  :global {
-    .ant-radio-group-solid .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
-      background  : #4C73B0;
-      border-color: #4C73B0;
     }
   }
 }
