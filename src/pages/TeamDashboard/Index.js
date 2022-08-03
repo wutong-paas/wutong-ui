@@ -811,7 +811,7 @@ export default class Index extends PureComponent {
                       onSearch={this.onSearch}
                       defaultValue={query}
                       allowClear
-                      style={{ width: 400 }}
+                      style={{ width: 400, marginLeft: 24 }}
                       className={styles.search}
                     />
                   )}

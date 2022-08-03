@@ -1177,19 +1177,6 @@ export default class Index extends PureComponent {
     return (
       <Fragment>
         <Row>{pageHeaderContentNew}</Row>
-        {/* <Row>{pageHeaderContent}</Row> */}
-        {/* {guideStep === 1 &&
-          this.handleNewbieGuiding({
-            tit: '应用信息',
-            showSvg: false,
-            showArrow: true,
-            send: false,
-            configName: 'applicationInfo',
-            desc:
-              '应用由一个或多个服务组成，可以管理一个完整业务系统，比如：OA、CRM、ERP等，也可以管理一个完整的微服务架构的系统，这里展示了应用的基本信息。',
-            nextStep: 2,
-            conPosition: { top: '336px', left: '42%' }
-          })} */}
         {customSwitch && (
           <ApplicationGovernance
             mode={currApp && currApp.governance_mode}
@@ -1211,7 +1198,105 @@ export default class Index extends PureComponent {
               boxShadow: ': 0px 1px 4px 0px rgba(0,0,0,0.0600)'
             }}
           >
-            <Col span={5} style={{ paddingleft: '12px' }}>
+            <div className={styles.header}>
+              <div className={styles.left}>
+                <div className={styles.tabs}>
+                  {[
+                    { title: '组件列表', keys: 'list' },
+                    { title: '拓扑图', keys: 'shape' }
+                  ].map((item, index) => {
+                    if (item.keys === 'list' && !isComponentDescribe) {
+                      return null;
+                    }
+                    return (
+                      <div
+                        className={
+                          type === item.keys ||
+                          (type === 'shapes' && index === 1)
+                            ? styles.active
+                            : styles.tabpane
+                        }
+                        key={index}
+                        onClick={() => {
+                          this.changeType(item.keys);
+                        }}
+                      >
+                        <div>{item.title}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+                {type !== 'list' && isComponentCreate && (
+                  <div className={styles['radio-button']}>
+                    <Radio.Group value={this.state.type} buttonStyle="solid">
+                      <Tooltip
+                        placement="top"
+                        title="图形化展示应用组件的拓扑关系，该模式不可编辑"
+                      >
+                        <Radio.Button
+                          value="shape"
+                          onClick={() => {
+                            this.changeType('shape');
+                          }}
+                        >
+                          普通模式
+                        </Radio.Button>
+                      </Tooltip>
+                      <Tooltip
+                        placement="top"
+                        title="以编辑模式展示应用组件的拓扑关系"
+                      >
+                        <Radio.Button
+                          value="shapes"
+                          onClick={() => {
+                            this.changeType('shapes');
+                          }}
+                        >
+                          编排模式
+                        </Radio.Button>
+                      </Tooltip>
+                    </Radio.Group>
+                  </div>
+                )}
+              </div>
+              <div className={styles.right}>
+                <div className={styles['add-third']}>
+                  {isComponentCreate && isComponentConstruct && (
+                    <AddThirdParty
+                      groupId={this.getGroupId()}
+                      refreshCurrent={() => {
+                        this.loading();
+                      }}
+                      onload={() => {
+                        this.setState({ type: 'spin' }, () => {
+                          this.setState({
+                            type: this.state.size == 'large' ? 'shape' : 'list'
+                          });
+                        });
+                      }}
+                    />
+                  )}
+                </div>
+                <div className={styles['add-service']}>
+                  {isComponentCreate && isComponentConstruct && (
+                    <AddServiceComponent
+                      groupId={this.getGroupId()}
+                      refreshCurrent={() => {
+                        this.loading();
+                      }}
+                      onload={() => {
+                        this.setState({ type: 'spin' }, () => {
+                          this.setState({
+                            type: this.state.size == 'large' ? 'shape' : 'list'
+                          });
+                        });
+                      }}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+            {/* <Col span={5} style={{ paddingleft: '12px' }}>
               <div className={styles.tabs}>
                 {[
                   { title: '组件列表', keys: 'list' },
@@ -1223,7 +1308,9 @@ export default class Index extends PureComponent {
                   return (
                     <div
                       className={
-                        type === item.keys ? styles.active : styles.tabpane
+                        type === item.keys || (type === 'shapes' && index === 1)
+                          ? styles.active
+                          : styles.tabpane
                       }
                       key={index}
                       onClick={() => {
@@ -1235,41 +1322,6 @@ export default class Index extends PureComponent {
                   );
                 })}
               </div>
-              {/* {isComponentDescribe && (
-                <a
-                  onClick={() => {
-                    this.changeType('list');
-                  }}
-                  style={{
-                    marginLeft: '30px',
-                    color: type === 'list' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'
-                  }}
-                >
-                  组件列表
-                </a>
-              )}
-              <a
-                onClick={() => {
-                  this.changeType('shape');
-                }}
-                style={{
-                  marginLeft: '30px',
-                  color: type === 'shape' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'
-                }}
-              >
-                拓扑图
-              </a> */}
-              {/*<a
-                onClick={() => {
-                  this.changeType('monitor');
-                }}
-                style={{
-                  marginLeft: '30px',
-                  color: type === 'monitor' ? '#1890ff' : 'rgba(0, 0, 0, 0.65)'
-                }}
-              >
-                监控
-              </a>*/}
             </Col>
             <Col
               className={styles.topoBtn}
@@ -1342,7 +1394,7 @@ export default class Index extends PureComponent {
                   }}
                 />
               )}
-            </Col>
+            </Col> */}
           </Row>
           {rapidCopy && (
             <RapidCopy
@@ -1351,35 +1403,6 @@ export default class Index extends PureComponent {
               title="应用复制"
             />
           )}
-
-          {/* {type !== 'list' && type !== 'monitor' && isComponentCreate && (
-            <Row
-              style={{
-                textAlign: 'right',
-                paddingTop: '16px',
-                paddingRight: '20px',
-                background: '#fff'
-              }}
-            >
-              {type === 'shapes' ? (
-                <a
-                  onClick={() => {
-                    this.changeType('shape');
-                  }}
-                >
-                  切换到展示模式
-                </a>
-              ) : (
-                <a
-                  onClick={() => {
-                    this.changeType('shapes');
-                  }}
-                >
-                  切换到编辑模式
-                </a>
-              )}
-            </Row>
-          )} */}
 
           {type === 'list' && isComponentDescribe && (
             <ComponentList

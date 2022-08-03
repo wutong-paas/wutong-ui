@@ -1422,9 +1422,9 @@ export default class EnterpriseShared extends PureComponent {
         <Row style={contentStyle}>
           <Col span={19} style={contentLeftStyle}>
             <Search
-              style={{ width: '250px' }}
               placeholder="请输入名称进行搜索"
               onSearch={this.handleSearchLocal}
+               style={{ width: 320 }}
             />
             <div className={styles.serBox}>
               <Radio.Group
@@ -1517,7 +1517,7 @@ export default class EnterpriseShared extends PureComponent {
                 &nbsp;应用权限
               </div>
               <Search
-                style={{ width: '400px', marginLeft: '100px' }}
+                style={{ width: '320px', marginLeft: '100px' }}
                 placeholder="请输入名称进行搜索"
                 onSearch={this.handleSearchMarket}
               />
@@ -1563,7 +1563,7 @@ export default class EnterpriseShared extends PureComponent {
         <Row style={contentStyle}>
           <Col span={19} style={contentLeftStyle}>
             <Search
-              style={{ width: '400px' }}
+              style={{ width: '320px' }}
               placeholder="请输入名称进行搜索"
               onSearch={this.handleSearchHelmMarket}
             />
