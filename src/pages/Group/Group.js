@@ -41,18 +41,6 @@ import GobackImg from '../../../public/images/common/goback.svg';
 import AppImg from '../../../public/images/common/app.svg';
 import EditImg from '../../../public/images/common/edit.svg';
 import SwitchImg from '../../../public/images/team/switch.svg';
-import IngressImg from '../../../public/images/team/ingress.svg';
-import ModelImg from '../../../public/images/team/model.svg';
-import ConfigImg from '../../../public/images/team/config.svg';
-import UpdateImg from '../../../public/images/team/update.svg';
-import BackupImg from '../../../public/images/team/backup.svg';
-import RightImg from '../../../public/images/common/right.svg';
-import IngressHoverImg from '../../../public/images/team/ingress_hover.svg';
-import ModelHoverImg from '../../../public/images/team/model_hover.svg';
-import ConfigHoverImg from '../../../public/images/team/config_hover.svg';
-import UpdateHoverImg from '../../../public/images/team/update_hover.svg';
-import BackupHoverImg from '../../../public/images/team/backup_hover.svg';
-import RightHoverImg from '../../../public/images/common/right_hover.svg';
 
 const appState = {
   RUNNING: '运行中',
@@ -164,9 +152,7 @@ export default class Index extends PureComponent {
       upgradableNumLoading: true,
       appStatusConfig: false,
       guideStep: 1,
-      actionsList: [],
-      currentIndex: -1,
-      isHover: false
+      actionsList: []
     };
   }
 
@@ -379,24 +365,21 @@ export default class Index extends PureComponent {
             {
               num: backup_num,
               title: '备份',
-              src: BackupImg,
-              hoverSrc: BackupHoverImg,
+              icon: 'icon-beifen1',
               canJump: isBackup && false, //暂时关闭跳转-by leon
               keys: 'backup'
             },
             {
               num: share_num,
               title: '模型发布',
-              src: ModelImg,
-              hoverSrc: ModelHoverImg,
+              icon: 'icon-moxingfabu',
               canJump: isShare,
               keys: 'publish'
             },
             {
               num: ingress_num,
               title: '网关策略',
-              src: IngressImg,
-              hoverSrc: IngressHoverImg,
+              icon: 'icon-wangguancelve1',
               canJump: isControl,
               keys: 'gateway'
             },
@@ -409,8 +392,7 @@ export default class Index extends PureComponent {
             {
               num: config_group_num,
               title: '配置',
-              src: ConfigImg,
-              hoverSrc: ConfigHoverImg,
+              icon: 'icon-peizhizu1',
               canJump: isConfigGroup,
               keys: 'configgroups'
             }
@@ -1084,57 +1066,31 @@ export default class Index extends PureComponent {
               <div className={styles.wrap}>
                 {actionsList.length !== 0 &&
                   actionsList.map((item, index) => {
-                    const { num, src, title, canJump, keys, hoverSrc } = item;
+                    const { num, icon, title, canJump, keys } = item;
                     return (
                       <div
                         key={index}
                         className={styles.info}
-                        onMouseEnter={() => {
-                          this.setState({
-                            currentIndex: index
-                          });
-                        }}
-                        onMouseLeave={() => {
-                          this.setState({
-                            currentIndex: -1
-                          });
-                        }}
                         onClick={() => {
                           canJump && this.handleJump(keys);
                         }}
                       >
                         <div className={styles.count}>{num || 0}</div>
                         <div>
-                          <img
-                            src={currentIndex === index ? hoverSrc : src}
-                            style={{ width: 16, height: 16 }}
-                            alt=""
-                          />
+                          <span
+                            className={`iconfont ${icon}`}
+                            style={{ verticalAlign: 'middle' }}
+                          ></span>
                           <span className={styles.text}>{title}</span>
                         </div>
                         <div>
-                          <img
-                            src={
-                              currentIndex === index ? RightHoverImg : RightImg
-                            }
-                            alt=""
-                          />
+                          <span className="iconfont icon-tiaozhuan-moren"></span>
                         </div>
                       </div>
                     );
                   })}
                 <div
                   className={styles.info}
-                  onMouseEnter={() => {
-                    this.setState({
-                      isHover: true
-                    });
-                  }}
-                  onMouseLeave={() => {
-                    this.setState({
-                      isHover: false
-                    });
-                  }}
                   onClick={() => {
                     !upgradableNumLoading &&
                       isUpgrade &&
@@ -1150,11 +1106,14 @@ export default class Index extends PureComponent {
                       alt=""
                       style={{ width: 16, height: 16 }}
                     /> */}
-                    <span className="iconfont icon-shengji"></span>
+                    <span
+                      className="iconfont icon-daishengji1"
+                      style={{ verticalAlign: 'middle' }}
+                    ></span>
                     <span className={styles.text}>待升级</span>
                   </div>
                   <div>
-                    <img src={!isHover ? RightImg : RightHoverImg} alt="" />
+                    <span className="iconfont icon-tiaozhuan-moren"></span>
                   </div>
                 </div>
               </div>

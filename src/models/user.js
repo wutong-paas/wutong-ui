@@ -208,12 +208,16 @@ export default {
         } finally {
           // yield put(routerRedux.push('/user/login')); Login out after permission
           // changes to admin or user The refresh will automatically redirect to the login
-          // page
+          // page;
           yield put({ type: 'tologout' });
 
           yield put({ type: 'saveCurrentUser', payload: null });
 
-          yield put(routerRedux.push('/user/login'));
+          if (payload?.homeUrl) {
+            window.location.href = `${payload?.homeUrl}/loginout`;
+          } else {
+            yield put(routerRedux.push('/user/login'));
+          }
         }
       }
     },

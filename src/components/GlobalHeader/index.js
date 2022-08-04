@@ -22,6 +22,7 @@ import React, { PureComponent } from 'react';
 import userIcon from '../../../public/images/user-icon-small.png';
 import { setNewbieGuide } from '../../services/api';
 import ChangePassword from '../ChangePassword';
+import cookie from '../../utils/cookie';
 import HomeMenu from '../../../public/images/header/header-menu.svg';
 import styles from './index.less';
 
@@ -43,8 +44,31 @@ export default class GlobalHeader extends PureComponent {
       showChangePassword: false
     };
   }
+  componentDidMount() {
+    const { dispatch, eid } = this.props;
+    if (cookie.get('third_token')) {
+      dispatch({
+        type: 'global/getOauthInfo',
+        payload: {
+          enterprise_id: eid
+        },
+        callback: res => {
+          if (res) {
+            const homeAuthList = res?.list.filter(
+              i => i?.oauth_type === 'idaas'
+            );
+            this.setState({
+              homeUrl:
+                homeAuthList.length > 0 ? homeAuthList[0]?.home_url : null
+            });
+          }
+        }
+      });
+    }
+  }
   handleMenuClick = ({ key }) => {
     const { dispatch, enterprise } = this.props;
+    const { homeUrl } = this.state;
     if (key === 'userCenter') {
       dispatch(routerRedux.push(`/account/${enterprise.enterprise_id}/center`));
     }
@@ -52,7 +76,12 @@ export default class GlobalHeader extends PureComponent {
       this.showChangePass();
     }
     if (key === 'logout') {
-      dispatch({ type: 'user/logout' });
+      dispatch({
+        type: 'user/logout',
+        payload: {
+          homeUrl
+        }
+      });
     }
   };
   showChangePass = () => {
@@ -162,7 +191,7 @@ export default class GlobalHeader extends PureComponent {
     return (
       <Header className={styles.header}>
         <div className={styles.wrap}>
-          <div style={{display:'flex'}}>
+          <div style={{ display: 'flex' }}>
             <Icon
               className={styles.trigger}
               type={collapsed ? 'menu-unfold' : 'menu-fold'}
