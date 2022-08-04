@@ -67,8 +67,16 @@ class Index extends PureComponent {
       failure: 'logfailed'
     };
     return (
-      <Card bordered={false} title="操作记录" loading={recordLoading}>
-        <Row gutter={24}>
+      <Card
+        bordered={false}
+        loading={recordLoading}
+        style={{
+          boxShadow: ' 0px 1px 4px 0px rgba(0,0,0,0.0600)',
+          borderRadius: 4
+        }}
+      >
+        <Row>
+          <div className={styles.title}>操作记录</div>
           <Col xs={24} xm={24} md={24} lg={24} xl={24}>
             {logList &&
               logList.map(item => {
@@ -141,9 +149,9 @@ class Index extends PureComponent {
                     </div>
                     <div>
                       <span className={styles.alcen}>
-                        {EndTime &&
+                        {/* {EndTime &&
                           create_time &&
-                          globalUtil.fetchSvg('runTime')}
+                          globalUtil.fetchSvg('runTime')} */}
                         <span>
                           {EndTime && create_time
                             ? globalUtil.fetchTime(
@@ -170,13 +178,13 @@ class Index extends PureComponent {
                         >
                           <div
                             style={{
-                              width: '16px'
+                              width: '80px'
                             }}
                             onClick={() => {
                               this.showLogModal(EventID, FinalStatus === '');
                             }}
                           >
-                            {logsvg}
+                            <a>查看日志</a>
                           </div>
                         </Tooltip>
                       )}
@@ -198,20 +206,28 @@ class Index extends PureComponent {
                 </div>
               ))}
             {has_next && (
-              <p
-                style={{
-                  textAlign: 'center',
-                  fontSize: 30
-                }}
-              >
-                <Icon
-                  style={{
-                    cursor: 'pointer'
-                  }}
+              // <p
+              //   style={{
+              //     textAlign: 'center',
+              //     fontSize: 30
+              //   }}
+              // >
+              //   <Icon
+              //     style={{
+              //       cursor: 'pointer'
+              //     }}
+              //     onClick={this.props.handleNextPage}
+              //     type="down"
+              //   />
+              // </p>
+              <div className={styles.footer}>
+                <div
+                  className={styles.more}
                   onClick={this.props.handleNextPage}
-                  type="down"
-                />
-              </p>
+                >
+                  <span>查看更多</span>
+                </div>
+              </div>
             )}
           </Col>
         </Row>
