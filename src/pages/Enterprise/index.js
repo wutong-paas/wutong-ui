@@ -22,7 +22,6 @@ import {
   computedPercentage
 } from './conf';
 import HomeCloud from '../../../public/images/home/home_cloud.svg';
-import Tooltips from '../../../public/images/home/tooltip.svg';
 import Close from '../../../public/images/home/home_close.svg';
 import HomeTeam from '../../../public/images/home/home_team.svg';
 import GroupImg from '../../../public/images/home/group.svg';
@@ -268,9 +267,8 @@ const Home = props => {
                 <Row className={styles['home-view-content-left-useinfo-title']}>
                   {HOME_CONTENT_USEINFO_TITLE}
                   <Tooltip placement="top" title={HOME_CONTENT_USEINFO_TOOLTIP}>
-                    <img
-                      src={Tooltips}
-                      alt=""
+                    <span
+                      className="iconfont icon-yiwen"
                       style={{ cursor: 'pointer', marginLeft: 4 }}
                     />
                   </Tooltip>
@@ -451,10 +449,14 @@ const Home = props => {
                         >
                           {item.name}
                           <Tooltip placement="top" title={item.tooltip}>
-                            <img
-                              src={Tooltips}
-                              alt=""
-                              style={{ cursor: 'pointer', marginLeft: 4 }}
+                            <i
+                              className="iconfont icon-yiwen"
+                              style={{
+                                cursor: 'pointer',
+                                marginLeft: 4,
+                                verticalAlign: 'middle',
+                                fontSize: 14
+                              }}
                             />
                           </Tooltip>
                         </div>
@@ -611,10 +613,14 @@ const Home = props => {
                           团队数量
                         </span>
                         <Tooltip placement="top" title="平台管理的团队数">
-                          <img
-                            src={Tooltips}
-                            alt=""
-                            style={{ cursor: 'pointer', marginLeft: 4 }}
+                          <i
+                            className="iconfont icon-yiwen"
+                            style={{
+                              cursor: 'pointer',
+                              marginLeft: 4,
+                              verticalAlign: 'middle',
+                              fontSize: 14
+                            }}
                           />
                         </Tooltip>
                       </div>
@@ -628,10 +634,14 @@ const Home = props => {
                           用户数量
                         </span>
                         <Tooltip placement="top" title="所有团队的用户总数">
-                          <img
-                            src={Tooltips}
-                            alt=""
-                            style={{ cursor: 'pointer', marginLeft: 4 }}
+                          <i
+                            className="iconfont icon-yiwen"
+                            style={{
+                              cursor: 'pointer',
+                              marginLeft: 4,
+                              verticalAlign: 'middle',
+                              fontSize: 14
+                            }}
                           />
                         </Tooltip>
                       </div>
@@ -645,10 +655,14 @@ const Home = props => {
                           集群数量
                         </span>
                         <Tooltip placement="top" title="平台纳管的集群数量">
-                          <img
-                            src={Tooltips}
-                            alt=""
-                            style={{ cursor: 'pointer', marginLeft: 4 }}
+                          <i
+                            className="iconfont icon-yiwen"
+                            style={{
+                              cursor: 'pointer',
+                              marginLeft: 4,
+                              verticalAlign: 'middle',
+                              fontSize: 14
+                            }}
                           />
                         </Tooltip>
                       </div>

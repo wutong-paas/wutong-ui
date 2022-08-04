@@ -29,7 +29,6 @@ import Result from '../../components/Result';
 import VisterBtn from '../../components/visitBtnForAlllink';
 import globalUtil from '../../utils/global';
 import userUtil from '../../utils/user';
-import Tooltips from '../../../public/images/home/tooltip.svg';
 import AppTotal from '../../../public/images/team/app_total.svg';
 import MemoryImg from '../../../public/images/team/memory.svg';
 import CpuImg from '../../../public/images/team/cpu.svg';
@@ -590,10 +589,14 @@ export default class Index extends PureComponent {
                         placement="top"
                         title="团队所有应用运行情况统计信息"
                       >
-                        <img
-                          src={Tooltips}
-                          alt=""
-                          style={{ cursor: 'pointer', marginLeft: 4 }}
+                        <i
+                          className="iconfont icon-yiwen"
+                          style={{
+                            cursor: 'pointer',
+                            marginLeft: 4,
+                            verticalAlign: 'middle',
+                            fontSize: 14
+                          }}
                         />
                       </Tooltip>
                     </div>
@@ -651,10 +654,14 @@ export default class Index extends PureComponent {
                         placement="top"
                         title="团队所有组件运行情况统计信息"
                       >
-                        <img
-                          src={Tooltips}
-                          alt=""
-                          style={{ cursor: 'pointer', marginLeft: 4 }}
+                        <i
+                          className="iconfont icon-yiwen"
+                          style={{
+                            cursor: 'pointer',
+                            marginLeft: 4,
+                            verticalAlign: 'middle',
+                            fontSize: 14
+                          }}
                         />
                       </Tooltip>
                     </div>
@@ -708,10 +715,14 @@ export default class Index extends PureComponent {
                 <div className={styles.title}>
                   资源使用
                   <Tooltip placement="top" title="团队所有应用使用资源统计信息">
-                    <img
-                      src={Tooltips}
-                      alt=""
-                      style={{ cursor: 'pointer', marginLeft: 4 }}
+                    <i
+                      className="iconfont icon-yiwen"
+                      style={{
+                        cursor: 'pointer',
+                        marginLeft: 4,
+                        verticalAlign: 'middle',
+                        fontSize: 14
+                      }}
                     />
                   </Tooltip>
                 </div>
