@@ -691,7 +691,15 @@ const Home = props => {
                 <Card
                   bordered={false}
                   className={styles['home-view-content-right-myteam-card']}
-                  style={{ height: isShowAdvice ? 438 : 620 }}
+                  style={{
+                    height: isShowAdvice
+                      ? activeKey === 0
+                        ? 436
+                        : 536
+                      : activeKey === 0
+                      ? 624
+                      : 724
+                  }}
                 >
                   <Row>
                     <Spin spinning={teamListLoading}>
