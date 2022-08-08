@@ -270,7 +270,7 @@ export default class Index extends PureComponent {
           container_name: value[1].slice(3)
         },
         () => {
-          this.fetchContainerLog();
+          if (!this.props.socket) this.fetchContainerLog();
         }
       );
     } else {
@@ -313,6 +313,15 @@ export default class Index extends PureComponent {
     } = this.state;
     return (
       <Card
+        onMouseEnter={() => {
+          this.setState({ isAutoScroll: true });
+        }}
+        onMouseLeave={() => {
+          if (isStopMouseMoveEvent) {
+            return;
+          }
+          this.setState({ isAutoScroll: false });
+        }}
         title={
           <Fragment>
             {started ? (
