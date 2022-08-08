@@ -30,18 +30,19 @@ class Search extends Component {
     return (
       <Form layout="inline" style={{ display: 'inline-block' }}>
         <FormItem>
-          <Input
+          <Input.Search
             placeholder={(!appID && appPlaceholder) || teamPlaceholder}
             onChange={this.handelChange}
             onPressEnter={this.handleEnter}
-            style={{ width: 250 }}
+            style={{ width: 320 }}
+            onEnter={this.handleSearch}
           />
         </FormItem>
-        <FormItem>
+        {/* <FormItem>
           <Button type="primary" onClick={this.handleSearch} icon="search">
             搜索
           </Button>
-        </FormItem>
+        </FormItem> */}
       </Form>
     );
   }
