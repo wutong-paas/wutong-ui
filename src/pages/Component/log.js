@@ -163,7 +163,7 @@ export default class Index extends PureComponent {
         },
         messages => {
           if (this.state.started) {
-            let logs = this.state.logs || [];
+            let logs = this.state.logs || this.state.containerLog || [];
             logs = logs.concat(messages);
             this.setLogs(logs);
           }
@@ -225,6 +225,7 @@ export default class Index extends PureComponent {
         data.response_data
       ) {
         const arr = data.response_data.split('\n');
+        console.log('coming');
         this.setState(
           {
             containerLog: arr || []
