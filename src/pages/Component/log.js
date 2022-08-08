@@ -27,6 +27,7 @@ const { Option } = Select;
 )
 export default class Index extends PureComponent {
   logRef = React.createRef();
+  wrapRef = React.createRef();
   constructor(arg) {
     super(arg);
     this.state = {
@@ -52,10 +53,11 @@ export default class Index extends PureComponent {
   }
   componentDidUpdate(prevProps, prevState) {
     if (this.state.isAutoScroll && this.state.started) {
-      if (this.logRef.current) {
-        this.logRef.current.scrollIntoView({
-          behavior: 'smooth'
-        });
+      if (this.wrapRef.current) {
+        // this.logRef.current.scrollIntoView({
+        //   behavior: 'smooth'
+        // });
+        this.wrapRef.current.scrollTop = this.wrapRef.current.scrollHeight;
       }
     }
   }
@@ -163,7 +165,7 @@ export default class Index extends PureComponent {
         },
         messages => {
           if (this.state.started) {
-            let logs = this.state.logs || [];
+            let logs = this.state.logs || this.state.containerLog || [];
             logs = logs.concat(messages);
             this.setLogs(logs);
           }
@@ -225,6 +227,7 @@ export default class Index extends PureComponent {
         data.response_data
       ) {
         const arr = data.response_data.split('\n');
+        console.log('coming');
         this.setState(
           {
             containerLog: arr || []
@@ -313,15 +316,6 @@ export default class Index extends PureComponent {
     } = this.state;
     return (
       <Card
-        onMouseEnter={() => {
-          this.setState({ isAutoScroll: true });
-        }}
-        onMouseLeave={() => {
-          if (isStopMouseMoveEvent) {
-            return;
-          }
-          this.setState({ isAutoScroll: false });
-        }}
         title={
           <Fragment>
             {started ? (
@@ -392,6 +386,7 @@ export default class Index extends PureComponent {
           )}
         </Form>
         <div
+          ref={this.wrapRef}
           className={styles.logsss}
           onMouseEnter={() => {
             this.setState({ isAutoScroll: false });
