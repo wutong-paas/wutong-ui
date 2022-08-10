@@ -227,7 +227,6 @@ export default class Index extends PureComponent {
         data.response_data
       ) {
         const arr = data.response_data.split('\n');
-        console.log('coming');
         this.setState(
           {
             containerLog: arr || []
