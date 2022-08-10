@@ -7,6 +7,7 @@ import publishImg from '../../public/images/menu/publish.svg';
 import configImg from '../../public/images/menu/config.svg';
 import gatewayImg from '../../public/images/menu/gateway.svg';
 import dashboardImg from '../../public/images/menu/dashboard.svg';
+import backupImg from '../../public/images/menu/backup.svg';
 
 const publishIcon = (
   <i className="anticon">
@@ -168,14 +169,14 @@ function menuData(teamName, regionName, appID, permissionsInfo) {
     });
   }
 
-  if (isBackup) {
-    addMenuArr({
-      name: formatMessage({ id: 'menu.app.backup' }),
-      icon: renderIcon(gatewayImg),
-      path: `team/${teamName}/region/${regionName}/apps/${appID}/backup`,
-      authority: ['admin', 'user']
-    });
-  }
+  // if (isBackup) {
+  //   addMenuArr({
+  //     name: formatMessage({ id: 'menu.app.backup' }),
+  //     icon: renderIcon(backupImg),
+  //     path: `team/${teamName}/region/${regionName}/apps/${appID}/backup`,
+  //     authority: ['admin', 'user']
+  //   });
+  // }
   if (control) {
     addMenuArr({
       name: formatMessage({ id: 'menu.app.gateway' }),
