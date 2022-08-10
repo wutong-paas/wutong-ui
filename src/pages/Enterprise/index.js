@@ -24,10 +24,6 @@ import {
 import HomeCloud from '../../../public/images/home/home_cloud.svg';
 import Close from '../../../public/images/home/home_close.svg';
 import HomeTeam from '../../../public/images/home/home_team.svg';
-import GroupImg from '../../../public/images/home/group.svg';
-import RightImg from '../../../public/images/home/right.svg';
-import GroupHoverImg from '../../../public/images/home/group_hover.svg';
-import RightHoverImg from '../../../public/images/home/right_hover.svg';
 import HomeGropu from '../../../public/images/home/home_group.png';
 import { routerRedux } from 'dva/router';
 import * as echarts from 'echarts';
@@ -70,9 +66,6 @@ const Home = props => {
   const [overviewInfo, setOverviewInfo] = useState([]);
   const [overviewMonitorInfo, setOverviewMonitorInfo] = useState([]);
   const [teamList, setTeamList] = useState([]);
-  const [isHover, setIsHover] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(-1);
-  const [currentParentIndex, setCurrentParentIndex] = useState(-1);
 
   useEffect(() => {
     fetchHomeInfoList();
@@ -738,16 +731,7 @@ const Home = props => {
                                   item.region_list.map((i, index) => (
                                     <div style={{ marginRight: 24 }}>
                                       <span
-                                        onMouseEnter={() => {
-                                          setIsHover(true);
-                                          setCurrentIndex(index);
-                                          setCurrentParentIndex(n);
-                                        }}
-                                        onMouseLeave={() => {
-                                          setIsHover(true);
-                                          setCurrentIndex(-1);
-                                          setCurrentParentIndex(-1);
-                                        }}
+                                        className={styles.name}
                                         onClick={() => {
                                           dispatch(
                                             routerRedux.push(
@@ -756,15 +740,9 @@ const Home = props => {
                                           );
                                         }}
                                       >
-                                        <img
-                                          src={
-                                            isHover &&
-                                            currentIndex === index &&
-                                            currentParentIndex === n
-                                              ? GroupHoverImg
-                                              : GroupImg
-                                          }
-                                          alt=""
+                                        <i
+                                          className="iconfont icon-kaifajiqun"
+                                          style={{ verticalAlign: 'middle' }}
                                         />
                                         <span
                                           style={{
@@ -774,15 +752,9 @@ const Home = props => {
                                         >
                                           {i.region_alias}
                                         </span>
-                                        <img
-                                          src={
-                                            isHover &&
-                                            currentIndex === index &&
-                                            currentParentIndex === n
-                                              ? RightHoverImg
-                                              : RightImg
-                                          }
-                                          alt=""
+                                        <i
+                                          className="iconfont icon-tiaozhuan-moren"
+                                          style={{ verticalAlign: 'middle' }}
                                         />
                                       </span>
                                     </div>
