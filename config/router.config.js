@@ -253,7 +253,6 @@ export default [
             title: '应用配置详情'
           },
 
-          /*
           {
             path: '/team/:teamName/region/:regionName/apps/:appID/backup',
             component: './Group/Backup',
@@ -262,7 +261,6 @@ export default [
             authority: ['admin', 'user'],
             title: '备份管理'
           },
-          */
 
           {
             path: '/team/:teamName/region/:regionName/apps/:appID/publish',

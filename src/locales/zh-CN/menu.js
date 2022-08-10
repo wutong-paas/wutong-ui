@@ -21,7 +21,7 @@ export default {
   'menu.app.publish': '发布',
   'menu.app.gateway': '网关',
   'menu.app.configgroups': '配置',
+  'menu.app.backup': '备份',
   'menu.app.upgrade': '升级'
 };
 //'menu.app.monitor': '监控',
-//'menu.app.backup': '备份',

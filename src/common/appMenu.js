@@ -1,6 +1,6 @@
 /* eslint-disable react/react-in-jsx-scope */
 import { formatMessage } from 'umi-plugin-locale';
-import { isUrl,renderIcon } from '../utils/utils';
+import { isUrl, renderIcon } from '../utils/utils';
 import roleUtil from '../utils/role';
 import updateImg from '../../public/images/menu/update.svg';
 import publishImg from '../../public/images/menu/publish.svg';
@@ -168,14 +168,14 @@ function menuData(teamName, regionName, appID, permissionsInfo) {
     });
   }
 
-  /*if (isBackup) {
+  if (isBackup) {
     addMenuArr({
       name: formatMessage({ id: 'menu.app.backup' }),
-      icon: backupIcon,
+      icon: renderIcon(gatewayImg),
       path: `team/${teamName}/region/${regionName}/apps/${appID}/backup`,
       authority: ['admin', 'user']
     });
-  }*/
+  }
   if (control) {
     addMenuArr({
       name: formatMessage({ id: 'menu.app.gateway' }),
