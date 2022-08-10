@@ -1105,7 +1105,7 @@ export default class Main extends PureComponent {
             defaultValue={defaultValue}
             onSearch={this.handleSearch}
             style={{
-              width: 500
+              width: 500,
             }}
           />
         </span>

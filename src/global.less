@@ -102,12 +102,11 @@ body {
   }
 }
 
-// antd input 主题色修改
-// .ant-input-search .ant-input {
-//   background-color: rgba(241, 249, 255, 1);
-//   border          : none;
-//   border-radius   : 15px;
-// }
+//antd input 主题色修改
+.ant-input-search .ant-input {
+  border       : none;
+  border-radius: 15px;
+}
 
 // antd tabs 主题色修改
 
@@ -138,22 +137,32 @@ a {
   background: #525b75;
 }
 
-.ant-tooltip-placement-top .ant-tooltip-arrow,
-.ant-tooltip-placement-topLeft .ant-tooltip-arrow,
-.ant-tooltip-placement-topRight .ant-tooltip-arrow {
-  border-top-color: #525b75 !important;
+.ant-tooltip-placement-top .ant-tooltip-content .ant-tooltip-arrow,
+.ant-tooltip-placement-topLeft .ant-tooltip-content .ant-tooltip-arrow,
+.ant-tooltip-placement-topRight .ant-tooltip-content .ant-tooltip-arrow {
+  border-top-color: rgba(82, 91, 117, 1);
 }
 
 //ant-tree hover背景色
 .ant-tree li .ant-tree-node-content-wrapper:hover {
-  background: #565f6e !important;
+  .ant-tree-title {
+    color: #fff
+  }
+}
+
+.ant-tree li .ant-tree-node-content-wrapper.ant-tree-node-selected {
+  background-color: #565f6e;
+
+  .ant-tree-title {
+    color: #fff;
+  }
 }
 
 //ant-radio-group 背景色
 .ant-radio-group .ant-radio-button-wrapper-checked {
   background  : #08153A;
   border-color: #08153A;
-  color: #fff;
+  color       : #fff;
 
   &:hover {
     color: #fff
