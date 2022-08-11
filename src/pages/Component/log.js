@@ -341,7 +341,7 @@ export default class Index extends PureComponent {
             style={{ marginRight: '10px' }}
           >
             <Input.Search
-              style={{ width: '300px' }}
+              style={{ width: '320px' }}
               placeholder="请输入过滤文本"
               onSearch={this.onFinish}
             />

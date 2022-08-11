@@ -199,18 +199,19 @@ export default class ConfigurationTable extends PureComponent {
         <Row>
           <Form layout="inline" style={{ display: 'inline-block' }}>
             <FormItem>
-              <Input
+              <Input.Search
                 placeholder="搜索配置组名称"
                 onChange={this.handelChange}
                 onPressEnter={this.handleEnter}
-                style={{ width: 250 }}
+                style={{ width: 320 }}
+                onSearch={this.handleSearch}
               />
             </FormItem>
-            <FormItem>
+            {/* <FormItem>
               <Button type="primary" onClick={this.handleSearch} icon="search">
                 搜索
               </Button>
-            </FormItem>
+            </FormItem> */}
           </Form>
           {isCreate && (
             <Button

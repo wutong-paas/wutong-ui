@@ -1,10 +1,11 @@
 .hiddeninput {
   :global {
     .ant-input {
-      border    : none !important;
-      background: none !important;
-      outline   : none !important;
+      border      : none !important;
+      background  : none !important;
+      outline     : none !important;
       padding-left: 0 !important;
+
       &:focus {
         box-shadow: none !important;
       }
@@ -18,16 +19,27 @@
       border    : none !important;
       background: none !important;
     }
+
     input:-webkit-autofill {
       -webkit-text-fill-color: #333;
-      -webkit-box-shadow: 0 0 0px 1000px white inset !important;
-      outline:none;
-     }
+      -webkit-box-shadow     : 0 0 0px 1000px white inset !important;
+      outline                : none;
+    }
+
     span {
       cursor: pointer;
+
       &:hover {
         color: #333;
       }
+    }
+  }
+}
+
+.card {
+  :global {
+    .ant-input {
+      background-color: rgba(241, 249, 255, 1);
     }
   }
 }

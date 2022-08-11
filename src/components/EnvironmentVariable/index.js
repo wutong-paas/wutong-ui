@@ -702,6 +702,7 @@ class EnvironmentVariable extends React.Component {
           loading={loading}
           title={title}
           extra={type === 'Outer' && addButton}
+          className={styles.card}
         >
           {type === 'Inner' && (
             <div
@@ -712,7 +713,7 @@ class EnvironmentVariable extends React.Component {
               }}
             >
               <Search
-                style={{ width: '260px' }}
+                style={{ width: '320px' }}
                 placeholder="请输入变量名进行搜索"
                 onSearch={this.handleSearch}
               />
