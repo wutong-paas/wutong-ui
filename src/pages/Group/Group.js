@@ -366,7 +366,7 @@ export default class Index extends PureComponent {
               num: backup_num,
               title: '备份',
               icon: 'icon-beifen1',
-              canJump: isBackup && false, //暂时关闭跳转-by leon
+              canJump: isBackup,
               keys: 'backup'
             },
             {

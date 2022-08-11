@@ -169,14 +169,14 @@ function menuData(teamName, regionName, appID, permissionsInfo) {
     });
   }
 
-  // if (isBackup) {
-  //   addMenuArr({
-  //     name: formatMessage({ id: 'menu.app.backup' }),
-  //     icon: renderIcon(backupImg),
-  //     path: `team/${teamName}/region/${regionName}/apps/${appID}/backup`,
-  //     authority: ['admin', 'user']
-  //   });
-  // }
+  if (isBackup) {
+    addMenuArr({
+      name: formatMessage({ id: 'menu.app.backup' }),
+      icon: renderIcon(backupImg),
+      path: `team/${teamName}/region/${regionName}/apps/${appID}/backup`,
+      authority: ['admin', 'user']
+    });
+  }
   if (control) {
     addMenuArr({
       name: formatMessage({ id: 'menu.app.gateway' }),
