@@ -37,16 +37,16 @@ const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
 
 const canViewPluginType = {
-  'filebrowser_plugin':'filemanager',
-  'mysql_dbgate_plugin':'dbgatemanager',
-  'redis_dbgate_plugin':'dbgatemanager'
-}
+  filebrowser_plugin: 'filemanager',
+  mysql_dbgate_plugin: 'dbgatemanager',
+  redis_dbgate_plugin: 'dbgatemanager'
+};
 
 const canViewPluginTypeText = {
-  'filebrowser_plugin':'文件管理',
-  'mysql_dbgate_plugin':'数据中间件管理',
-  'redis_dbgate_plugin':'数据中间件管理'
-}
+  filebrowser_plugin: '文件管理',
+  mysql_dbgate_plugin: '数据中间件管理',
+  redis_dbgate_plugin: '数据中间件管理'
+};
 @Form.create()
 class UpdateMemory extends PureComponent {
   handleOk = () => {
@@ -713,7 +713,7 @@ export default class Index extends PureComponent {
     return `/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/`;
   };
   renderInstalled = () => {
-    const { installedList } = this.state;
+    const { installedList, category } = this.state;
     const { appDetail } = this.props;
     const serviceAlias = appDetail?.service?.service_alias;
     const service_id = appDetail?.service?.service_id;
@@ -781,10 +781,14 @@ export default class Index extends PureComponent {
       if (item?.plugin_status && canViewPluginType[item.plugin_type]) {
         list.unshift(
           <Link
-            to={`${this.fetchPrefixUrl()}components/${serviceAlias}/${canViewPluginType[item.plugin_type]}/service_id/${service_id}`}
+            to={`${this.fetchPrefixUrl()}components/${serviceAlias}/${
+              canViewPluginType[item.plugin_type]
+            }/service_id/${service_id}`}
             target="_blank"
           >
-            <Tooltip title={ `访问${canViewPluginTypeText[item.plugin_type]}`}>访问</Tooltip>
+            <Tooltip title={`访问${canViewPluginTypeText[item.plugin_type]}`}>
+              访问
+            </Tooltip>
           </Link>
         );
       }
@@ -810,13 +814,17 @@ export default class Index extends PureComponent {
                 title={
                   <div>
                     <div className={styles['install-list-title']}>
-                      <Link
-                        to={`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/myplugns/${
-                          item.plugin_id
-                        }`}
-                      >
-                        {item.plugin_alias}
-                      </Link>
+                      {category !== 'sys' ? (
+                        <Link
+                          to={`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/myplugns/${
+                            item.plugin_id
+                          }`}
+                        >
+                          {item.plugin_alias}
+                        </Link>
+                      ) : (
+                        <a href="javascript:;void(0)">{item.plugin_alias}</a>
+                      )}
                       <div className={styles.open}>已开通</div>
                     </div>
                     <p style={{ fontSize: 12, color: '#dcdcdc' }}>
@@ -883,7 +891,7 @@ export default class Index extends PureComponent {
     );
   };
   renderUnInstalled = () => {
-    const { unInstalledList } = this.state;
+    const { unInstalledList, category } = this.state;
     const loading = this.state.unInstalledList === null;
     if (!unInstalledList?.length) return;
     // if (!unInstalledList?.length) {
@@ -929,13 +937,17 @@ export default class Index extends PureComponent {
               title={
                 <div>
                   <div className={styles['uninstall-list-title']}>
-                    <Link
-                      to={`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/myplugns/${
-                        item.plugin_id
-                      }`}
-                    >
-                      {item.plugin_alias}
-                    </Link>
+                    {category !== 'sys' ? (
+                      <Link
+                        to={`/team/${globalUtil.getCurrTeamName()}/region/${globalUtil.getCurrRegionName()}/myplugns/${
+                          item.plugin_id
+                        }`}
+                      >
+                        {item.plugin_alias}
+                      </Link>
+                    ) : (
+                      <a href="javascript:;void(0)">{item.plugin_alias}</a>
+                    )}
                     <div className={styles['not-open']}>未开通</div>
                   </div>
                   <p style={{ fontSize: 12, color: '#dcdcdc' }}>
