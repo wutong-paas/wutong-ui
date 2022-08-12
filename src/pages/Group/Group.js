@@ -856,7 +856,8 @@ export default class Index extends PureComponent {
                             resources?.status
                               ? `${appStateColor[(resources?.status)]}`
                               : `${appStateColor.default}`
-                          }`
+                          }`,
+                          verticalAlign: 'middle'
                         }}
                       ></span>
                       <Tooltip placement="top" title="应用运行状态">
@@ -868,7 +869,7 @@ export default class Index extends PureComponent {
                   )}
                   {resources.status && isStart && (
                     <Tooltip placement="top" title="启动当前应用的全部组件">
-                      <span>
+                      <span style={{ verticalAlign: 'middle' }}>
                         <a
                           onClick={() => {
                             this.handleTopology('start');
@@ -891,7 +892,7 @@ export default class Index extends PureComponent {
                         placement="top"
                         title="重新启动  当前应用的全部组件"
                       >
-                        <span>
+                        <span style={{ verticalAlign: 'middle' }}>
                           <a
                             onClick={() => {
                               this.handleTopology('restart');
@@ -906,7 +907,12 @@ export default class Index extends PureComponent {
                     )}
                   {isDelete && resources.status !== 'RUNNING' && (
                     <Tooltip placement="top" title="删除此应用">
-                      <a onClick={this.toDelete}>删除</a>
+                      <a
+                        onClick={this.toDelete}
+                        style={{ verticalAlign: 'middle' }}
+                      >
+                        删除
+                      </a>
                     </Tooltip>
                   )}
                   {resources.status && resources.status !== 'CLOSED' && isStop && (
@@ -914,7 +920,7 @@ export default class Index extends PureComponent {
                       placement="top"
                       title="停用当前应用下的全部组件, 释放应用占用资源"
                     >
-                      <span>
+                      <span style={{ verticalAlign: 'middle' }}>
                         {resources.status !== 'RUNNING' && (
                           <Divider type="vertical" />
                         )}
