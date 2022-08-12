@@ -405,7 +405,7 @@ export default class Index extends PureComponent {
           });
           this.setState({
             teamHotAppList: res.list,
-            total: res.bean && res.bean.total,
+            total: status ? res.bean[status] || 0 : res.bean && res.bean.total,
             tablist: list,
             loadingOfApp: false,
             emptyConfig: false,
