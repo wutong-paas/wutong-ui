@@ -800,6 +800,7 @@ export default class Index extends PureComponent {
                           }
                           key={index}
                           onClick={() => {
+                            if (activeKey !== index && loadingOfApp) return;
                             this.setState({ activeKey: index });
                             this.handleFilter(item.key);
                           }}

@@ -246,7 +246,7 @@ export default class EnterpriseUsers extends PureComponent {
         title: '用户名称',
         dataIndex: 'nick_name',
         rowKey: 'nick_name',
-        align: 'center',
+        // align: 'center',
         render: (val, data) => (
           <Button
             type="link"
@@ -262,26 +262,26 @@ export default class EnterpriseUsers extends PureComponent {
       {
         title: '姓名',
         dataIndex: 'real_name',
-        rowKey: 'real_name',
-        align: 'center'
+        rowKey: 'real_name'
+        // align: 'center'
       },
       {
         title: '电话',
         dataIndex: 'phone',
-        rowKey: 'phone',
-        align: 'center'
+        rowKey: 'phone'
+        // align: 'center'
       },
       {
         title: '邮箱',
         dataIndex: 'email',
-        rowKey: 'email',
-        align: 'center'
+        rowKey: 'email'
+        //align: 'center'
       },
       {
         title: '创建时间',
         dataIndex: 'create_time',
         rowKey: 'create_time',
-        align: 'center',
+        // align: 'center',
         render: val => {
           return (
             <span>
@@ -295,7 +295,7 @@ export default class EnterpriseUsers extends PureComponent {
       {
         title: '操作',
         dataIndex: 'user_id',
-        align: 'center',
+        // align: 'center',
         rowKey: 'user_id',
         render: (val, item) => {
           return [
