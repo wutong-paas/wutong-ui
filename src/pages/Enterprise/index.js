@@ -85,6 +85,18 @@ const Home = props => {
     radarChartsEntity.setOption(radarOption(res));
     window.onresize = () => {
       radarChartsEntity.resize();
+      // 指示器的字体大小和距离图表的距离跟随窗口自适应变化
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      const percent = width / 1920;
+      radarChartsEntity.setOption({
+        radar: {
+          axisName: {
+            fontSize: 14 * percent,
+          },
+          nameGap: 12 * percent
+        }
+      });
     };
   };
 
