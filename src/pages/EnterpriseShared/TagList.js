@@ -1,9 +1,9 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable camelcase */
-import { Button, Checkbox, Col, Form, Modal, Row } from "antd";
-import { connect } from "dva";
-import React, { PureComponent } from "react";
-import styles from "../../components/CreateTeam/index.less";
+import { Button, Checkbox, Col, Form, Modal, Row } from 'antd';
+import { connect } from 'dva';
+import React, { PureComponent } from 'react';
+import styles from '../../components/CreateTeam/index.less';
 
 const FormItem = Form.Item;
 
@@ -83,34 +83,34 @@ export default class TagList extends PureComponent {
           >
             <FormItem {...formItemLayout} label="">
               {getFieldDecorator('tag', {
-                  initialValue: checkedValues || [],
-                  rules: [
-                    {
-                      required: false,
-                      message: '请选择标签',
-                    },
-                  ],
-                })(
-                  <Checkbox.Group
-                    style={{ width: '100%' }}
-                    onChange={this.onChangeCheckbox}
-                  >
-                    <Row>
-                      {tagLists &&
-                        tagLists.map(item => {
-                          const { name, tag_id } = item;
-                          return (
-                            <Col key={tag_id} span={8}>
-                              <Checkbox value={name}>{name}</Checkbox>
-                            </Col>
-                          );
-                        })}
-                    </Row>
-                  </Checkbox.Group>
-                )}
+                initialValue: checkedValues || [],
+                rules: [
+                  {
+                    required: false,
+                    message: '请选择标签'
+                  }
+                ]
+              })(
+                <Checkbox.Group
+                  style={{ width: '100%' }}
+                  onChange={this.onChangeCheckbox}
+                >
+                  <div>
+                    {tagLists &&
+                      tagLists.map(item => {
+                        const { name, tag_id } = item;
+                        return (
+                          <span key={tag_id}>
+                            <Checkbox value={name}>{name}</Checkbox>
+                          </span>
+                        );
+                      })}
+                  </div>
+                </Checkbox.Group>
+              )}
             </FormItem>
           </Form>
-          )}
+        )}
       </Modal>
     );
   }

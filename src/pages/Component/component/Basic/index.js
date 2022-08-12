@@ -49,7 +49,8 @@ class Index extends PureComponent {
                       ),
                       boxShadow: `0px 0px 6px 0px ${globalUtil.fetchStateColor(
                         status && status.status
-                      )}65`
+                      )}65`,
+                      verticalAlign: 'middle'
                     }}
                   ></span>
                   <span className={styles.text}>
@@ -69,7 +70,7 @@ class Index extends PureComponent {
               <div className={styles.info}>
                 <Row>
                   <Col span={8}>
-                    <div>
+                    <div className={styles.wrap}>
                       <span className={styles.lable}>运行</span>
                       <span className={styles.value}>
                         {status && status.start_time
@@ -80,7 +81,7 @@ class Index extends PureComponent {
                           : ''}
                       </span>
                     </div>
-                    <div style={{ marginTop: 10 }}>
+                    <div style={{ marginTop: 10 }} className={styles.wrap}>
                       <span className={styles.lable}>
                         {/* {globalUtil.fetchSvg('warehouse')} */}
                         {buildSource && buildSource === 'source_code'
@@ -110,7 +111,7 @@ class Index extends PureComponent {
                     </div>
                   </Col>
                   <Col span={8}>
-                    <div>
+                    <div className={styles.wrap}>
                       <span className={styles.lable}>分配</span>
                       <span className={styles.value}>
                         {!resourcesLoading && (
@@ -125,7 +126,7 @@ class Index extends PureComponent {
                         <span className={styles.unit}>MB 内存</span>
                       )}
                     </div>
-                    <div style={{ marginTop: 10 }}>
+                    <div style={{ marginTop: 10 }} className={styles.wrap}>
                       <span className={styles.lable}>
                         {buildSource && buildSource === 'source_code'
                           ? '提交信息'
@@ -154,7 +155,7 @@ class Index extends PureComponent {
                     </div>
                   </Col>
                   <Col span={8}>
-                    <div>
+                    <div className={styles.wrap}>
                       <span className={styles.lable}>占用</span>
                       <span className={styles.value}>
                         {!resourcesLoading && (
@@ -167,7 +168,7 @@ class Index extends PureComponent {
                       </span>
                       <span className={styles.unit}>MB 磁盘</span>
                     </div>
-                    <div style={{ marginTop: 10 }}>
+                    <div style={{ marginTop: 10 }} className={styles.wrap}>
                       <span className={styles.lable}>
                         {buildSource && buildSource === 'source_code'
                           ? '代码分支'
