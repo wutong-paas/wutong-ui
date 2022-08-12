@@ -24,6 +24,9 @@ import { setNewbieGuide } from '../../services/api';
 import ChangePassword from '../ChangePassword';
 import cookie from '../../utils/cookie';
 import HomeMenu from '../../../public/images/header/header-menu.svg';
+import AccountImg from '../../../public/images/menu/account.svg';
+import PassworImg from '../../../public/images/menu/password.svg';
+import LogoutImg from '../../../public/images/menu/logout.svg';
 import styles from './index.less';
 
 const { Header } = Layout;
@@ -165,8 +168,8 @@ export default class GlobalHeader extends PureComponent {
     const MenuItems = (key, component, text) => {
       return (
         <Menu.Item key={key}>
-          <Icon
-            component={component}
+          <img
+            src={component}
             style={{
               marginRight: 8
             }}
@@ -179,10 +182,10 @@ export default class GlobalHeader extends PureComponent {
     const menu = (
       <div className={styles.uesrInfo}>
         <Menu selectedKeys={[]} onClick={this.handleMenuClick}>
-          {MenuItems('userCenter', handleUserSvg, '个人中心')}
-          {MenuItems('cpw', handleEditSvg, '修改密码')}
+          {MenuItems('userCenter', AccountImg, '个人中心')}
+          {MenuItems('cpw', PassworImg, '修改密码')}
           {!wutongUtil.logoutEnable(wutongInfo) &&
-            MenuItems('logout', handleLogoutSvg, '退出登录')}
+            MenuItems('logout', LogoutImg, '退出登录')}
         </Menu>
       </div>
     );
