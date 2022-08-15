@@ -32,6 +32,7 @@ import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import roleUtil from '../../utils/role';
 import userUtil from '../../utils/user';
 import styles from './index.less';
+import EmptyImg from '../../../public/images/common/empty.svg';
 
 const { Search } = Input;
 
@@ -843,7 +844,7 @@ export default class EnterpriseTeams extends PureComponent {
         {!userTeam && (
           <Empty
             description="暂无团队，请点击创建团队进行创建"
-            image={Empty.PRESENTED_IMAGE_SIMPLE}
+            image={EmptyImg}
           />
         )}
         {userTeam &&

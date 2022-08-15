@@ -38,6 +38,7 @@ import Meiqia from '../../layouts/Meiqia';
 import wutongUtil from '../../utils/wutong';
 import userUtil from '../../utils/user';
 import styles from '../List/BasicList.less';
+import EmptyImg from '../../../public/images/common/empty.svg';
 
 @connect(({ user, global, index }) => ({
   user: user.currentUser,

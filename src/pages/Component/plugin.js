@@ -28,6 +28,7 @@ import appPluginUtil from '../../utils/appPlugin';
 import globalUtil from '../../utils/global';
 import pluginUtil from '../../utils/plugin';
 import styles from './Index.less';
+import EmptyImg from '../../../public/images/common/empty.svg';
 
 const { Option } = Select;
 const { TabPane } = Tabs;
@@ -1052,7 +1053,7 @@ export default class Index extends PureComponent {
       if (installedList?.length === 0 && unInstalledList.length === 0) {
         return (
           <div>
-            <Empty description={<span>暂无可用插件</span>} />
+            <Empty description={<span>暂无可用插件</span>} image={EmptyImg} />
           </div>
         );
       }

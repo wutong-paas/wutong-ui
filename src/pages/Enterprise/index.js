@@ -25,6 +25,7 @@ import HomeCloud from '../../../public/images/home/home_cloud.svg';
 import Close from '../../../public/images/home/home_close.svg';
 import HomeTeam from '../../../public/images/home/home_team.svg';
 import HomeGropu from '../../../public/images/home/home_group.png';
+import EmptyImg from '../../../public/images/common/empty.svg';
 import { routerRedux } from 'dva/router';
 import * as echarts from 'echarts';
 import classNames from 'classnames';
@@ -92,7 +93,7 @@ const Home = props => {
       radarChartsEntity.setOption({
         radar: {
           axisName: {
-            fontSize: 14 * percent,
+            fontSize: 14 * percent
           },
           nameGap: 12 * percent
         }
@@ -432,7 +433,7 @@ const Home = props => {
                         </Col>
                       </Row>
                     ) : (
-                      <Empty description="暂无数据" />
+                      <Empty description="暂无数据" image={EmptyImg} />
                     )}
                   </Spin>
                 </Card>
@@ -776,7 +777,7 @@ const Home = props => {
                           );
                         })
                       ) : (
-                        <Empty description="暂无数据" />
+                        <Empty description="暂无数据" image={EmptyImg} />
                       )}
                     </Spin>
                   </Row>

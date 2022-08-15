@@ -47,6 +47,7 @@ import userUtil from '../../utils/user';
 import ExportOperation from './ExportOperation';
 import styles from './index.less';
 import TagList from './TagList';
+import EmptyImg from '../../../public/images/common/empty.svg';
 
 const { TabPane } = Tabs;
 const { Search } = Input;
@@ -1403,7 +1404,7 @@ export default class EnterpriseShared extends PureComponent {
     const noCloudMarket = isHelm => (
       <Empty
         style={{ marginTop: '120px' }}
-        image="https://gw.alipayobjects.com/mdn/miniapp_social/afts/img/A*pevERLJC9v0AAAAAAAAAAABjAQAAAQ/original"
+        image={EmptyImg}
         imageStyle={{
           height: 60
         }}
@@ -1424,7 +1425,7 @@ export default class EnterpriseShared extends PureComponent {
             <Search
               placeholder="请输入名称进行搜索"
               onSearch={this.handleSearchLocal}
-               style={{ width: 320 }}
+              style={{ width: 320 }}
             />
             <div className={styles.serBox}>
               <Radio.Group

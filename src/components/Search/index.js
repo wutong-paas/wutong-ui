@@ -36,6 +36,7 @@ class Search extends Component {
             onPressEnter={this.handleEnter}
             style={{ width: 320 }}
             onEnter={this.handleSearch}
+            onSearch={this.handleSearch}
           />
         </FormItem>
         {/* <FormItem>
