@@ -254,7 +254,7 @@ export async function getHelmAppStoresVersions(body = {}, handleError) {
 
 export async function getUpgradeComponentList(body = {}, handleError) {
   return request(
-    `${apiconfig.baseUrl}/console/teams/${body.team_name}/groups/${body.group_id}/apps/${body.upgrade_group_id}/components`,
+    `${apiconfig.baseUrl}/console/teams/${body.team_name}/groups/${body.upgrade_group_id}/apps/${body.group_id}/components`,
     {
       params: { app_model_key: body.app_model_key },
       handleError
@@ -367,7 +367,7 @@ export async function editGroups(body = {}) {
   return request(
     `${apiconfig.baseUrl}/console/teams/${body.team_name}/groups/${body.group_id}/volumes`,
     {
-      method: 'put',
+      method: 'put'
     }
   );
 }
@@ -396,7 +396,6 @@ export async function addGroup(body = {}) {
     }
   );
 }
-
 
 export async function getServices(body = {}, handleError) {
   return request(
