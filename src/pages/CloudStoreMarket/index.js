@@ -317,30 +317,30 @@ const CloudStore = props => {
   };
 
   return (
-    <>
+    <div className={styles.local}>
       <PageHeaderLayout
         title="云市场应用店铺"
         content="在云市场应用店铺中创建并发布自己的应用，成功发布的应用可作为后续应用上架至云市场门户、以及应用交付的基础"
       >
-        <Tabs
-          activeKey={activeTabKey}
-          className={styles.setTabs}
-          onChange={handleTabChange}
-        >
-          {tabpaneList.length !== 0 &&
-            tabpaneList.map((item, index) => {
-              const { name, store_id } = item;
-              return (
-                <TabPane
-                  tab={
-                    <span className={styles.verticalCen}>
-                      <Icon type="shop" />
-                      {name}
-                    </span>
-                  }
-                  key={`${item?.store_id},${item?.ID}`}
-                >
-                  <Spin spinning={loading}>
+        <div className={styles.header}>
+          <Tabs
+            activeKey={activeTabKey}
+            className={styles.setTabs}
+            onChange={handleTabChange}
+          >
+            {tabpaneList.length !== 0 &&
+              tabpaneList.map((item, index) => {
+                const { name, store_id } = item;
+                return (
+                  <TabPane
+                    tab={
+                      <span className={styles.verticalCen}>
+                        <Icon type="shop" />
+                        {name}
+                      </span>
+                    }
+                    key={`${item?.store_id},${item?.ID}`}
+                  >
                     <div className={styles.actions}>
                       <Search
                         style={{ width: '320px' }}
@@ -364,66 +364,68 @@ const CloudStore = props => {
                         </Button>
                       </div>
                     </div>
-                    {renderContent()}
-                    <div style={{ textAlign: 'right' }}>
-                      <Pagination
-                        showQuickJumper
-                        current={queryApplicationListParam.current}
-                        pageSize={queryApplicationListParam.size}
-                        total={total}
-                        showTotal={total => `共${total}条`}
-                        onChange={handlePage}
-                      />
-                    </div>
-                  </Spin>
-                </TabPane>
-              );
-            })}
-          <TabPane
-            tab={
-              <Tooltip placement="top" title="添加应用店铺">
-                <Icon type="plus" className={styles.addSvg} />
-              </Tooltip>
-            }
-            key="add"
-          />
-        </Tabs>
-        {tabpaneList.length === 0 && (
-          <div className={styles.empty}>
-            <img src={NoComponent} />
-            <p>当前无可用店铺，请先添加一个店铺</p>
-          </div>
-        )}
-        {installApplication && (
-          <CreateHelmAppModels
-            title="安装应用"
-            eid={eid}
-            appTypes={'localsContent'}
-            appInfo={appInfo}
-            helmInfo={false}
-            onOk={handleupDataAppModel}
-            onCancel={handleCancelupDataAppModel}
-            marketId={queryApplicationListParam.market_id}
-          />
-        )}
-        {createMarketModalVisible && (
-          <CreateMarketModal
-            createMarketModalVisible={createMarketModalVisible}
-            eid={eid}
-            onCancel={handleCancelCreateMarketModal}
-            fetchStoreList={fetchStoreList}
-          />
-        )}
-        {createTemplateModalVisible && (
-          <CreateTemplateModal
-            createTemplateModalVisible={createTemplateModalVisible}
-            eid={eid}
-            onCancel={() => setCreateTemplateModalVisible(false)}
-            createdCallback={fetchStoreList}
-          />
-        )}
+                    <Spin spinning={loading}>
+                      {renderContent()}
+                      <div style={{ textAlign: 'right' }}>
+                        <Pagination
+                          showQuickJumper
+                          current={queryApplicationListParam.current}
+                          pageSize={queryApplicationListParam.size}
+                          total={total}
+                          showTotal={total => `共${total}条`}
+                          onChange={handlePage}
+                        />
+                      </div>
+                    </Spin>
+                  </TabPane>
+                );
+              })}
+            <TabPane
+              tab={
+                <Tooltip placement="top" title="添加应用店铺">
+                  <Icon type="plus" className={styles.addSvg} />
+                </Tooltip>
+              }
+              key="add"
+            />
+          </Tabs>
+          {tabpaneList.length === 0 && (
+            <div className={styles.empty}>
+              <img src={NoComponent} />
+              <p>当前无可用店铺，请先添加一个店铺</p>
+            </div>
+          )}
+          {installApplication && (
+            <CreateHelmAppModels
+              title="安装应用"
+              eid={eid}
+              appTypes={'localsContent'}
+              appInfo={appInfo}
+              helmInfo={false}
+              onOk={handleupDataAppModel}
+              onCancel={handleCancelupDataAppModel}
+              marketId={queryApplicationListParam.market_id}
+            />
+          )}
+          {createMarketModalVisible && (
+            <CreateMarketModal
+              createMarketModalVisible={createMarketModalVisible}
+              eid={eid}
+              onCancel={handleCancelCreateMarketModal}
+              fetchStoreList={fetchStoreList}
+            />
+          )}
+          {createTemplateModalVisible && (
+            <CreateTemplateModal
+              createTemplateModalVisible={createTemplateModalVisible}
+              eid={eid}
+              onCancel={() => setCreateTemplateModalVisible(false)}
+              createdCallback={fetchStoreList}
+            />
+          )}
+        </div>
       </PageHeaderLayout>
-    </>
+    </div>
   );
 };
 
