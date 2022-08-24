@@ -32,6 +32,7 @@ import cookie from '../../utils/cookie';
 import globalUtil from '../../utils/global';
 import userUtil from '../../utils/user';
 import styless from './index.less';
+import GoBackImg from '../../../public/images/common/goback.svg';
 
 const FormItem = Form.Item;
 const { Option } = Select;
@@ -541,7 +542,11 @@ export default class Main extends PureComponent {
           title="本地组件库"
           content="共享企业创造的业务系统，服务组件，中间件"
         >
-          <Form onSubmit={this.handleSubmit} layout="horizontal">
+          <Form
+            onSubmit={this.handleSubmit}
+            layout="horizontal"
+            className={styless.form}
+          >
             <Card
               style={{
                 marginBottom: 24
@@ -777,55 +782,63 @@ export default class Main extends PureComponent {
                   </div>
                 )}
                 {appInfo && !isEdit && (
-                  <div className={styless.appBoxs}>
-                    <div>
-                      <Icon type="arrow-left" onClick={this.handleCancel} />
-                    </div>
-                    <div>
-                      {imageBase64 || imageUrl ? (
-                        <img
-                          src={imageBase64 || imageUrl}
-                          alt="LOGO"
-                          style={{
-                            margin: '0 auto',
-                            maxWidth: '60px',
-                            maxHeight: '60px'
+                  <div className={styless.app}>
+                    <div className={styless['app-header']}>
+                      <div>
+                        <img src={GoBackImg} onClick={this.handleCancel} />
+                        {/* <Icon type="arrow-left" onClick={this.handleCancel} /> */}
+                      </div>
+                      {!isEdit && isEditApp && (
+                        <div
+                          className={styless.edit}
+                          onClick={() => {
+                            this.handleIsEdit(!isEdit);
                           }}
-                        />
-                      ) : (
-                        appInfo &&
-                        appInfo.app_name && (
-                          <div
+                        >
+                          编辑
+                        </div>
+                      )}
+                    </div>
+                    <div className={styless.appBoxs}>
+                      <div>
+                        {imageBase64 || imageUrl ? (
+                          <img
+                            src={imageBase64 || imageUrl}
+                            alt="LOGO"
                             style={{
                               margin: '0 auto',
                               maxWidth: '60px',
                               maxHeight: '60px'
                             }}
-                          >
-                            {defaulAppImg}
-                          </div>
-                        )
-                      )}
-                    </div>
+                          />
+                        ) : (
+                          appInfo &&
+                          appInfo.app_name && (
+                            <div
+                              style={{
+                                margin: '0 auto',
+                                maxWidth: '60px',
+                                maxHeight: '60px'
+                              }}
+                            >
+                              {defaulAppImg}
+                            </div>
+                          )
+                        )}
+                      </div>
 
-                    <div>
-                      <h3 title={appInfo.app_name}>{appInfo.app_name}</h3>
-                      <div>{appInfo.describe}</div>
+                      <div>
+                        <h3 title={appInfo.app_name}>{appInfo.app_name}</h3>
+                        <div>{appInfo.describe}</div>
+                      </div>
+                      <div>
+                        {arr.map(item => {
+                          return (
+                            <div className={styless.appVersion}>{item}</div>
+                          );
+                        })}
+                      </div>
                     </div>
-                    <div>
-                      {arr.map(item => {
-                        return <div className={styless.appVersion}>{item}</div>;
-                      })}
-                    </div>
-                    {!isEdit && isEditApp && (
-                      <a
-                        onClick={() => {
-                          this.handleIsEdit(!isEdit);
-                        }}
-                      >
-                        编辑
-                      </a>
-                    )}
                   </div>
                 )}
               </div>
@@ -984,9 +997,12 @@ export default class Main extends PureComponent {
               extra={
                 <div>
                   {!isAppDetails && isEditApp && (
-                    <a onClick={() => this.handleAppDetails(!isAppDetails)}>
+                    <div
+                      className={styless.edit}
+                      onClick={() => this.handleAppDetails(!isAppDetails)}
+                    >
                       编辑
-                    </a>
+                    </div>
                   )}
                 </div>
               }
@@ -998,6 +1014,7 @@ export default class Main extends PureComponent {
                 style={{
                   padding: '36px'
                 }}
+                className={styless.richtext}
               >
                 <Row gutter={24}>
                   {isAppDetails ? (
@@ -1025,6 +1042,7 @@ export default class Main extends PureComponent {
                           className="my-editor"
                           controls={controls}
                           placeholder="请输入详情"
+                          style={{ backgroundColor: '#F1F9FF' }}
                         />
                       )}
                     </FormItem>
