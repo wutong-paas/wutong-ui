@@ -34,18 +34,25 @@ export default class EnterpriseTeams extends PureComponent {
     );
 
     return (
-      <Card style={stylePro} hoverable bodyStyle={{ padding: 0 }}>
-        <Row type="flex" align="middle" className={styles.pl24}>
-          <Col span={overlay ? 23 : 24}>{Cols || ''}</Col>
-          {overlay && (
-            <Col span={1} className={styles.bor}>
-              <Dropdown overlay={overlay} placement="bottomLeft">
-                <Icon component={moreSvg} style={{ width: '100%' }} />
-              </Dropdown>
-            </Col>
-          )}
-        </Row>
-      </Card>
+      <div className={styles.item}>
+        <Card
+          style={stylePro}
+          hoverable
+          bodyStyle={{ padding: 0 }}
+          bordered={false}
+        >
+          <Row type="flex" align="middle" className={styles.pl24}>
+            <Col span={overlay ? 23 : 24}>{Cols || ''}</Col>
+            {overlay && (
+              <Col span={1} className={styles.bor}>
+                <Dropdown overlay={overlay} placement="bottomLeft">
+                  <Icon component={moreSvg} style={{ width: '100%' }} />
+                </Dropdown>
+              </Col>
+            )}
+          </Row>
+        </Card>
+      </div>
     );
   }
 }

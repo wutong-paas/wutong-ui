@@ -48,6 +48,7 @@ import ExportOperation from './ExportOperation';
 import styles from './index.less';
 import TagList from './TagList';
 import EmptyImg from '../../../public/images/common/empty.svg';
+import InstallImg from '../../../public/images/market/install.svg';
 
 const { TabPane } = Tabs;
 const { Search } = Input;
@@ -1093,7 +1094,8 @@ export default class EnterpriseShared extends PureComponent {
                     }
                   }}
                 >
-                  {globalUtil.fetchSvg('InstallApp')}
+                  {/* {globalUtil.fetchSvg('InstallApp')} */}
+                  <img src={InstallImg} />
                   <div style={{ background: '#fff' }}>安装</div>
                 </div>
               </Col>
@@ -1314,7 +1316,9 @@ export default class EnterpriseShared extends PureComponent {
       display: 'flex',
       alignItems: 'center',
       marginBottom: '20px',
-      marginTop: '4px'
+      padding: '20px 24px',
+      background: '#fff',
+      borderRadius: '0 0 4px 4px'
     };
     const contentLeftStyle = {
       textAlign: 'left',
@@ -1449,11 +1453,15 @@ export default class EnterpriseShared extends PureComponent {
                       return null;
                     }
                     return (
-                      <Checkbox key={id} value={name}>
-                        {name}
-                      </Checkbox>
+                      <span>
+                        {index !== 0 && <Divider type="vertical" />}
+                        <Checkbox key={id} value={name}>
+                          {name}
+                        </Checkbox>
+                      </span>
                     );
                   })}
+                  {tagLists && <Divider type="vertical" />}
                   <a onClick={this.handleOpenEditorMoreTags} style={rightStyle}>
                     更多标签
                   </a>
@@ -1606,118 +1614,119 @@ export default class EnterpriseShared extends PureComponent {
       </div>
     );
     return (
-      <PageHeaderLayout
-        title="本地组件库"
-        content="共享企业创造的业务系统，服务组件，中间件。"
-      >
-        {/* {initShow && isNewbieGuide && (
+      <div className={styles.local}>
+        <PageHeaderLayout
+          title="本地组件库"
+          content="共享企业创造的业务系统，服务组件，中间件。"
+        >
+          {/* {initShow && isNewbieGuide && (
           <PlatformIntroduced onCancel={this.hideInitShow} />
         )} */}
 
-        {guideStep === 'Jump' && isInStallShow && (
-          <InstallStep
-            onCancel={this.hideInstallStep}
-            isAuthorize={isAuthorize}
-            eid={eid}
-            installType={this.state.installType}
-            isStoreCluster={this.state.isStoreCluster}
-          />
-        )}
+          {guideStep === 'Jump' && isInStallShow && (
+            <InstallStep
+              onCancel={this.hideInstallStep}
+              isAuthorize={isAuthorize}
+              eid={eid}
+              installType={this.state.installType}
+              isStoreCluster={this.state.isStoreCluster}
+            />
+          )}
 
-        {showMarketCloudAuth && (
-          <AuthCompany
-            eid={eid}
-            marketName={marketInfo.name}
-            title="欢迎使用该平台，请先完成连接云应用商店授权"
-            onCancel={() => {
-              this.setState({ showMarketCloudAuth: false });
-            }}
-            currStep={2}
-            isReload
-            onCloseLogin={this.onCloseLogin}
-          />
-        )}
-        {showMarketAppDetail && (
-          <MarketAppDetailShow
-            onOk={this.hideMarketAppDetail}
-            onCancel={this.hideMarketAppDetail}
-            app={this.state.showApp}
-          />
-        )}
-        {moreTags && (
-          <TagList
-            title="查看标签"
-            onOk={this.handleCloseMoreTags}
-            onChangeCheckbox={this.onChangeCheckbox}
-            onCancel={this.handleCloseMoreTags}
-            tagLists={tagLists}
-            seeTag={seeTag}
-            checkedValues={this.state.tags}
-            componentList={componentList}
-            editorTags={editorTags}
-          />
-        )}
-        {deleteApp && (
-          <ConfirmModal
-            onOk={this.handleDeleteApp}
-            desc="确定要删除此应用模型吗?"
-            subDesc="删除后其他人将无法安装此应用模型"
-            title="删除应用模版"
-            onCancel={this.handleCancelDelete}
-          />
-        )}
-        {installHelmApp && (
-          <CreateHelmAppModels
-            title="安装应用"
-            eid={eid}
-            appTypes={appTypes}
-            appInfo={appInfo}
-            helmInfo={helmInfo}
-            onOk={this.handleupDataAppModel}
-            onCancel={this.handleCancelupDataAppModel}
-          />
-        )}
-        {deleteAppMarket && (
-          <ConfirmModal
-            onOk={this.handleDeleteAppMarket}
-            loading={deleteAppMarketLoading}
-            subDesc="此操作不可恢复"
-            desc="确定要删除此商店吗?"
-            title="删除应用商店"
-            onCancel={this.handleCloseDeleteAppMarket}
-          />
-        )}
-        {deleteHelmAppMarket && (
-          <ConfirmModal
-            onOk={this.handleDeleteHelmAppMarket}
-            loading={deleteHelmAppMarketLoading}
-            subDesc="此操作不可恢复"
-            desc="确定要删除此商店吗?"
-            title="删除Helm应用商店"
-            onCancel={this.handleCloseDeleteHelmAppMarket}
-          />
-        )}
+          {showMarketCloudAuth && (
+            <AuthCompany
+              eid={eid}
+              marketName={marketInfo.name}
+              title="欢迎使用该平台，请先完成连接云应用商店授权"
+              onCancel={() => {
+                this.setState({ showMarketCloudAuth: false });
+              }}
+              currStep={2}
+              isReload
+              onCloseLogin={this.onCloseLogin}
+            />
+          )}
+          {showMarketAppDetail && (
+            <MarketAppDetailShow
+              onOk={this.hideMarketAppDetail}
+              onCancel={this.hideMarketAppDetail}
+              app={this.state.showApp}
+            />
+          )}
+          {moreTags && (
+            <TagList
+              title="查看标签"
+              onOk={this.handleCloseMoreTags}
+              onChangeCheckbox={this.onChangeCheckbox}
+              onCancel={this.handleCloseMoreTags}
+              tagLists={tagLists}
+              seeTag={seeTag}
+              checkedValues={this.state.tags}
+              componentList={componentList}
+              editorTags={editorTags}
+            />
+          )}
+          {deleteApp && (
+            <ConfirmModal
+              onOk={this.handleDeleteApp}
+              desc="确定要删除此应用模型吗?"
+              subDesc="删除后其他人将无法安装此应用模型"
+              title="删除应用模版"
+              onCancel={this.handleCancelDelete}
+            />
+          )}
+          {installHelmApp && (
+            <CreateHelmAppModels
+              title="安装应用"
+              eid={eid}
+              appTypes={appTypes}
+              appInfo={appInfo}
+              helmInfo={helmInfo}
+              onOk={this.handleupDataAppModel}
+              onCancel={this.handleCancelupDataAppModel}
+            />
+          )}
+          {deleteAppMarket && (
+            <ConfirmModal
+              onOk={this.handleDeleteAppMarket}
+              loading={deleteAppMarketLoading}
+              subDesc="此操作不可恢复"
+              desc="确定要删除此商店吗?"
+              title="删除应用商店"
+              onCancel={this.handleCloseDeleteAppMarket}
+            />
+          )}
+          {deleteHelmAppMarket && (
+            <ConfirmModal
+              onOk={this.handleDeleteHelmAppMarket}
+              loading={deleteHelmAppMarketLoading}
+              subDesc="此操作不可恢复"
+              desc="确定要删除此商店吗?"
+              title="删除Helm应用商店"
+              onCancel={this.handleCloseDeleteHelmAppMarket}
+            />
+          )}
 
-        {createAppModel && (
-          <CreateAppModels
-            title="创建应用模版"
-            eid={eid}
-            onOk={this.handleCreateAppModel}
-            onCancel={this.handleCancelAppModel}
-          />
-        )}
+          {createAppModel && (
+            <CreateAppModels
+              title="创建应用模版"
+              eid={eid}
+              onOk={this.handleCreateAppModel}
+              onCancel={this.handleCancelAppModel}
+            />
+          )}
 
-        {createAppMarket && (
-          <AuthCompany
-            isHelm
-            eid={eid}
-            title="添加应用商店"
-            onOk={this.getHelmMarketsTab}
-            onCancel={this.handleCancelAppMarket}
-            currStep={1}
-          />
-        )}
-        {/* {this.state.createAppMarket && (
+          {createAppMarket && (
+            <AuthCompany
+              isHelm
+              eid={eid}
+              title="添加应用商店"
+              onOk={this.getHelmMarketsTab}
+              onCancel={this.handleCancelAppMarket}
+              currStep={1}
+            />
+          )}
+          {/* {this.state.createAppMarket && (
           <CreateAppMarket
             title="添加应用商店"
             eid={eid}
@@ -1726,125 +1735,128 @@ export default class EnterpriseShared extends PureComponent {
             onCancel={this.handleCancelAppMarket}
           />
         )} */}
-        {upAppMarket && (
-          <CreateAppMarket
-            title="编辑应用商店连接信息"
-            eid={eid}
-            loading={upAppMarketLoading}
-            marketInfo={marketInfo}
-            onOk={this.handleCreateAppMarket}
-            onCancel={this.handleCancelAppMarket}
-          />
-        )}
-        {upHelmAppMarket && (
-          <HelmAppMarket
-            title={`编辑${helmInfo.name}商店`}
-            eid={eid}
-            data={helmInfo}
-            onOk={this.handleUpHelmAppMarket}
-            onCancel={this.handleCancelHelmAppMarket}
-          />
-        )}
-
-        {upDataAppModel && (
-          <CreateAppModels
-            title="编辑应用模版"
-            eid={eid}
-            appInfo={appInfo}
-            onOk={this.handleupDataAppModel}
-            onCancel={this.handleCancelupDataAppModel}
-          />
-        )}
-        {visibles && (
-          <DeleteApp
-            appInfo={appInfo}
-            bouncedText={bouncedText}
-            onOk={this.handleOkBounced}
-            onCancel={this.handleCancelDelete}
-            onCheckedValues={this.onChangeBounced}
-          />
-        )}
-
-        {showCloudMarketAuth && (
-          <AuthCompany
-            eid={eid}
-            marketName={marketInfo.name}
-            title="您在该云应用商店无安装权限，请登录获取授权"
-            onCancel={() => {
-              this.setState({ showCloudMarketAuth: false });
-            }}
-            currStep={2}
-          />
-        )}
-        <Tabs
-          activeKey={activeTabKey}
-          className={styles.setTabs}
-          onChange={this.onTabChange}
-        >
-          <TabPane
-            tab={
-              <span className={styles.verticalCen}>
-                {globalUtil.fetchSvg('localMarket')}
-                本地组件库
-              </span>
-            }
-            key="local"
-          >
-            <div
-              style={{
-                display: 'block',
-                position: 'relative',
-                overflow: 'hidden'
-              }}
-            >
-              {localsContent}
-            </div>
-          </TabPane>
-          {marketTab.map(item => {
-            const { ID, alias, name } = item;
-            return (
-              <TabPane
-                tab={
-                  <span className={styles.verticalCen}>
-                    {globalUtil.fetchSvg('cloudMarket')}
-                    {alias || name}
-                  </span>
-                }
-                key={ID}
-              >
-                {marketContent}
-              </TabPane>
-            );
-          })}
-          {helmTab.map(item => {
-            const { name } = item;
-            return (
-              <TabPane
-                tab={
-                  <span className={styles.verticalCen}>
-                    {globalUtil.fetchSvg('HelmSvg')}
-                    {name}
-                  </span>
-                }
-                key={name}
-              >
-                {helmContent}
-              </TabPane>
-            );
-          })}
-
-          {isCreateAppStore && (
-            <TabPane
-              tab={
-                <Tooltip placement="top" title="添加应用市场">
-                  <Icon type="plus" className={styles.addSvg} />
-                </Tooltip>
-              }
-              key="add"
+          {upAppMarket && (
+            <CreateAppMarket
+              title="编辑应用商店连接信息"
+              eid={eid}
+              loading={upAppMarketLoading}
+              marketInfo={marketInfo}
+              onOk={this.handleCreateAppMarket}
+              onCancel={this.handleCancelAppMarket}
             />
           )}
-        </Tabs>
-      </PageHeaderLayout>
+          {upHelmAppMarket && (
+            <HelmAppMarket
+              title={`编辑${helmInfo.name}商店`}
+              eid={eid}
+              data={helmInfo}
+              onOk={this.handleUpHelmAppMarket}
+              onCancel={this.handleCancelHelmAppMarket}
+            />
+          )}
+
+          {upDataAppModel && (
+            <CreateAppModels
+              title="编辑应用模版"
+              eid={eid}
+              appInfo={appInfo}
+              onOk={this.handleupDataAppModel}
+              onCancel={this.handleCancelupDataAppModel}
+            />
+          )}
+          {visibles && (
+            <DeleteApp
+              appInfo={appInfo}
+              bouncedText={bouncedText}
+              onOk={this.handleOkBounced}
+              onCancel={this.handleCancelDelete}
+              onCheckedValues={this.onChangeBounced}
+            />
+          )}
+
+          {showCloudMarketAuth && (
+            <AuthCompany
+              eid={eid}
+              marketName={marketInfo.name}
+              title="您在该云应用商店无安装权限，请登录获取授权"
+              onCancel={() => {
+                this.setState({ showCloudMarketAuth: false });
+              }}
+              currStep={2}
+            />
+          )}
+          <div className={styles.header}>
+            <Tabs
+              activeKey={activeTabKey}
+              className={styles.setTabs}
+              onChange={this.onTabChange}
+            >
+              <TabPane
+                tab={
+                  <span className={styles.verticalCen}>
+                    {/* {globalUtil.fetchSvg('localMarket')} */}
+                    本地组件库
+                  </span>
+                }
+                key="local"
+              >
+                <div
+                  style={{
+                    display: 'block',
+                    position: 'relative',
+                    overflow: 'hidden'
+                  }}
+                >
+                  {localsContent}
+                </div>
+              </TabPane>
+              {marketTab.map(item => {
+                const { ID, alias, name } = item;
+                return (
+                  <TabPane
+                    tab={
+                      <span className={styles.verticalCen}>
+                        {/* {globalUtil.fetchSvg('cloudMarket')} */}
+                        {alias || name}
+                      </span>
+                    }
+                    key={ID}
+                  >
+                    {marketContent}
+                  </TabPane>
+                );
+              })}
+              {helmTab.map(item => {
+                const { name } = item;
+                return (
+                  <TabPane
+                    tab={
+                      <span className={styles.verticalCen}>
+                        {/* {globalUtil.fetchSvg('HelmSvg')} */}
+                        {name}
+                      </span>
+                    }
+                    key={name}
+                  >
+                    {helmContent}
+                  </TabPane>
+                );
+              })}
+
+              {isCreateAppStore && (
+                <TabPane
+                  tab={
+                    <Tooltip placement="top" title="添加应用市场">
+                      <Icon type="plus" className={styles.addSvg} />
+                    </Tooltip>
+                  }
+                  key="add"
+                />
+              )}
+            </Tabs>
+          </div>
+        </PageHeaderLayout>
+      </div>
     );
   }
 }

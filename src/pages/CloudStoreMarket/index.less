@@ -11,8 +11,8 @@
     }
 
     .ant-tabs-tab {
-      background: #fff;
-      padding   : 6px 16px 8px;
+      // background: #fff;
+      padding: 6px 16px 8px;
 
       &>span {
         vertical-align: super;
@@ -213,5 +213,134 @@
       cursor            : pointer;
       //background-color: #fff;
     }
+  }
+}
+
+.local {
+  .header {
+    .actions {
+      padding      : 20px 24px;
+      background   : #fff;
+      margin-bottom: 20px;
+    }
+
+    .serBox {
+      margin-left  : 28px;
+      background   : #F1F9FF;
+      box-shadow   : 0 2px 2px 0 rgba(56, 69, 81, 0.06);
+      border-radius: 1px;
+      display      : flex;
+      align-items  : center;
+      padding      : 0 16px 0 0;
+      width        : fit-content;
+      overflow-x   : auto;
+      white-space  : nowrap;
+      text-overflow: ellipsis;
+      border-radius: 16px;
+
+      .setRadioGroup {
+        width: 112px;
+
+        :global {
+          .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+            box-shadow: none !important;
+          }
+
+          .ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):focus-within {
+            outline: none !important;
+          }
+
+          .ant-radio-button-wrapper {
+            padding: 0 6px;
+            border : none !important;
+          }
+
+          .ant-radio-button-wrapper:not(:first-child)::before {
+            display: none;
+          }
+
+          .ant-radio-button-wrapper:first-child {
+            border-radius: 16px;
+            padding      : 0 16px;
+          }
+
+          .ant-radio-button-wrapper:last-child {
+            border-radius: 16px;
+            padding      : 0 16px;
+          }
+
+          .ant-radio-button-wrapper {
+            background-color: initial
+          }
+
+          .ant-radio-button-wrapper-checked {
+            background-color: #08153A;
+          }
+        }
+      }
+
+      .setCheckboxGroup {
+        margin: -4px 0 0 5px;
+        width : calc(100% - 110px) !important;
+
+        :global {
+          .ant-checkbox-wrapper+span {
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+
+    :global {
+      .ant-input {
+        background-color: rgba(241, 249, 255, 1);
+      }
+
+      .ant-tabs-ink-bar {
+        height: 0px;
+      }
+
+      .ant-tabs-bar {
+        border-radius: 4px 4px 0 0;
+        background   : #fff;
+        margin       : 0;
+        padding      : 20px 24px;
+        font-size    : 14px;
+        font-family  : PingFangSC-Medium,
+          PingFang SC;
+        font-weight  : 500;
+        color        : rgba(0, 0, 0, 0.85);
+        border-bottom: 1px solid #eee;
+
+        .ant-tabs-nav-container {
+          border-radius: 18px;
+          background   : #F1F9FF;
+          width        : fit-content;
+        }
+
+        .ant-tabs-nav .ant-tabs-tab {
+          margin: 0;
+        }
+
+        .ant-tabs-nav-wrap .ant-tabs-nav .ant-tabs-tab-active {
+          background   : #08153A;
+          color        : #fff;
+          border-radius: 16px;
+        }
+      }
+    }
+
+    .add {
+      flex            : 1;
+      background-color: #fff;
+    }
+  }
+
+  .text {
+    font-size: 14px;
+    font-family: PingFangSC-Regular,
+      PingFang SC;
+    font-weight: 400;
+    color      : rgba(0, 0, 0, 0.65);
   }
 }
