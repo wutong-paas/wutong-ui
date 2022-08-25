@@ -240,102 +240,117 @@ export default class Management extends PureComponent {
     );
     const managementAdmin = (
       <div style={{ marginTop: '20px' }}>
-        <Row>{adminer && operation}</Row>
-        {adminLists && (
-          <Row
-            className={styles.teamMinTit}
-            type="flex"
-            align="middle"
-            style={{ padding: ' 0 0 10px 24px' }}
-          >
-            <Col span={5}>名称</Col>
-            <Col span={5}>姓名</Col>
-            <Col span={6}>角色</Col>
-            <Col span={5}>时间</Col>
-          </Row>
-        )}
-        {adminLists ? (
-          adminLists.map(item => {
-            const {
-              user_id: id,
-              create_time: createTime,
-              nick_name: nickName,
-              real_name: realName,
-              roles
-            } = item;
-            return (
-              <Card
-                key={id}
-                style={{ marginBottom: '10px' }}
-                bodyStyle={{ padding: 0 }}
-                hoverable
-              >
-                <Row
-                  type="flex"
-                  align="middle"
-                  style={{ paddingLeft: '24px', height: '70px' }}
+        <div className={styles.header}>
+          <Row>{adminer && operation}</Row>
+        </div>
+        <div className={styles.content}>
+          {adminLists && (
+            <Row
+              className={styles.teamMinTit}
+              type="flex"
+              align="middle"
+              style={{ padding: ' 0 0 10px 24px' }}
+            >
+              <Col span={5}>名称</Col>
+              <Col span={5}>姓名</Col>
+              <Col span={6}>角色</Col>
+              <Col span={5}>时间</Col>
+            </Row>
+          )}
+          {adminLists ? (
+            adminLists.map(item => {
+              const {
+                user_id: id,
+                create_time: createTime,
+                nick_name: nickName,
+                real_name: realName,
+                roles
+              } = item;
+              return (
+                <Card
+                  key={id}
+                  style={{
+                    marginBottom: '16px',
+                    height: 76,
+                    backgroundColor: '#F1F9FF',
+                    color: '#000',
+                    fontSize: 14,
+                    fontWeight: 500
+                  }}
+                  bodyStyle={{ padding: 0 }}
+                  bordered={false}
+                  // hoverable
                 >
-                  <Col span={5}>{nickName}</Col>
-                  <Col span={5}>{realName}</Col>
-                  <Col span={6}>
-                    {roles.map(items => {
-                      return (
-                        <span style={{ marginRight: '5px' }}>
-                          {roleUtil.roleMap(items)}
-                        </span>
-                      );
-                    })}
-                  </Col>
-                  <Col span={5}>
-                    {moment(createTime).format('YYYY-MM-DD HH:mm:ss')}
-                  </Col>
-                  <Col span={2} />
-                  <Col span={1} className={styles.bor}>
-                    <Dropdown
-                      disabled={userId == id}
-                      overlay={managementMenu(item)}
-                      placement="bottomLeft"
-                    >
-                      <Icon component={moreSvg} style={{ width: '100%' }} />
-                    </Dropdown>
-                  </Col>
-                </Row>
-              </Card>
-            );
-          })
-        ) : (
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-        )}
+                  <Row
+                    type="flex"
+                    align="middle"
+                    style={{ paddingLeft: '24px', height: '70px' }}
+                  >
+                    <Col span={5}>{nickName}</Col>
+                    <Col span={5}>{realName}</Col>
+                    <Col span={6}>
+                      {roles.map(items => {
+                        return (
+                          <span style={{ marginRight: '5px' }}>
+                            {roleUtil.roleMap(items)}
+                          </span>
+                        );
+                      })}
+                    </Col>
+                    <Col span={5}>
+                      {moment(createTime).format('YYYY-MM-DD HH:mm:ss')}
+                    </Col>
+                    <Col span={2} />
+                    <Col span={1} className={styles.bor}>
+                      <Dropdown
+                        disabled={userId == id}
+                        overlay={managementMenu(item)}
+                        placement="bottomLeft"
+                      >
+                        <Icon component={moreSvg} style={{ width: '100%' }} />
+                      </Dropdown>
+                    </Col>
+                  </Row>
+                </Card>
+              );
+            })
+          ) : (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          )}
+        </div>
       </div>
     );
 
     return (
       <Fragment>
-        {showAddAdmin && (
-          <AddAdmin
-            eid={eid}
-            info={info}
-            onOk={this.handleCreateAdmin}
-            onCancel={this.cancelCreateAdmin}
-          />
-        )}
-        {showDelTeam && (
-          <ConfirmModal
-            onOk={this.handleDelAdmin}
-            title="删除管理员"
-            subDesc="此操作不可恢复"
-            desc="确定要删除此管理员吗？"
-            onCancel={this.hideDelAdmin}
-          />
-        )}
+        <div className={styles.admin}>
+          {showAddAdmin && (
+            <AddAdmin
+              eid={eid}
+              info={info}
+              onOk={this.handleCreateAdmin}
+              onCancel={this.cancelCreateAdmin}
+            />
+          )}
 
-        {enterpriseAdminLoading ? (
-          <div className={styles.example}>
-            <Spin />
-          </div>
-        ) : (
-          managementAdmin
-        )}
+          {showDelTeam && (
+            <ConfirmModal
+              onOk={this.handleDelAdmin}
+              title="删除管理员"
+              subDesc="此操作不可恢复"
+              desc="确定要删除此管理员吗？"
+              onCancel={this.hideDelAdmin}
+            />
+          )}
+
+          {enterpriseAdminLoading ? (
+            <div className={styles.example}>
+              <Spin />
+            </div>
+          ) : (
+            managementAdmin
+          )}
+        </div>
       </Fragment>
     );
   }

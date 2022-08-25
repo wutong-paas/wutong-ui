@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-unused-expressions */
-import { Card, Col, notification, Row, Spin, Switch } from 'antd';
+import { Card, Col, notification, Row, Spin, Switch, Divider } from 'antd';
 import { connect } from 'dva';
 import React, { Fragment, PureComponent } from 'react';
 import CertificateForm from '../../components/CertificateForm';
@@ -435,16 +435,16 @@ class Infrastructure extends PureComponent {
     } = this.state;
     const UserRegistered = (
       <Card
-        hoverable
+        // hoverable
+        className={styles.card}
         bordered={false}
-        style={{ borderTop: enterpriseEdition ? '1px solid  #ccc' : 'none' }}
       >
         <Row type="flex" align="middle">
-          <Col span={3}>用户注册</Col>
-          <Col span={17}>
-            <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-              控制用户是否可以注册功能。
-            </span>
+          <Col span={3} className={styles.title}>
+            用户注册
+          </Col>
+          <Col span={17} className={styles.description}>
+            <span>控制用户是否可以注册功能。</span>
           </Col>
 
           <Col span={4} style={{ textAlign: 'right' }}>
@@ -458,60 +458,71 @@ class Infrastructure extends PureComponent {
       </Card>
     );
     const Oauth = (
-      <div>
-        <Card
-          style={{ borderTop: '1px solid  #ccc' }}
-          hoverable
-          bordered={false}
-        >
-          <Row type="flex" align="middle">
-            <Col span={3}>Oauth 第三方服务集成</Col>
-            <Col span={17}>
-              <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-                支持Github、Gitlab、码云等多种第三方OAuth服务，用户互联后可获取仓库项目。支持钉钉、Aliyun等服务进行第三方登录认证。
-              </span>
-            </Col>
-            <Col span={4} style={{ textAlign: 'right' }}>
-              {iswutongTird && (
+      <Card
+        //hoverable
+        bordered={false}
+        className={styles.card}
+      >
+        <Row type="flex" align="middle">
+          <Col span={3} className={styles.title}>
+            Oauth 第三方服务集成
+          </Col>
+          <Col span={17} className={styles.description}>
+            <span>
+              支持Github、Gitlab、码云等多种第三方OAuth服务，用户互联后可获取仓库项目。支持钉钉、Aliyun等服务进行第三方登录认证。
+            </span>
+          </Col>
+          <Col span={4} style={{ textAlign: 'right' }}>
+            {iswutongTird && (
+              <Fragment>
                 <a
                   onClick={() => {
                     this.setState({ openOauthTable: true });
                   }}
-                  style={{ marginRight: '10px' }}
+                  style={{ verticalAlign: 'middle' }}
                 >
                   查看配置
                 </a>
-              )}
-              <Switch
-                onChange={this.handlChooseeOpen}
-                checked={iswutongTird}
-                className={styles.automaTictelescopingSwitch}
-              />
-            </Col>
-          </Row>
-        </Card>
-      </div>
+                <Divider style={{ margin: '0 16px' }} type="vertical" />
+              </Fragment>
+            )}
+
+            <Switch
+              onChange={this.handlChooseeOpen}
+              checked={iswutongTird}
+              className={styles.automaTictelescopingSwitch}
+            />
+          </Col>
+        </Row>
+      </Card>
     );
     const AutomaticCertificate = wutongUtil.CertificateIssuedByEnable(
       enterprise
     );
     const AutomaticIssueCertificate = (
-      <Card hoverable bordered={false} style={{ borderTop: '1px solid  #ccc' }}>
+      <Card
+        //hoverable
+        bordered={false}
+        className={styles.card}
+      >
         <Row type="flex" align="middle">
-          <Col span={3}>自动签发证书</Col>
-          <Col span={17}>
-            <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-              这是一个外部扩充功能，实现网关策略所需证书的自动签发。
-            </span>
+          <Col span={3} className={styles.title}>
+            自动签发证书
+          </Col>
+          <Col span={17} className={styles.description}>
+            <span>这是一个外部扩充功能，实现网关策略所需证书的自动签发。</span>
           </Col>
           <Col span={4} style={{ textAlign: 'right' }}>
             {AutomaticCertificate && (
-              <a
-                onClick={this.handelOpenCertificate}
-                style={{ marginRight: '10px' }}
-              >
-                查看配置
-              </a>
+              <Fragment>
+                <a
+                  onClick={this.handelOpenCertificate}
+                  style={{ verticalAlign: 'middle' }}
+                >
+                  查看配置
+                </a>
+                <Divider style={{ margin: '0 16px' }} type="vertical" />
+              </Fragment>
             )}
 
             <Switch
@@ -529,22 +540,31 @@ class Infrastructure extends PureComponent {
     );
 
     const MirrorWarehouseInformation = (
-      <Card hoverable bordered={false} style={{ borderTop: '1px solid  #ccc' }}>
+      <Card
+        //hoverable
+        bordered={false}
+        className={styles.card}
+      >
         <Row type="flex" align="middle">
-          <Col span={3}>内部组件库镜像仓库</Col>
-          <Col span={17}>
-            <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
+          <Col span={3} className={styles.title}>
+            内部组件库镜像仓库
+          </Col>
+          <Col span={17} className={styles.description}>
+            <span>
               用于存储发布到组件库的应用模型镜像，其需要能被所有集群访问。
             </span>
           </Col>
           <Col span={4} style={{ textAlign: 'right' }}>
             {isEnableAppstoreImageHub && (
-              <a
-                onClick={this.handelOpenImageHub}
-                style={{ marginRight: '10px' }}
-              >
-                查看配置
-              </a>
+              <Fragment>
+                <a
+                  onClick={this.handelOpenImageHub}
+                  style={{ verticalAlign: 'middle' }}
+                >
+                  查看配置
+                </a>
+                <Divider style={{ margin: '0 16px' }} type="vertical" />
+              </Fragment>
             )}
 
             <Switch
@@ -561,22 +581,24 @@ class Infrastructure extends PureComponent {
       </Card>
     );
     const CloudBackup = (
-      <Card hoverable bordered={false} style={{ borderTop: '1px solid  #ccc' }}>
+      <Card
+        //hoverable
+        bordered={false}
+        className={styles.card}
+      >
         <Row type="flex" align="middle">
-          <Col span={3}>对象存储</Col>
-          <Col span={17}>
-            <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-              对象存储用于云端备份功能，存储应用的备份文件。
-            </span>
+          <Col span={3} className={styles.title}>
+            对象存储
+          </Col>
+          <Col span={17} className={styles.description}>
+            <span>对象存储用于云端备份功能，存储应用的备份文件。</span>
           </Col>
           <Col span={4} style={{ textAlign: 'right' }}>
             {isEnableObjectStorage && (
-              <a
-                onClick={this.handelOpenCloudBackup}
-                style={{ marginRight: '10px' }}
-              >
-                查看配置
-              </a>
+              <Fragment>
+                <a onClick={this.handelOpenCloudBackup}>查看配置</a>
+                <Divider style={{ margin: '0 16px' }} type="vertical" />
+              </Fragment>
             )}
 
             <Switch
@@ -593,22 +615,29 @@ class Infrastructure extends PureComponent {
       </Card>
     );
     const Monitoring = (
-      <Card hoverable bordered={false} style={{ borderTop: '1px solid  #ccc' }}>
+      <Card
+        // hoverable
+        bordered={false}
+        className={styles.card}
+      >
         <Row type="flex" align="middle">
-          <Col span={3}>监控</Col>
-          <Col span={17}>
-            <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-              用于监控：集群、节点、组件、服务数据。
-            </span>
+          <Col span={3} className={styles.title}>
+            监控
+          </Col>
+          <Col span={17} className={styles.description}>
+            <span>用于监控：集群、节点、组件、服务数据。</span>
           </Col>
           <Col span={4} style={{ textAlign: 'right' }}>
             {isEnableMonitoring && (
-              <a
-                onClick={this.handelOpenisEnableMonitoring}
-                style={{ marginRight: '10px' }}
-              >
-                查看配置
-              </a>
+              <Framegent>
+                <a
+                  onClick={this.handelOpenisEnableMonitoring}
+                  style={{ verticalAlign: 'middle' }}
+                >
+                  查看配置
+                </a>
+                <Divider style={{ margin: '0 16px' }} type="vertical" />
+              </Framegent>
             )}
 
             <Switch
@@ -627,19 +656,22 @@ class Infrastructure extends PureComponent {
     const BasicInformation = (
       <Card style={{ marginTop: '10px' }} hoverable bordered={false}>
         <Row type="flex" align="middle">
-          <Col span={3}>基础信息</Col>
-          <Col span={17}>
-            <span style={{ color: 'rgba(0, 0, 0, 0.45)' }}>
-              可以修改网站的标题、企业名称、LOGO、网页图标。
-            </span>
+          <Col span={3} className={styles.title}>
+            基础信息
+          </Col>
+          <Col span={17} className={styles.description}>
+            <span>可以修改网站的标题、企业名称、LOGO、网页图标。</span>
           </Col>
           <Col span={4} style={{ textAlign: 'right' }}>
-            <a
-              onClick={this.handelOpenBasicInformation}
-              style={{ marginRight: '10px' }}
-            >
-              查看配置
-            </a>
+            <Fragment>
+              <a
+                onClick={this.handelOpenBasicInformation}
+                style={{ marginRight: '10px', verticalAlign: 'middle' }}
+              >
+                查看配置
+              </a>
+              <Divider style={{ margin: '0 8px' }} type="vertical" />
+            </Fragment>
           </Col>
         </Row>
       </Card>
@@ -787,14 +819,16 @@ class Infrastructure extends PureComponent {
             <Spin />
           </div>
         ) : (
-          <div>
-            {enterpriseEdition && BasicInformation}
-            {UserRegistered}
-            {AutomaticIssueCertificate}
-            {Oauth}
-            {MirrorWarehouseInformation}
-            {CloudBackup}
-            {Monitoring}
+          <div className={styles.base}>
+            <Card bordered={false}>
+              {enterpriseEdition && BasicInformation}
+              {UserRegistered}
+              {AutomaticIssueCertificate}
+              {Oauth}
+              {MirrorWarehouseInformation}
+              {CloudBackup}
+              {Monitoring}
+            </Card>
           </div>
         )}
       </Fragment>
