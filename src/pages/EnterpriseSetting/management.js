@@ -239,7 +239,7 @@ export default class Management extends PureComponent {
       </Col>
     );
     const managementAdmin = (
-      <div style={{ marginTop: '20px' }}>
+      <div>
         <div className={styles.header}>
           <Row>{adminer && operation}</Row>
         </div>

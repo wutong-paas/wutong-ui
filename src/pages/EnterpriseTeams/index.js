@@ -165,6 +165,7 @@ export default class EnterpriseTeams extends PureComponent {
       pageSize={this.state.page_size}
       total={Number(this.state.total)}
       onChange={this.onPageChangeTeam}
+      showTotal={total => `共${total}条`}
     />
   );
   handleSearchUserTeam = name => {
@@ -645,13 +646,13 @@ export default class EnterpriseTeams extends PureComponent {
     );
 
     const managementTemas = (
-      <div>
+      <div className={styles['team-manager']}>
         <Row
           style={{
             display: 'flex',
-            alignItems: 'center',
-            marginBottom: '20px'
+            alignItems: 'center'
           }}
+          className={styles['team-manager-header']}
         >
           <Col span={17} style={{ textAlign: 'left' }}>
             <span className={styles.teamsTit}> 全部团队</span>
@@ -663,143 +664,73 @@ export default class EnterpriseTeams extends PureComponent {
           </Col>
           {operation}
         </Row>
-        <Row className={styles.teamMinTit} type="flex" align="middle">
-          <Col span={6}>团队名称</Col>
-          <Col span={3}>
-            <Tooltip placement="top" title="团队的管理员账号">
-              <span>拥有人</span>
-              <i
-                className="iconfont icon-yiwen"
-                style={{
-                  cursor: 'pointer',
-                  marginLeft: 4,
-                  verticalAlign: 'middle',
-                  fontSize: 14
-                }}
-              />
-            </Tooltip>
-          </Col>
-          <Col span={11}>
-            <Tooltip
-              placement="top"
-              title="团队开通的集群，如果有多个集群则显示多个"
-            >
-              <span>集群</span>
-              <i
-                className="iconfont icon-yiwen"
-                style={{
-                  cursor: 'pointer',
-                  marginLeft: 4,
-                  verticalAlign: 'middle',
-                  fontSize: 14
-                }}
-              />
-            </Tooltip>
-          </Col>
-        </Row>
-
-        {teamList.map(item => {
-          const {
-            team_id,
-            team_alias,
-            region_list,
-            owner_name,
-            team_name
-          } = item;
-          return (
-            <Card
-              key={team_id}
-              style={{ marginTop: '10px' }}
-              hoverable
-              bodyStyle={{ padding: 0 }}
-            >
-              <Row type="flex" align="middle" className={styles.pl24}>
-                <Col span={6}>{team_alias}</Col>
-                <Col span={3}>{owner_name}</Col>
-                <Col span={14}>
-                  {this.showRegions(team_name, region_list, true)}
-                </Col>
-                <Col span={1} className={styles.bor}>
-                  <Dropdown
-                    overlay={managementMenu(team_name)}
-                    placement="bottomLeft"
-                  >
-                    <Icon component={moreSvg} style={{ width: '100%' }} />
-                  </Dropdown>
-                </Col>
-              </Row>
-            </Card>
-          );
-        })}
-        <div style={{ textAlign: 'right', margin: '15px' }}>
-          {this.handlePaginations()}
-        </div>
-      </div>
-    );
-
-    const teamInfo = (
-      <div>
-        <Row>
-          <Col span={17} className={styles.teamsTit}>
-            {haveNewJoinTeam && '最新加入团队'}
-          </Col>
-          {operation}
-        </Row>
-        {haveNewJoinTeam && (
+        <div className={styles['team-manager-content']}>
           <Row className={styles.teamMinTit} type="flex" align="middle">
             <Col span={6}>团队名称</Col>
-            <Col span={3}>拥有人</Col>
-            <Col span={3}>角色</Col>
-            <Col span={12}>状态</Col>
+            <Col span={3}>
+              <Tooltip placement="top" title="团队的管理员账号">
+                <span>拥有人</span>
+                <i
+                  className="iconfont icon-yiwen"
+                  style={{
+                    cursor: 'pointer',
+                    marginLeft: 4,
+                    verticalAlign: 'middle',
+                    fontSize: 14
+                  }}
+                />
+              </Tooltip>
+            </Col>
+            <Col span={11}>
+              <Tooltip
+                placement="top"
+                title="团队开通的集群，如果有多个集群则显示多个"
+              >
+                <span>集群</span>
+                <i
+                  className="iconfont icon-yiwen"
+                  style={{
+                    cursor: 'pointer',
+                    marginLeft: 4,
+                    verticalAlign: 'middle',
+                    fontSize: 14
+                  }}
+                />
+              </Tooltip>
+            </Col>
           </Row>
-        )}
-        {request_join_team &&
-          request_join_team.map(item => {
+
+          {teamList.map(item => {
             const {
-              is_pass,
               team_id,
-              team_name,
               team_alias,
+              region_list,
               owner_name,
-              role
+              team_name
             } = item;
             return (
               <Card
                 key={team_id}
                 style={{
-                  marginTop: '10px',
-                  borderLeft: is_pass === 0 && '6px solid #4D73B1'
+                  marginTop: '16px',
+                  backgroundColor: '#f1f9ff',
+                  fontSize: 14,
+                  fontWeight: 500,
+                  color: '#000'
                 }}
+                bordered={false}
+                // hoverable
                 bodyStyle={{ padding: 0 }}
-                hoverable
               >
-                <Row
-                  type="flex"
-                  className={styles.pl24}
-                  align="middle"
-                  key={team_id}
-                >
+                <Row type="flex" align="middle" className={styles.pl24}>
                   <Col span={6}>{team_alias}</Col>
                   <Col span={3}>{owner_name}</Col>
-                  <Col span={3}>{roleUtil.actionMap(role)}</Col>
-                  <Col
-                    span={11}
-                    style={{
-                      color: is_pass === 0 && '#999999'
-                    }}
-                  >
-                    {is_pass === 0 && (
-                      <span>
-                        <img src={WarningImg} alt="" />
-                        &nbsp;申请加入团队审批中
-                      </span>
-                    )}
+                  <Col span={14}>
+                    {this.showRegions(team_name, region_list, true)}
                   </Col>
                   <Col span={1} className={styles.bor}>
                     <Dropdown
-                      overlay={
-                        is_pass === 0 ? menucancel(item) : menu(team_name)
-                      }
+                      overlay={managementMenu(team_name)}
                       placement="bottomLeft"
                     >
                       <Icon component={moreSvg} style={{ width: '100%' }} />
@@ -809,90 +740,186 @@ export default class EnterpriseTeams extends PureComponent {
               </Card>
             );
           })}
+          <div style={{ textAlign: 'right', margin: '15px' }}>
+            {this.handlePaginations()}
+          </div>
+        </div>
+      </div>
+    );
 
-        <Row
-          style={{
-            margin: '10px 0',
-            display: 'flex',
-            alignItems: 'center'
-          }}
-        >
-          <Col
-            span={4}
-            className={styles.teamsTit}
-            style={{ marginBottom: '0' }}
-          >
-            我的团队
+    const teamInfo = (
+      <div className={styles['team-manager']}>
+        <Row className={styles['team-manager-header']}>
+          <Col span={17} className={styles.teamsTit}>
+            {haveNewJoinTeam && '最新加入团队'}
           </Col>
-
-          <Col span={20} style={{ textAlign: 'right' }}>
-            <Search
-              style={{ width: '320px' }}
-              placeholder="请输入团队名称进行搜索"
-              onSearch={this.handleSearchUserTeam}
-            />
-          </Col>
+          {operation}
         </Row>
-        {userTeam && (
-          <Row className={styles.teamMinTit} type="flex" align="middle">
-            <Col span={6}>团队名称</Col>
-            <Col span={3}>拥有人</Col>
-            <Col span={3}>角色</Col>
-            <Col span={12}>集群</Col>
+        <div className={styles['team-manager-content']}>
+          {haveNewJoinTeam && (
+            <Row className={styles.teamMinTit} type="flex" align="middle">
+              <Col span={6}>团队名称</Col>
+              <Col span={3}>拥有人</Col>
+              <Col span={3}>角色</Col>
+              <Col span={12}>状态</Col>
+            </Row>
+          )}
+          {request_join_team &&
+            request_join_team.map(item => {
+              const {
+                is_pass,
+                team_id,
+                team_name,
+                team_alias,
+                owner_name,
+                role
+              } = item;
+              return (
+                <Card
+                  key={team_id}
+                  style={{
+                    marginTop: '16px',
+                    borderLeft: is_pass === 0 && '6px solid #4D73B1',
+                    backgroundColor: '#f1f9ff',
+                    fontSize: 14,
+                    fontWeight: 500,
+                    color: '#000'
+                  }}
+                  bodyStyle={{ padding: 0 }}
+                  //hoverable
+                  bordered={false}
+                >
+                  <Row
+                    type="flex"
+                    className={styles.pl24}
+                    align="middle"
+                    key={team_id}
+                  >
+                    <Col span={6}>{team_alias}</Col>
+                    <Col span={3}>{owner_name}</Col>
+                    <Col span={3}>{roleUtil.actionMap(role)}</Col>
+                    <Col
+                      span={11}
+                      style={{
+                        color: is_pass === 0 && '#999999'
+                      }}
+                    >
+                      {is_pass === 0 && (
+                        <span>
+                          <img src={WarningImg} alt="" />
+                          &nbsp;申请加入团队审批中
+                        </span>
+                      )}
+                    </Col>
+                    <Col span={1} className={styles.bor}>
+                      <Dropdown
+                        overlay={
+                          is_pass === 0 ? menucancel(item) : menu(team_name)
+                        }
+                        placement="bottomLeft"
+                      >
+                        <Icon component={moreSvg} style={{ width: '100%' }} />
+                      </Dropdown>
+                    </Col>
+                  </Row>
+                </Card>
+              );
+            })}
+
+          <Row
+            style={{
+              marginBottom: 10,
+              display: 'flex',
+              alignItems: 'center'
+            }}
+          >
+            <Col
+              span={4}
+              className={styles.teamsTit}
+              style={{ marginBottom: '0' }}
+            >
+              我的团队
+            </Col>
+
+            <Col span={20} style={{ textAlign: 'right' }}>
+              <Search
+                style={{ width: '320px' }}
+                placeholder="请输入团队名称进行搜索"
+                onSearch={this.handleSearchUserTeam}
+              />
+            </Col>
           </Row>
-        )}
-        {!userTeam && (
-          <Empty
-            description="暂无团队，请点击创建团队进行创建"
-            image={EmptyImg}
-          />
-        )}
-        {userTeam &&
-          userTeam.map(item => {
-            const {
-              team_id,
-              team_alias,
-              team_name,
-              region_list,
-              owner_name,
-              roles
-            } = item;
-            return (
-              <Card
-                key={team_id}
-                style={{ marginBottom: '10px' }}
-                hoverable
-                bodyStyle={{ padding: 0 }}
-              >
-                <Row type="flex" align="middle" className={styles.pl24}>
-                  <Col span={6}>{team_alias}</Col>
-                  <Col span={3}>{owner_name}</Col>
-                  <Col span={3}>
-                    {roles &&
-                      roles.length > 0 &&
-                      roles.map(role => {
-                        return (
-                          <span
-                            style={{ marginRight: '8px' }}
-                            key={`role${role}`}
-                          >
-                            {roleUtil.actionMap(role)}
-                          </span>
-                        );
-                      })}
-                  </Col>
-                  <Col span={11}>
-                    {this.showRegions(team_name, region_list)}
-                  </Col>
-                  <Col span={1} className={styles.bor}>
-                    <Dropdown overlay={menu(team_name)} placement="bottomLeft">
-                      <Icon component={moreSvg} style={{ width: '100%' }} />
-                    </Dropdown>
-                  </Col>
-                </Row>
-              </Card>
-            );
-          })}
+          {userTeam && (
+            <Row className={styles.teamMinTit} type="flex" align="middle">
+              <Col span={6}>团队名称</Col>
+              <Col span={3}>拥有人</Col>
+              <Col span={3}>角色</Col>
+              <Col span={12}>集群</Col>
+            </Row>
+          )}
+          {!userTeam && (
+            <Empty
+              description="暂无团队，请点击创建团队进行创建"
+              image={EmptyImg}
+            />
+          )}
+          {userTeam &&
+            userTeam.map(item => {
+              const {
+                team_id,
+                team_alias,
+                team_name,
+                region_list,
+                owner_name,
+                roles
+              } = item;
+              return (
+                <Card
+                  key={team_id}
+                  style={{
+                    marginBottom: '16px',
+                    backgroundColor: '#f1f9ff',
+                    fontSize: 14,
+                    fontWeight: 500,
+                    color: '#000'
+                  }}
+                  // hoverable
+                  bordered={false}
+                  bodyStyle={{ padding: 0 }}
+                >
+                  <Row type="flex" align="middle" className={styles.pl24}>
+                    <Col span={6}>{team_alias}</Col>
+                    <Col span={3}>{owner_name}</Col>
+                    <Col span={3}>
+                      {roles &&
+                        roles.length > 0 &&
+                        roles.map(role => {
+                          return (
+                            <span
+                              style={{ marginRight: '8px' }}
+                              key={`role${role}`}
+                            >
+                              {roleUtil.actionMap(role)}
+                            </span>
+                          );
+                        })}
+                    </Col>
+                    <Col span={11}>
+                      {this.showRegions(team_name, region_list)}
+                    </Col>
+                    <Col span={1} className={styles.bor}>
+                      <Dropdown
+                        overlay={menu(team_name)}
+                        placement="bottomLeft"
+                      >
+                        <Icon component={moreSvg} style={{ width: '100%' }} />
+                      </Dropdown>
+                    </Col>
+                  </Row>
+                </Card>
+              );
+            })}
+        </div>
       </div>
     );
     let title = '我的团队';
