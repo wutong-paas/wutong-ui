@@ -651,3 +651,16 @@ export async function fetchFeatures(body, handleError) {
     }
   );
 }
+
+export function getKubernetConfigFileAPI(
+  body = {
+    team_name
+  }
+) {
+  return request(
+    `${apiconfig.baseUrl}/console/teams/${body.team_name}/kubeconfig`,
+    {
+      method: 'get'
+    }
+  );
+}

@@ -1,11 +1,14 @@
-import { Card } from 'antd';
+import { Card, Tooltip } from 'antd';
 import { connect } from 'dva';
 import moment from 'moment';
 import React, { PureComponent } from 'react';
 import ConfirmModal from '../../../components/ConfirmModal';
 import globalUtil from '../../../utils/global';
 import OpenRegion from '../../OpenRegion';
+import apiconfig from '../../../../config/api.config';
+import { getKubernetConfigFileAPI } from '../../../services/team';
 import styles from './index.less';
+import downLoadTools from '@/utils/downLoadTools';
 
 @connect(({ teamControl, loading }) => ({
   regions: teamControl.regions,
@@ -75,6 +78,7 @@ export default class DatacenterList extends PureComponent {
   cancelCloseRegion = () => {
     this.setState({ showUninstallCluster: false });
   };
+
   render() {
     const {
       regions,
@@ -137,6 +141,22 @@ export default class DatacenterList extends PureComponent {
                         />
                       </svg>
                       <a>{item.region_alisa}</a>
+                      <Tooltip title="下载kubeconfig文件">
+                        <a
+                          onClick={async () => {
+                            const res = await getKubernetConfigFileAPI({
+                              team_name: globalUtil.getCurrTeamName()
+                            });
+                            downLoadTools.saveTXT(
+                              res?.response_data,
+                              '配置文件'
+                            );
+                          }}
+                          style={{ float: 'right', color: '#0070FF' }}
+                        >
+                          下载
+                        </a>
+                      </Tooltip>
                       {isUninstall && (
                         <a
                           onClick={() => this.showCloseRegion(item.region_name)}
