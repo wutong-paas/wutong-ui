@@ -21,6 +21,7 @@ import React, { PureComponent } from 'react';
 import PageHeaderLayout from '../../layouts/PageHeaderLayout';
 import userUtil from '../../utils/user';
 import styles from './index.less';
+import UploadImg from '../../../public/images/common/upload.svg';
 
 const { confirm } = Modal;
 
@@ -369,9 +370,12 @@ export default class EnterpriseShared extends PureComponent {
         title="离线应用模版导入"
         content="离线应用模版导入是创建本地共享库应用模型的方式之一，离线应用包可以来自其他在线平台导出或云应用商店导出"
       >
-        <div style={{ margin: '75px 21px 0 24px' }}>
+        <div>
           <div className={styles.tit}>离线应用模版导入</div>
-          <Card
+          <div className={styles.status}>
+            正在使用<span>“{region_name}”</span>完成本次导入任务
+          </div>
+          {/* <Card
             bodyStyle={{ padding: '25px 0 25px 29px' }}
             className={styles.mb10}
           >
@@ -380,9 +384,13 @@ export default class EnterpriseShared extends PureComponent {
                 正在使用<span>“{region_name}”</span>完成本次导入任务
               </Col>
             </Row>
-          </Card>
+          </Card> */}
 
-          <Card bodyStyle={{ padding: '0 0 0 27px' }} className={styles.mb10}>
+          <Card
+            bodyStyle={{ padding: '0 0 0 27px' }}
+            className={styles.mb10}
+            bordered={false}
+          >
             <Row className={styles.box}>
               <Col span={23} className={styles.con}>
                 上传APP文件
@@ -406,7 +414,7 @@ export default class EnterpriseShared extends PureComponent {
                   headers={myheaders}
                   disabled={region_name === ''}
                 >
-                  <Icon component={upSvg} />
+                  <img src={UploadImg} />
                   <div className={styles.upText}>上传</div>
                 </Upload>
               </Col>
