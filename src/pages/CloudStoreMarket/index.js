@@ -200,7 +200,7 @@ const CloudStore = props => {
         <>
           <Lists
             key={appId}
-            stylePro={{ marginBottom: '10px' }}
+            stylePro={{ marginBottom: '16px' }}
             Cols={
               <div
                 className={styles.h70}

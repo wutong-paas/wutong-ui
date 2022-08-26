@@ -149,7 +149,8 @@ export default class DatacenterList extends PureComponent {
                             });
                             downLoadTools.saveTXT(
                               res?.response_data,
-                              '配置文件'
+                              'kubeconfig',
+                              false
                             );
                           }}
                           style={{ float: 'right', color: '#0070FF' }}
