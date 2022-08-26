@@ -13,10 +13,10 @@ export default {
    * @params content csv文件内容
    * @params fileName 保存的文件名
    */
-  saveTXT: (content, fileName) => {
+  saveTXT: (content, fileName, isShowFileType = true) => {
     const blob = new Blob(['\ufeff' + content], {
       type: 'text/tet,charset=UTF-8'
     });
-    openDownloadDialog(blob, `${fileName}.txt`);
+    openDownloadDialog(blob, `${fileName}${isShowFileType ? '.txt' : ''}`);
   }
 };
