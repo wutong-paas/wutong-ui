@@ -6,7 +6,7 @@ import styles from './PageHeaderLayout.less';
 export default () => (
   <DefaultFooter
     className={styles.customFooter}
-    copyright="2021 拓维信息系统股份有限公司出品"
+    copyright="2022 拓维信息系统股份有限公司出品"
     links={[
       {
         key: 'PaaS',

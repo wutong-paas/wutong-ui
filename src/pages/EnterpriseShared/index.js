@@ -971,7 +971,7 @@ export default class EnterpriseShared extends PureComponent {
           })}
         <Lists
           key={appId}
-          stylePro={{ marginBottom: '10px' }}
+          stylePro={{ marginBottom: '16px' }}
           Cols={
             <div
               className={styles.h70}
