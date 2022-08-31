@@ -1107,7 +1107,14 @@ export default class Main extends PureComponent {
       record.scope_target && record.scope_target.store_version;
     const isCloudMarket = this.props?.location?.from;
     return (
-      <PageHeaderLayout breadcrumbList={breadcrumbList}>
+      <PageHeaderLayout
+        breadcrumbList={breadcrumbList}
+        title={
+          record && record.scope === 'goodrain'
+            ? '发布到云应用商店'
+            : '发布到组件库'
+        }
+      >
         <div>
           <Card
             style={{
