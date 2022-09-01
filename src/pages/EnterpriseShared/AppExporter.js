@@ -208,7 +208,9 @@ export default class AppExporter extends PureComponent {
     const th = this;
     // if (versionInfo.dev_status === '') {
     confirm({
-      title: '当前导出版本非Release状态',
+      title: `当前导出版本为${
+        versionInfo.dev_status === '' ? '非' : ''
+      }Release状态`,
       content: (
         <div>
           {/* <span>是否继续导出</span> */}
