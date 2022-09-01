@@ -85,18 +85,17 @@ export default class AppExporter extends PureComponent {
   getAction = (app_status, type) => {
     if (!app_status.is_export_before) {
       return (
-          <Button
-            type="primary"
-            size="small"
-            onClick={() => {
-              this.handleRelease(type);
-            }}
-          >
-            导出
-          </Button>
+        <Button
+          type="primary"
+          size="small"
+          onClick={() => {
+            this.handleRelease(type, app_status.is_export_image);
+          }}
+        >
+          导出
+        </Button>
       );
     }
-
     if (app_status.status == 'success') {
       return (
         <div>
@@ -113,7 +112,7 @@ export default class AppExporter extends PureComponent {
             style={{ marginLeft: 16 }}
             size="small"
             onClick={() => {
-              this.handleRelease(type);
+              this.handleRelease(type, app_status.is_export_image);
             }}
           >
             重新导出
@@ -201,8 +200,11 @@ export default class AppExporter extends PureComponent {
     }
   };
 
-  handleRelease = type => {
+  handleRelease = (type, export_image) => {
     const { versionInfo, is_export_image } = this.state;
+    this.setState({
+      is_export_image: export_image
+    });
     const th = this;
     if (versionInfo.dev_status === '') {
       confirm({
@@ -211,7 +213,10 @@ export default class AppExporter extends PureComponent {
           <div>
             {/* <span>是否继续导出</span> */}
             <div>
-              <Checkbox onChange={this.handleCheckChange}>
+              <Checkbox
+                defaultChecked={export_image}
+                onChange={this.handleCheckChange}
+              >
                 是否镜像导出（镜像包文件较大，一并导出可能会需要更长处理时间）
               </Checkbox>
             </div>
