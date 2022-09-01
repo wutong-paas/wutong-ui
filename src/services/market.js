@@ -362,7 +362,7 @@ export function queryExport(body = {}) {
      应用导出 console/teams/{team_name}/apps/export
   */
 export function appExport(
-  body = { enterprise_id, app_id, format, app_versions }
+  body = { enterprise_id, app_id, format, app_versions, is_export_image }
 ) {
   return request(
     `${apiconfig.baseUrl}/console/enterprise/${body.enterprise_id}/app-models/export`,
@@ -371,7 +371,8 @@ export function appExport(
       data: {
         app_id: body.app_id,
         app_versions: body.app_versions,
-        format: body.format
+        format: body.format,
+        is_export_image: body.is_export_image
       }
     }
   );
