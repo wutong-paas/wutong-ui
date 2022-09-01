@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 /* eslint-disable consistent-return */
-import { Alert, Button, Modal, notification, Select } from 'antd';
+import { Alert, Button, Modal, notification, Select, Checkbox } from 'antd';
 import { connect } from 'dva';
 import React, { PureComponent } from 'react';
 import styles from '../../components/CreateTeam/index.less';
@@ -21,6 +21,7 @@ export default class AppExporter extends PureComponent {
       app_exporte_status: null,
       exportVersionList: app.versions_info || [],
       versionInfo: {},
+      is_export_image: false,
       exportVersion:
         (app.versions_info &&
           app.versions_info.length > 0 && [
@@ -74,18 +75,25 @@ export default class AppExporter extends PureComponent {
       </DescriptionList>
     );
   };
+
+  handleCheckChange = e => {
+    this.setState({
+      is_export_image: e.target.checked
+    });
+  };
+
   getAction = (app_status, type) => {
     if (!app_status.is_export_before) {
       return (
-        <Button
-          type="primary"
-          size="small"
-          onClick={() => {
-            this.handleRelease(type);
-          }}
-        >
-          导出
-        </Button>
+          <Button
+            type="primary"
+            size="small"
+            onClick={() => {
+              this.handleRelease(type);
+            }}
+          >
+            导出
+          </Button>
       );
     }
 
@@ -194,14 +202,24 @@ export default class AppExporter extends PureComponent {
   };
 
   handleRelease = type => {
-    const { versionInfo } = this.state;
+    const { versionInfo, is_export_image } = this.state;
     const th = this;
     if (versionInfo.dev_status === '') {
       confirm({
         title: '当前导出版本非Release状态',
-        content: '是否继续导出',
+        content: (
+          <div>
+            {/* <span>是否继续导出</span> */}
+            <div>
+              <Checkbox onChange={this.handleCheckChange}>
+                是否镜像导出（镜像包文件较大，一并导出可能会需要更长处理时间）
+              </Checkbox>
+            </div>
+          </div>
+        ),
         okText: '确认',
         cancelText: '取消',
+        onCancel: () => this.setState({ is_export_image: false }),
         onOk() {
           th.handleExporter(type);
           return new Promise((resolve, reject) => {
@@ -222,14 +240,15 @@ export default class AppExporter extends PureComponent {
   };
   handleExporter = format => {
     const { app, eid, dispatch } = this.props;
-    const { exportVersion } = this.state;
+    const { exportVersion, is_export_image } = this.state;
     dispatch({
       type: 'market/appExport',
       payload: {
         app_id: app.app_id,
         enterprise_id: eid,
         app_versions: exportVersion,
-        format
+        format,
+        is_export_image
       },
       callback: data => {
         if (data && data.bean) {
@@ -238,6 +257,7 @@ export default class AppExporter extends PureComponent {
         }
       }
     });
+    this.setState({ is_export_image: false });
   };
   queryExport = () => {
     const { app, eid, dispatch, setIsExporting } = this.props;
