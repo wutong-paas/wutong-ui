@@ -206,35 +206,35 @@ export default class AppExporter extends PureComponent {
       is_export_image: export_image
     });
     const th = this;
-    if (versionInfo.dev_status === '') {
-      confirm({
-        title: '当前导出版本非Release状态',
-        content: (
+    // if (versionInfo.dev_status === '') {
+    confirm({
+      title: '当前导出版本非Release状态',
+      content: (
+        <div>
+          {/* <span>是否继续导出</span> */}
           <div>
-            {/* <span>是否继续导出</span> */}
-            <div>
-              <Checkbox
-                defaultChecked={export_image}
-                onChange={this.handleCheckChange}
-              >
-                是否镜像导出（镜像包文件较大，一并导出可能会需要更长处理时间）
-              </Checkbox>
-            </div>
+            <Checkbox
+              defaultChecked={export_image}
+              onChange={this.handleCheckChange}
+            >
+              是否镜像导出（镜像包文件较大，一并导出可能会需要更长处理时间）
+            </Checkbox>
           </div>
-        ),
-        okText: '确认',
-        cancelText: '取消',
-        onCancel: () => this.setState({ is_export_image: false }),
-        onOk() {
-          th.handleExporter(type);
-          return new Promise((resolve, reject) => {
-            setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
-          }).catch(() => console.log('Oops errors!'));
-        }
-      });
-    } else {
-      th.handleExporter(type);
-    }
+        </div>
+      ),
+      okText: '确认',
+      cancelText: '取消',
+      onCancel: () => this.setState({ is_export_image: false }),
+      onOk() {
+        th.handleExporter(type);
+        return new Promise((resolve, reject) => {
+          setTimeout(Math.random() > 0.5 ? resolve : reject, 1000);
+        }).catch(() => console.log('Oops errors!'));
+      }
+    });
+    // } else {
+    //   th.handleExporter(type);
+    // }
   };
 
   handleCancel = () => {
