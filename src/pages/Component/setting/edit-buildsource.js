@@ -226,80 +226,85 @@ export default class ChangeBuildSource extends PureComponent {
           // onClose={onClose}
         />
         <Tabs defaultActiveKey={tabKey} onChange={this.handleTabs}>
-          <TabPane tab="源码" key="1">
-            {tabValue === 'source_code' && (
-              <Form onSubmit={this.handleSubmit}>
-                <Form.Item {...formItemLayout} label="仓库地址">
-                  {getFieldDecorator('git_url', {
-                    initialValue:
-                      buildSource.service_source == 'source_code' &&
-                      buildSource.git_url
-                        ? buildSource.git_url
-                        : '',
-                    force: true,
-                    rules: [
-                      { required: true, message: '请输入仓库地址' },
-                      { validator: this.checkURL, message: '仓库地址不合法' }
-                    ]
-                  })(
-                    <Input
-                      addonBefore={prefixSelector}
-                      placeholder="请输入仓库地址"
-                    />
-                  )}
-                </Form.Item>
-                {isFlag && (
-                  <Form.Item {...formItemLayout} label="代码版本">
-                    {getFieldDecorator('code_version', {
+          {buildSource.service_source == 'market' && (
+            <TabPane tab="源码" key="1">
+              {tabValue === 'source_code' && (
+                <Form onSubmit={this.handleSubmit}>
+                  <Form.Item {...formItemLayout} label="仓库地址">
+                    {getFieldDecorator('git_url', {
                       initialValue:
                         buildSource.service_source == 'source_code' &&
-                        codeVersion
-                          ? codeVersion
+                        buildSource.git_url
+                          ? buildSource.git_url
                           : '',
-                      rules: [{ required: true, message: '请输入代码版本' }]
+                      force: true,
+                      rules: [
+                        { required: true, message: '请输入仓库地址' },
+                        { validator: this.checkURL, message: '仓库地址不合法' }
+                      ]
                     })(
                       <Input
-                        addonBefore={versionSelector}
-                        placeholder="请输入代码版本"
+                        addonBefore={prefixSelector}
+                        placeholder="请输入仓库地址"
                       />
                     )}
                   </Form.Item>
-                )}
+                  {isFlag && (
+                    <Form.Item {...formItemLayout} label="代码版本">
+                      {getFieldDecorator('code_version', {
+                        initialValue:
+                          buildSource.service_source == 'source_code' &&
+                          codeVersion
+                            ? codeVersion
+                            : '',
+                        rules: [{ required: true, message: '请输入代码版本' }]
+                      })(
+                        <Input
+                          addonBefore={versionSelector}
+                          placeholder="请输入代码版本"
+                        />
+                      )}
+                    </Form.Item>
+                  )}
 
-                <Form.Item {...formItemLayout} label="用户名">
-                  {getFieldDecorator('user_name', {
-                    initialValue:
-                      // buildSource.user_name ||
-                      // buildSource.user ||
-                      //   '',
-                      buildSource.service_source == 'source_code' &&
-                      (buildSource.user_name || buildSource.user)
-                        ? buildSource.user_name || buildSource.user
-                        : '',
-                    rules: [{ required: false, message: '请输入仓库用户名' }]
-                  })(
-                    <Input autoComplete="off" placeholder="请输入仓库用户名" />
-                  )}
-                </Form.Item>
-                <Form.Item {...formItemLayout} label="密码">
-                  {getFieldDecorator('password', {
-                    initialValue:
-                      buildSource.service_source == 'source_code' &&
-                      buildSource.password
-                        ? buildSource.password
-                        : '',
-                    rules: [{ required: false, message: '请输入仓库密码' }]
-                  })(
-                    <Input
-                      autoComplete="new-password"
-                      type="password"
-                      placeholder="请输入仓库密码"
-                    />
-                  )}
-                </Form.Item>
-              </Form>
-            )}
-          </TabPane>
+                  <Form.Item {...formItemLayout} label="用户名">
+                    {getFieldDecorator('user_name', {
+                      initialValue:
+                        // buildSource.user_name ||
+                        // buildSource.user ||
+                        //   '',
+                        buildSource.service_source == 'source_code' &&
+                        (buildSource.user_name || buildSource.user)
+                          ? buildSource.user_name || buildSource.user
+                          : '',
+                      rules: [{ required: false, message: '请输入仓库用户名' }]
+                    })(
+                      <Input
+                        autoComplete="off"
+                        placeholder="请输入仓库用户名"
+                      />
+                    )}
+                  </Form.Item>
+                  <Form.Item {...formItemLayout} label="密码">
+                    {getFieldDecorator('password', {
+                      initialValue:
+                        buildSource.service_source == 'source_code' &&
+                        buildSource.password
+                          ? buildSource.password
+                          : '',
+                      rules: [{ required: false, message: '请输入仓库密码' }]
+                    })(
+                      <Input
+                        autoComplete="new-password"
+                        type="password"
+                        placeholder="请输入仓库密码"
+                      />
+                    )}
+                  </Form.Item>
+                </Form>
+              )}
+            </TabPane>
+          )}
           <TabPane tab="镜像" key="2">
             {tabValue === 'docker_run' && (
               <Form onSubmit={this.handleSubmit}>
@@ -333,7 +338,9 @@ export default class ChangeBuildSource extends PureComponent {
                 <Form.Item {...formItemLayout} label="用户名">
                   {getFieldDecorator('user_name', {
                     initialValue:
-                      buildSource.service_source == 'docker_image' &&
+                      ['docker_run', 'docker_image'].includes(
+                        buildSource.service_source
+                      ) &&
                       (buildSource.user_name || buildSource.user)
                         ? buildSource.user_name || buildSource.user
                         : '',
@@ -345,8 +352,9 @@ export default class ChangeBuildSource extends PureComponent {
                 <Form.Item {...formItemLayout} label="密码">
                   {getFieldDecorator('password', {
                     initialValue:
-                      buildSource.service_source == 'docker_image' &&
-                      buildSource.password
+                      ['docker_run', 'docker_image'].includes(
+                        buildSource.service_source
+                      ) && buildSource.password
                         ? buildSource.password
                         : '',
                     rules: [{ required: false, message: '请输入仓库密码' }]
