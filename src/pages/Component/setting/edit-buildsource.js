@@ -328,8 +328,9 @@ export default class ChangeBuildSource extends PureComponent {
                 <FormItem {...formItemLayout} label="启动命令">
                   {getFieldDecorator('cmd', {
                     initialValue:
-                      buildSource.service_source == 'docker_image' &&
-                      buildSource.cmd
+                      ['docker_run', 'docker_image'].includes(
+                        buildSource.service_source
+                      ) && buildSource.cmd
                         ? buildSource.cmd
                         : ''
                   })(<Input placeholder="请输入启动命令" />)}
