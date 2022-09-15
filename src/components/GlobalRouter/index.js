@@ -340,7 +340,7 @@ export default class GlobalRouter extends PureComponent {
         >
           {!collapsed && (
             <div>
-              <div className={styles.title}>梧桐PaaS</div>
+              <div className={styles.title}>梧桐·容器平台</div>
             </div>
           )}
           {collectionVisible && (

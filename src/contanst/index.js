@@ -1,8 +1,8 @@
 export const Text = {
          enterprise: {
-           HOME_HEAD_TITLE: 'Hi, 欢迎使用梧桐PaaS平台！',
+           HOME_HEAD_TITLE: 'Hi, 欢迎使用 梧桐·容器平台',
            HOME_HEAD_INTRODUCE:
-             '梧桐PaaS是一个云原生应用管理平台，使用简单，不需要懂容器、Kubernetes和底层复杂技术，支持管理多个Kubernetes集群，和管理企业应用全生命周期。主要功能包括应用开发环境、应用市场、微服务架构、应用交付、应用运维、应用级多云管理等。',
+             '梧桐·容器平台介于IaaS层与SaaS层之间，南向对接IaaS资源，北向对接应用系统。平台遵循以应用为中心的设计理念，统一封装容器、K8s等底层技术。同时，深度整合应用开发、交付、运维，微服务治理、资源管理等功能，实现了对所有应用、基础设施的统一管理，及应用全生命周期管理过程的自动化。',
            HOME_CONTENT_USEINFO_TITLE: '集群资源使用情况',
            HOME_CONTENT_USEINFO_USED: '已使用',
            HOME_CONTENT_USEINFO_TOTAL: '总共',

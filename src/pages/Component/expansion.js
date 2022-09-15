@@ -130,13 +130,15 @@ export default class Index extends PureComponent {
     const memory = getFieldValue('memory');
     const gpu = Number(getFieldValue('gpu'));
     const cpu = Number(getFieldValue('new_cpu'));
+    const new_gpu_type = getFieldValue('gpu_type');
 
     vertical({
       team_name: globalUtil.getCurrTeamName(),
       app_alias: appAlias,
       new_memory: memory,
       new_gpu: gpu,
-      new_cpu: cpu
+      new_cpu: cpu,
+      new_gpu_type,
     }).then(data => {
       if (data && !data.status) {
         notification.success({ message: '操作成功，执行中' });
@@ -389,7 +391,6 @@ export default class Index extends PureComponent {
         metric_target_value: values.value ? parseInt(values.value) : 0
       });
     }
-
 
     const _th = this;
     if (id) {
@@ -878,7 +879,52 @@ export default class Index extends PureComponent {
         <Card className={styles.clerBorder} border={false} title="手动伸缩">
           <Form layout="inline" hideRequiredMark className={styles.fromItem}>
             <Row gutter={16}>
-              <Col lg={8} md={8} sm={24}>
+              <Col lg={6} md={6} sm={24}>
+                <Form.Item
+                  labelCol={{ span: 6 }}
+                  wrapperCol={{ span: 18 }}
+                  className={styles.customFormItem}
+                  label="GPU类型"
+                >
+                  {getFieldDecorator('gpu_type', {
+                    initialValue: extendInfo.current_gpu_type ? `${extendInfo.current_gpu_type}` : ''
+                  })(
+                    <Select
+                      getPopupContainer={triggerNode => triggerNode.parentNode}
+                      className={styles.memorySelect}
+                    >
+                      {(extendInfo.gpu_type_list || []).map(item => (
+                        <Option key={item} value={item}>
+                          {item}
+                        </Option>
+                      ))}
+                    </Select>
+                  )}
+                </Form.Item>
+                {descBox('GPU类型')}
+              </Col>
+              <Col lg={6} md={6} sm={24}>
+                <Form.Item
+                  labelCol={{ span: 6 }}
+                  wrapperCol={{ span: 18 }}
+                  className={styles.customFormItem}
+                  label="GPU显存"
+                >
+                  {getFieldDecorator('gpu', {
+                    initialValue: `${extendInfo.current_gpu}`
+                  })(
+                    <Input
+                      disabled={!enableGPU}
+                      type="number"
+                      addonAfter="MiB"
+                    />
+                  )}
+                </Form.Item>
+                {descBox(
+                  'GPU设置为0则不分配GPU资源，请求显存超过集群中单颗显卡的最大可用容量时无法进行调度。'
+                )}
+              </Col>
+              <Col lg={6} md={6} sm={24}>
                 <Form.Item
                   labelCol={{ span: 5 }}
                   wrapperCol={{ span: 19 }}
@@ -905,28 +951,7 @@ export default class Index extends PureComponent {
                 </Form.Item>
                 {descBox('CPU 限制值目前基于比例算法基于设置内存值计算。')}
               </Col>
-              <Col lg={8} md={8} sm={24}>
-                <Form.Item
-                  labelCol={{ span: 6 }}
-                  wrapperCol={{ span: 18 }}
-                  className={styles.customFormItem}
-                  label="GPU显存"
-                >
-                  {getFieldDecorator('gpu', {
-                    initialValue: `${extendInfo.current_gpu}`
-                  })(
-                    <Input
-                      disabled={!enableGPU}
-                      type="number"
-                      addonAfter="MiB"
-                    />
-                  )}
-                </Form.Item>
-                {descBox(
-                  'GPU设置为0则不分配GPU资源，请求显存超过集群中单颗显卡的最大可用容量时无法进行调度。'
-                )}
-              </Col>
-              <Col lg={8} md={8} sm={24}>
+              <Col lg={6} md={6} sm={24}>
                 <Form.Item
                   label="CPU"
                   labelCol={{ span: 5 }}
@@ -970,7 +995,7 @@ export default class Index extends PureComponent {
               </Col>
             </Row>
             <Row gutter={16}>
-              <Col lg={8} md={8} sm={24}>
+              <Col lg={6} md={6} sm={24}>
                 <Form.Item
                   label="实例数量"
                   labelCol={{ span: 5 }}

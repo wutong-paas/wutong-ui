@@ -469,7 +469,8 @@ export function vertical(
       data: {
         new_memory: body.new_memory,
         new_gpu: body.new_gpu,
-        new_cpu: body.new_cpu
+        new_cpu: body.new_cpu,
+        new_gpu_type: body.new_gpu_type
       }
     }
   );
