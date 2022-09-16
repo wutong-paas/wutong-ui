@@ -130,7 +130,7 @@ export default class Index extends PureComponent {
     const memory = getFieldValue('memory');
     const gpu = Number(getFieldValue('gpu'));
     const cpu = Number(getFieldValue('new_cpu'));
-    const new_gpu_type = getFieldValue('gpu_type');
+    const new_gpu_type = getFieldValue('gpu_type') || '';
 
     vertical({
       team_name: globalUtil.getCurrTeamName(),
@@ -138,7 +138,7 @@ export default class Index extends PureComponent {
       new_memory: memory,
       new_gpu: gpu,
       new_cpu: cpu,
-      new_gpu_type,
+      new_gpu_type
     }).then(data => {
       if (data && !data.status) {
         notification.success({ message: '操作成功，执行中' });
@@ -961,7 +961,7 @@ export default class Index extends PureComponent {
               </Col>
               <Col lg={6} md={6} sm={24}>
                 <Form.Item
-                  labelCol={{ span: 7  }}
+                  labelCol={{ span: 7 }}
                   wrapperCol={{ span: 17 }}
                   className={styles.customFormItem}
                   label="GPU类型"
@@ -974,6 +974,7 @@ export default class Index extends PureComponent {
                     <Select
                       getPopupContainer={triggerNode => triggerNode.parentNode}
                       className={styles.memorySelect}
+                      allowClear
                     >
                       {(extendInfo.gpu_type_list || []).map(item => (
                         <Option key={item} value={item}>
