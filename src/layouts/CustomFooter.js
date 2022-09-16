@@ -14,12 +14,12 @@ export default () => (
         href: 'https://www.talkweb.com.cn',
         blankTarget: true
       },
-      {
-        key: 'poc',
-        title: '联系我们',
-        href: 'https://www.talkweb.com.cn/contact',
-        blankTarget: true
-      }
+      // {
+      //   key: 'poc',
+      //   title: '联系我们',
+      //   href: 'https://www.talkweb.com.cn/contact',
+      //   blankTarget: true
+      // }
     ]}
   />
 );
