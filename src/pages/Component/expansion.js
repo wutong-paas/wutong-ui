@@ -940,29 +940,8 @@ export default class Index extends PureComponent {
               </Col>
               <Col lg={6} md={6} sm={24}>
                 <Form.Item
-                  labelCol={{ span: 8 }}
-                  wrapperCol={{ span: 16 }}
-                  className={styles.customFormItem}
-                  label="GPU显存"
-                >
-                  {getFieldDecorator('gpu', {
-                    initialValue: `${extendInfo.current_gpu}`
-                  })(
-                    <Input
-                      disabled={!enableGPU}
-                      type="number"
-                      addonAfter="MiB"
-                    />
-                  )}
-                </Form.Item>
-                {descBox(
-                  'GPU设置为0则不分配GPU资源，请求显存超过集群中单颗显卡的最大可用容量时无法进行调度。'
-                )}
-              </Col>
-              <Col lg={6} md={6} sm={24}>
-                <Form.Item
-                  labelCol={{ span: 7 }}
-                  wrapperCol={{ span: 17 }}
+                  labelCol={{ xxl: 5, xl: 8 }}
+                  wrapperCol={{ xxl: 19, xl: 16 }}
                   className={styles.customFormItem}
                   label="GPU类型"
                 >
@@ -983,6 +962,26 @@ export default class Index extends PureComponent {
                       ))}
                     </Select>
                   )}
+                </Form.Item>
+                {descBox('GPU类型')}
+              </Col>
+              <Col lg={6} md={6} sm={24}>
+                <Form.Item
+                  labelCol={{ xxl: 5, xl: 8 }}
+                  wrapperCol={{ xxl: 19, xl: 16 }}
+                  className={styles.customFormItem}
+                  label="GPU数量"
+                >
+                  {getFieldDecorator('gpu', {
+                    initialValue: `${extendInfo.current_gpu}`
+                  })(
+                    <Input
+                      disabled={!enableGPU}
+                      type="number"
+                      min={0}
+                      //addonAfter="MiB"
+                    />
+                  )}
                   <Button
                     onClick={this.handleVertical}
                     size="default"
@@ -994,15 +993,17 @@ export default class Index extends PureComponent {
                     设置
                   </Button>
                 </Form.Item>
-                {descBox('GPU类型')}
+                {descBox(
+                  'GPU设置为0则不分配GPU资源，请求显存超过集群中单颗显卡的最大可用容量时无法进行调度。'
+                )}
               </Col>
             </Row>
             <Row gutter={16}>
               <Col lg={6} md={6} sm={24}>
                 <Form.Item
                   label="实例数量"
-                  labelCol={{ span: 5 }}
-                  wrapperCol={{ span: 19 }}
+                  labelCol={{ xxl: 5, xl: 8 }}
+                  wrapperCol={{ xxl: 19, xl: 16 }}
                   className={styles.customFormItem}
                 >
                   {getFieldDecorator('node', {
