@@ -1004,14 +1004,15 @@ export default class EnterpriseShared extends PureComponent {
               <Col span={13} className={styles.tits}>
                 <div>
                   <p>
-                    <a
-                      onClick={e => {
-                        e.stopPropagation();
-                        this.showMarketAppDetail(item);
-                      }}
+                    <span
+                      // onClick={e => {
+                      //   e.stopPropagation();
+                      //   this.showMarketAppDetail(item);
+                      // }}
+                      className={styles.title}
                     >
                       {appName || name}
-                    </a>
+                    </span>
                   </p>
                   <p>
                     <Tooltip
