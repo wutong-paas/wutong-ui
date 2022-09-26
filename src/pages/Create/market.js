@@ -692,9 +692,9 @@ export default class Main extends PureComponent {
         }}
       >
         <a
-          onClick={() => {
-            this.showMarketAppDetail(item);
-          }}
+        // onClick={() => {
+        //   this.showMarketAppDetail(item);
+        // }}
         >
           {item.app_name || item.name}
         </a>
@@ -738,14 +738,11 @@ export default class Main extends PureComponent {
       </div>
     );
     const fastactions = [
-      <Tooltip title={isInstall ? '点击安装' : '不可安装'}>
-        <div
-          onClick={() => {
-            if (isInstall) {
-              this.showCreate(item);
-            }
-          }}
-        >
+      <Tooltip
+        //title={isInstall ? '点击安装' : '不可安装'}
+        title={item?.detail || '-'}
+      >
+        <div>
           <div className={PluginStyles.cardTitle}>
             <span title={item.app_name}>{item.app_name}</span>
           </div>
@@ -780,6 +777,11 @@ export default class Main extends PureComponent {
               : PluginStyles.cards
           }
           actions={handleType ? fastactions : defaultActions}
+          onClick={() => {
+            if (isInstall) {
+              this.showCreate(item);
+            }
+          }}
         >
           <Card.Meta
             className={PluginStyles.cardsMetas}
@@ -1105,7 +1107,7 @@ export default class Main extends PureComponent {
             defaultValue={defaultValue}
             onSearch={this.handleSearch}
             style={{
-              width: 500,
+              width: 500
             }}
           />
         </span>
