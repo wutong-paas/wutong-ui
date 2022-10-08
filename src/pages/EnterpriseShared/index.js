@@ -1721,7 +1721,7 @@ export default class EnterpriseShared extends PureComponent {
             <AuthCompany
               isHelm
               eid={eid}
-              title="添加应用商店"
+              title="添加商店"
               onOk={this.getHelmMarketsTab}
               onCancel={this.handleCancelAppMarket}
               currStep={1}

@@ -91,7 +91,7 @@ export default class Index extends PureComponent {
                   marginBottom: 0
                 }}
               >
-                {is_public ? '欢迎使用梧桐云' : '欢迎使用平台'}
+                {is_public ? '欢迎使用容器平台' : '欢迎使用容器平台'}
               </h1>
               <div className={userStyles.desc}>简单2步, 开启云端之旅</div>
             </div>

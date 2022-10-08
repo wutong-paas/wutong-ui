@@ -368,7 +368,7 @@ export default class Index extends PureComponent {
                 tab={
                   <span className={PluginStyles.verticalCen}>
                     {globalUtil.fetchSvg('cloudMarket')}
-                    梧桐商店
+                    应用商店
                   </span>
                 }
                 key="wutongStore"
