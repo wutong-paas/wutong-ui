@@ -139,7 +139,8 @@ import {
   updatePluginMemory,
   updateRolling,
   updateServiceName,
-  upgrade
+  upgrade,
+  getClusterResource
 } from '../services/app';
 import { getGroupApps } from '../services/application';
 import { addCertificate, getCertificates } from '../services/team';
@@ -1159,6 +1160,12 @@ export default {
     },
     *updateServiceName({ payload, callback }, { call }) {
       const response = yield call(updateServiceName, payload);
+      if (response && callback) {
+        callback(response);
+      }
+    },
+    *fetchClusterResourcee({ payload, callback }, { call }) {
+      const response = yield call(getClusterResource, payload);
       if (response && callback) {
         callback(response);
       }

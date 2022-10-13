@@ -3254,3 +3254,17 @@ export async function rollbackUpgradeList(body = {}) {
     }
   );
 }
+
+/* 下载集群资源 */
+export async function getClusterResource(body = {}) {
+  return request(
+    `${apiconfig.baseUrl}/console/teams/${body.team_name}/services/kuberesources`,
+    {
+      method: 'post',
+      data: {
+        namespace: body.namespace,
+        service_alias: body.serviceList
+      }
+    }
+  );
+}
