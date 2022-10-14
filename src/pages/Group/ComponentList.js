@@ -294,6 +294,7 @@ export default class ComponentList extends Component {
 
   handleDownloadClusterResource = () => {
     const { namespaceValue, serviceAlias, selectedRows, isBatch } = this.state;
+    const { groupId } = this.props;
     this.props.dispatch({
       type: 'appControl/fetchClusterResourcee',
       payload: {
@@ -301,7 +302,8 @@ export default class ComponentList extends Component {
         namespace: namespaceValue,
         serviceList: !isBatch
           ? [serviceAlias]
-          : selectedRows.map(i => i.service_alias)
+          : selectedRows.map(i => i.service_alias),
+        app_id: groupId
       },
       callback: res => {
         downLoadTools.saveFile(

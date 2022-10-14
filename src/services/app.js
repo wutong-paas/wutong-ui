@@ -3258,7 +3258,7 @@ export async function rollbackUpgradeList(body = {}) {
 /* 下载集群资源 */
 export async function getClusterResource(body = {}) {
   return request(
-    `${apiconfig.baseUrl}/console/teams/${body.team_name}/services/kuberesources`,
+    `${apiconfig.baseUrl}/console/teams/${body.team_name}/apps/${body.app_id}/kuberesources`,
     {
       method: 'post',
       data: {
