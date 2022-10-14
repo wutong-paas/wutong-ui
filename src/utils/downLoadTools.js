@@ -18,5 +18,11 @@ export default {
       type: 'text/tet,charset=UTF-8'
     });
     openDownloadDialog(blob, `${fileName}${isShowFileType ? '.txt' : ''}`);
+  },
+  saveFile: (content, fileName, fileType) => {
+    const blob = new Blob(['\ufeff' + content], {
+      type: 'text/tet,charset=UTF-8'
+    });
+    openDownloadDialog(blob, `${fileName}${fileType ? `.${fileType}` : ''}`);
   }
 };
