@@ -299,7 +299,7 @@ export default class ComponentList extends Component {
       type: 'appControl/fetchClusterResourcee',
       payload: {
         team_name: globalUtil.getCurrTeamName(),
-        namespace: namespaceValue,
+        namespace: namespaceValue === '' ? undefined : namespaceValue,
         serviceList: !isBatch
           ? [serviceAlias]
           : selectedRows.map(i => i.service_alias),
