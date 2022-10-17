@@ -272,7 +272,7 @@ export default class Index extends PureComponent {
           container_name: value[1].slice(3)
         },
         () => {
-          if (!this.props.socket) this.fetchContainerLog();
+          this.fetchContainerLog();
         }
       );
     } else {
