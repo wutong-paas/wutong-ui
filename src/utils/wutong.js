@@ -17,7 +17,7 @@ export default {
       enterpriseInfo.logo.enable &&
       enterpriseInfo.logo.value),
   // 获取网站标题
-  fetchSiteTitle: '开发运维一体化平台',
+  fetchSiteTitle: '梧桐容器平台',
   // 获取当前版本
   fetchIsSource: () => true,
   // BillingFunction
