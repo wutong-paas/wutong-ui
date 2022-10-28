@@ -508,7 +508,7 @@ class Index extends React.Component {
                         </Tooltip>
                       </Col>
 
-                      <Col span={ServiceComponent ? 12 : 8}>
+                      {/* <Col span={ServiceComponent ? 12 : 8}>
                         <Tooltip title={item.project_default_branch}>
                           <div className={styles.listItemMataBranch}>
                             <Icon
@@ -518,7 +518,7 @@ class Index extends React.Component {
                             {item.project_default_branch || '-'}
                           </div>
                         </Tooltip>
-                      </Col>
+                      </Col> */}
                     </Row>
                   )}
                 </Skeleton>

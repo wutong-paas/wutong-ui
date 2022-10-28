@@ -1195,6 +1195,7 @@ class Main extends PureComponent {
       deploy: '构建',
       rolling: upDataText
     };
+    console.time()
     if (!appDetail.service) {
       return null;
     }
@@ -1311,7 +1312,8 @@ class Main extends PureComponent {
           : isUpdate && (
               <Tooltip
                 placement="top"
-                title={`以最新的组件配置属性对组件实例进行${!isShowThirdParty &&'滚动'}升级`}
+                title={`以最新的组件配置属性对组件实例进行${!isShowThirdParty &&
+                  '滚动'}升级`}
               >
                 <Button
                   onClick={() => {
@@ -1503,6 +1505,8 @@ class Main extends PureComponent {
         componentID: serviceAlias
       }
     );
+
+    console.timeEnd()
     return (
       <PageHeaderLayout
         breadcrumbList={breadcrumbList}

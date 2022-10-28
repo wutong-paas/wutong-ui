@@ -8,6 +8,7 @@ import appImg from '../../public/images/menu/app.svg';
 import newImg from '../../public/images/menu/new.svg';
 import pluginImg from '../../public/images/menu/plugin.svg';
 import teamManagerImg from '../../public/images/menu/teammanager.svg';
+import settingImg from '../../public/images/menu/setting.svg';
 
 const newbieGuide = cookie.get('newbie_guide');
 
@@ -128,6 +129,20 @@ function menuData(teamName, regionName, permissionsInfo, teamId, enterprise) {
         authority: ['admin', 'user']
       });
     }
+
+    menuArr.push({
+      name: formatMessage({ id: 'menu.team.config' }),
+      icon: renderIcon(settingImg),
+      path: `/team/${teamName}/region/${regionName}/config`,
+      authority: ['admin', 'user'],
+      children: [
+        {
+          name: formatMessage({ id: 'menu.team.log' }),
+          path: `/log`,
+          authority: ['admin', 'user']
+        }
+      ]
+    });
 
     if (dynamic || members || clusters || roles) {
       addMenuArr({

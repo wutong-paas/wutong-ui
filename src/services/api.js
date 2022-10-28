@@ -1371,3 +1371,27 @@ export async function fetchHomeGroupEventAPI(params) {
     }
   );
 }
+
+//设置日志查询功能
+export async function setLogQuery(body = {}) {
+  const { enterprise_id, enable } = body;
+  return request(
+    `${apiconfig.baseUrl}/console/enterprise/${enterprise_id}/log_query`,
+    {
+      method: 'put',
+      data: { enable }
+    }
+  );
+}
+
+//设置链路查询功能
+export async function setCallLinkQuery(body = {}) {
+  const { enterprise_id, enable } = body;
+  return request(
+    `${apiconfig.baseUrl}/console/enterprise/${enterprise_id}/call_link`,
+    {
+      method: 'put',
+      data: { enable }
+    }
+  );
+}

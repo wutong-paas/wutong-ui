@@ -17,6 +17,8 @@ export default {
   'menu.team.gateway.control': '访问策略管理',
   'menu.team.plugin': '插件',
   'menu.team.setting': '团队管理',
+  'menu.team.config': '设置',
+  'menu.team.log': '提取日志标签',
   'menu.app.dashboard': '总览',
   'menu.app.publish': '发布',
   'menu.app.gateway': '网关',
