@@ -804,9 +804,9 @@ export default class Main extends PureComponent {
                 alt={item.title}
                 src={cloud ? item.logo || item.icon : item.pic}
                 height={handleType ? 154 : 80}
-                onClick={() => {
-                  this.showMarketAppDetail(item);
-                }}
+                // onClick={() => {
+                //   this.showMarketAppDetail(item);
+                // }}
               />
             }
             title={handleType ? '' : title(item)}

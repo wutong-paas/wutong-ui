@@ -494,6 +494,12 @@ export default [
             name: 'license',
             authority: ['admin', 'user']
           },
+          {
+            path: '/team/:teamName/region/:regionName/config/log',
+            component: './Config/Log',
+            name: 'log',
+            authority: ['admin', 'user']
+          },
           { component: '404' }
         ]
       },
