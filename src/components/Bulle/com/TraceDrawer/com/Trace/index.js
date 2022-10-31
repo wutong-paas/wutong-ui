@@ -41,6 +41,7 @@ const Trace = props => {
     location: { pathname },
     tarceLoading,
     onTraceIdClick,
+    activityKey,
     visible
   } = props;
   const [queryText, setQueryText] = useState('0');
@@ -50,7 +51,7 @@ const Trace = props => {
       .valueOf(),
     end: moment().valueOf()
   });
-  const [nameSpace, setNamespace] = useState(getUrlParams(pathname, 'team'));
+  const [nameSpace, setNamespace] = useState(undefined);
   const [dataSource, setDataSource] = useState([]);
   const [serviceList, setServiceList] = useState([]);
   const [methodList, setMethodList] = useState([]);
@@ -74,6 +75,12 @@ const Trace = props => {
   }, [limit]);
 
   useEffect(() => {
+    if (activityKey > 0 && timeId.current) {
+      clearTimeout(timeId.current);
+    }
+  }, [activityKey]);
+
+  useEffect(() => {
     if (visible) fetchFilterList();
   }, [visible]);
 
@@ -94,7 +101,6 @@ const Trace = props => {
         setQueryText(e.key);
         queryTextCurrent.current = e.key;
         if (e.key === '0') {
-          console.log(timeId.current, 'timeId');
           clearTimeout(timeId.current);
           timeId.current = null;
           return;
@@ -154,10 +160,10 @@ const Trace = props => {
         const { list } = res;
         setDataSource(list);
         if (queryTextCurrent?.current !== '0') {
-           if (timeId.current) {
-             clearTimeout(timeId.current);
-             timeId.current = null;
-           }
+          if (timeId.current) {
+            clearTimeout(timeId.current);
+            timeId.current = null;
+          }
           timeId.current = setTimeout(() => {
             queryTraceRef.current();
           }, timeObject[(queryTextCurrent?.current)]);
@@ -166,7 +172,7 @@ const Trace = props => {
     });
   };
 
-  queryTraceRef.current = fetchTraceList
+  queryTraceRef.current = fetchTraceList;
 
   const handleQuery = () => {
     if (!nameSpace) {
