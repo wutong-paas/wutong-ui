@@ -2,7 +2,8 @@ const levelTextColor = {
   一般: 'rgba(36, 103, 246, 1)',
   正常: 'rgba(6, 199, 127, 1)',
   警告: 'rgba(255, 191, 119, 1)',
-  严重: 'rgba(253, 106, 106, 1)'
+  严重: 'rgba(253, 106, 106, 1)',
+  紧急: 'red'
 };
 
 export const computedPercentage = (dividend, divisor) => {
@@ -36,33 +37,33 @@ export const GroupNodeColunms = [
 ];
 
 export const GroupEventColunms = [
-         {
-           title: '时间',
-           dataIndex: 'time',
-           key: 'time',
-           width: 180
-         },
-         {
-           title: '类型',
-           dataIndex: 'name',
-           key: 'name',
-           width: 200
-         },
-         {
-           title: '描述',
-           dataIndex: 'mesc',
-           key: 'mesc'
-         },
-         {
-           title: '等级',
-           dataIndex: 'level',
-           key: 'level',
-           width: 80,
-           render: (text, record) => (
-             <span style={{ color: levelTextColor[text] }}>{text}</span>
-           )
-         }
-       ];
+  {
+    title: '时间',
+    dataIndex: 'time',
+    key: 'time',
+    width: 180
+  },
+  {
+    title: '类型',
+    dataIndex: 'name',
+    key: 'name',
+    width: 200
+  },
+  {
+    title: '描述',
+    dataIndex: 'mesc',
+    key: 'mesc'
+  },
+  {
+    title: '等级',
+    dataIndex: 'level',
+    key: 'level',
+    width: 80,
+    render: (text, record) => (
+      <span style={{ color: levelTextColor[text] }}>{text}</span>
+    )
+  }
+];
 
 export const tabList = [
   {

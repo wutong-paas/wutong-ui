@@ -34,6 +34,7 @@ import styles from './index.less';
 import deleteImg from '../../../../../public/images/common/delete.svg';
 import addImg from '../../../../../public/images/common/add.svg';
 import { start } from '@/services/app';
+import user from '@/models/user';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -69,9 +70,9 @@ const LogDrawer = props => {
   const [stateExpr, setStateExpr] = useState(''); //查询表达式
   const [selectLoading, setSelectLoading] = useState(false); //下拉状态
   const [currentId, setCurrentId] = useState(); //当前下拉框Id
-  const [serviceName, setServiceName] = useState('');
   const timeId = useRef(null);
   const queryTextCurrent = useRef('0');
+  const queryLogRef = useRef();
   // const currentLogList = useRef(); //定时轮询数据，保证数据应用不变
   // currentLogList.current = newLogList;
 
@@ -100,6 +101,14 @@ const LogDrawer = props => {
       }
     }
   }, [pathname, teamList, appList]);
+
+  useEffect(() => {
+    return () => {
+      if (timeId.current) {
+        clearTimeout(timeId.current);
+      }
+    };
+  }, []);
 
   const menu = (
     <Menu
@@ -295,13 +304,19 @@ const LogDrawer = props => {
         setNewLogList(list);
         setLoading(false);
         if (queryTextCurrent?.current !== '0') {
+          if (timeId.current) {
+            clearTimeout(timeId.current);
+            timeId.current = null;
+          }
           timeId.current = setTimeout(() => {
-            queryLogList();
+            queryLogRef.current();
           }, timeObject[(queryTextCurrent?.current)]);
         }
       }
     });
   };
+
+  queryLogRef.current = queryLogList;
 
   const handleQueryTagList = ({ e, id }) => {
     const { dispatch } = props;

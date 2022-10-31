@@ -63,6 +63,7 @@ const Trace = props => {
   const didMountRef = useRef(false);
   const timeId = useRef(null);
   const queryTextCurrent = useRef('0');
+  const queryTraceRef = useRef();
 
   useEffect(() => {
     if (didMountRef.current) {
@@ -153,13 +154,19 @@ const Trace = props => {
         const { list } = res;
         setDataSource(list);
         if (queryTextCurrent?.current !== '0') {
+           if (timeId.current) {
+             clearTimeout(timeId.current);
+             timeId.current = null;
+           }
           timeId.current = setTimeout(() => {
-            fetchTraceList();
+            queryTraceRef.current();
           }, timeObject[(queryTextCurrent?.current)]);
         }
       }
     });
   };
+
+  queryTraceRef.current = fetchTraceList
 
   const handleQuery = () => {
     if (!nameSpace) {
