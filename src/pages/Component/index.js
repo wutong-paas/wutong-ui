@@ -1355,7 +1355,7 @@ class Main extends PureComponent {
     if (!status.status) {
       return (
         <div style={{ width: '100%', textAlign: 'center', marginTop: 400 }}>
-          <Spin spinning={status.status} tip="loading..."></Spin>
+          <Spin spinning={true} tip="loading..."></Spin>
         </div>
       );
     }
