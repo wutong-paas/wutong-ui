@@ -26,6 +26,9 @@ import OauthTable from './oauthTable';
   imageHubLongin: loading.effects['global/editImageHub'],
   monitoringLongin: loading.effects['global/editImageHub'],
   objectStorageLongin: loading.effects['global/editCloudBackup'],
+  putSetLogQueryLoading: loading.effects['global/putSetLogQuery'],
+  putSetTraceQueryLoading: loading.effects['global/putSetCallLinkQuery'],
+  putSetIsRegistLoading: loading.effects['global/putIsRegist'],
   overviewInfo: index.overviewInfo
 }))
 class Infrastructure extends PureComponent {
@@ -494,6 +497,7 @@ class Infrastructure extends PureComponent {
               onChange={this.onRegistChange}
               className={styles.automaTictelescopingSwitch}
               checked={this.props.isRegist}
+              loading={this.props.putSetIsRegistLoading}
             />
           </Col>
         </Row>
@@ -721,6 +725,7 @@ class Infrastructure extends PureComponent {
                 wutongInfo.log_query.enable
               }
               onChange={this.onQueryLogChange}
+              loading={this.props.putSetLogQueryLoading}
               defaultChecked={true}
               className={styles.automaTictelescopingSwitch}
             />
@@ -754,6 +759,7 @@ class Infrastructure extends PureComponent {
                 wutongInfo.call_link_query.enable
               }
               onChange={this.onQueryCallLinkChange}
+              loading={this.props.putSetTraceQueryLoading}
               defaultChecked={true}
               className={styles.automaTictelescopingSwitch}
             />
