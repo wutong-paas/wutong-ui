@@ -23,7 +23,6 @@ const TraceDetail = props => {
   const [keyList, setKeyList] = useState([]);
 
   useEffect(() => {
-    console.log(traceId, 'ddd');
     fetchTraceDetail();
   }, [traceId]);
 

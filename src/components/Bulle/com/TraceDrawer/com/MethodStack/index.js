@@ -135,7 +135,16 @@ const MethodStack = props => {
                                         {m.key}：
                                       </div>
                                       <div style={{ flex: 1, width: 0 }}>
-                                        {m.value}
+                                        {typeof m.value === 'string' && (
+                                          <span
+                                            style={{ color: 'green' }}
+                                          >{`"${m.value}"`}</span>
+                                        )}
+                                        {typeof m.value === 'number' && (
+                                          <span style={{ color: 'brown' }}>
+                                            {m.value}
+                                          </span>
+                                        )}
                                       </div>
                                       <div
                                         style={{
