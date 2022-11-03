@@ -14,7 +14,8 @@ import {
   Menu,
   Icon,
   Spin,
-  message
+  message,
+  Tooltip
 } from 'antd';
 import RenderList from './com/RendreList';
 import TeamCondition from '../TeamCondition';
@@ -34,7 +35,7 @@ import styles from './index.less';
 import deleteImg from '../../../../../public/images/common/delete.svg';
 import addImg from '../../../../../public/images/common/add.svg';
 import { start } from '@/services/app';
-import user from '@/models/user';
+import classNames from 'classnames';
 
 const { RangePicker } = DatePicker;
 const { Option } = Select;
@@ -70,6 +71,7 @@ const LogDrawer = props => {
   const [stateExpr, setStateExpr] = useState(''); //查询表达式
   const [selectLoading, setSelectLoading] = useState(false); //下拉状态
   const [currentId, setCurrentId] = useState(); //当前下拉框Id
+  const [isExpand, setIsExpand] = useState(true);
   const timeId = useRef(null);
   const queryTextCurrent = useRef('0');
   const queryLogRef = useRef();
@@ -87,10 +89,30 @@ const LogDrawer = props => {
       );
       const teamName = teamList[teamIndex]?.namespace;
       const serviceName = appList[serviceIndex]?.k8s_component_name;
+      4;
+      //    //到了指定的团队界面，默认赋值
+      // if (teamName && !nameSpace) setNamespace(teamName);
+      // //到了指定的组件页面，且没有查询条件，则新增一个
+      // if (serviceName && filterValue.length === 0) {
+      //   setfilterValue([
+      //     {
+      //       id: -1,
+      //       tag: 'container',
+      //       values: serviceName
+      //     }
+      //   ]);
+      // }
+      //TODO  先收集用户体验
       //到了指定的团队界面，默认赋值
-      if (teamName && !nameSpace) setNamespace(teamName);
+      if (teamName) setNamespace(teamName);
+      //如果当前的团队切换了，且不是在首页 清空查询结果和条件，重新带入新标签
+      if (teamName !== nameSpace && teamName) {
+        setNewLogList([]);
+        setfilterValue([]);
+      }
       //到了指定的组件页面，且没有查询条件，则新增一个
-      if (serviceName && filterValue.length === 0) {
+      if (serviceName) {
+        setNewLogList([]);
         setfilterValue([
           {
             id: -1,
@@ -402,8 +424,23 @@ const LogDrawer = props => {
             onRangeChange={onTimeChange}
             onTeamChange={onTeamChange}
             nameSpace={nameSpace}
+            customRight={() => {
+              return (
+                <div
+                  style={{ color: 'blue' }}
+                  onClick={() => setIsExpand(!isExpand)}
+                >
+                  {isExpand ? '收起' : '展开'}查询
+                  <Icon type={isExpand ? 'caret-down' : 'caret-up'} />
+                </div>
+              );
+            }}
           />
-          <div className={styles.middle}>
+          <div
+            className={classNames(styles.middle, {
+              [styles.hide]: !isExpand
+            })}
+          >
             <div className={styles.title}>标签</div>
             <div className={styles.block}>
               {filterValue.map((item, index) => {
@@ -501,17 +538,24 @@ const LogDrawer = props => {
             </div>
             <div className={styles.query}>
               <ButtonGroup>
-                <Button type="primary" onClick={handleQuery} loading={loading}>
+                <Button
+                  type="primary"
+                  onClick={handleQuery}
+                  loading={loading}
+                  icon="sync"
+                >
                   <span>查询</span>
                 </Button>
-                <Dropdown overlay={menu}>
-                  <Button type="primary">
-                    <span style={{ zIndex: '2' }}>
-                      <span>{queryText === '0' ? 'off' : queryText}</span>
-                      <Icon type="down" />
-                    </span>
-                  </Button>
-                </Dropdown>
+                <Tooltip title="定时查询">
+                  <Dropdown overlay={menu}>
+                    <Button type="primary">
+                      <span style={{ zIndex: '2' }}>
+                        <span>{queryText === '0' ? 'off' : queryText}</span>
+                        <Icon type="down" />
+                      </span>
+                    </Button>
+                  </Dropdown>
+                </Tooltip>
               </ButtonGroup>
             </div>
           </div>
@@ -523,6 +567,7 @@ const LogDrawer = props => {
             heightList={heightList}
             timeRange={timeRange}
             callLinkQuery={call_link_query}
+            isExpand={isExpand}
           />
         </div>
       </Drawer>
