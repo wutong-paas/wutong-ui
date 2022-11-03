@@ -191,7 +191,8 @@ const RenderList = memo(props => {
     loading,
     timeRange: { start, end },
     wutongInfo,
-    callLinkQuery: { enable }
+    callLinkQuery: { enable },
+    isExpand
   } = props;
   const [heightList, setHeightList] = useState([]);
   const [index, setIndex] = useState(0);
@@ -318,7 +319,7 @@ const RenderList = memo(props => {
           // )
           <VariableSizeList
             ref={listRef}
-            containerHeight={640}
+            containerHeight={isExpand ? 610 : 770}
             itemCount={newLogList.length}
             getItemHeight={getHeight}
             itemData={newLogList}

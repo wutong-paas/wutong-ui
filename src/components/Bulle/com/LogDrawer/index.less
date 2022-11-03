@@ -63,7 +63,7 @@
   .content {
     font-family: PingFangSC-Regular,
       PingFang SC;
-    height  : calc(100vh - 324px);
+   // height  : calc(100vh - 324px);
     overflow: hidden;
 
     .item {
@@ -141,4 +141,12 @@
   .ant-drawer-body {
     padding: 20px 20px;
   }
+}
+
+.hide {
+  height    : 0;
+  transition: height 1s linear 1s;
+  opacity   : 0;
+  z-index   : -1;
+  padding   : 0px !important;
 }
