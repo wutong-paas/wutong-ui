@@ -519,20 +519,22 @@ const LogDrawer = props => {
               })}
               {
                 <div className={styles.group}>
-                  <div
-                    className={styles.wrap}
-                    onClick={() => {
-                      if (!nameSpace) {
-                        message.warning('请选择团队');
-                        return;
-                      }
-                      let tempArray = [...filterValue];
-                      tempArray.push({ id: new Date().valueOf() });
-                      setfilterValue(tempArray);
-                    }}
-                  >
-                    <img src={addImg} />
-                  </div>
+                  <Tooltip title="添加标签组">
+                    <div
+                      className={styles.wrap}
+                      onClick={() => {
+                        if (!nameSpace) {
+                          message.warning('请选择团队');
+                          return;
+                        }
+                        let tempArray = [...filterValue];
+                        tempArray.push({ id: new Date().valueOf() });
+                        setfilterValue(tempArray);
+                      }}
+                    >
+                      <img src={addImg} />
+                    </div>
+                  </Tooltip>
                 </div>
               }
             </div>

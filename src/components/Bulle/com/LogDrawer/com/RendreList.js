@@ -240,7 +240,7 @@ const RenderList = memo(props => {
     }, [setHeight, index]);
 
     const handleSetHeight = (index, itemRef) => {
-      setHeight(index, itemRef?.current?.getBoundingClientRect().height + 4);
+      setHeight(index, itemRef?.current?.getBoundingClientRect().height + 10);
     };
 
     // lastFunc.current = handleSetHeight;
