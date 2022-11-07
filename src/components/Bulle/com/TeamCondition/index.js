@@ -21,7 +21,8 @@ const TeamConditon = props => {
     onRangeChange,
     onTeamChange,
     nameSpace,
-    customRight
+    customRight,
+    customQuery
   } = props;
   const [isShowRangePicker, setIsShowRangePicker] = useState(false);
 
@@ -103,6 +104,7 @@ const TeamConditon = props => {
               <RangePicker size="default" showTime onOk={handleRangeChange} />
             </div>
           )}
+          {customQuery && customQuery()}
         </div>
         {customRight && <div className={styles.right}>{customRight()}</div>}
       </div>
