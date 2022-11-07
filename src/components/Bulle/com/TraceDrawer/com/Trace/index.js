@@ -15,7 +15,8 @@ import {
   Button,
   Icon,
   Table,
-  message
+  message,
+  Tooltip
 } from 'antd';
 import TeamCondition from '../../../TeamCondition';
 import {
@@ -267,17 +268,24 @@ const Trace = props => {
         {/* <Input style={{ width: 186, marginRight: 24 }} placeholder="响应码" /> */}
         <div>
           <ButtonGroup>
-            <Button type="primary" onClick={handleQuery} loading={tarceLoading}>
+            <Button
+              type="primary"
+              onClick={handleQuery}
+              loading={tarceLoading}
+              icon="sync"
+            >
               <span>查询</span>
             </Button>
-            <Dropdown overlay={menu}>
-              <Button type="primary">
-                <span style={{ zIndex: '2' }}>
-                  <span>{queryText === '0' ? 'off' : queryText}</span>
-                  <Icon type="down" />
-                </span>
-              </Button>
-            </Dropdown>
+            <Tooltip title="定时轮询间隔">
+              <Dropdown overlay={menu}>
+                <Button type="primary">
+                  <span style={{ zIndex: '2' }}>
+                    <span>{queryText === '0' ? 'off' : queryText}</span>
+                    <Icon type="down" />
+                  </span>
+                </Button>
+              </Dropdown>
+            </Tooltip>
           </ButtonGroup>
         </div>
       </div>

@@ -407,6 +407,29 @@ const LogDrawer = props => {
     return Array.from(new Set(keyArrayList));
   };
 
+  const renderButton = () => (
+    <ButtonGroup>
+      <Button
+        type="primary"
+        onClick={handleQuery}
+        loading={loading}
+        icon="sync"
+      >
+        <span>查询</span>
+      </Button>
+      <Tooltip title="定时轮询间隔">
+        <Dropdown overlay={menu}>
+          <Button type="primary">
+            <span style={{ zIndex: '2' }}>
+              <span>{queryText === '0' ? 'off' : queryText}</span>
+              <Icon type="down" />
+            </span>
+          </Button>
+        </Dropdown>
+      </Tooltip>
+    </ButtonGroup>
+  );
+
   return (
     <div className={styles.container}>
       <Drawer
@@ -434,6 +457,12 @@ const LogDrawer = props => {
                   <Icon type={isExpand ? 'caret-down' : 'caret-up'} />
                 </div>
               );
+            }}
+            customQuery={() => {
+              if (!isExpand) {
+                return renderButton();
+              }
+              return null;
             }}
           />
           <div
@@ -538,28 +567,7 @@ const LogDrawer = props => {
                 </div>
               }
             </div>
-            <div className={styles.query}>
-              <ButtonGroup>
-                <Button
-                  type="primary"
-                  onClick={handleQuery}
-                  loading={loading}
-                  icon="sync"
-                >
-                  <span>查询</span>
-                </Button>
-                <Tooltip title="定时查询">
-                  <Dropdown overlay={menu}>
-                    <Button type="primary">
-                      <span style={{ zIndex: '2' }}>
-                        <span>{queryText === '0' ? 'off' : queryText}</span>
-                        <Icon type="down" />
-                      </span>
-                    </Button>
-                  </Dropdown>
-                </Tooltip>
-              </ButtonGroup>
-            </div>
+            <div className={styles.query}>{renderButton()}</div>
           </div>
           <RenderList
             newLogList={newLogList}
