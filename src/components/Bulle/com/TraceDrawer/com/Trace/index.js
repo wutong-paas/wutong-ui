@@ -235,12 +235,12 @@ const Trace = props => {
         /> */}
         <Select
           style={{ width: 186, marginRight: 24 }}
-          placeholder="链路节点名称"
-          onChange={e => handleFilterChange({ e, flag: 'method' })}
-          value={filteValue.methodValue}
+          placeholder="服务名称"
+          onChange={e => handleFilterChange({ e, flag: 'service' })}
+          value={filteValue.serviceValue}
           allowClear
         >
-          {methodList?.map((item, index) => (
+          {serviceList?.map((item, index) => (
             <Option key={index} value={item}>
               {item}
             </Option>
@@ -248,12 +248,12 @@ const Trace = props => {
         </Select>
         <Select
           style={{ width: 186, marginRight: 24 }}
-          placeholder="服务名称"
-          onChange={e => handleFilterChange({ e, flag: 'service' })}
-          value={filteValue.serviceValue}
+          placeholder="链路节点名称"
+          onChange={e => handleFilterChange({ e, flag: 'method' })}
+          value={filteValue.methodValue}
           allowClear
         >
-          {serviceList?.map((item, index) => (
+          {methodList?.map((item, index) => (
             <Option key={index} value={item}>
               {item}
             </Option>
