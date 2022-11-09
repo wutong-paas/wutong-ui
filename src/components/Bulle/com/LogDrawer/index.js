@@ -397,7 +397,7 @@ const LogDrawer = props => {
         //过滤这些不需要的标签
         if (tempArray.length > 0) {
           tempArray = tempArray.filter(
-            i => !['cluster', 'namespace', 'job', 'stream'].includes(i)
+            i => !['cluster', 'namespace', 'job', 'stream', 'ts'].includes(i)
           );
         }
         if (temp[filterItemIndex])
