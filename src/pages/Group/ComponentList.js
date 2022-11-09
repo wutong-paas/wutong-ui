@@ -273,6 +273,10 @@ export default class ComponentList extends Component {
     const arr = this.getSelected();
     return arr && arr.length > 0;
   };
+  canBatchClosed = () => {
+    const arr = this.getSelected();
+    return arr ? arr.some(item => item.status !== 'closed') : true;
+  };
   handelChange = e => {
     this.setState({
       changeQuery: e.target.value
@@ -322,6 +326,20 @@ export default class ComponentList extends Component {
       isBatch: false,
       namespaceValue: 'default'
     });
+
+  handleDeleteComponent = data => {
+    this.props.dispatch({
+      type: 'appControl/deleteApp',
+      payload: {
+        team_name: globalUtil.getCurrTeamName(),
+        app_alias: data?.service_alias
+      },
+      callback: () => {
+        notification.success({ message: '删除成功' });
+        this.loadComponents();
+      }
+    });
+  };
 
   render() {
     const {
@@ -486,8 +504,8 @@ export default class ComponentList extends Component {
         render: (val, data) => (
           <Fragment>
             {data.service_source && data.service_source !== 'third_party' && (
-              <Fragment>
-                {isRestart && (
+              <div style={{ textAlign: 'right' }}>
+                {isRestart && data?.status !== 'closed' && (
                   <Popconfirm
                     title="确认要重启该组件吗？"
                     onConfirm={() => {
@@ -497,7 +515,9 @@ export default class ComponentList extends Component {
                     <a>重启</a>
                   </Popconfirm>
                 )}
-                {isRestart && <Divider type="vertical" />}
+                {isRestart && data?.status !== 'closed' && (
+                  <Divider type="vertical" />
+                )}
                 {isStart && (
                   <Popconfirm
                     title="确认要启动该组件吗？"
@@ -509,7 +529,7 @@ export default class ComponentList extends Component {
                   </Popconfirm>
                 )}
                 {isStart && <Divider type="vertical" />}
-                {isStop && (
+                {isStop && data?.status !== 'closed' && (
                   <Popconfirm
                     title="确认要关闭该组件吗？"
                     onConfirm={() => {
@@ -519,7 +539,20 @@ export default class ComponentList extends Component {
                     <a>关闭</a>
                   </Popconfirm>
                 )}
-                {isStop && <Divider type="vertical" />}
+                {isStop && data?.status !== 'closed' && (
+                  <Divider type="vertical" />
+                )}
+                {data?.status === 'closed' && (
+                  <Popconfirm
+                    title="确认要删除该组件吗？"
+                    onConfirm={() => {
+                      this.handleDeleteComponent(data);
+                    }}
+                  >
+                    <a>删除</a>
+                  </Popconfirm>
+                )}
+                {data?.status === 'closed' && <Divider type="vertical" />}
                 <Tooltip title="导出集群资源">
                   <a
                     onClick={() =>
@@ -532,7 +565,7 @@ export default class ComponentList extends Component {
                     导出
                   </a>
                 </Tooltip>
-              </Fragment>
+              </div>
             )}
           </Fragment>
         )
@@ -555,7 +588,7 @@ export default class ComponentList extends Component {
         action: 'restart'
       },
       {
-        permissions: isStop,
+        permissions: isStop && this.canBatchClosed(),
         name: '关闭',
         action: 'stop'
       },
