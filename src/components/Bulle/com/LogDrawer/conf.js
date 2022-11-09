@@ -266,3 +266,9 @@ export const getUrlParams = (url, params) => {
   const result = regexp.exec(url);
   return result ? result[1] : undefined;
 };
+
+export const tagName = {
+  container: '组件',
+  pod: '实例',
+  filename: '日志文件'
+};
