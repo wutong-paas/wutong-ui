@@ -29,7 +29,8 @@ import {
   filterList,
   filterTermList,
   formatTime,
-  getUrlParams
+  getUrlParams,
+  tagName
 } from './conf';
 import styles from './index.less';
 import deleteImg from '../../../../../public/images/common/delete.svg';
@@ -110,16 +111,23 @@ const LogDrawer = props => {
         setNewLogList([]);
         setfilterValue([]);
       }
-      //到了指定的组件页面，且没有查询条件，则新增一个
+      //到了指定的组件页面，先清除log,并重置为当前页面的默认标签组（当前页的组件名称）,默认标签组的id为-1
       if (serviceName) {
         setNewLogList([]);
-        setfilterValue([
-          {
-            id: -1,
-            tag: 'container',
-            values: serviceName
+        handleQueryTagList({
+          id: -1,
+          teamName,
+          callback: filterList => {
+            setfilterValue([
+              {
+                id: -1,
+                tag: 'container',
+                values: serviceName,
+                filterList
+              }
+            ]);
           }
-        ]);
+        });
       }
     }
   }, [pathname, teamList, appList]);
@@ -340,16 +348,18 @@ const LogDrawer = props => {
 
   queryLogRef.current = queryLogList;
 
-  const handleQueryTagList = ({ e, id }) => {
+  const handleQueryTagList = ({ e, id, teamName, callback }) => {
     const { dispatch } = props;
     const { start, end } = timeRange;
     setCurrentId(id);
+    //通过id筛选出当前操作项的下标
     const filterItemIndex = filterValue.findIndex(item => item.id === id);
-
+    //如果当前的标签已被选中了，则不进行标签查询
     if (filterValue[filterItemIndex]?.tag && id !== -1) {
       return;
     }
     let list = [];
+    //拼接查询条件
     list = filterValue
       .map(i => {
         const { tag, values, condition } = i;
@@ -365,7 +375,7 @@ const LogDrawer = props => {
         return null;
       })
       .filter(i => !!i);
-    list.unshift(`namespace="${nameSpace}"`);
+    list.unshift(`namespace="${nameSpace || teamName}"`);
     const match = '{' + list.join(',') + '}';
     setSelectLoading(true);
     dispatch({
@@ -384,14 +394,23 @@ const LogDrawer = props => {
             item => (tempArray = [...tempArray, ...Object.keys(item)])
           );
         setOriginFilterList(list);
-        temp[filterItemIndex].filterList = Array.from(new Set(tempArray));
-        //到了指定的组件页面，且没有查询条件，则新增一个
-        if (id === -1) {
-          temp[filterItemIndex].keyList = getKeyList(temp[filterItemIndex].tag);
+        //过滤这些不需要的标签
+        if (tempArray.length > 0) {
+          tempArray = tempArray.filter(
+            i => !['cluster', 'namespace', 'job', 'stream', 'ts'].includes(i)
+          );
         }
-        // setFilterList(Array.from(new Set(tempArray)));
-        setfilterValue(temp);
+        if (temp[filterItemIndex])
+          temp[filterItemIndex].filterList = Array.from(new Set(tempArray));
+        //到了指定的组件页面，且没有查询条件，则新增一个
         setSelectLoading(false);
+        //如果是默认标签组，则调用callback
+        if (id === -1) {
+          callback && callback(Array.from(new Set(tempArray)));
+          return;
+          // temp[filterItemIndex].keyList = getKeyList(temp[filterItemIndex].tag);
+        }
+        setfilterValue(temp);
       }
     });
   };
@@ -494,7 +513,7 @@ const LogDrawer = props => {
                     >
                       {filterList.map((item, index) => (
                         <Option key={item} value={item}>
-                          {item}
+                          {tagName[item] ? tagName[item] : item}
                         </Option>
                       ))}
                     </Select>

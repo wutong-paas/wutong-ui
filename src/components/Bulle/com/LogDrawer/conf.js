@@ -266,3 +266,14 @@ export const getUrlParams = (url, params) => {
   const result = regexp.exec(url);
   return result ? result[1] : undefined;
 };
+
+export const tagName = {
+  container: '组件',
+  pod: '实例',
+  filename: '日志文件',
+  app: '业务应用',
+  level: '日志等级',
+  thread: '线程',
+  logger: '日志记录器',
+  traceId: '链路标识'
+};
