@@ -107,13 +107,14 @@ const LogDrawer = props => {
       //到了指定的团队界面，默认赋值
       if (teamName) setNamespace(teamName);
       //如果当前的团队切换了，且不是在首页 清空查询结果和条件，重新带入新标签
-      if (teamName !== nameSpace && teamName) {
+      if (teamName && teamName !== nameSpace) {
         setNewLogList([]);
         setfilterValue([]);
       }
       //到了指定的组件页面，先清除log,并重置为当前页面的默认标签组（当前页的组件名称）,默认标签组的id为-1
       if (serviceName) {
         setNewLogList([]);
+        setfilterValue([]);
         handleQueryTagList({
           id: -1,
           teamName,
@@ -376,6 +377,10 @@ const LogDrawer = props => {
       })
       .filter(i => !!i);
     list.unshift(`namespace="${nameSpace || teamName}"`);
+    //如果id为-1 则默认需要重写match条件，主要是因为setFilterValue是异步，此处是为了省力，直接手动置为默认条件，不在useEffect里监听
+    if (id === -1) {
+      list = [`namespace="${nameSpace || teamName}"`];
+    }
     const match = '{' + list.join(',') + '}';
     setSelectLoading(true);
     dispatch({
