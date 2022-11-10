@@ -250,7 +250,11 @@ const RenderList = memo(props => {
         <div
           style={{
             borderLeft: `2px solid ${
-              logLevelColor[getLogLevel(newLogList[index].line)]
+              logLevelColor[
+                (newLogList[index].level &&
+                  newLogList[index].level.toLowerCase()) ||
+                  getLogLevel(newLogList[index].line)
+              ]
             }`
           }}
           className={styles.info}
@@ -273,11 +277,12 @@ const RenderList = memo(props => {
               });
             }}
           >
-            {getTraceId(newLogList[index].line, 'traceId') && (
-              <Tooltip title="查看调用链路">
-                <img src={traceIdImg} />
-              </Tooltip>
-            )}
+            {newLogList[index].traceId ||
+              (getTraceId(newLogList[index].line, 'traceId') && (
+                <Tooltip title="查看调用链路">
+                  <img src={traceIdImg} />
+                </Tooltip>
+              ))}
           </div>
         </div>
       </div>
