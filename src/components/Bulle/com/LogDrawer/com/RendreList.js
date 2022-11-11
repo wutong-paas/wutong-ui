@@ -271,18 +271,20 @@ const RenderList = memo(props => {
                 return;
               }
               openTraceDetail({
-                traceId: getTraceId(newLogList[index].line, 'traceId'),
+                traceId:
+                  newLogList[index].traceId ||
+                  getTraceId(newLogList[index].line, 'traceId'),
                 start,
                 end
               });
             }}
           >
-            {newLogList[index].traceId ||
-              (getTraceId(newLogList[index].line, 'traceId') && (
-                <Tooltip title="查看调用链路">
-                  <img src={traceIdImg} />
-                </Tooltip>
-              ))}
+            {(newLogList[index].traceId ||
+              getTraceId(newLogList[index].line, 'traceId')) && (
+              <Tooltip title="查看调用链路">
+                <img src={traceIdImg} />
+              </Tooltip>
+            )}
           </div>
         </div>
       </div>
