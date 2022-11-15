@@ -27,6 +27,7 @@ class ShareEvent extends React.Component {
     this.state = {
       data: data || {},
       eventId: (data && data.event_id) || '',
+      eventIds: '', //从单个状态中获取事件id
       status: (data && data.event_status) || 'not_start',
       openedEventId: false
     };
@@ -87,7 +88,8 @@ class ShareEvent extends React.Component {
         if (res && res.bean) {
           this.setState(
             {
-              status: res.bean.event_status
+              status: res.bean.event_status,
+              eventIds: res.bean.event_id
             },
             () => {
               this.handleSendStatus();
@@ -134,7 +136,6 @@ class ShareEvent extends React.Component {
         if (res && res.bean) {
           this.setState(
             {
-              eventId: res.bean.event_id,
               status: res.bean.event_status
             },
             () => {
@@ -174,11 +175,12 @@ class ShareEvent extends React.Component {
   };
 
   render() {
-    const { openedEventId, data, status } = this.state;
+    const { openedEventId, data, status, eventIds } = this.state;
     const datas = data || {};
     const isSuccess = status && status === 'success';
     const isShowSocket = !isSuccess;
-    const isLogs = !isSuccess && datas.event_id;
+
+    const isLogs = !isSuccess && (datas.event_id || eventIds);
     return (
       <div>
         <List.Item>
@@ -204,7 +206,7 @@ class ShareEvent extends React.Component {
                     {isLogs && [
                       <a
                         onClick={() => {
-                          this.handleOpenedEventId(datas.event_id);
+                          this.handleOpenedEventId(datas.event_id || eventIds);
                         }}
                       >
                         日志
