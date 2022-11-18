@@ -1,5 +1,5 @@
 import styles from '@/components/CreateTeam/index.less';
-import { Button, Card, Form, Modal } from 'antd';
+import { Button, Card, Form, Modal, Spin } from 'antd';
 import { connect } from 'dva';
 import React, { PureComponent } from 'react';
 import { getRollsBackRecordDetails } from '../../../services/app';
@@ -132,7 +132,6 @@ export default class rollsBackRecordDetails extends PureComponent {
       >
         <Card
           title="组件列表"
-          loading={recordLoading}
           extra={
             <Button
               type="primary"
@@ -143,19 +142,21 @@ export default class rollsBackRecordDetails extends PureComponent {
             </Button>
           }
         >
-          {list &&
-            list.length > 0 &&
-            list.map(item => {
-              const { ID, status, service_cname: name } = item;
-              return (
-                <Card.Grid key={ID} style={gridStyle}>
-                  {name} 状态：
-                  <span style={{ color: infoUtil.getStatusColor(status) }}>
-                    {infoUtil.getStatusCNS(status)}
-                  </span>
-                </Card.Grid>
-              );
-            })}
+          <Spin spinning={recordLoading}>
+            {list &&
+              list.length > 0 &&
+              list.map(item => {
+                const { ID, status, service_cname: name } = item;
+                return (
+                  <Card.Grid key={ID} style={gridStyle}>
+                    {name} 状态：
+                    <span style={{ color: infoUtil.getStatusColor(status) }}>
+                      {infoUtil.getStatusCNS(status)}
+                    </span>
+                  </Card.Grid>
+                );
+              })}
+          </Spin>
         </Card>
       </Modal>
     );

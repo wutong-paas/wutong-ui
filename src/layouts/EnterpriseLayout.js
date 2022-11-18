@@ -479,7 +479,7 @@ class EnterpriseLayout extends PureComponent {
         </Layout>
       );
     };
-    const SiteTitle = '开发运维一体化平台';
+    const SiteTitle = '梧桐容器平台';
 
     return (
       <Fragment>

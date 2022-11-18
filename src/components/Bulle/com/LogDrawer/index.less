@@ -1,0 +1,152 @@
+.wrap {
+
+  :global {
+    .ant-input {
+      background-color: rgba(241, 249, 255, 1);
+      border          : none;
+    }
+
+    .ant-select-selection {
+      background-color: rgba(241, 249, 255, 1);
+      border          : none;
+    }
+  }
+
+
+  .middle {
+    padding: 24px 0;
+    font-family: PingFangSC-Medium,
+      PingFang SC;
+    border-bottom: 1px solid #E9F1F7;
+
+    .title {
+      font-size  : 14px;
+      font-weight: 500;
+      color      : rgba(0, 0, 0, 0.85);
+    }
+
+    .block {
+      display  : flex;
+      flex-wrap: wrap;
+
+      .group {
+        margin-top  : 8px;
+        display     : flex;
+        margin-right: 24px;
+
+        .wrap {
+          width        : 30px;
+          height       : 30px;
+          background   : #08153A;
+          border-radius: 4px;
+          text-align   : center;
+          line-height  : 30px;
+          cursor       : pointer;
+        }
+      }
+    }
+
+    .query {
+      margin-top: 20px;
+    }
+  }
+
+  .total {
+    margin     : 12px 0;
+    text-align : right;
+    font-size  : 14px;
+    font-weight: 400;
+    color      : rgba(0, 0, 0, 0.35);
+    text-align : right;
+  }
+
+  .content {
+    font-family: PingFangSC-Regular,
+      PingFang SC;
+   // height  : calc(100vh - 324px);
+    overflow: hidden;
+
+    .item {
+      width          : 100%;
+      font-size      : 12px;
+      font-weight    : 400;
+      color          : rgba(0, 0, 0, 0.65);
+      min-height     : 28px;
+      display        : flex;
+      justify-content: space-between;
+      cursor         : pointer;
+      align-items    : center;
+
+      &:hover {
+        background-color: #F6FBFE;
+      }
+
+      &:not(:first-child) {
+        margin-top: 6px;
+      }
+
+      // .wrap {
+      //   height : 100%;
+      //   padding: 3px 0px;
+
+      //   .flag {
+      //     width       : 2px;
+      //     height      : 100%;
+      //     margin-right: 10px;
+      //   }
+      // }
+
+      .info {
+        flex        : 1;
+        white-space : pre-wrap;
+        padding-left: 10px;
+        line-height : 26px;
+        display     : flex;
+
+        .line-number {
+          text-align  : right;
+          min-width   : 30px;
+          margin-right: 20px;
+          font-size   : 600;
+        }
+
+        .text {
+          flex : 1;
+          width: 0;
+        }
+      }
+
+      .wrap {
+        width          : 200px;
+        display        : flex;
+        justify-content: flex-end;
+
+        .trace {
+          width       : 30px;
+          margin-right: 10px;
+          text-align  : center;
+
+          &:hover {
+            background-color: rgba(8, 21, 58, 0.2000);
+            border          : 1px solid rgba(8, 21, 58, 0.2000);
+            border-radius   : 4px;
+          }
+        }
+      }
+    }
+  }
+}
+
+:global {
+  .ant-drawer-body {
+    padding: 20px 20px;
+  }
+}
+
+.hide {
+  height    : 0;
+  transition: height 1s linear 1s;
+  opacity   : 0;
+  z-index   : -1;
+  padding   : 0px !important;
+}

@@ -1,0 +1,117 @@
+.mask {
+  // position: absolute;
+  // top     : 0;
+  // width   : 100%;
+  // height  : 100%;
+  // z-index : 9999;
+
+  .wrap {
+    width                  : 40px;
+    height                 : 40px;
+    background-color       : rgba(8, 21, 58, 0.8500);
+    position               : absolute;
+    bottom                 : 160px;
+    // right               : 0px;
+    border-radius          : 60px 0 0 60px;
+    //border-radius     : 0px 60px 60px 0px;
+    cursor                 : pointer;
+    transition             : width 0.5s;
+    -webkit-transition     : width 0.5s;
+    z-index                : 999;
+    text-align             : center;
+    line-height            : 36px;
+
+    .card {
+      width                   : 412px;
+      border-radius           : 4px;
+      // height               : 160px;
+      position                : relative;
+      // right           : 208px;
+      transform               : translateY(-56%);
+      background-color        : rgba(8, 21, 58, 0.8500);
+      font-family             : PingFangSC-Regular,
+        PingFang SC;
+
+      //opacity            : 0.9;
+      .header {
+        padding        : 10px 20px;
+        text-align     : left;
+        border-bottom  : 1px solid rgba(255, 255, 255, 0.2);
+        display        : flex;
+        justify-content: space-between;
+        color          : #FFFFFF;
+
+        .left {
+          .title {
+            font-size  : 16px;
+            font-weight: 600;
+
+            margin-right: 8px;
+          }
+
+          .desc {
+            font-size  : 12px;
+            font-weight: 400;
+
+          }
+        }
+
+      }
+
+      .list {
+        padding: 10px 20px 20px 20px;
+        font-family: PingFangSC-Medium,
+          PingFang SC;
+        text-align: left;
+        color     : #FFFFFF;
+
+        .title {
+          font-size  : 12px;
+          font-weight: 500;
+          line-height: 20px;
+        }
+
+        .item {
+          padding      : 10px 10px;
+          width        : 372px;
+          height       : 62px;
+          background   : #08153A;
+          border-radius: 4px;
+          opacity      : 0.8;
+          margin-top   : 10px;
+          display      : flex;
+
+          img {
+            margin-right: 16px;
+          }
+
+          div :first-child {
+            line-height: 22px;
+            font-size  : 14px;
+            font-weight: 600;
+            color      : #FFFFFF;
+          }
+
+          div :last-child {
+            line-height: 20px;
+            font-weight: 400;
+          }
+        }
+      }
+    }
+
+    // &:hover {
+    //   width: 60px;
+    // }
+  }
+
+  .left {
+    float: right;
+    left : 424px;
+  }
+
+  .right {
+    float: none;
+    right: 424px;
+  }
+}

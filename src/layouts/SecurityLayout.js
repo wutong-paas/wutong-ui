@@ -6,6 +6,7 @@ import PageLoading from '../components/PageLoading';
 import cookie from '../utils/cookie';
 import globalUtil from '../utils/global';
 import ErrorBoundary from './ErrorBoundary';
+import Bulle from '@/components/Bulle';
 
 class SecurityLayout extends React.PureComponent {
   state = {
@@ -46,7 +47,8 @@ class SecurityLayout extends React.PureComponent {
   };
 
   render() {
-    const { children, currentUser, needLogin } = this.props;
+    const { children, currentUser, needLogin, wutongInfo } = this.props;
+    const { log_query, call_link_query } = wutongInfo || {};
     const { isReady } = this.state;
     // You can replace it to your authentication rule (such as check token exists)
     const token = cookie.get('token');
@@ -66,12 +68,27 @@ class SecurityLayout extends React.PureComponent {
       return <Redirect to={`/user/login?${queryString}`} />;
     }
 
-    return <ErrorBoundary children={children} />;
+    return (
+      <>
+        <ErrorBoundary
+          children={
+            <>
+              {children}
+              {!(
+                call_link_query?.enable === false && log_query?.enable === false
+              ) && <Bulle {...this.props} />}
+            </>
+          }
+        />
+        {/* <Bulle /> */}
+      </>
+    );
   }
 }
 
 export default connect(({ user, loading, global }) => ({
   currentUser: user.currentUser,
   loading: loading.models.user,
-  needLogin: global.needLogin
+  needLogin: global.needLogin,
+  wutongInfo: global.wutongInfo
 }))(SecurityLayout);

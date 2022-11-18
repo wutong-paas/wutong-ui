@@ -18,7 +18,8 @@ import {
   notification,
   Radio,
   Select,
-  Tooltip
+  Tooltip,
+  Spin
 } from 'antd';
 import { connect } from 'dva';
 import { Link, routerRedux } from 'dva/router';
@@ -1138,88 +1139,22 @@ class Main extends PureComponent {
     );
   }
 
-  render() {
+  action = ({ upDataText, visitBtns, serviceAlias }) => {
     const {
       appDetail,
-      currentEnterprise,
-      currentTeam,
-      currentRegionName,
       componentPermissions: {
         isAccess,
         isStart,
         isVisitWebTerminal,
         isConstruct,
         isUpdate,
-        isTelescopic,
-        isEnv,
-        isRely,
-        isStorage,
-        isPort,
-        isPlugin,
-        isSource,
-        isDeploytype,
         isCharacteristic,
         isHealth
       },
-      appPermissions,
-      componentPermissions,
-      groups = [],
-      form,
-      deleteAppLoading,
-      reStartLoading,
-      startLoading,
-      stopLoading,
-      moveGroupLoading,
-      editNameLoading,
-      updateRollingLoading,
-      deployLoading,
       buildInformationLoading
     } = this.props;
-    const {
-      BuildList,
-      componentTimer,
-      isShowThirdParty,
-      status,
-      promptModal,
-      showDeleteApp,
-      showEditName,
-      showMoveGroup,
-      groupDetail
-    } = this.state;
-    const { getFieldDecorator } = form;
-    const upDataText = isShowThirdParty ? '更新' : '更新(滚动）';
-    const codeObj = {
-      start: '启动',
-      restart: '重启',
-      stop: '关闭',
-      deploy: '构建',
-      rolling: upDataText
-    };
-    if (!appDetail.service) {
-      return null;
-    }
-    const { is_filebrowser_plugin: isShowFileManager } = appDetail.service;
-    const {
-      serviceAlias,
-      app_alias: appAlias,
-      group_id,
-      group_name: appName,
-      service_cname: componentName,
-      k8s_component_name: k8sComponentName,
-      service_id
-    } = this.fetchParameter();
-    const visitBtns = (
-      <VisitBtn
-        timers={componentTimer}
-        btntype="primary"
-        app_alias={appAlias}
-      />
-    );
-
-    if (!status.status) {
-      return null;
-    }
-    const action = (
+    const { isShowThirdParty, status } = this.state;
+    return (
       <div className={styles.actions}>
         {isStart && !appStatusUtil.canStop(status) && (
           <Button
@@ -1311,7 +1246,8 @@ class Main extends PureComponent {
           : isUpdate && (
               <Tooltip
                 placement="top"
-                title={`以最新的组件配置属性对组件实例进行${!isShowThirdParty &&'滚动'}升级`}
+                title={`以最新的组件配置属性对组件实例进行${!isShowThirdParty &&
+                  '滚动'}升级`}
               >
                 <Button
                   onClick={() => {
@@ -1336,6 +1272,94 @@ class Main extends PureComponent {
         {isShowThirdParty && isAccess && visitBtns}
       </div>
     );
+  };
+
+  render() {
+    const {
+      appDetail,
+      currentEnterprise,
+      currentTeam,
+      currentRegionName,
+      componentPermissions: {
+        isAccess,
+        isStart,
+        isVisitWebTerminal,
+        isConstruct,
+        isUpdate,
+        isTelescopic,
+        isEnv,
+        isRely,
+        isStorage,
+        isPort,
+        isPlugin,
+        isSource,
+        isDeploytype,
+        isCharacteristic,
+        isHealth
+      },
+      appPermissions,
+      componentPermissions,
+      groups = [],
+      form,
+      deleteAppLoading,
+      reStartLoading,
+      startLoading,
+      stopLoading,
+      moveGroupLoading,
+      editNameLoading,
+      updateRollingLoading,
+      deployLoading,
+      buildInformationLoading
+    } = this.props;
+    const {
+      BuildList,
+      componentTimer,
+      isShowThirdParty,
+      status,
+      promptModal,
+      showDeleteApp,
+      showEditName,
+      showMoveGroup,
+      groupDetail
+    } = this.state;
+    const { getFieldDecorator } = form;
+    const upDataText = isShowThirdParty ? '更新' : '更新(滚动）';
+    const codeObj = {
+      start: '启动',
+      restart: '重启',
+      stop: '关闭',
+      deploy: '构建',
+      rolling: upDataText
+    };
+    if (!appDetail.service) {
+      return null;
+    }
+    const { is_filebrowser_plugin: isShowFileManager } = appDetail.service;
+    const {
+      serviceAlias,
+      app_alias: appAlias,
+      group_id,
+      group_name: appName,
+      service_cname: componentName,
+      k8s_component_name: k8sComponentName,
+      service_id
+    } = this.fetchParameter();
+    const visitBtns = (
+      <VisitBtn
+        timers={componentTimer}
+        btntype="primary"
+        app_alias={appAlias}
+      />
+    );
+
+    if (!status.status) {
+      return (
+        <div style={{ width: '100%', textAlign: 'center', marginTop: 400 }}>
+          <Spin spinning={true} tip="loading..."></Spin>
+        </div>
+      );
+    }
+
     const tabs = [
       {
         key: 'overview',
@@ -1482,6 +1506,8 @@ class Main extends PureComponent {
       }
     };
     let breadcrumbList = [];
+    // console.timeEnd();
+
     breadcrumbList = createComponent(
       createApp(
         createTeam(
@@ -1503,10 +1529,16 @@ class Main extends PureComponent {
         componentID: serviceAlias
       }
     );
+
+    // console.timeEnd();
     return (
       <PageHeaderLayout
         breadcrumbList={breadcrumbList}
-        action={action}
+        action={this.action({
+          upDataText,
+          visitBtns,
+          serviceAlias
+        })}
         title={this.renderTitle(componentName)}
         headerTitle={
           <div className={styles['header-title']}>

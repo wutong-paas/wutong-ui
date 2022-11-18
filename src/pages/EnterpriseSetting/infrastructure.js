@@ -26,6 +26,9 @@ import OauthTable from './oauthTable';
   imageHubLongin: loading.effects['global/editImageHub'],
   monitoringLongin: loading.effects['global/editImageHub'],
   objectStorageLongin: loading.effects['global/editCloudBackup'],
+  putSetLogQueryLoading: loading.effects['global/putSetLogQuery'],
+  putSetTraceQueryLoading: loading.effects['global/putSetCallLinkQuery'],
+  putSetIsRegistLoading: loading.effects['global/putIsRegist'],
   overviewInfo: index.overviewInfo
 }))
 class Infrastructure extends PureComponent {
@@ -70,6 +73,48 @@ class Infrastructure extends PureComponent {
       type: 'global/putIsRegist',
       payload: {
         isRegist: checked
+      }
+    });
+  };
+
+  onQueryLogChange = checked => {
+    const {
+      dispatch,
+      match: {
+        params: { eid }
+      }
+    } = this.props;
+    dispatch({
+      type: 'global/putSetLogQuery',
+      payload: {
+        enable: checked,
+        enterprise_id: eid
+      },
+      callback: res => {
+        dispatch({
+          type: 'global/fetchWutongInfo'
+        });
+      }
+    });
+  };
+
+  onQueryCallLinkChange = checked => {
+    const {
+      dispatch,
+      match: {
+        params: { eid }
+      }
+    } = this.props;
+    dispatch({
+      type: 'global/putSetCallLinkQuery',
+      payload: {
+        enable: checked,
+        enterprise_id: eid
+      },
+      callback: res => {
+        dispatch({
+          type: 'global/fetchWutongInfo'
+        });
       }
     });
   };
@@ -452,6 +497,7 @@ class Infrastructure extends PureComponent {
               onChange={this.onRegistChange}
               className={styles.automaTictelescopingSwitch}
               checked={this.props.isRegist}
+              loading={this.props.putSetIsRegistLoading}
             />
           </Col>
         </Row>
@@ -653,6 +699,74 @@ class Infrastructure extends PureComponent {
         </Row>
       </Card>
     );
+    const QueryLog = (
+      <Card
+        // hoverable
+        bordered={false}
+        className={styles.card}
+      >
+        <Row type="flex" align="middle">
+          <Col span={3} className={styles.title}>
+            日志查询
+          </Col>
+          <Col span={17} className={styles.description}>
+            <span>用于对采集到的日志进行筛选查询与分析</span>
+          </Col>
+          <Col span={4} style={{ textAlign: 'right' }}>
+            <Switch
+              // onChange={() => {
+              //   isEnableMonitoring
+              //     ? this.handelOpenCloseCloudMonitoring()
+              //     : this.handelOpenisEnableMonitoring();
+              // }}
+              checked={
+                wutongInfo &&
+                wutongInfo.log_query &&
+                wutongInfo.log_query.enable
+              }
+              onChange={this.onQueryLogChange}
+              loading={this.props.putSetLogQueryLoading}
+              defaultChecked={true}
+              className={styles.automaTictelescopingSwitch}
+            />
+          </Col>
+        </Row>
+      </Card>
+    );
+    const QueryCallLink = (
+      <Card
+        // hoverable
+        bordered={false}
+        className={styles.card}
+      >
+        <Row type="flex" align="middle">
+          <Col span={3} className={styles.title}>
+            调用链路查询
+          </Col>
+          <Col span={17} className={styles.description}>
+            <span>用于对采集到的调用链路进行查询与分析</span>
+          </Col>
+          <Col span={4} style={{ textAlign: 'right' }}>
+            <Switch
+              // onChange={() => {
+              //   isEnableMonitoring
+              //     ? this.handelOpenCloseCloudMonitoring()
+              //     : this.handelOpenisEnableMonitoring();
+              // }}
+              checked={
+                wutongInfo &&
+                wutongInfo.call_link_query &&
+                wutongInfo.call_link_query.enable
+              }
+              onChange={this.onQueryCallLinkChange}
+              loading={this.props.putSetTraceQueryLoading}
+              defaultChecked={true}
+              className={styles.automaTictelescopingSwitch}
+            />
+          </Col>
+        </Row>
+      </Card>
+    );
     const BasicInformation = (
       <Card style={{ marginTop: '10px' }} hoverable bordered={false}>
         <Row type="flex" align="middle">
@@ -828,6 +942,8 @@ class Infrastructure extends PureComponent {
               {MirrorWarehouseInformation}
               {CloudBackup}
               {Monitoring}
+              {QueryLog}
+              {QueryCallLink}
             </Card>
           </div>
         )}

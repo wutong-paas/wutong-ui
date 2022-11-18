@@ -102,7 +102,9 @@ import {
   upEnterpriseUsers,
   fetchHomeInfoAPI,
   fetchHomeAppInfoAPI,
-  fetchHomeGroupEventAPI
+  fetchHomeGroupEventAPI,
+  setLogQuery,
+  setCallLinkQuery
 } from '../services/api';
 import { getTeamRegionGroups } from '../services/team';
 import cookie from '../utils/cookie';
@@ -138,7 +140,8 @@ export default {
     memoryTip: '',
     is_enterprise_version: false,
     nouse: false,
-    needLogin: false
+    needLogin: false,
+    teamInfo: null //团队信息
   },
 
   effects: {
@@ -563,6 +566,18 @@ export default {
         }
       }
     },
+    *putSetLogQuery({ payload, callback }, { call }) {
+      const response = yield call(setLogQuery, payload);
+      if (response && callback) {
+        callback(response);
+      }
+    },
+    *putSetCallLinkQuery({ payload, callback }, { call }) {
+      const response = yield call(setCallLinkQuery, payload);
+      if (response && callback) {
+        callback(response);
+      }
+    },
     *getIsRegist({ payload, callback }, { put, call }) {
       const response = yield call(getRegist, payload);
       if (response) {
@@ -668,11 +683,16 @@ export default {
         callback(response);
       }
     },
-    *fetchMyTeams({ payload, callback }, { call }) {
+    *fetchMyTeams({ payload, callback }, { call, put }) {
       const response = yield call(fetchMyTeams, payload);
       if (response && callback) {
         callback(response);
       }
+      const { list = null } = response;
+      yield put({
+        type: 'saveTeamInfo',
+        payload: list
+      });
     },
     *fetchUserTeams({ payload, callback }, { call }) {
       const response = yield call(fetchUserTeams, payload);
@@ -868,7 +888,7 @@ export default {
         callback(response);
       }
     },
-     *fetchHomeGroupEvent({ payload, callback }, { call }) {
+    *fetchHomeGroupEvent({ payload, callback }, { call }) {
       const response = yield call(fetchHomeGroupEventAPI, payload);
       if (callback) {
         callback(response);
@@ -1037,6 +1057,9 @@ export default {
         ...state,
         enterprise: payload
       };
+    },
+    saveTeamInfo(state, { payload }) {
+      return { ...state, teamInfo: payload };
     }
   },
 

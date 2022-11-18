@@ -48,6 +48,9 @@ export default class Index extends PureComponent {
   };
 
   handleSubmit = e => {
+    if (this.props.createAppByDockerrunLoading) {
+      return;
+    }
     e.preventDefault();
     const { form, onSubmit } = this.props;
     form.validateFields((err, fieldsValue) => {
@@ -56,6 +59,7 @@ export default class Index extends PureComponent {
       }
     });
   };
+
   handleValiateNameSpace = (_, value, callback) => {
     if (!value) {
       return callback(new Error('请输入组件英文名称'));
@@ -64,7 +68,9 @@ export default class Index extends PureComponent {
       const Reg = /^[a-z]([-a-z0-9]*[a-z0-9])?$/;
       if (!Reg.test(value)) {
         return callback(
-          new Error('只支持小写字母、数字或“-”，并且必须以字母开始、以数字或字母结尾')
+          new Error(
+            '只支持小写字母、数字或“-”，并且必须以字母开始、以数字或字母结尾'
+          )
         );
       }
       callback();

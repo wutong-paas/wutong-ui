@@ -13,7 +13,9 @@ import {
   Popconfirm,
   Table,
   Tooltip,
-  Divider
+  Divider,
+  Modal,
+  message
 } from 'antd';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
@@ -24,15 +26,18 @@ import BatchDelete from '../../components/BatchDelete';
 import { batchOperation } from '../../services/app';
 import appUtil from '../../utils/app';
 import globalUtil from '../../utils/global';
+import downLoadTools from '@/utils/downLoadTools';
 import styles from './ComponentList.less';
 
 @connect(
-  ({ global, loading }) => ({
+  ({ global, loading, application }) => ({
     groups: global.groups,
     batchMoveLoading: loading.effects['appControl/putBatchMove'],
     reStartLoading: loading.effects['appControl/putReStart'],
     startLoading: loading.effects['appControl/putStart'],
-    stopLoading: loading.effects['appControl/putStop']
+    stopLoading: loading.effects['appControl/putStop'],
+    yamlLoading: loading.effects['appControl/fetchClusterResourcee'],
+    groupDetail: application.groupDetail || {}
   }),
   null,
   null,
@@ -55,7 +60,12 @@ export default class ComponentList extends Component {
       operationState: false,
       query: '',
       changeQuery: '',
-      tableDataLoading: true
+      tableDataLoading: true,
+      downLoadClusterVisible: false,
+      namespaceValue: 'default',
+      serviceAlias: '',
+      selectedRows: [],
+      isBatch: false
     };
   }
   componentDidMount() {
@@ -76,9 +86,10 @@ export default class ComponentList extends Component {
       type: 'application/clearApps'
     });
   }
-  onSelectChange = selectedRowKeys => {
+  onSelectChange = (selectedRowKeys, selectedRows) => {
     this.setState({
-      selectedRowKeys
+      selectedRowKeys,
+      selectedRows
     });
   };
   getSelectedKeys() {
@@ -262,6 +273,10 @@ export default class ComponentList extends Component {
     const arr = this.getSelected();
     return arr && arr.length > 0;
   };
+  canBatchClosed = () => {
+    const arr = this.getSelected();
+    return arr ? arr.some(item => item.status !== 'closed') : true;
+  };
   handelChange = e => {
     this.setState({
       changeQuery: e.target.value
@@ -280,6 +295,52 @@ export default class ComponentList extends Component {
       }
     );
   };
+
+  handleDownloadClusterResource = () => {
+    const { namespaceValue, serviceAlias, selectedRows, isBatch } = this.state;
+    const { groupId } = this.props;
+    this.props.dispatch({
+      type: 'appControl/fetchClusterResourcee',
+      payload: {
+        team_name: globalUtil.getCurrTeamName(),
+        namespace: namespaceValue === '' ? undefined : namespaceValue,
+        serviceList: !isBatch
+          ? [serviceAlias]
+          : selectedRows.map(i => i.service_alias),
+        app_id: groupId
+      },
+      callback: res => {
+        downLoadTools.saveFile(
+          res?.response_data,
+          `${this.props.groupDetail.k8s_app}_${moment().format('YYYY-MM-DD')}`,
+          'yaml'
+        );
+        this.initState();
+      }
+    });
+  };
+
+  initState = () =>
+    this.setState({
+      downLoadClusterVisible: false,
+      isBatch: false,
+      namespaceValue: 'default'
+    });
+
+  handleDeleteComponent = data => {
+    this.props.dispatch({
+      type: 'appControl/deleteApp',
+      payload: {
+        team_name: globalUtil.getCurrTeamName(),
+        app_alias: data?.service_alias
+      },
+      callback: () => {
+        notification.success({ message: '删除成功' });
+        this.loadComponents();
+      }
+    });
+  };
+
   render() {
     const {
       componentPermissions: {
@@ -296,7 +357,8 @@ export default class ComponentList extends Component {
       startLoading,
       stopLoading,
       groupId,
-      groups
+      groups,
+      yamlLoading
     } = this.props;
     const {
       selectedRowKeys,
@@ -308,7 +370,10 @@ export default class ComponentList extends Component {
       batchDeleteApps,
       moveGroupShow,
       operationState,
-      tableDataLoading
+      tableDataLoading,
+      downLoadClusterVisible,
+      namespaceValue,
+      selectedRows
     } = this.state;
     const rowSelection = {
       selectedRowKeys,
@@ -435,12 +500,12 @@ export default class ComponentList extends Component {
       {
         title: '操作',
         dataIndex: 'action',
-        width: 180,
+        width: 230,
         render: (val, data) => (
           <Fragment>
             {data.service_source && data.service_source !== 'third_party' && (
-              <Fragment>
-                {isRestart && (
+              <div style={{ textAlign: 'right' }}>
+                {isRestart && data?.status !== 'closed' && (
                   <Popconfirm
                     title="确认要重启该组件吗？"
                     onConfirm={() => {
@@ -450,7 +515,9 @@ export default class ComponentList extends Component {
                     <a>重启</a>
                   </Popconfirm>
                 )}
-                {isRestart && <Divider type="vertical" />}
+                {isRestart && data?.status !== 'closed' && (
+                  <Divider type="vertical" />
+                )}
                 {isStart && (
                   <Popconfirm
                     title="确认要启动该组件吗？"
@@ -462,7 +529,7 @@ export default class ComponentList extends Component {
                   </Popconfirm>
                 )}
                 {isStart && <Divider type="vertical" />}
-                {isStop && (
+                {isStop && data?.status !== 'closed' && (
                   <Popconfirm
                     title="确认要关闭该组件吗？"
                     onConfirm={() => {
@@ -472,7 +539,33 @@ export default class ComponentList extends Component {
                     <a>关闭</a>
                   </Popconfirm>
                 )}
-              </Fragment>
+                {isStop && data?.status !== 'closed' && (
+                  <Divider type="vertical" />
+                )}
+                {data?.status === 'closed' && (
+                  <Popconfirm
+                    title="确认要删除该组件吗？"
+                    onConfirm={() => {
+                      this.handleDeleteComponent(data);
+                    }}
+                  >
+                    <a>删除</a>
+                  </Popconfirm>
+                )}
+                {data?.status === 'closed' && <Divider type="vertical" />}
+                <Tooltip title="导出集群资源">
+                  <a
+                    onClick={() =>
+                      this.setState({
+                        downLoadClusterVisible: true,
+                        serviceAlias: data.service_alias
+                      })
+                    }
+                  >
+                    导出
+                  </a>
+                </Tooltip>
+              </div>
             )}
           </Fragment>
         )
@@ -495,7 +588,7 @@ export default class ComponentList extends Component {
         action: 'restart'
       },
       {
-        permissions: isStop,
+        permissions: isStop && this.canBatchClosed(),
         name: '关闭',
         action: 'stop'
       },
@@ -515,6 +608,24 @@ export default class ComponentList extends Component {
         name: '删除',
         action: false,
         customMethods: this.handleBatchDelete
+      },
+      {
+        permissions: true,
+        name: '导出',
+        action: false,
+        customMethods: () => {
+          if (
+            selectedRows.some(item => item.service_source === 'third_party')
+          ) {
+            message.warning('第三方组件不能导出');
+            return;
+          }
+          this.setState({
+            downLoadClusterVisible: true,
+            isBatch: true,
+            namespaceValue: 'default'
+          });
+        }
       }
     ];
 
@@ -648,6 +759,23 @@ export default class ComponentList extends Component {
             )}
           </div>
         </Card>
+        <Modal
+          title="导出集群资源"
+          visible={downLoadClusterVisible}
+          onCancel={this.initState}
+          onOk={this.handleDownloadClusterResource}
+          confirmLoading={yamlLoading}
+        >
+          <h3>自定义配置</h3>
+          <div style={{ display: 'flex', marginTop: 16 }}>
+            <div style={{ alignSelf: 'center', width: 90 }}>命名空间：</div>
+            <Input
+              value={namespaceValue}
+              onChange={e => this.setState({ namespaceValue: e.target.value })}
+              placeholder="请输入命名空间"
+            />
+          </div>
+        </Modal>
       </div>
     );
   }

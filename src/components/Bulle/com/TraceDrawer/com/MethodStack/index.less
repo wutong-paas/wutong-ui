@@ -1,0 +1,37 @@
+.back {
+  margin-bottom: 16px;
+}
+
+.header {
+  display        : flex;
+  margin-bottom  : 16px;
+  justify-content: space-around;
+
+
+  .title {
+    width       : fit-content;
+    margin-right: 40px;
+  }
+
+  .info {
+    flex           : 1;
+    display        : flex;
+    flex-wrap      : wrap;
+    justify-content: flex-end;
+
+    div {
+      height     : 32px;
+      margin-left: 20px;
+
+      span:first-child {
+        font-size  : 14px;
+        font-weight: 600;
+        color      : rgba(0, 0, 0, .85);
+      }
+
+      span:last-child {
+        color: rgba(0, 0, 0, .65);
+      }
+    }
+  }
+}
