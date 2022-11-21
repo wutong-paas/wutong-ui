@@ -697,6 +697,7 @@ export default class Index extends PureComponent {
                   onDeleteDomain={this.handleDeleteDomain}
                   onSubDomain={this.showSubDomain}
                   onSubPort={this.showSubPort}
+                  {...this.props}
                 />
               ))}
             </ScrollerX>

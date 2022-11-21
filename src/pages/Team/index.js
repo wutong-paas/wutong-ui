@@ -291,6 +291,7 @@ export default class Index extends PureComponent {
 
         {showEditName && (
           <MoveTeam
+            namespace={currentTeam?.namespace}
             teamAlias={currentTeam.team_alias}
             onSubmit={this.handleEditName}
             onCancel={this.hideEditName}

@@ -24,8 +24,9 @@ import styles from './index.less';
 const { Option } = Select;
 const FormItem = Form.Item;
 
-@connect(({ region, appControl }) => {
+@connect(({ region, appControl, global }) => {
   return {
+    teamInfo: global.teamInfo,
     appDetail: appControl.appDetail,
     protocols: region.protocols || []
   };
@@ -91,7 +92,8 @@ class ChangeProtocol extends PureComponent {
   }
 }
 
-@connect(({ user, appControl }) => ({
+@connect(({ user, appControl, global }) => ({
+  teamInfo: global.teamInfo,
   currUser: user.currentUser,
   appDetail: appControl.appDetail
 }))
@@ -254,7 +256,7 @@ export default class Index extends PureComponent {
     );
   };
   render() {
-    const { port, currUser, appDetail } = this.props;
+    const { port, currUser, appDetail, teamInfo } = this.props;
     const outerUrl = appPortUtil.getOuterUrl(port);
     const innerUrl = appPortUtil.getInnerUrl(port);
     const showAlias = appPortUtil.getShowAlias(port);
@@ -292,6 +294,10 @@ export default class Index extends PureComponent {
     const currenTeams = teams.filter(item => {
       return item.team_name === teamName;
     });
+
+    const nameSpace = teamInfo.filter(i => i.team_name === teamName)[0]
+      ? teamInfo.filter(i => i.team_name === teamName)[0].namespace
+      : '-';
 
     const region =
       currenTeams && currenTeams.length > 0 ? currenTeams[0].region : [];
@@ -383,6 +389,12 @@ export default class Index extends PureComponent {
                     size="small"
                   />
                 </p>
+                {appPortUtil.isOpenInner(port) && (
+                  <p>
+                    <span className={styles.label}>k8s service</span>
+                    {port.k8s_service_name}.{nameSpace}
+                  </p>
+                )}
                 <p>
                   <span className={styles.label}>访问地址</span>
                   {innerUrl || '-'}
