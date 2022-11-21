@@ -19,6 +19,7 @@ export default class MoveTeam extends PureComponent {
   render() {
     const { getFieldDecorator } = this.props.form;
     const initValue = this.props.teamAlias;
+    const initNameSpace = this.props.namespace;
     return (
       <Modal
         title="修改团队名称"
@@ -27,7 +28,7 @@ export default class MoveTeam extends PureComponent {
         onCancel={this.onCancel}
       >
         <Form onSubmit={this.handleSubmit}>
-          <FormItem label="">
+          <FormItem label="团队名称">
             {getFieldDecorator('new_team_alias', {
               initialValue: initValue || '',
               rules: [
@@ -38,6 +39,13 @@ export default class MoveTeam extends PureComponent {
                 { max: 32, message: '最大长度32位' }
               ]
             })(<Input placeholder="请输入新的团队名称" />)}
+          </FormItem>
+        </Form>
+        <Form>
+          <FormItem label="团队英文名称">
+            {getFieldDecorator('namespace', {
+              initialValue: initNameSpace || '',
+            })(<Input disabled placeholder="请输入新的团队名称" />)}
           </FormItem>
         </Form>
       </Modal>
