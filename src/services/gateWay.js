@@ -64,7 +64,9 @@ export async function editParameter(params) {
       method: 'PUT',
       data: {
         rule_id: params.rule_id,
-        value: params.value
+        value: params.value,
+        type: params.type,
+        service_id: params?.service_id || undefined
       }
     }
   );
