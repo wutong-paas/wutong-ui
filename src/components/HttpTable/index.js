@@ -248,6 +248,7 @@ export default class HttpTable extends PureComponent {
       payload: {
         team_name: globalUtil.getCurrTeamName(),
         rule_id: this.state.parameterVisible.http_rule_id,
+        type: 'http',
         value
       },
       callback: data => {
