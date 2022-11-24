@@ -241,7 +241,8 @@ export default class HttpTable extends PureComponent {
       proxy_send_timeout: Number(values.proxy_send_timeout),
       proxy_buffering: values.proxy_buffering ? 'on' : 'off',
       WebSocket: values.WebSocket,
-      set_headers: values.set_headers
+      set_headers: values.set_headers,
+      access_log: values.access_log
     };
     dispatch({
       type: 'gateWay/editParameter',

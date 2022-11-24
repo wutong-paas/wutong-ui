@@ -17,6 +17,7 @@ class ParameterForm extends PureComponent {
     super(props);
     const { editInfo } = this.props;
     this.state = {
+      accessLog: editInfo.access_log || false,
       proxyBuffering: !!(
         editInfo &&
         editInfo.proxy_buffering &&
@@ -117,7 +118,7 @@ class ParameterForm extends PureComponent {
   render() {
     const { editInfo, form, onClose, visible } = this.props;
     const { getFieldDecorator } = form;
-    const { proxyBuffering, WebSocket } = this.state;
+    const { proxyBuffering, WebSocket, accessLog } = this.state;
     const customRules = [
       {
         pattern: new RegExp(/^[0-9]\d*$/, 'g'),
@@ -268,6 +269,24 @@ class ParameterForm extends PureComponent {
                   checked={proxyBuffering}
                   onClick={() => {
                     this.setState({ proxyBuffering: !proxyBuffering });
+                  }}
+                />
+              )}
+            </FormItem>
+            <FormItem
+              {...formItemLayout}
+              label="开启AccessLog"
+              className={styles.antd_form}
+            >
+              {getFieldDecorator('access_log', {
+                initialValue: accessLog
+              })(
+                <Switch
+                  checkedChildren="开"
+                  unCheckedChildren="关"
+                  checked={accessLog}
+                  onClick={() => {
+                    this.setState({ accessLog: !accessLog });
                   }}
                 />
               )}
