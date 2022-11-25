@@ -17,7 +17,7 @@ class ParameterForm extends PureComponent {
     super(props);
     const { editInfo } = this.props;
     this.state = {
-      accessLog: editInfo.access_log || false,
+      accessLog: (editInfo && editInfo.access_log) || false,
       proxyBuffering: !!(
         editInfo &&
         editInfo.proxy_buffering &&
