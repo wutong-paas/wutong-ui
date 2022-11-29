@@ -11,6 +11,7 @@ import globalUtil from '../../../utils/global';
 const FormItem = Form.Item;
 const { Option } = Select;
 const { TabPane } = Tabs;
+const imageList = ['source_code', 'docker_image', 'docker_run'];
 // 切换分支组件
 @Form.create()
 @connect()
@@ -39,10 +40,7 @@ export default class ChangeBuildSource extends PureComponent {
     if (appUtil.isCodeAppByBuildSource(this.state.buildSource)) {
       this.loadBranch();
     }
-    if (
-      buildSource.service_source == 'docker_image' ||
-      buildSource.service_source == 'docker_run'
-    ) {
+    if (imageList.includes(buildSource.service_source)) {
       this.setState({
         tabKey: '2',
         tabValue: 'docker_run'
