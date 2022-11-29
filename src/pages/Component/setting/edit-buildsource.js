@@ -11,7 +11,12 @@ import globalUtil from '../../../utils/global';
 const FormItem = Form.Item;
 const { Option } = Select;
 const { TabPane } = Tabs;
-const imageList = ['source_code', 'docker_image', 'docker_run'];
+const imageList = [
+  'source_code',
+  'docker_image',
+  'docker_run',
+  'docker_compose'
+];
 // 切换分支组件
 @Form.create()
 @connect()
