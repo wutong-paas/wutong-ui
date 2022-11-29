@@ -11,12 +11,8 @@ import globalUtil from '../../../utils/global';
 const FormItem = Form.Item;
 const { Option } = Select;
 const { TabPane } = Tabs;
-const imageList = [
-  'source_code',
-  'docker_image',
-  'docker_run',
-  'docker_compose'
-];
+const imageList = ['docker_image', 'docker_run', 'docker_compose'];
+const sourceCodeList = ['source_code', 'market'];
 // 切换分支组件
 @Form.create()
 @connect()
@@ -229,7 +225,7 @@ export default class ChangeBuildSource extends PureComponent {
           // onClose={onClose}
         />
         <Tabs defaultActiveKey={tabKey} onChange={this.handleTabs}>
-          {buildSource.service_source == 'market' && (
+          {sourceCodeList.includes(buildSource?.service_source) && (
             <TabPane tab="源码" key="1">
               {tabValue === 'source_code' && (
                 <Form onSubmit={this.handleSubmit}>
@@ -308,71 +304,75 @@ export default class ChangeBuildSource extends PureComponent {
               )}
             </TabPane>
           )}
-          <TabPane tab="镜像" key="2">
-            {tabValue === 'docker_run' && (
-              <Form onSubmit={this.handleSubmit}>
-                <FormItem {...formItemLayout} label="镜像名称">
-                  {getFieldDecorator('image', {
-                    initialValue:
-                      (buildSource.service_source == 'docker_image' ||
-                        buildSource.service_source == 'docker_run') &&
-                      buildSource.image
-                        ? buildSource.image
-                        : '',
-                    rules: [
-                      { required: true, message: '镜像名称不能为空' },
-                      {
-                        max: 190,
-                        message: '最大长度190位'
-                      }
-                    ]
-                  })(<Input placeholder="请输入镜像名称" />)}
-                </FormItem>
-                <FormItem {...formItemLayout} label="启动命令">
-                  {getFieldDecorator('cmd', {
-                    initialValue:
-                      ['docker_run', 'docker_image'].includes(
-                        buildSource.service_source
-                      ) && buildSource.cmd
-                        ? buildSource.cmd
-                        : ''
-                  })(<Input placeholder="请输入启动命令" />)}
-                </FormItem>
+          {buildSource?.service_source !== 'source_code' && (
+            <TabPane tab="镜像" key="2">
+              {tabValue === 'docker_run' && (
+                <Form onSubmit={this.handleSubmit}>
+                  <FormItem {...formItemLayout} label="镜像名称">
+                    {getFieldDecorator('image', {
+                      initialValue:
+                        (imageList.includes(buildSource.service_source) ||
+                          buildSource.service_source === 'market') &&
+                        buildSource.image
+                          ? buildSource.image
+                          : '',
+                      rules: [
+                        { required: true, message: '镜像名称不能为空' },
+                        {
+                          max: 190,
+                          message: '最大长度190位'
+                        }
+                      ]
+                    })(<Input placeholder="请输入镜像名称" />)}
+                  </FormItem>
+                  <FormItem {...formItemLayout} label="启动命令">
+                    {getFieldDecorator('cmd', {
+                      initialValue:
+                        (imageList.includes(buildSource.service_source) ||
+                          buildSource.service_source === 'market') &&
+                        buildSource.cmd
+                          ? buildSource.cmd
+                          : ''
+                    })(<Input placeholder="请输入启动命令" />)}
+                  </FormItem>
 
-                <Form.Item {...formItemLayout} label="用户名">
-                  {getFieldDecorator('user_name', {
-                    initialValue:
-                      ['docker_run', 'docker_image'].includes(
-                        buildSource.service_source
-                      ) &&
-                      (buildSource.user_name || buildSource.user)
-                        ? buildSource.user_name || buildSource.user
-                        : '',
-                    rules: [{ required: false, message: '请输入仓库用户名' }]
-                  })(
-                    <Input autoComplete="off" placeholder="请输入仓库用户名" />
-                  )}
-                </Form.Item>
-                <Form.Item {...formItemLayout} label="密码">
-                  {getFieldDecorator('password', {
-                    initialValue:
-                      ['docker_run', 'docker_image'].includes(
-                        buildSource.service_source
-                      ) && buildSource.password
-                        ? buildSource.password
-                        : '',
-                    rules: [{ required: false, message: '请输入仓库密码' }]
-                  })(
-                    <Input
-                      autoComplete="new-password"
-                      type="password"
-                      placeholder="请输入仓库密码"
-                    />
-                  )}
-                </Form.Item>
-              </Form>
-            )}
-          </TabPane>
+                  <Form.Item {...formItemLayout} label="用户名">
+                    {getFieldDecorator('user_name', {
+                      initialValue:
+                        (imageList.includes(buildSource.service_source) ||
+                          buildSource.service_source === 'market') &&
+                        (buildSource.user_name || buildSource.user)
+                          ? buildSource.user_name || buildSource.user
+                          : '',
+                      rules: [{ required: false, message: '请输入仓库用户名' }]
+                    })(
+                      <Input
+                        autoComplete="off"
+                        placeholder="请输入仓库用户名"
+                      />
+                    )}
+                  </Form.Item>
+                  <Form.Item {...formItemLayout} label="密码">
+                    {getFieldDecorator('password', {
+                      initialValue:
+                        (imageList.includes(buildSource.service_source) ||
+                          buildSource.service_source === 'market') &&
+                        buildSource.password
+                          ? buildSource.password
+                          : '',
+                      rules: [{ required: false, message: '请输入仓库密码' }]
+                    })(
+                      <Input
+                        autoComplete="new-password"
+                        type="password"
+                        placeholder="请输入仓库密码"
+                      />
+                    )}
+                  </Form.Item>
+                </Form>
+              )}
+            </TabPane>
+          )}
         </Tabs>
         {/* <Form onSubmit={this.handleSubmit}>
           <FormItem
