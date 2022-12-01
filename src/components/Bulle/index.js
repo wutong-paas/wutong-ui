@@ -16,7 +16,7 @@ import styles from './index.less';
 import user from '@/models/user';
 
 const Index = props => {
-  const { wutongInfo = {}, appList } = props;
+  const { wutongInfo = {}, appList, teamInfo } = props;
   const { log_query, call_link_query } = wutongInfo;
   const [iX, setiX] = useState(0);
   const [iY, setiY] = useState(0);
@@ -30,7 +30,7 @@ const Index = props => {
   const [isLeft, setIsLeft] = useState(false);
   const [logDrawerVisible, setLogDrawerVisible] = useState(false);
   const [traceDrawerVisible, setTraceDrawerVisble] = useState(false);
-  const [teamList, setTeamList] = useState([]);
+  //const [teamList, setTeamList] = useState([]);
 
   const bulleRef = useRef();
   const maskRef = useRef();
@@ -52,7 +52,7 @@ const Index = props => {
       const { style: bullRefstyle } = bulleRef.current;
       bullRefstyle.right = 0;
     }
-    fetchTeams();
+    // fetchTeams();
   }, []);
 
   const handleMouseDown = e => {
@@ -185,24 +185,24 @@ const Index = props => {
     setTraceDrawerVisble(true);
   };
 
-  const fetchTeams = () => {
-    const {
-      dispatch,
-      currUser: { enterprise_id }
-    } = props;
-    dispatch({
-      type: 'global/fetchMyTeams',
-      payload: {
-        enterprise_id,
-        page: 0,
-        page_size: 999
-      },
-      callback: res => {
-        const { list } = res;
-        setTeamList(list);
-      }
-    });
-  };
+  // const fetchTeams = () => {
+  //   const {
+  //     dispatch,
+  //     currUser: { enterprise_id }
+  //   } = props;
+  //   dispatch({
+  //     type: 'global/fetchMyTeams',
+  //     payload: {
+  //       enterprise_id,
+  //       page: 0,
+  //       page_size: 999
+  //     },
+  //     callback: res => {
+  //       const { list } = res;
+  //       setTeamList(list);
+  //     }
+  //   });
+  // };
 
   return (
     <div
@@ -273,7 +273,7 @@ const Index = props => {
         visible={logDrawerVisible}
         onClose={() => setLogDrawerVisible(false)}
         openTraceDetail={openTraceDetail}
-        teamList={teamList}
+        teamList={teamInfo || []}
         {...props}
       />
       <TraceDrawer
@@ -283,15 +283,16 @@ const Index = props => {
           traceRef.current.setIsGoBack(true);
         }}
         ref={traceRef}
-        teamList={teamList}
+        teamList={teamInfo || []}
         {...props}
       />
     </div>
   );
 };
-const Bulle = connect(({ user, application }) => ({
+const Bulle = connect(({ user, application, global }) => ({
   currUser: user.currentUser,
-  appList: application.apps
+  appList: application.apps,
+  teamInfo: global.teamInfo
 }))(Index);
 
 export default Bulle;
