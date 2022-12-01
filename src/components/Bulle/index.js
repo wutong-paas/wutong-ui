@@ -41,9 +41,11 @@ const Index = props => {
     const body = document.body;
     body.addEventListener('mousemove', handleMouseMove);
     body.addEventListener('mouseup', handleMouseUp);
+    body.addEventListener('mouseleave', handleMouseUp);
     return () => {
       body.removeEventListener('mousemove', handleMouseMove);
       body.removeEventListener('mouseup', handleMouseUp);
+      body.removeEventListener('mouseleave', handleMouseUp);
     };
   }, [moveCount, isMouseDown]);
 
@@ -122,7 +124,8 @@ const Index = props => {
     //console.log('拖拽按钮', actionMgrY, actionMgrX, actionMgrStyle);
 
     // 计算后坐标  设置 按钮位置
-    if (dY > 0 && dY < windowHeight - 50) {
+    // dY > 0 && dY < windowHeight - 50
+    if (dY >= 0 && dX !== 0) {
       //  不在顶 且 不在底部
       if (dX <= windowWidth / 2) {
         //  left 小于等于屏幕一半
@@ -161,11 +164,11 @@ const Index = props => {
       //   actionMgrStyle.bottom = 0;
       //   actionMgrStyle.top = "auto";
       // }
-      if (dX >= windowWidth / 2) {
-        //  右侧是将left改为auto，调整right
-        actionMgrStyle.left = 'auto';
-        actionMgrStyle.right = windowWidth - dX - 50 + 'px';
-      }
+      // if (dX >= windowWidth / 2) {
+      //   //  右侧是将left改为auto，调整right
+      //   actionMgrStyle.left = 'auto';
+      //   actionMgrStyle.right = windowWidth - dX - 50 + 'px';
+      // }
     }
     setIsMouseDown(false);
   };
