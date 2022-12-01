@@ -316,9 +316,9 @@ export default class GlobalRouter extends PureComponent {
       <div
         style={{
           height: '100%',
-          background: ' rgba(233, 241, 247, 1)'
+          background: ' rgba(233, 241, 247, 1)',
           // width: '68px',
-          // display: showMenu ? 'block' : 'none'
+          display: showMenu ? 'block' : 'none'
         }}
       >
         <div

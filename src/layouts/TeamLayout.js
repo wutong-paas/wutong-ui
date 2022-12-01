@@ -612,29 +612,31 @@ class TeamLayout extends PureComponent {
             onCollapse={this.handleMenuCollapse}
           /> */}
           <Layout>
-            <Sider width={220} collapsed={collapsed} collapsedWidth={48}>
-              {teamView && (
-                <GlobalRouter
-                  currentEnterprise={currentEnterprise}
-                  enterpriseList={enterpriseList}
-                  title={
-                    wutongInfo &&
-                    wutongInfo.title &&
-                    wutongInfo.title.enable &&
-                    wutongInfo.title.value
-                  }
-                  currentUser={currentUser}
-                  Authorized={Authorized}
-                  collapsed={collapsed}
-                  location={location}
-                  isMobile={this.state.isMobile}
-                  onCollapse={this.handleMenuCollapse}
-                  menuData={menuData}
-                  pathname={pathname}
-                  showMenu={!componentID}
-                />
-              )}
-            </Sider>
+            {!componentID && (
+              <Sider width={220} collapsed={collapsed} collapsedWidth={48}>
+                {teamView && (
+                  <GlobalRouter
+                    currentEnterprise={currentEnterprise}
+                    enterpriseList={enterpriseList}
+                    title={
+                      wutongInfo &&
+                      wutongInfo.title &&
+                      wutongInfo.title.enable &&
+                      wutongInfo.title.value
+                    }
+                    currentUser={currentUser}
+                    Authorized={Authorized}
+                    collapsed={collapsed}
+                    location={location}
+                    isMobile={this.state.isMobile}
+                    onCollapse={this.handleMenuCollapse}
+                    menuData={menuData}
+                    pathname={pathname}
+                    showMenu={!componentID}
+                  />
+                )}
+              </Sider>
+            )}
             <Layout
             // style={{ flexDirection: 'row' }}
             >
@@ -657,6 +659,7 @@ class TeamLayout extends PureComponent {
                 onCollapse={this.handleMenuCollapse}
                 isMobile={this.state.isMobile}
                 customHeader={teamView && customHeader}
+                showMenu={!componentID}
               />
               <Content
                 style={{

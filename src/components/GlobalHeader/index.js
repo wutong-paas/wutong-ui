@@ -27,6 +27,8 @@ import HomeMenu from '../../../public/images/header/header-menu.svg';
 import AccountImg from '../../../public/images/menu/account.svg';
 import PassworImg from '../../../public/images/menu/password.svg';
 import LogoutImg from '../../../public/images/menu/logout.svg';
+import logoSmall from '../../../public/images/logo/logo_small.png';
+import logoNormal from '../../../public/images/logo/logo_normal.png';
 import styles from './index.less';
 
 const { Header } = Layout;
@@ -141,7 +143,13 @@ export default class GlobalHeader extends PureComponent {
     });
   };
   render() {
-    const { currentUser, customHeader, wutongInfo, collapsed } = this.props;
+    const {
+      currentUser,
+      customHeader,
+      wutongInfo,
+      collapsed,
+      showMenu = true
+    } = this.props;
     if (!currentUser) {
       return null;
     }
@@ -193,52 +201,68 @@ export default class GlobalHeader extends PureComponent {
     const platformUrl = wutongUtil.documentPlatform_url(wutongInfo);
     return (
       <Header className={styles.header}>
-        <div className={styles.wrap}>
-          <div style={{ display: 'flex' }}>
-            <Icon
-              className={styles.trigger}
-              type={collapsed ? 'menu-unfold' : 'menu-fold'}
-              style={{ color: '#000', float: 'left' }}
-              onClick={this.toggle}
-            />
-            {customHeader && customHeader()}
-          </div>
-          <div className={styles.title}>
-            <img
-              src={HomeMenu}
-              alt=""
-              style={{ marginRight: 10, verticalAlign: 'middle' }}
-            />
-            开发运维一体化平台
-          </div>
-          <div className={styles.right}>
-            {currentUser ? (
-              <Dropdown overlay={menu}>
-                <span className={`${styles.action} ${styles.account}`}>
-                  <Avatar
-                    size="small"
-                    className={styles.avatar}
-                    src={userIcon}
-                  />
-                  <span className={styles.name}>{currentUser.user_name}</span>
-                </span>
-              </Dropdown>
-            ) : (
-              <Spin
-                size="small"
-                style={{
-                  marginLeft: 8
-                }}
+        <div style={{ display: 'flex' }}>
+          {!showMenu && (
+            <div
+              style={{
+                height: 56,
+                backgroundColor: '#fff',
+                textAlign: 'center',
+                lineHeight: '56px',
+                width: collapsed ? 48 : 220,
+                borderRight: '1px solid rgb(221, 228, 234)'
+              }}
+            >
+              <img src={collapsed ? logoSmall : logoNormal} alt="" />
+            </div>
+          )}
+          <div className={styles.wrap}>
+            <div style={{ display: 'flex' }}>
+              <Icon
+                className={styles.trigger}
+                type={collapsed ? 'menu-unfold' : 'menu-fold'}
+                style={{ color: '#000', float: 'left' }}
+                onClick={this.toggle}
+              />
+              {customHeader && customHeader()}
+            </div>
+            <div className={styles.title}>
+              <img
+                src={HomeMenu}
+                alt=""
+                style={{ marginRight: 10, verticalAlign: 'middle' }}
+              />
+              开发运维一体化平台
+            </div>
+            <div className={styles.right}>
+              {currentUser ? (
+                <Dropdown overlay={menu}>
+                  <span className={`${styles.action} ${styles.account}`}>
+                    <Avatar
+                      size="small"
+                      className={styles.avatar}
+                      src={userIcon}
+                    />
+                    <span className={styles.name}>{currentUser.user_name}</span>
+                  </span>
+                </Dropdown>
+              ) : (
+                <Spin
+                  size="small"
+                  style={{
+                    marginLeft: 8
+                  }}
+                />
+              )}
+            </div>
+            {/* change password */}
+            {this.state.showChangePassword && (
+              <ChangePassword
+                onOk={this.handleChangePass}
+                onCancel={this.cancelChangePass}
               />
             )}
           </div>
-          {/* change password */}
-          {this.state.showChangePassword && (
-            <ChangePassword
-              onOk={this.handleChangePass}
-              onCancel={this.cancelChangePass}
-            />
-          )}
         </div>
       </Header>
     );
