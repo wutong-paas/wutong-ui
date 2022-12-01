@@ -37,6 +37,7 @@ import styles from './ComponentList.less';
     startLoading: loading.effects['appControl/putStart'],
     stopLoading: loading.effects['appControl/putStop'],
     yamlLoading: loading.effects['appControl/fetchClusterResourcee'],
+    deleteLoading: loading.effects['appControl/deleteApp'],
     groupDetail: application.groupDetail || {}
   }),
   null,
@@ -327,7 +328,15 @@ export default class ComponentList extends Component {
       namespaceValue: 'default'
     });
 
-  handleDeleteComponent = data => {
+  handleDeleteComponent = (data, index) => {
+    const { selectedRowKeys } = this.state;
+    if (typeof index === 'number' && selectedRowKeys.length > 0) {
+      this.setState(
+        {
+          selectedRowKeys: selectedRowKeys.filter(i => i !== index)
+        },
+      );
+    }
     this.props.dispatch({
       type: 'appControl/deleteApp',
       payload: {
@@ -358,7 +367,8 @@ export default class ComponentList extends Component {
       stopLoading,
       groupId,
       groups,
-      yamlLoading
+      yamlLoading,
+      deleteLoading
     } = this.props;
     const {
       selectedRowKeys,
@@ -501,7 +511,7 @@ export default class ComponentList extends Component {
         title: '操作',
         dataIndex: 'action',
         width: 230,
-        render: (val, data) => (
+        render: (val, data, index) => (
           <Fragment>
             {data.service_source && data.service_source !== 'third_party' && (
               <div style={{ textAlign: 'right' }}>
@@ -546,7 +556,7 @@ export default class ComponentList extends Component {
                   <Popconfirm
                     title="确认要删除该组件吗？"
                     onConfirm={() => {
-                      this.handleDeleteComponent(data);
+                      this.handleDeleteComponent(data, index);
                     }}
                   >
                     <a>删除</a>
@@ -736,7 +746,8 @@ export default class ComponentList extends Component {
                 reStartLoading ||
                 startLoading ||
                 stopLoading ||
-                tableDataLoading
+                tableDataLoading ||
+                deleteLoading
               }
               dataSource={apps || []}
               //footer={() => footer}
