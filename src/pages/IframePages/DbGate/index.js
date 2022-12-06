@@ -44,7 +44,7 @@ export default class DbGateManager extends PureComponent {
     return (
       <iframe
         // src={`/console/team/${teamName}/region/${regionName}/components/${appAlias}/filemanager/service_id/${serviceID}`}
-        src={`/console/dbgate/${serviceID}/`}
+        src={`/console/proxy/dbgate/${serviceID}/`}
         // src={`https://wutong.talkweb.com.cn/console/filebrowser/${serviceID}`}
         style={{
           width: '100%',
