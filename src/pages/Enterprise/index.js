@@ -95,7 +95,7 @@ const Home = props => {
           axisName: {
             fontSize: 14 * percent
           },
-          nameGap: 12 * percent
+          nameGap: 10 * percent
         }
       });
     };

@@ -86,7 +86,7 @@ export const useInfoList = res => {
     {
       percentage: computedPercentage(store?.used_cpu, store?.total_cpu),
       use: store?.used_cpu || '0',
-      total: store?.total_cpu || '0',
+      total: store?.total_cpu?.toFixed(2) || '0',
       unit: 'Core',
       id: Math.random(),
       whoUse: 'CPU'
@@ -94,7 +94,7 @@ export const useInfoList = res => {
     {
       percentage: computedPercentage(store?.used_memory, store?.total_memory),
       use: store?.used_memory || '0',
-      total: store?.total_memory || '0',
+      total: store?.total_memory?.toFixed(2) || '0',
       unit: 'GB',
       id: Math.random(),
       whoUse: '内存'
@@ -102,7 +102,7 @@ export const useInfoList = res => {
     {
       percentage: computedPercentage(pod?.used_pod, pod?.total),
       use: pod?.used_pod || '0',
-      total: pod?.total || '0',
+      total: pod?.total?.toFixed(2) || '0',
       unit: '个',
       id: Math.random(),
       whoUse: '容器组'
@@ -110,7 +110,7 @@ export const useInfoList = res => {
     {
       percentage: computedPercentage(store?.used_disk, store?.total_disk),
       use: store?.used_disk || '0',
-      total: store?.total_disk || '0',
+      total: store?.total_disk?.toFixed(2) || '0',
       unit: 'GB',
       id: Math.random(),
       whoUse: '存储'
@@ -149,6 +149,9 @@ export const radarOption = res => {
     store?.used_disk,
     store?.total_disk
   );
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const percent = width / 1920;
 
   return {
     // legend: {
@@ -179,6 +182,10 @@ export const radarOption = res => {
         { name: '容器组', max: 100, color: 'rgba(0, 0, 0, 1)' },
         { name: '存储', max: 100, color: 'rgba(0, 0, 0, 1)' }
       ],
+      axisName: {
+        fontSize: 14 * percent
+      },
+      nameGap: 10 * percent,
       axisLine: {
         lineStyle: {
           color: 'rgba(221, 233, 243, 1)'
