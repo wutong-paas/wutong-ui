@@ -18,7 +18,7 @@ export default {
   'menu.team.plugin': '插件',
   'menu.team.setting': '团队管理',
   'menu.team.config': '设置',
-  'menu.team.log': '提取日志标签',
+  'menu.team.log': '日志采集配置',
   'menu.app.dashboard': '总览',
   'menu.app.publish': '发布',
   'menu.app.gateway': '网关',
