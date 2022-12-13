@@ -521,7 +521,9 @@ class PluginConfigs extends PureComponent {
   ({ user, loading, appControl }) => ({
     currUser: user.currentUser,
     loading: loading.appControl,
-    appDetail: appControl.appDetail
+    appDetail: appControl.appDetail,
+    installSystemLoaing: loading.effects['appControl/installSystemPlugin'],
+    installLoaing: loading.effects['appControl/installPlugin']
   }),
   null,
   null,
@@ -537,7 +539,8 @@ export default class Index extends PureComponent {
       type: 'installed',
       showDeletePlugin: null,
       openedPlugin: {},
-      loading: false
+      loading: false,
+      currentInstallIndex: -1
     };
     this.isInit = true;
   }
@@ -892,7 +895,8 @@ export default class Index extends PureComponent {
     );
   };
   renderUnInstalled = () => {
-    const { unInstalledList, category } = this.state;
+    const { installSystemLoaing, installLoaing } = this.props;
+    const { unInstalledList, category, currentInstallIndex } = this.state;
     const loading = this.state.unInstalledList === null;
     if (!unInstalledList?.length) return;
     // if (!unInstalledList?.length) {
@@ -915,14 +919,18 @@ export default class Index extends PureComponent {
         loading={loading}
         pagination={false}
         dataSource={unInstalledList || []}
-        renderItem={item => (
+        renderItem={(item, index) => (
           <List.Item
             actions={[
               <a
                 onClick={() => {
-                  this.installPlugin(item);
+                  this.installPlugin(item, index);
                 }}
                 href="javascript:;"
+                disabled={
+                  (installSystemLoaing || installLoaing) &&
+                  currentInstallIndex === index
+                }
               >
                 开通
               </a>
@@ -975,10 +983,20 @@ export default class Index extends PureComponent {
     const { installedList } = this.state;
     return installedList && !!installedList.length;
   };
-  installPlugin = plugin => {
-    const { category } = this.state;
+  installPlugin = (plugin, index) => {
+    const { category, currentInstallIndex } = this.state;
+    const { installLoaing, installSystemLoaing } = this.props;
+    if (
+      (installSystemLoaing || installLoaing) &&
+      currentInstallIndex === index
+    ) {
+      return
+    }
     const team_name = globalUtil.getCurrTeamName();
     const app_alias = this.props.appAlias;
+    this.setState({
+      currentInstallIndex: index
+    });
     this.props.dispatch({
       type: `appControl/${
         category === 'sys' ? 'installSystemPlugin' : 'installPlugin'
