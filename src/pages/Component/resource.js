@@ -16,7 +16,9 @@ import {
   notification,
   Select,
   Spin,
-  Tabs
+  Tabs,
+  message,
+  Tooltip
 } from 'antd';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
@@ -533,11 +535,9 @@ export default class Index extends PureComponent {
                 //     更改
                 //   </a>
                 // )
-                (
-                  <a onClick={this.changeBuildSource} href="javascript:;">
-                    更改
-                  </a>
-                )
+                <a onClick={this.changeBuildSource} href="javascript:;">
+                  更改
+                </a>
               )
             ]}
           >
@@ -576,7 +576,18 @@ export default class Index extends PureComponent {
                   {...formItemLayout}
                   label="镜像名称"
                 >
-                  {buildSource.image}
+                  <span style={{ marginRight: 8 }}>{buildSource.image}</span>
+                  <Tooltip title="复制">
+                    <Icon
+                      type="copy"
+                      onClick={() => {
+                        navigator.clipboard
+                          .writeText(buildSource.image)
+                          .catch(e => message.error(e));
+                        message.success('复制成功！');
+                      }}
+                    />
+                  </Tooltip>
                 </FormItem>
                 <FormItem
                   style={{
