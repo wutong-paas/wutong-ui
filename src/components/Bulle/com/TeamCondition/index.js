@@ -27,23 +27,11 @@ const TeamConditon = props => {
   const [isShowRangePicker, setIsShowRangePicker] = useState(false);
 
   const handleTimeChange = e => {
+    onTimeChange({ value: e });
     if (e === 'custom') {
       setIsShowRangePicker(true);
       return;
     }
-    const end = moment().valueOf();
-    let start = '';
-    if (e === 'today') {
-      start = moment()
-        .startOf('day')
-        .valueOf();
-    } else {
-      start = moment()
-        .subtract(formatTime[e].count.toString(), formatTime[e].unit)
-        .valueOf();
-    }
-    onTimeChange({ start, end });
-    // setTimeRange({ start, end });
     setIsShowRangePicker(false);
   };
 
