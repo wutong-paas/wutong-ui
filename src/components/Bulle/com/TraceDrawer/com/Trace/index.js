@@ -26,7 +26,7 @@ import {
   timeOptionList,
   timeObject
 } from './conf';
-import { getUrlParams } from '../../../LogDrawer/conf';
+import { getUrlParams, formatTime } from '../../../LogDrawer/conf';
 import { connect } from 'dva';
 import moment from 'moment';
 import styles from './index.less';
@@ -62,6 +62,7 @@ const Trace = props => {
     methodValue: undefined
   });
   const [limit, setLimit] = useState('20');
+  const [timeValue, setTimeValue] = useState('last1hour');
   const didMountRef = useRef(false);
   const timeId = useRef(null);
   const queryTextCurrent = useRef('0');
@@ -128,7 +129,12 @@ const Trace = props => {
     </Menu>
   );
 
-  const onTimeChange = ({ start, end }) => {
+  const onTimeChange = ({ value }) => {
+    //setTimeRange({ start, end });
+    setTimeValue(value);
+  };
+
+  const handleRangeChange = ({ start, end }) => {
     setTimeRange({ start, end });
   };
 
@@ -138,7 +144,7 @@ const Trace = props => {
 
   const fetchTraceList = () => {
     const { dispatch } = props;
-    const { start, end } = timeRange;
+    const { start: startTime, end: endTime } = timeRange;
     const { serviceValue, methodValue } = filteValue;
     let list = [];
     list.push(`namespace=${nameSpace}`);
@@ -147,6 +153,26 @@ const Trace = props => {
     }
     if (methodValue) {
       list.push(`name=${methodValue}`);
+    }
+    let start,
+      end = '';
+    if (timeValue !== 'custom') {
+      end = moment().valueOf();
+      if (timeValue === 'today') {
+        start = moment()
+          .startOf('day')
+          .valueOf();
+      } else {
+        start = moment()
+          .subtract(
+            formatTime[timeValue].count.toString(),
+            formatTime[timeValue].unit
+          )
+          .valueOf();
+      }
+    } else {
+      start = startTime;
+      end = endTime;
     }
     dispatch({
       type: 'toolkit/fetchTraceList',
@@ -224,7 +250,7 @@ const Trace = props => {
         teamOptionList={teamList}
         timeOptionList={timeOptionList}
         onTimeChange={onTimeChange}
-        onRangeChange={onTimeChange}
+        onRangeChange={handleRangeChange}
         onTeamChange={onTeamChange}
         nameSpace={nameSpace}
       />

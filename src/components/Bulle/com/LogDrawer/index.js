@@ -73,6 +73,7 @@ const LogDrawer = props => {
   const [selectLoading, setSelectLoading] = useState(false); //下拉状态
   const [currentId, setCurrentId] = useState(); //当前下拉框Id
   const [isExpand, setIsExpand] = useState(true);
+  const [timeValue, setTimeValue] = useState('last1hour');
   const timeId = useRef(null);
   const queryTextCurrent = useRef('0');
   const queryLogRef = useRef();
@@ -224,7 +225,12 @@ const LogDrawer = props => {
     }
   };
 
-  const onTimeChange = ({ start, end }) => {
+  const onTimeChange = ({ value }) => {
+    //setTimeRange({ start, end });
+    setTimeValue(value);
+  };
+
+  const handleRangeChange = ({ start, end }) => {
     setTimeRange({ start, end });
   };
 
@@ -320,8 +326,28 @@ const LogDrawer = props => {
 
   const queryLogList = propsExpr => {
     const { dispatch } = props;
-    const { start, end } = timeRange;
+    const { start: startTime, end: endTime } = timeRange;
     const expr = propsExpr || stateExpr;
+    let start,
+      end = '';
+    if (timeValue !== 'custom') {
+      end = moment().valueOf();
+      if (timeValue === 'today') {
+        start = moment()
+          .startOf('day')
+          .valueOf();
+      } else {
+        start = moment()
+          .subtract(
+            formatTime[timeValue].count.toString(),
+            formatTime[timeValue].unit
+          )
+          .valueOf();
+      }
+    } else {
+      start = startTime;
+      end = endTime;
+    }
     setLoading(true);
     dispatch({
       type: 'toolkit/fetchLogList',
@@ -468,7 +494,7 @@ const LogDrawer = props => {
             teamOptionList={teamList}
             timeOptionList={timeOptionList}
             onTimeChange={onTimeChange}
-            onRangeChange={onTimeChange}
+            onRangeChange={handleRangeChange}
             onTeamChange={onTeamChange}
             nameSpace={nameSpace}
             customRight={() => {
