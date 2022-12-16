@@ -125,7 +125,7 @@ const LogTagConfig = props => {
       try {
         yaml.loadAll(editorValue, function(parseValue) {
           yaml.loadAll(showValue, function(parseShowValue) {
-            parseShowValue.spec.selector = parseValue;
+            parseShowValue.spec.pipelineStages = parseValue;
             setShowValue(yaml.dump(parseShowValue));
             editor.current.getCodeMirror().setValue(yaml.dump(parseShowValue));
           });
@@ -144,7 +144,7 @@ const LogTagConfig = props => {
     <div className={styles.wrap}>
       <PageHeaderLayout
         breadcrumbList={null}
-        title="提取日志标签"
+        title="日志采集配置"
         content="编辑yaml文件，配置日志标签提取规则"
       >
         <Spin spinning={logConfigLoading}>

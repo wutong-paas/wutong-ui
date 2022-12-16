@@ -4,6 +4,7 @@ import {
   Button,
   Card,
   Icon,
+  message,
   Modal,
   notification,
   Row,
@@ -19,6 +20,7 @@ import InfoConnectModal from '../InfoConnectModal';
 import Search from '../Search';
 import TcpDrawerForm from '../TcpDrawerForm';
 import styles from './index.less';
+import TcpParamterForm from '../TcpParamterForm';
 
 @connect(({ user, global, loading, teamControl, enterprise }) => ({
   currUser: user.currentUser,
@@ -48,7 +50,10 @@ export default class TcpTable extends PureComponent {
       visibleModal: false,
       agreement: {},
       NotHttpConnectInfo: [],
-      tcpType: ''
+      tcpType: '',
+      tcpparameterVisible: false,
+      tcpparameterInfo: [],
+      rowRecords: null
     };
   }
   UNSAFE_componentWillMount() {
@@ -381,6 +386,71 @@ export default class TcpTable extends PureComponent {
       />
     );
   };
+
+  handleParameterVisibleClick = values => {
+    const { dispatch } = this.props;
+    this.setState({
+      rowRecords: values
+    });
+    dispatch({
+      type: 'gateWay/getParameter',
+      payload: {
+        team_name: globalUtil.getCurrTeamName(),
+        rule_id: values.tcp_rule_id
+      },
+      callback: res => {
+        if (res && res.status_code === 200) {
+          if (res.bean && res.bean.value) {
+            this.setState({
+              tcpparameterVisible: values,
+              tcpparameterInfo: res.bean && res.bean.value
+            });
+          } else {
+            this.setState({
+              tcpparameterVisible: values,
+              tcpparameterInfo: null
+            });
+          }
+        }
+      }
+    });
+  };
+
+  handleCloseTcpParameter = () => {
+    this.setState({
+      tcpparameterVisible: false,
+      tcpparameterInfo: null
+    });
+  };
+
+  handleOkTcpParameter = value => {
+    const { dispatch } = this.props;
+    const { rowRecords: values } = this.state;
+    console.log(values, 'ddd');
+    value = {
+      keepalive_enabled: value.keepalive_enabled,
+      keepalive_idle: Number(value.keepalive_idle),
+      keepalive_intvl: Number(value.keepalive_intvl),
+      keepalive_cnt: Number(value.keepalive_cnt)
+    };
+    dispatch({
+      type: 'gateWay/editParameter',
+      payload: {
+        team_name: globalUtil.getCurrTeamName(),
+        rule_id: values?.tcp_rule_id,
+        service_id: values?.service_id,
+        type: 'tcp/udp',
+        value
+      },
+      callback: data => {
+        message.success('更新成功！')
+        if (data) {
+          this.handleCloseTcpParameter();
+        }
+      }
+    });
+  };
+
   render() {
     const {
       appID,
@@ -404,7 +474,9 @@ export default class TcpTable extends PureComponent {
       whetherOpenForm,
       visibleModal,
       tcpType,
-      agreement
+      agreement,
+      tcpparameterVisible,
+      tcpparameterInfo
     } = this.state;
     const columns = [
       {
@@ -520,6 +592,15 @@ export default class TcpTable extends PureComponent {
               )}
               {isEdit && (
                 <a
+                  onClick={() => {
+                    this.handleParameterVisibleClick(record);
+                  }}
+                >
+                  参数配置
+                </a>
+              )}
+              {isEdit && (
+                <a
                   style={{ marginRight: '10px' }}
                   onClick={() => {
                     this.handleEdit(record);
@@ -623,6 +704,14 @@ export default class TcpTable extends PureComponent {
             loading={this.state.tcpLoading}
           />
         </Card>
+        {tcpparameterVisible && (
+          <TcpParamterForm
+            onOk={this.handleOkTcpParameter}
+            onClose={this.handleCloseTcpParameter}
+            visible={tcpparameterVisible}
+            editInfo={tcpparameterInfo}
+          />
+        )}
         {TcpDrawerVisible && (
           <TcpDrawerForm
             visible={TcpDrawerVisible}

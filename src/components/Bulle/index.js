@@ -16,7 +16,7 @@ import styles from './index.less';
 import user from '@/models/user';
 
 const Index = props => {
-  const { wutongInfo = {}, appList } = props;
+  const { wutongInfo = {}, appList, teamInfo } = props;
   const { log_query, call_link_query } = wutongInfo;
   const [iX, setiX] = useState(0);
   const [iY, setiY] = useState(0);
@@ -30,7 +30,7 @@ const Index = props => {
   const [isLeft, setIsLeft] = useState(false);
   const [logDrawerVisible, setLogDrawerVisible] = useState(false);
   const [traceDrawerVisible, setTraceDrawerVisble] = useState(false);
-  const [teamList, setTeamList] = useState([]);
+  //const [teamList, setTeamList] = useState([]);
 
   const bulleRef = useRef();
   const maskRef = useRef();
@@ -41,9 +41,11 @@ const Index = props => {
     const body = document.body;
     body.addEventListener('mousemove', handleMouseMove);
     body.addEventListener('mouseup', handleMouseUp);
+    body.addEventListener('mouseleave', handleMouseUp);
     return () => {
       body.removeEventListener('mousemove', handleMouseMove);
       body.removeEventListener('mouseup', handleMouseUp);
+      body.removeEventListener('mouseleave', handleMouseUp);
     };
   }, [moveCount, isMouseDown]);
 
@@ -52,7 +54,7 @@ const Index = props => {
       const { style: bullRefstyle } = bulleRef.current;
       bullRefstyle.right = 0;
     }
-    fetchTeams();
+    // fetchTeams();
   }, []);
 
   const handleMouseDown = e => {
@@ -122,7 +124,8 @@ const Index = props => {
     //console.log('拖拽按钮', actionMgrY, actionMgrX, actionMgrStyle);
 
     // 计算后坐标  设置 按钮位置
-    if (dY > 0 && dY < windowHeight - 50) {
+    // dY > 0 && dY < windowHeight - 50
+    if (dY >= 0 && dX !== 0) {
       //  不在顶 且 不在底部
       if (dX <= windowWidth / 2) {
         //  left 小于等于屏幕一半
@@ -161,11 +164,11 @@ const Index = props => {
       //   actionMgrStyle.bottom = 0;
       //   actionMgrStyle.top = "auto";
       // }
-      if (dX >= windowWidth / 2) {
-        //  右侧是将left改为auto，调整right
-        actionMgrStyle.left = 'auto';
-        actionMgrStyle.right = windowWidth - dX - 50 + 'px';
-      }
+      // if (dX >= windowWidth / 2) {
+      //   //  右侧是将left改为auto，调整right
+      //   actionMgrStyle.left = 'auto';
+      //   actionMgrStyle.right = windowWidth - dX - 50 + 'px';
+      // }
     }
     setIsMouseDown(false);
   };
@@ -185,24 +188,24 @@ const Index = props => {
     setTraceDrawerVisble(true);
   };
 
-  const fetchTeams = () => {
-    const {
-      dispatch,
-      currUser: { enterprise_id }
-    } = props;
-    dispatch({
-      type: 'global/fetchMyTeams',
-      payload: {
-        enterprise_id,
-        page: 0,
-        page_size: 999
-      },
-      callback: res => {
-        const { list } = res;
-        setTeamList(list);
-      }
-    });
-  };
+  // const fetchTeams = () => {
+  //   const {
+  //     dispatch,
+  //     currUser: { enterprise_id }
+  //   } = props;
+  //   dispatch({
+  //     type: 'global/fetchMyTeams',
+  //     payload: {
+  //       enterprise_id,
+  //       page: 0,
+  //       page_size: 999
+  //     },
+  //     callback: res => {
+  //       const { list } = res;
+  //       setTeamList(list);
+  //     }
+  //   });
+  // };
 
   return (
     <div
@@ -273,7 +276,7 @@ const Index = props => {
         visible={logDrawerVisible}
         onClose={() => setLogDrawerVisible(false)}
         openTraceDetail={openTraceDetail}
-        teamList={teamList}
+        teamList={teamInfo || []}
         {...props}
       />
       <TraceDrawer
@@ -283,15 +286,16 @@ const Index = props => {
           traceRef.current.setIsGoBack(true);
         }}
         ref={traceRef}
-        teamList={teamList}
+        teamList={teamInfo || []}
         {...props}
       />
     </div>
   );
 };
-const Bulle = connect(({ user, application }) => ({
+const Bulle = connect(({ user, application, global }) => ({
   currUser: user.currentUser,
-  appList: application.apps
+  appList: application.apps,
+  teamInfo: global.teamInfo
 }))(Index);
 
 export default Bulle;
