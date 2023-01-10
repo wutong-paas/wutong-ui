@@ -16,7 +16,7 @@ export default function Result({
     error: <Icon className={styles.error} type="close-circle" />,
     success: <Icon className={styles.success} type="check-circle" />,
     warning: <Icon className={styles.warning} type="exclamation-circle" />,
-    ing: <Icon className={`${styles.success} roundloading`} type="sync" />
+    ing: <Icon className={`${styles.success} roundloading`} type="sync" spin />
   };
   const clsString = classNames(styles.result, className);
   return (
