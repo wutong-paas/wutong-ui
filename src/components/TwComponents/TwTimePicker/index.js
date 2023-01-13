@@ -82,7 +82,7 @@ const TwTimePicker = props => {
           'yyyy-MM-DD hh:mm:ss'
         )}`
       );
-    onTimeRange && onTimeRange(timeRange, pollingValue, 'custom');
+    onTimeRange && onTimeRange(timeRange, pollingValue, timeKey || 'custom');
     setIsExpand(false);
   };
 

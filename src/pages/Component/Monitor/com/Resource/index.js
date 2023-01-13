@@ -32,7 +32,7 @@ const Resource = props => {
     end,
     pods,
     instance,
-    pollingRef,
+    pollingValue,
     timeKey,
     location: { pathname }
   } = props;
@@ -40,6 +40,7 @@ const Resource = props => {
   const [listData, setData] = useState([]);
   const timeId = useRef(null);
   const getChartsDataRef = useRef();
+  const pollingRef = useRef(pollingValue);
 
   //如果有定时器，依赖改变时需要先清理，再调用请求
   useEffect(() => {
@@ -58,14 +59,11 @@ const Resource = props => {
 
   // 轮询间隔改变时单独处理
   useEffect(() => {
-    if (timeId.current) {
-      clearTimeout(timeId.current);
-      timeId.current = null;
-      if (pollingRef?.current !== 'off') {
-        getChartsData.current();
-      }
+    pollingRef.current = pollingValue;
+    if (pollingValue !== 'off') {
+      getChartsData.current();
     }
-  }, [pollingRef]);
+  }, [pollingValue]);
 
   //初始化图表hooks
   useCharts(listData, timeKey);
@@ -174,8 +172,7 @@ const Resource = props => {
                         <div
                           id={flag}
                           className={styles['monitor-resource-charts']}
-                        >
-                        </div>
+                        ></div>
                       )}
                     </Card>
                   </Col>
