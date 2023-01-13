@@ -1,5 +1,5 @@
 /**
- * @content 自定义tabs
+ * @content 自定义tabs，表格使用
  * @author  Leon
  * @date    2022/08/02
  *

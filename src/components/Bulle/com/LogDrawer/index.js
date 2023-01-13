@@ -73,7 +73,7 @@ const LogDrawer = props => {
   const [selectLoading, setSelectLoading] = useState(false); //下拉状态
   const [currentId, setCurrentId] = useState(); //当前下拉框Id
   const [isExpand, setIsExpand] = useState(true);
-  const [timeValue, setTimeValue] = useState('last1hour');
+  const [timeValue, setTimeValue] = useState('last15min');
   const timeId = useRef(null);
   const queryTextCurrent = useRef('0');
   const queryLogRef = useRef();
@@ -91,7 +91,6 @@ const LogDrawer = props => {
       );
       const teamName = teamList[teamIndex]?.namespace;
       const serviceName = appList[serviceIndex]?.k8s_component_name;
-      4;
       //    //到了指定的团队界面，默认赋值
       // if (teamName && !nameSpace) setNamespace(teamName);
       // //到了指定的组件页面，且没有查询条件，则新增一个
