@@ -48,12 +48,25 @@ const Monitor = props => {
   // 存储实例value
   const [instanceValue, setInstance] = useState('all');
   // 轮询间隔key,因为轮询需要一个固定的值，所以用useRef存储
+  const [pollingValue, setPolling] = useState('off');
   const pollingRef = useRef('off');
+  const fetchOverviewListRef = useRef();
+  const timeId = useRef();
 
   useEffect(() => {
     fetchPods();
-    fetchOverviewList();
   }, []);
+
+  useEffect(() => {
+    console.log('ddd');
+    fetchOverviewListRef.current();
+    return () => {
+      if (timeId.current) {
+        clearTimeout(timeId.current);
+        timeId.current = null;
+      }
+    };
+  }, [instanceValue, pollingValue]);
 
   const fetchPods = () => {
     dispatch({
@@ -71,6 +84,7 @@ const Monitor = props => {
   };
 
   const fetchOverviewList = () => {
+    console.log('coming');
     dispatch({
       type: 'monitor/fetchOverviewList',
       payload: {
@@ -89,10 +103,22 @@ const Monitor = props => {
               return item;
             })
           );
+          if (pollingRef?.current !== 'off') {
+            if (timeId.current) {
+              clearTimeout(timeId.current);
+              timeId.current = null;
+            }
+
+            timeId.current = setTimeout(() => {
+              fetchOverviewListRef.current();
+            }, Number(pollingRef?.current));
+          }
         }
       }
     });
   };
+
+  fetchOverviewListRef.current = fetchOverviewList;
 
   const handleClick = ({ e, index, isOutlink, key }) => {
     if (!isOutlink) setActiveKey(index);
@@ -123,7 +149,10 @@ const Monitor = props => {
       setStart(String(start));
       setEnd(String(end));
     }
-    if (pollingValue) pollingRef.current = pollingValue;
+    if (pollingValue) {
+      setPolling(pollingValue);
+      pollingRef.current = pollingValue;
+    }
     setTimeKey(timeKey);
   };
 
@@ -223,7 +252,7 @@ const Monitor = props => {
             start={start}
             end={end}
             instance={instanceValue}
-            pollingRef={pollingRef}
+            pollingValue={pollingValue}
             timeKey={timeKey}
             {...otherProps}
             pods={pods}
