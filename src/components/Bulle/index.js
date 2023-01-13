@@ -16,7 +16,16 @@ import styles from './index.less';
 import user from '@/models/user';
 
 const Index = props => {
-  const { wutongInfo = {}, appList, teamInfo } = props;
+  const {
+    wutongInfo = {},
+    appList,
+    isShowLog,
+    isShowTrace,
+    showLogWithParams,
+    showTraceWithParams,
+    dispatch,
+    teamInfo
+  } = props;
   const { log_query, call_link_query } = wutongInfo;
   const [iX, setiX] = useState(0);
   const [iY, setiY] = useState(0);
@@ -56,6 +65,14 @@ const Index = props => {
     }
     // fetchTeams();
   }, []);
+
+  useEffect(() => {
+    setLogDrawerVisible(isShowLog);
+  }, [isShowLog]);
+
+  useEffect(() => {
+    setTraceDrawerVisble(isShowTrace);
+  }, [isShowTrace]);
 
   const handleMouseDown = e => {
     //console.log('mouse down');
@@ -274,7 +291,15 @@ const Index = props => {
       </div>
       <LogDrawer
         visible={logDrawerVisible}
-        onClose={() => setLogDrawerVisible(false)}
+        onClose={() => {
+          setLogDrawerVisible(false);
+          dispatch({
+            type: 'toolkit/showLog',
+            payload: {
+              isShowLog: false
+            }
+          });
+        }}
         openTraceDetail={openTraceDetail}
         teamList={teamInfo || []}
         {...props}
@@ -284,6 +309,12 @@ const Index = props => {
         onClose={() => {
           setTraceDrawerVisble(false);
           traceRef.current.setIsGoBack(true);
+          dispatch({
+            type: 'toolkit/showTrace',
+            payload: {
+              isShowTrace: false
+            }
+          });
         }}
         ref={traceRef}
         teamList={teamInfo || []}
@@ -292,9 +323,13 @@ const Index = props => {
     </div>
   );
 };
-const Bulle = connect(({ user, application, global }) => ({
+const Bulle = connect(({ user, application, toolkit, global }) => ({
   currUser: user.currentUser,
   appList: application.apps,
+  isShowLog: toolkit.isShowLog,
+  isShowTrace: toolkit.isShowTrace,
+  showLogWithParams: toolkit.showLogWithParams,
+  showTraceWithParams: toolkit.showTraceWithParams,
   teamInfo: global.teamInfo
 }))(Index);
 

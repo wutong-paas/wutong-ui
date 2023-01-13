@@ -21,7 +21,8 @@ import {
   getServiceMonitorFigureInfo,
   getKeyImport,
   getComponentMetrics,
-  addKeyImport
+  addKeyImport,
+  getOverviewList
 } from '../services/monitor';
 
 export default {
@@ -143,6 +144,12 @@ export default {
     },
     *getMonitorRangeData({ payload, callback }, { call }) {
       const response = yield call(getMonitorRangeData, payload);
+      if (callback) {
+        callback(response);
+      }
+    },
+    *fetchOverviewList({ payload, callback }, { call }) {
+      const response = yield call(getOverviewList, payload);
       if (callback) {
         callback(response);
       }

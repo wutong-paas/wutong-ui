@@ -41,6 +41,18 @@ export const timeOptionList = [
 ];
 
 export const formatTime = {
+  last5min: {
+    count: 5,
+    unit: 'minute'
+  },
+  last10min: {
+    count: 10,
+    unit: 'minute'
+  },
+  last15min: {
+    count: 15,
+    unit: 'minute'
+  },
   last30min: {
     count: 30,
     unit: 'minute'
@@ -49,9 +61,17 @@ export const formatTime = {
     count: 1,
     unit: 'hour'
   },
-  last12hour: {
-    count: 12,
+  last6hour: {
+    count: 6,
     unit: 'hour'
+  },
+  // last12hour: {
+  //   count: 12,
+  //   unit: 'hour'
+  // },
+  last1day: {
+    count: 1,
+    unit: 'day'
   },
   last3day: {
     count: 3,

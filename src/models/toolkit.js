@@ -16,7 +16,12 @@ import {
 
 export default {
   namespace: 'toolkit',
-  state: {},
+  state: {
+    isShowLog: false,
+    showLogWithParams: {},
+    isShowTrace: false,
+    showTraceWithParams: {}
+  },
   effects: {
     *fetchTagList({ payload, callback }, { call }) {
       const response = yield call(getTagListAPI, payload);
@@ -97,5 +102,22 @@ export default {
       }
     }
   },
-  reducers: {}
+  reducers: {
+    showLog(state, { payload, redirect }) {
+      const { isShowLog, showLogWithParams } = payload;
+      return {
+        ...state,
+        isShowLog,
+        showLogWithParams
+      };
+    },
+    showTrace(state, { payload }) {
+      const { isShowTrace, showTraceWithParams } = payload;
+      return {
+        ...state,
+        isShowTrace,
+        showTraceWithParams
+      };
+    }
+  }
 };

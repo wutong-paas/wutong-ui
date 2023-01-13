@@ -8,6 +8,7 @@ import React, { memo, useState } from 'react';
 import { Select, DatePicker, Icon } from 'antd';
 import moment from 'moment';
 import { formatTime } from '../LogDrawer/conf';
+import TwTimePicker from '@/components/TwComponents/TwTimePicker';
 import styles from './index.less';
 
 const { Option } = Select;
@@ -27,16 +28,17 @@ const TeamConditon = props => {
   const [isShowRangePicker, setIsShowRangePicker] = useState(false);
 
   const handleTimeChange = e => {
+    console.log(e, 'e');
     onTimeChange({ value: e });
-    if (e === 'custom') {
-      setIsShowRangePicker(true);
-      return;
-    }
-    setIsShowRangePicker(false);
+    // if (e === 'custom') {
+    //   setIsShowRangePicker(true);
+    //   return;
+    // }
+    // setIsShowRangePicker(false);
   };
 
   const handleRangeChange = dates => {
-    let [start, end] = dates;
+    let { start, end } = dates;
     start = start.valueOf();
     end = end.valueOf();
     onRangeChange({ start, end });
@@ -74,7 +76,12 @@ const TeamConditon = props => {
             </Select>
           </div>
           <div className={styles.actions}>
-            <Select
+            <TwTimePicker
+              onTimeRange={handleRangeChange}
+              onTimeClick={handleTimeChange}
+              hideRefresh
+            />
+            {/* <Select
               placeholder="请选择时间"
               style={{ width: 138 }}
               defaultValue={'last1hour'}
@@ -85,13 +92,13 @@ const TeamConditon = props => {
                   {item.label}
                 </Option>
               ))}
-            </Select>
+            </Select> */}
           </div>
-          {isShowRangePicker && (
+          {/* {isShowRangePicker && (
             <div className={styles.actions}>
               <RangePicker size="default" showTime onOk={handleRangeChange} />
             </div>
-          )}
+          )} */}
           {customQuery && customQuery()}
         </div>
         {customRight && <div className={styles.right}>{customRight()}</div>}

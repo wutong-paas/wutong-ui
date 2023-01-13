@@ -53,7 +53,7 @@ import Log from './log';
 import Log2 from './log2';
 import Members from './members';
 import Mnt from './mnt';
-import Monitor from './monitor';
+import Monitor from './Monitor/monitor';
 import Overview from './overview';
 import Plugin from './plugin';
 import Port from './port';

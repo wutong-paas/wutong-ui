@@ -36,6 +36,7 @@ import AppShape from './AppShape';
 import ComponentList from './ComponentList';
 import EditorTopology from './EditorTopology';
 import Monitor from './Monitor';
+import TwOverViewList from '@/components/TwComponents/TwOverViewList';
 import styles from './Index.less';
 import GobackImg from '../../../public/images/common/goback.svg';
 import AppImg from '../../../public/images/common/app.svg';
@@ -120,6 +121,7 @@ const resolveUnit = (num, baseUnit = 'KB', fixed = 2) => {
   buildShapeLoading: loading.effects['global/buildShape'],
   editGroupLoading: loading.effects['application/editGroup'],
   deleteLoading: loading.effects['application/delete'],
+  getTotalInfoLoading: loading.effects['application/fetchAppDetailState'],
   currUser: user.currentUser,
   apps: application.apps,
   groupDetail: application.groupDetail || {},
@@ -699,6 +701,29 @@ export default class Index extends PureComponent {
 
   goBack = () => this.props.history.goBack();
 
+  getList = ({ resources, currApp }) => [
+    {
+      number: resolveUnit(resources.memory || 0, 'MB').num,
+      unit: resolveUnit(resources.memory || 0, 'MB').unit,
+      title: '使用内存'
+    },
+    {
+      number: (resources.cpu && resources.cpu / 1000) || 0,
+      unit: 'Core',
+      title: '使用CPU'
+    },
+    {
+      number: resolveUnit(resources.disk || 0, 'KB').num || 0,
+      unit: resolveUnit(resources.disk || 0, 'KB').currUnit || 'KB',
+      title: '使用磁盘'
+    },
+    {
+      number: currApp.service_num || 0,
+      unit: '个',
+      title: '组件数量'
+    }
+  ];
+
   render() {
     const {
       groupDetail,
@@ -726,7 +751,8 @@ export default class Index extends PureComponent {
         isCreate: isComponentCreate,
         isConstruct: isComponentConstruct,
         isRestart
-      }
+      },
+      getTotalInfoLoading
     } = this.props;
     const {
       currApp,
@@ -938,56 +964,10 @@ export default class Index extends PureComponent {
               </div>
             </Col>
             <Col span={12} className={styles.right}>
-              <div className={styles.wrap}>
-                <div className={styles.info}>
-                  <div className={styles.top}>
-                    <span className={styles.count}>
-                      {resolveUnit(resources.memory || 0, 'MB').num}
-                    </span>
-                    <span className={styles.unit}>
-                      {resolveUnit(resources.memory || 0, 'MB').currUnit}
-                    </span>
-                  </div>
-                  <div>
-                    <span className={styles.title}>使用内存</span>
-                  </div>
-                </div>
-                <div className={styles.info}>
-                  <div className={styles.top}>
-                    <span className={styles.count}>
-                      {(resources.cpu && resources.cpu / 1000) || 0}
-                    </span>
-                    <span className={styles.unit}>Core</span>
-                  </div>
-                  <div>
-                    <span className={styles.title}>使用CPU</span>
-                  </div>
-                </div>
-                <div className={styles.info}>
-                  <div className={styles.top}>
-                    <span className={styles.count}>
-                      {resolveUnit(resources.disk || 0, 'KB').num || 0}
-                    </span>
-                    <span className={styles.unit}>
-                      {resolveUnit(resources.disk || 0, 'KB').currUnit || 'KB'}
-                    </span>
-                  </div>
-                  <div>
-                    <span className={styles.title}>使用磁盘</span>
-                  </div>
-                </div>
-                <div className={styles.info}>
-                  <div className={styles.top}>
-                    <span className={styles.count}>
-                      {currApp.service_num || 0}
-                    </span>
-                    <span className={styles.unit}>个</span>
-                  </div>
-                  <div>
-                    <span className={styles.title}>组件数量</span>
-                  </div>
-                </div>
-              </div>
+              <TwOverViewList
+                list={this.getList({ resources, currApp })}
+                loading={getTotalInfoLoading}
+              />
             </Col>
           </Row>
           <Row gutter={16} className={styles.bottom}>
