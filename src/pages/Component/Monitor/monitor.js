@@ -58,7 +58,6 @@ const Monitor = props => {
   }, []);
 
   useEffect(() => {
-    console.log('ddd');
     fetchOverviewListRef.current();
     return () => {
       if (timeId.current) {
@@ -66,7 +65,7 @@ const Monitor = props => {
         timeId.current = null;
       }
     };
-  }, [instanceValue, pollingValue]);
+  }, [instanceValue, pollingValue, start, end]);
 
   const fetchPods = () => {
     dispatch({
