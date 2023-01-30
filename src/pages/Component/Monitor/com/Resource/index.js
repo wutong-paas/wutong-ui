@@ -48,7 +48,7 @@ const Resource = props => {
       clearTimeout(timeId.current);
       timeId.current = null;
     }
-    if (pods.length > 0) getChartsData.current();
+    if (pods?.length > 0) getChartsData.current();
     return () => {
       if (timeId.current) {
         clearTimeout(timeId.current);
