@@ -187,7 +187,7 @@ const Monitor = props => {
               style={{ width: 250, marginLeft: 16 }}
               placeholder="请选择实例"
               onChange={handleSelectChange}
-              value={instanceValue}
+              value={pods?.length > 0 ? instanceValue : undefined}
             >
               {pods?.length > 0 &&
                 pods?.map(({ pod_name }) => (
